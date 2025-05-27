@@ -25,11 +25,11 @@ export default function LandingPage() {
         <div className="container mx-auto px-4 py-4 flex items-center justify-between">
           <div className="flex items-center space-x-3">
             <Image
-              src="/logo-agrivanna-white.png"
+              src="/LOGO White.png"
               alt="Agrivanna Logo"
-              width={180}
-              height={60}
-              className="h-12 w-auto"
+              width={320}
+              height={107}
+              className="h-24 w-auto"
             />
           </div>
 
@@ -241,11 +241,11 @@ export default function LandingPage() {
           <div className="flex flex-col md:flex-row justify-between items-center">
             <div className="flex items-center space-x-3 mb-4 md:mb-0">
               <Image
-                src="/logo-agrivanna-white.png"
+                src="/LOGO White.png"
                 alt="Agrivanna Logo"
-                width={180}
-                height={60}
-                className="h-12 w-auto"
+                width={320}
+                height={107}
+                className="h-24 w-auto"
               />
             </div>
 
