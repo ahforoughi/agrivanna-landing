@@ -86,7 +86,7 @@ export default function LandingPage() {
               asChild
             >
               <a
-                href="https://calendly.com/ah-foroughi98/meeting-with-vanna-team?month=2025-05"
+                href="mailto:aminreza.abbasi@agrivanna.com"
                 target="_blank"
                 rel="noopener noreferrer"
               >
@@ -224,9 +224,15 @@ export default function LandingPage() {
             Join thousands of farmers who trust Agrivanna to keep their livestock healthy and their operations
             compliant.
           </p>
-          <Button size="lg" className="font-inter bg-white text-black hover:bg-gray-100 text-lg px-8 py-3">
-            Start Your Free Trial Today
-            <ArrowRight className="ml-2 w-5 h-5" />
+          <Button size="lg" className="font-inter bg-white text-black hover:bg-gray-100 text-lg px-8 py-3" asChild>
+            <a
+              href="mailto:aminreza.abbasi@agrivanna.com"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Start Your Free Trial Today
+              <ArrowRight className="ml-2 w-5 h-5" />
+            </a>
           </Button>
         </div>
       </section>
