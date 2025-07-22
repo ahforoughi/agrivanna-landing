@@ -9,7 +9,7 @@ import Image from "next/image"
 
 export default function LandingPage() {
   const [currentText, setCurrentText] = useState(0)
-  const rotatingTexts = ["Tracking System", "Health Management", "Vet Marketplace"]
+  const rotatingTexts = ["Tracking System", "Health Management", "Virtual Grazing"]
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -51,7 +51,7 @@ export default function LandingPage() {
               asChild
             >
               <a
-                href="https://calendly.com/ah-foroughi98/meeting-with-vanna-team?month=2025-05"
+                href="mailto:aminrezaabbasi@agrivanna.com"
                 target="_blank"
                 rel="noopener noreferrer"
               >
@@ -75,10 +75,8 @@ export default function LandingPage() {
             </span>
           </h1>
 
-          <p className="font-inter text-xl text-gray-300 mb-8 leading-relaxed max-w-3xl mx-auto">
-            An AI-powered livestock health tracking system with a built-in vet marketplace, enabling farmers to monitor
-            symptoms, get treatment recommendations, connect with veterinarians, and ensure seamless regulatory
-            compliance.
+          <p className="font-inter text-xl text-gray-300 mb-8 leading-relaxed max-w-3xl mx-auto"> 
+          Agrivanna is an AI-powered modular platform that combines virtual grazing, AI-powered weight tracking, and livestock health monitoring.
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
@@ -111,62 +109,60 @@ export default function LandingPage() {
           </div>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {/* Disease Detection */}
+            {/* Virtual Fencing */}
             <Card className="bg-gray-800/50 border-gray-700 hover:border-purple-500 transition-colors">
               <CardContent className="p-6">
                 <div className="w-12 h-12 bg-gradient-to-r from-blue-500 to-purple-500 rounded-lg flex items-center justify-center mb-4">
                   <Stethoscope className="w-6 h-6 text-white" />
                 </div>
                 <h3 className="font-dm-sans text-xl font-semibold text-white mb-3">
-                  Disease Detection Without Expensive Hardware
+                 Virtual Fencing Without Physical Barriers
                 </h3>
                 <p className="font-inter text-gray-300 leading-relaxed">
-                  Advanced AI algorithms detect health issues early using simple smartphone cameras and sensors you
-                  already have.
+                Create dynamic, GPS-based grazing zones in seconds — no wires, no hassle.
                 </p>
               </CardContent>
             </Card>
 
-            {/* AI Assistant */}
+            {/* AI-Powered Weight Tracking */}
             <Card className="bg-gray-800/50 border-gray-700 hover:border-purple-500 transition-colors">
               <CardContent className="p-6">
                 <div className="w-12 h-12 bg-gradient-to-r from-purple-500 to-pink-500 rounded-lg flex items-center justify-center mb-4">
                   <Brain className="w-6 h-6 text-white" />
                 </div>
                 <h3 className="font-dm-sans text-xl font-semibold text-white mb-3">
-                  AI Assistant for Disease Detection and Treatment Suggestions
+                AI-Powered Weighing & Feed Optimization
                 </h3>
                 <p className="font-inter text-gray-300 leading-relaxed">
-                  Get instant, evidence-based treatment recommendations powered by machine learning and veterinary
-                  expertise.
+                Built-in weighing systems track weight during natural movement, while AI models suggest tailored feed plans to boost growth or recovery.
                 </p>
               </CardContent>
             </Card>
 
-            {/* Compliance */}
+            {/* Early health detection */}
             <Card className="bg-gray-800/50 border-gray-700 hover:border-purple-500 transition-colors">
               <CardContent className="p-6">
                 <div className="w-12 h-12 bg-gradient-to-r from-indigo-500 to-blue-500 rounded-lg flex items-center justify-center mb-4">
                   <Shield className="w-6 h-6 text-white" />
                 </div>
-                <h3 className="font-dm-sans text-xl font-semibold text-white mb-3">Compliance & Farm Management</h3>
+                <h3 className="font-dm-sans text-xl font-semibold text-white mb-3">Early Health Detection with No Extra Hardware</h3>
                 <p className="font-inter text-gray-300 leading-relaxed">
-                  Automated record-keeping and compliance tracking to meet regulatory requirements effortlessly.
+                Our system analyzes camera, collar, and sensor data to flag abnormal behaviors, slow growth, or escape attempts.
                 </p>
               </CardContent>
             </Card>
 
-            {/* Veterinary Assistance */}
+            {/* Offline */}
             <Card className="bg-gray-800/50 border-gray-700 hover:border-purple-500 transition-colors">
               <CardContent className="p-6">
                 <div className="w-12 h-12 bg-gradient-to-r from-blue-500 to-indigo-500 rounded-lg flex items-center justify-center mb-4">
                   <Users className="w-6 h-6 text-white" />
                 </div>
                 <h3 className="font-dm-sans text-xl font-semibold text-white mb-3">
-                  Veterinary Assistance & Treatment Recommendations
+                Offline-Ready & Built for Farms
                 </h3>
                 <p className="font-inter text-gray-300 leading-relaxed">
-                  Connect directly with certified veterinarians through our integrated marketplace for expert care.
+                Whether you’re in the foothills or the far north, Agrivanna works. Collars store data locally and sync when back online.
                 </p>
               </CardContent>
             </Card>
@@ -174,7 +170,7 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* How It Works */}
+      {/* How It Works
       <section id="how-it-works" className="py-20 px-4 bg-black">
         <div className="container mx-auto">
           <div className="text-center mb-16">
@@ -216,7 +212,7 @@ export default function LandingPage() {
             </div>
           </div>
         </div>
-      </section>
+      </section> */}
 
       {/* CTA Section */}
       <section className="py-20 px-4 bg-gradient-to-r from-blue-900/50 to-purple-900/50">
