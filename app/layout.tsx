@@ -1,6 +1,7 @@
 import type React from "react"
 import type { Metadata } from "next"
 import { dmSans, inter } from "@/lib/fonts"
+import { Analytics } from "@vercel/analytics/next"
 import "./globals.css"
 
 export const metadata: Metadata = {
@@ -16,7 +17,10 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className={`${dmSans.variable} ${inter.variable}`}>
-      <body className="font-inter antialiased">{children}</body>
+      <body className="font-inter antialiased">
+        {children}
+        <Analytics />
+      </body>
     </html>
   )
 }
