@@ -51,7 +51,7 @@ export default function LandingPage() {
               asChild
             >
               <a
-                href="mailto:aminrezaabbasi@agrivanna.com"
+                href="https://calendly.com/aminrezaabbasi-agrivanna/meeting-with-agrivanna-team"
                 target="_blank"
                 rel="noopener noreferrer"
               >
@@ -86,7 +86,7 @@ export default function LandingPage() {
               asChild
             >
               <a
-                href="mailto:aminreza.abbasi@agrivanna.com"
+                href="https://calendly.com/aminrezaabbasi-agrivanna/meeting-with-agrivanna-team"
                 target="_blank"
                 rel="noopener noreferrer"
               >
@@ -226,7 +226,7 @@ export default function LandingPage() {
           </p>
           <Button size="lg" className="font-inter bg-white text-black hover:bg-gray-100 text-lg px-8 py-3" asChild>
             <a
-              href="mailto:aminreza.abbasi@agrivanna.com"
+              href="https://calendly.com/aminrezaabbasi-agrivanna/meeting-with-agrivanna-team"
               target="_blank"
               rel="noopener noreferrer"
             >
