@@ -17,7 +17,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className={`${dmSans.variable} ${inter.variable}`}>
-      <body className="font-inter antialiased">
+      <body className="font-inter antialiased" suppressHydrationWarning>
         {children}
         <Analytics />
       </body>

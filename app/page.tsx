@@ -37,11 +37,8 @@ export default function LandingPage() {
             <a href="#features" className="font-inter text-gray-300 hover:text-purple-400 transition-colors">
               Features
             </a>
-            <a href="#how-it-works" className="font-inter text-gray-300 hover:text-purple-400 transition-colors">
+            <a href="#features" className="font-inter text-gray-300 hover:text-purple-400 transition-colors">
               How it Works
-            </a>
-            <a href="#contact" className="font-inter text-gray-300 hover:text-purple-400 transition-colors">
-              Contact
             </a>
           </nav>
 
@@ -67,13 +64,16 @@ export default function LandingPage() {
         <div className="container mx-auto text-center max-w-4xl">
           <Badge className="mb-6 bg-purple-900/50 text-purple-300 border-purple-700">AI-Powered Livestock Health</Badge>
 
-          <h1 className="font-dm-sans text-5xl md:text-6xl font-bold text-white mb-6 leading-tight">
-            Smart Livestock
-            <span className="bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent transition-all duration-500 ease-in-out">
-              {" "}
-              {rotatingTexts[currentText]}
-            </span>
-          </h1>
+          <div className="mb-6">
+            <h1 className="font-dm-sans text-5xl md:text-6xl font-bold text-white leading-tight">
+              Smart Livestock
+            </h1>
+            <div className="h-16 md:h-20 flex items-center justify-center">
+              <span className="bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent transition-all duration-500 ease-in-out font-dm-sans text-5xl md:text-6xl font-bold" style={{minWidth: '300px'}}>
+                {rotatingTexts[currentText]}
+              </span>
+            </div>
+          </div>
 
           <p className="font-inter text-xl text-gray-300 mb-8 leading-relaxed max-w-3xl mx-auto"> 
           Agrivanna is an AI-powered modular platform that combines virtual grazing, AI-powered weight tracking, and livestock health monitoring.
@@ -94,6 +94,33 @@ export default function LandingPage() {
                 <ArrowRight className="ml-2 w-5 h-5" />
               </a>
             </Button>
+          </div>
+
+          {/* Partners Section */}
+          <div className="mt-16 pt-8 border-t border-gray-800">
+            <p className="text-gray-400 text-sm mb-6 font-inter">Partners</p>
+            <div className="flex flex-wrap justify-center items-center gap-8 md:gap-12 opacity-60">
+              {/* Partner Logos */}
+              <div className="flex items-center justify-center h-12 w-32">
+                <Image
+                  src="/svg.png"
+                  alt="svg"
+                  width={120}
+                  height={40}
+                  className="h-8 w-auto object-contain filter brightness-0 invert"
+                />
+              </div>
+              <div className="flex items-center justify-center h-12 w-32">
+                <Image
+                  src="/pnp.svg"
+                  alt="pnp"
+                  width={120}
+                  height={40}
+                  className="h-8 w-auto object-contain filter brightness-0 invert"
+                />
+              </div>
+              
+            </div>
           </div>
         </div>
       </section>
