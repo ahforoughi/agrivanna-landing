@@ -6,6 +6,7 @@ import { Card, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Stethoscope, Brain, Shield, Users, ArrowRight } from "lucide-react"
 import Image from "next/image"
+import { SpeedInsights } from "@vercel/speed-insights/next"
 
 export default function LandingPage() {
   const [currentText, setCurrentText] = useState(0)
@@ -20,6 +21,7 @@ export default function LandingPage() {
 
   return (
     <div className="min-h-screen bg-black">
+      <SpeedInsights />
       {/* Header */}
       <header className="border-b border-gray-800 bg-black/80 backdrop-blur-sm sticky top-0 z-50">
         <div className="container mx-auto px-4 py-4 flex items-center justify-between">
