@@ -1,15 +1,13 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { useState } from "react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
-import { Stethoscope, Brain, Shield, Users, ArrowRight, ChevronDown, Search, Menu, X, Globe, Facebook, Twitter, Linkedin, Instagram, Youtube } from "lucide-react"
+import { Stethoscope, Brain, Shield, Users, ArrowRight, ChevronDown, Menu, X, Facebook, Twitter, Linkedin, Instagram, Youtube } from "lucide-react"
 import Image from "next/image"
 import { SpeedInsights } from "@vercel/speed-insights/next"
 
 export default function LandingPage() {
-  const [currentText, setCurrentText] = useState(0)
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [solutionsOpen, setSolutionsOpen] = useState(false)
   const [aboutOpen, setAboutOpen] = useState(false)
@@ -19,8 +17,6 @@ export default function LandingPage() {
   const [expandedFeature, setExpandedFeature] = useState<number | null>(null)
   const [startX, setStartX] = useState(0)
   const [isDragging, setIsDragging] = useState(false)
-  const rotatingTexts = ["Tracking System", "Health Management", "Virtual Grazing"]
-
   const features = [
     {
       icon: Stethoscope,
@@ -56,12 +52,6 @@ export default function LandingPage() {
     }
   ]
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentText((prev) => (prev + 1) % rotatingTexts.length)
-    }, 2000)
-    return () => clearInterval(interval)
-  }, [])
 
   // Swipe handling functions
   const handleTouchStart = (e: React.TouchEvent) => {
@@ -424,7 +414,7 @@ export default function LandingPage() {
           <div className="text-center mb-16">
             <h2 className="text-4xl font-bold text-[#2A5F36] mb-4">Sowing the seeds of ingenuity.</h2>
             <p className="text-xl text-[#637D59] max-w-3xl mx-auto">
-              Agrivanna's precision technologies are revolutionizing the way we farm the land. By harnessing the power of innovation, farmers can now achieve higher yields with fewer resources.
+              Agrivanna&apos;s precision technologies are revolutionizing the way we farm the land. By harnessing the power of innovation, farmers can now achieve higher yields with fewer resources.
             </p>
           </div>
 
@@ -575,7 +565,7 @@ export default function LandingPage() {
           <div className="text-center mb-16">
             <h2 className="text-4xl font-bold text-gray-900 mb-4">Latest News & Updates</h2>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              Stay informed about the latest developments in agricultural technology and Agrivanna's innovations.
+              Stay informed about the latest developments in agricultural technology and Agrivanna&apos;s innovations.
             </p>
           </div>
 
@@ -606,7 +596,7 @@ export default function LandingPage() {
                   Reducing Environmental Impact Through Smart Farming
                 </h3>
                 <p className="text-gray-600 mb-4">
-                  How Agrivanna's precision agriculture solutions are helping farmers reduce resource usage while increasing productivity.
+                  How Agrivanna&apos;s precision agriculture solutions are helping farmers reduce resource usage while increasing productivity.
                 </p>
                 <a href="#" className="text-blue-600 hover:text-blue-700 font-semibold">
                   Learn More →
@@ -639,7 +629,7 @@ export default function LandingPage() {
         <div className="container mx-auto px-4">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div>
-              <h2 className="text-4xl font-bold text-gray-900 mb-6">Today's challenges are tomorrow's possibilities.</h2>
+              <h2 className="text-4xl font-bold text-gray-900 mb-6">Today&apos;s challenges are tomorrow&apos;s possibilities.</h2>
               <p className="text-xl text-gray-600 leading-relaxed mb-8">
                 Our purpose at Agrivanna is to provide farmer-focused solutions to sustainably feed our world. Our ambition is to accelerate innovation and efficiency to drive positive outcomes for farmers and the planet.
               </p>
@@ -713,7 +703,7 @@ export default function LandingPage() {
       <section className="py-20 px-4 bg-[#2A5F36]">
         <div className="container mx-auto text-center">
           <h2 className="text-4xl font-bold text-white mb-6">
-            Together, we're helping change the world for good.
+            Together, we&apos;re helping change the world for good.
           </h2>
           <p className="text-xl text-[#F2F2F2] mb-8 max-w-3xl mx-auto">
             Not everyone can claim to feed the world, but it is part of our every day. Behind everything we do for our farmers, there is one Agrivanna team making it happen. We are proud to put our curiosity to work, building a better and more sustainable world.
