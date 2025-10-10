@@ -8,6 +8,11 @@ export const metadata: Metadata = {
   title: "Agrivanna - AI-Powered Livestock Health Tracking",
   description:
     "An AI-powered livestock health tracking system with a built-in vet marketplace, enabling farmers to monitor symptoms, get treatment recommendations, connect with veterinarians, and ensure seamless regulatory compliance.",
+  icons: {
+    icon: '/LOGO-black.png',
+    shortcut: '/LOGO-black.png',
+    apple: '/LOGO-black.png',
+  },
 }
 
 export default function RootLayout({

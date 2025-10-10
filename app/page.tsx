@@ -15,7 +15,46 @@ export default function LandingPage() {
   const [aboutOpen, setAboutOpen] = useState(false)
   const [solutionsTimeout, setSolutionsTimeout] = useState<NodeJS.Timeout | null>(null)
   const [aboutTimeout, setAboutTimeout] = useState<NodeJS.Timeout | null>(null)
+  const [currentFeature, setCurrentFeature] = useState(0)
+  const [expandedFeature, setExpandedFeature] = useState<number | null>(null)
+  const [startX, setStartX] = useState(0)
+  const [isDragging, setIsDragging] = useState(false)
   const rotatingTexts = ["Tracking System", "Health Management", "Virtual Grazing"]
+
+  const features = [
+    {
+      icon: Stethoscope,
+      title: "Virtual Fencing Without Physical Barriers",
+      shortDescription: "Create dynamic, GPS-based grazing zones in seconds — no wires, no hassle.",
+      fullDescription: "Revolutionary GPS-based virtual fencing system that creates precise grazing boundaries without physical barriers. Set up grazing zones in minutes, adjust boundaries remotely, and monitor livestock movement in real-time. Our advanced technology uses gentle audio cues and vibration to guide animals, ensuring they stay within designated areas while maintaining their natural grazing patterns.",
+      color: "#4A90E2",
+      bgColor: "bg-blue-50"
+    },
+    {
+      icon: Brain,
+      title: "AI-Powered Weighing & Feed Optimization",
+      shortDescription: "Built-in weighing systems track weight during natural movement, while AI models suggest tailored feed plans to boost growth or recovery.",
+      fullDescription: "Advanced AI-powered weight tracking system that monitors livestock weight during natural movement patterns. Our machine learning algorithms analyze behavioral data to suggest optimized feeding schedules, detect early signs of illness, and predict growth patterns. The system automatically adjusts feed recommendations based on individual animal needs, weather conditions, and seasonal changes.",
+      color: "#637D59",
+      bgColor: "bg-green-50"
+    },
+    {
+      icon: Shield,
+      title: "Early Health Detection with No Extra Hardware",
+      shortDescription: "Our system analyzes camera, collar, and sensor data to flag abnormal behaviors, slow growth, or escape attempts.",
+      fullDescription: "Comprehensive health monitoring system that uses existing camera, collar, and sensor data to detect early signs of illness, injury, or behavioral changes. Our AI algorithms analyze movement patterns, feeding behavior, and vital signs to identify potential health issues before they become serious. Get instant alerts for lameness, respiratory issues, or unusual behavior patterns.",
+      color: "#2A5F36",
+      bgColor: "bg-emerald-50"
+    },
+    {
+      icon: Users,
+      title: "Offline-Ready & Built for Farms",
+      shortDescription: "Whether you're in the foothills or the far north, Agrivanna works. Collars store data locally and sync when back online.",
+      fullDescription: "Robust offline-capable system designed specifically for remote farming operations. Our collars store all data locally and automatically sync when internet connectivity is restored. Perfect for operations in remote areas, mountainous terrain, or locations with unreliable internet. Data is securely stored and backed up, ensuring you never lose critical information about your livestock.",
+      color: "#4A90E2",
+      bgColor: "bg-blue-50"
+    }
+  ]
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -23,6 +62,54 @@ export default function LandingPage() {
     }, 2000)
     return () => clearInterval(interval)
   }, [])
+
+  // Swipe handling functions
+  const handleTouchStart = (e: React.TouchEvent) => {
+    setStartX(e.touches[0].clientX)
+    setIsDragging(true)
+  }
+
+  const handleTouchMove = (e: React.TouchEvent) => {
+    if (!isDragging) return
+    e.preventDefault()
+  }
+
+  const handleTouchEnd = (e: React.TouchEvent) => {
+    if (!isDragging) return
+    setIsDragging(false)
+    
+    const endX = e.changedTouches[0].clientX
+    const diff = startX - endX
+    
+    if (Math.abs(diff) > 50) {
+      if (diff > 0 && currentFeature < features.length - 1) {
+        setCurrentFeature(currentFeature + 1)
+      } else if (diff < 0 && currentFeature > 0) {
+        setCurrentFeature(currentFeature - 1)
+      }
+    }
+  }
+
+  const handleMouseDown = (e: React.MouseEvent) => {
+    setStartX(e.clientX)
+    setIsDragging(true)
+  }
+
+  const handleMouseUp = (e: React.MouseEvent) => {
+    if (!isDragging) return
+    setIsDragging(false)
+    
+    const endX = e.clientX
+    const diff = startX - endX
+    
+    if (Math.abs(diff) > 50) {
+      if (diff > 0 && currentFeature < features.length - 1) {
+        setCurrentFeature(currentFeature + 1)
+      } else if (diff < 0 && currentFeature > 0) {
+        setCurrentFeature(currentFeature - 1)
+      }
+    }
+  }
 
   // Helper functions for dropdown timing
   const handleSolutionsMouseEnter = () => {
@@ -271,8 +358,7 @@ export default function LandingPage() {
                   <div className="bg-white rounded-xl p-4 border border-[#637D59] shadow-sm hover:shadow-md transition-all duration-300 hover:-translate-y-1 hover:border-[#4A90E2] group" style={{ animationDelay: '0.1s' }}>
                     <div className="w-8 h-8 bg-[#2A5F36] rounded-full flex items-center justify-center mb-3 group-hover:scale-110 transition-transform duration-300">
                       <svg className="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20">
-                        <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z" />
-                        <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z" />
+                        <path d="M3 4a1 1 0 011-1h12a1 1 0 011 1v2a1 1 0 01-1 1H4a1 1 0 01-1-1V4zM3 10a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H4a1 1 0 01-1-1v-6zM14 9a1 1 0 00-1 1v6a1 1 0 001 1h2a1 1 0 001-1v-6a1 1 0 00-1-1h-2z" />
                       </svg>
                     </div>
                     <p className="text-sm font-medium text-[#2A5F36] group-hover:text-[#4A90E2] transition-colors duration-300">AI Weight</p>
@@ -291,11 +377,48 @@ export default function LandingPage() {
               </div>
             </div>
           </div>
+          
+          {/* Partners Section */}
+          <div className="relative z-10 mt-4">
+            <div className="text-center mb-4">
+              <p className="text-black text-sm font-medium">Trusted Partners</p>
+            </div>
+            <div className="flex justify-center items-center space-x-12">
+              <a 
+                href="https://www.plugandplaytechcenter.com/" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="hover:opacity-80 transition-opacity duration-300"
+              >
+                <Image
+                  src="/pnp.svg"
+                  alt="Plug and Play Logo"
+                  width={120}
+                  height={40}
+                  className="h-8 w-auto"
+                />
+              </a>
+              <a 
+                href="https://thriveagrifood.com/" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="hover:opacity-80 transition-opacity duration-300"
+              >
+                <Image
+                  src="/svg.png"
+                  alt="THRIVE by SVG Ventures Logo"
+                  width={100}
+                  height={40}
+                  className="h-8 w-auto"
+                />
+              </a>
+            </div>
+          </div>
         </div>
       </section>
 
 
-      {/* Features Section */}
+      {/* Features Section - Swiping Cards */}
       <section id="product" className="py-20 px-4 bg-white">
         <div className="container mx-auto">
           <div className="text-center mb-16">
@@ -305,64 +428,143 @@ export default function LandingPage() {
             </p>
           </div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {/* Virtual Fencing */}
-            <Card className="bg-[#F2F2F2] border border-[#637D59] hover:shadow-xl transition-all duration-500 hover:-translate-y-2 group animate-fade-in" style={{ animationDelay: '0.1s' }}>
-              <CardContent className="p-6">
-                <div className="w-12 h-12 bg-[#4A90E2] bg-opacity-20 rounded-lg flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300">
-                  <Stethoscope className="w-6 h-6 text-[#4A90E2]" />
-                </div>
-                <h3 className="text-xl font-semibold text-[#2A5F36] mb-3 group-hover:text-[#4A90E2] transition-colors duration-300">
-                 Virtual Fencing Without Physical Barriers
-                </h3>
-                <p className="text-[#637D59] leading-relaxed">
-                Create dynamic, GPS-based grazing zones in seconds — no wires, no hassle.
-                </p>
-              </CardContent>
-            </Card>
+          {/* Swiping Cards Container */}
+          <div className="max-w-4xl mx-auto">
+            {/* Feature Titles Row - Moved to top */}
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+              {features.map((feature, index) => (
+                <button
+                  key={index}
+                  onClick={() => setCurrentFeature(index)}
+                  className={`p-4 rounded-lg border-2 transition-all duration-300 text-left hover:shadow-md ${
+                    index === currentFeature
+                      ? 'border-[#2A5F36] bg-[#2A5F36] text-white shadow-lg'
+                      : 'border-gray-200 bg-white hover:border-[#637D59]'
+                  }`}
+                >
+                  <div className="flex items-center space-x-3">
+                    <div 
+                      className="w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0"
+                      style={{ 
+                        backgroundColor: index === currentFeature 
+                          ? 'rgba(255,255,255,0.2)' 
+                          : `${feature.color}20`
+                      }}
+                    >
+                      {(() => {
+                        const IconComponent = feature.icon
+                        return <IconComponent 
+                          className="w-4 h-4" 
+                          style={{ color: index === currentFeature ? 'white' : feature.color }}
+                        />
+                      })()}
+                    </div>
+                    <span className={`text-sm font-medium line-clamp-2 ${
+                      index === currentFeature ? 'text-white' : 'text-[#2A5F36]'
+                    }`}>
+                      {feature.title}
+                    </span>
+                  </div>
+                </button>
+              ))}
+            </div>
 
-            {/* AI-Powered Weight Tracking */}
-            <Card className="bg-[#F2F2F2] border border-[#637D59] hover:shadow-xl transition-all duration-500 hover:-translate-y-2 group animate-fade-in" style={{ animationDelay: '0.2s' }}>
-              <CardContent className="p-6">
-                <div className="w-12 h-12 bg-[#637D59] bg-opacity-20 rounded-lg flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300">
-                  <Brain className="w-6 h-6 text-[#637D59]" />
-                </div>
-                <h3 className="text-xl font-semibold text-[#2A5F36] mb-3 group-hover:text-[#637D59] transition-colors duration-300">
-                AI-Powered Weighing & Feed Optimization
-                </h3>
-                <p className="text-[#637D59] leading-relaxed">
-                Built-in weighing systems track weight during natural movement, while AI models suggest tailored feed plans to boost growth or recovery.
-                </p>
-              </CardContent>
-            </Card>
+            {/* Main Card Display */}
+            <div 
+              className="relative overflow-hidden rounded-2xl shadow-xl bg-white border border-[#637D59]"
+              onTouchStart={handleTouchStart}
+              onTouchMove={handleTouchMove}
+              onTouchEnd={handleTouchEnd}
+              onMouseDown={handleMouseDown}
+              onMouseUp={handleMouseUp}
+              style={{ userSelect: 'none' }}
+            >
+              <div className="relative">
+                {/* Card Content */}
+                <div className="p-8 md:p-12">
+                  <div className="flex items-center justify-center mb-8">
+                    <div 
+                      className="w-20 h-20 rounded-2xl flex items-center justify-center transition-all duration-300"
+                      style={{ backgroundColor: `${features[currentFeature].color}20` }}
+                    >
+                      {(() => {
+                        const IconComponent = features[currentFeature].icon
+                        return <IconComponent 
+                          className="w-10 h-10 transition-colors duration-300" 
+                          style={{ color: features[currentFeature].color }}
+                        />
+                      })()}
+                    </div>
+                  </div>
+                  
+                  <h3 className="text-2xl md:text-3xl font-bold text-[#2A5F36] text-center mb-6 leading-tight">
+                    {features[currentFeature].title}
+                  </h3>
+                  
+                  <div className="text-center mb-8">
+                    {expandedFeature === currentFeature ? (
+                      <p className="text-lg text-[#637D59] leading-relaxed max-w-3xl mx-auto">
+                        {features[currentFeature].fullDescription}
+                      </p>
+                    ) : (
+                      <p className="text-lg text-[#637D59] leading-relaxed max-w-3xl mx-auto">
+                        {features[currentFeature].shortDescription}
+                      </p>
+                    )}
+                  </div>
 
-            {/* Early health detection */}
-            <Card className="bg-[#F2F2F2] border border-[#637D59] hover:shadow-xl transition-all duration-500 hover:-translate-y-2 group animate-fade-in" style={{ animationDelay: '0.3s' }}>
-              <CardContent className="p-6">
-                <div className="w-12 h-12 bg-[#2A5F36] bg-opacity-20 rounded-lg flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300">
-                  <Shield className="w-6 h-6 text-[#2A5F36]" />
+                  <div className="text-center">
+                    <Button
+                      onClick={() => setExpandedFeature(expandedFeature === currentFeature ? null : currentFeature)}
+                      variant="outline"
+                      className="border-[#637D59] text-[#2A5F36] hover:bg-[#637D59] hover:text-white transition-all duration-300 hover:scale-105"
+                    >
+                      {expandedFeature === currentFeature ? 'Show Less' : 'Learn More'}
+                    </Button>
+                  </div>
                 </div>
-                <h3 className="text-xl font-semibold text-[#2A5F36] mb-3 group-hover:text-[#2A5F36] transition-colors duration-300">Early Health Detection with No Extra Hardware</h3>
-                <p className="text-[#637D59] leading-relaxed">
-                Our system analyzes camera, collar, and sensor data to flag abnormal behaviors, slow growth, or escape attempts.
-                </p>
-              </CardContent>
-            </Card>
 
-            {/* Offline */}
-            <Card className="bg-[#F2F2F2] border border-[#637D59] hover:shadow-xl transition-all duration-500 hover:-translate-y-2 group animate-fade-in" style={{ animationDelay: '0.4s' }}>
-              <CardContent className="p-6">
-                <div className="w-12 h-12 bg-[#4A90E2] bg-opacity-20 rounded-lg flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300">
-                  <Users className="w-6 h-6 text-[#4A90E2]" />
-                </div>
-                <h3 className="text-xl font-semibold text-[#2A5F36] mb-3 group-hover:text-[#4A90E2] transition-colors duration-300">
-                Offline-Ready & Built for Farms
-                </h3>
-                <p className="text-[#637D59] leading-relaxed">
-                Whether you're in the foothills or the far north, Agrivanna works. Collars store data locally and sync when back online.
-                </p>
-              </CardContent>
-            </Card>
+                {/* Navigation Arrows */}
+                <button
+                  onClick={() => currentFeature > 0 && setCurrentFeature(currentFeature - 1)}
+                  disabled={currentFeature === 0}
+                  className="absolute left-4 top-1/2 transform -translate-y-1/2 w-12 h-12 bg-white rounded-full shadow-lg border border-gray-200 flex items-center justify-center hover:bg-gray-50 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  <ArrowRight className="w-6 h-6 text-gray-600 rotate-180" />
+                </button>
+                
+                <button
+                  onClick={() => currentFeature < features.length - 1 && setCurrentFeature(currentFeature + 1)}
+                  disabled={currentFeature === features.length - 1}
+                  className="absolute right-4 top-1/2 transform -translate-y-1/2 w-12 h-12 bg-white rounded-full shadow-lg border border-gray-200 flex items-center justify-center hover:bg-gray-50 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  <ArrowRight className="w-6 h-6 text-gray-600" />
+                </button>
+              </div>
+            </div>
+
+            {/* Feature Indicators */}
+            <div className="flex justify-center mt-8 space-x-3">
+              {features.map((_, index) => (
+                <button
+                  key={index}
+                  onClick={() => setCurrentFeature(index)}
+                  className={`w-3 h-3 rounded-full transition-all duration-300 ${
+                    index === currentFeature 
+                      ? 'bg-[#2A5F36] scale-125' 
+                      : 'bg-[#637D59] bg-opacity-30 hover:bg-opacity-60'
+                  }`}
+                />
+              ))}
+            </div>
+
+            {/* Swipe Instruction */}
+            <div className="text-center mt-6">
+              <p className="text-sm text-[#637D59] flex items-center justify-center space-x-2">
+                <span>Swipe or click arrows to explore features</span>
+                <ArrowRight className="w-4 h-4" />
+              </p>
+            </div>
           </div>
         </div>
       </section>
