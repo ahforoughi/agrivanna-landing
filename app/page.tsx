@@ -212,7 +212,7 @@ export default function LandingPage() {
           playsInline
           className="absolute inset-0 w-full h-full object-cover opacity-30"
         >
-          <source src="/20251009_1242_Remix Video_remix_01k754f9zke3qbkagga2zj02j2.mp4" type="video/mp4" />
+          <source src="/hero.mp4" type="video/mp4" />
         </video>
         
         {/* Content Overlay */}
