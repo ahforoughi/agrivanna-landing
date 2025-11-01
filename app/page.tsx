@@ -227,7 +227,7 @@ export default function LandingPage() {
               <p className="text-xl text-black leading-relaxed mb-8 max-w-2xl animate-fade-in" style={{ animationDelay: '0.4s' }}>
                 Virtual grazing management, AI-enhanced smart weighing, health monitoring, and livestock lifecycle management in one platform.
               </p>
-              <div className="flex justify-center mb-6 animate-fade-in" style={{ animationDelay: '0.5s' }}>
+              <div className="flex justify-end mb-6 animate-fade-in" style={{ animationDelay: '0.5s' }}>
                 <Button
                   size="lg"
                   className="bg-[#2A5F36] hover:bg-[#637D59] text-white text-lg px-8 py-3 rounded-lg transition-all duration-300 hover:scale-105 hover:shadow-lg"
