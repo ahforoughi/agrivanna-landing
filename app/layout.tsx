@@ -2,6 +2,7 @@ import type React from "react"
 import type { Metadata } from "next"
 import { dmSans, inter } from "@/lib/fonts"
 import { Analytics } from "@vercel/analytics/next"
+import HubSpotFormPopup from "@/components/HubSpotFormPopup"
 import "./globals.css"
 
 export const metadata: Metadata = {
@@ -24,6 +25,7 @@ export default function RootLayout({
     <html lang="en" className={`${dmSans.variable} ${inter.variable}`}>
       <body className="font-inter antialiased" suppressHydrationWarning>
         {children}
+        <HubSpotFormPopup />
         <Analytics />
       </body>
     </html>
