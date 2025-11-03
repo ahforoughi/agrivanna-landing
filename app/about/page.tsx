@@ -50,22 +50,24 @@ export default function AboutPage() {
     {
       name: "Bita Asghari",
       role: "Hardware Specialist, Ph.D.",
+      linkedin: "https://www.linkedin.com/in/bita-asghari-b7710851/",
       image: "/bita-asghari.jpg"
-    }
-  ]
-
-  const mentors = [
+    },
     {
       name: "Jade Alberts",
       role: "Mentor",
+      linkedin: "https://www.linkedin.com/in/jadealberts/",
       image: "/jade-alberts.jpg"
     },
     {
       name: "Jason Donkersgoed",
       role: "Mentor",
+      linkedin: "https://www.linkedin.com/in/jason-donkersgoed/",
       image: "/jason-donkersgoed.jpg"
     }
   ]
+
+  const mentors: never[] = []
 
   const milestones = [
     {
@@ -313,42 +315,7 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* Our Mentors Section */}
-      <section className="py-20 bg-gray-50">
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold text-[#2A5F36] mb-4">Our Mentors</h2>
-            <p className="text-xl text-[#637D59] max-w-3xl mx-auto">
-              Experienced advisors who guide our strategy and growth.
-            </p>
-          </div>
-
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {mentors.map((mentor, index) => (
-              <Card key={index} className="bg-white border border-gray-200 hover:shadow-lg transition-all duration-300 hover:scale-105 text-center">
-                <CardContent className="p-8">
-                  <div className="w-40 h-40 bg-gray-200 rounded-full mx-auto mb-6 flex items-center justify-center overflow-hidden">
-                    <Image
-                      src={mentor.image}
-                      alt={mentor.name}
-                      width={160}
-                      height={160}
-                      className="w-full h-full object-cover rounded-full"
-                      onError={(e) => {
-                        const target = e.target as HTMLImageElement;
-                        if (target.src.includes('/profile-placeholder.svg')) return;
-                        target.src = '/profile-placeholder.svg';
-                      }}
-                    />
-                  </div>
-                  <h3 className="text-xl font-semibold text-[#2A5F36] mb-2">{mentor.name}</h3>
-                  <p className="text-[#637D59] font-medium">{mentor.role}</p>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-        </div>
-      </section>
+      {/* Mentors section removed; mentors are included in Our Team */}
 
       {/* Timeline Section */}
       <section className="py-20 bg-gray-50">
