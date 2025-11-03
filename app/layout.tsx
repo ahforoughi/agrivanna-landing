@@ -10,9 +10,9 @@ export const metadata: Metadata = {
   description:
     "An AI-powered livestock health tracking system with a built-in vet marketplace, enabling farmers to monitor symptoms, get treatment recommendations, connect with veterinarians, and ensure seamless regulatory compliance.",
   icons: {
-    icon: '/LOGO-black.png',
-    shortcut: '/LOGO-black.png',
-    apple: '/LOGO-black.png',
+    icon: '/logo-typo.png',
+    shortcut: '/logo-typo.png',
+    apple: '/logo-typo.png',
   },
 }
 
