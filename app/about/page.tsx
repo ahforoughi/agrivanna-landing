@@ -46,6 +46,11 @@ export default function AboutPage() {
       role: "Business Developer",
       linkedin: "https://www.linkedin.com/in/hadenharrison/",
       image: "/hayden-harrison.jpeg"
+    },
+    {
+      name: "Bita Asghari",
+      role: "Hardware Specialist, Ph.D.",
+      image: "/bita-asghari.jpg"
     }
   ]
 
@@ -59,11 +64,6 @@ export default function AboutPage() {
       name: "Jason Donkersgoed",
       role: "Mentor",
       image: "/jason-donkersgoed.jpg"
-    },
-    {
-      name: "Bita Asghari",
-      role: "Hardware Specialist, Ph.D.",
-      image: "/bita-asghari.jpg"
     }
   ]
 
@@ -295,15 +295,17 @@ export default function AboutPage() {
                   </div>
                   <h3 className="text-xl font-semibold text-[#2A5F36] mb-2">{member.name}</h3>
                   <p className="text-[#637D59] font-medium mb-4">{member.role}</p>
-                  <a
-                    href={member.linkedin}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center justify-center bg-[#0077B5] hover:bg-[#005885] text-white px-4 py-2 rounded-lg transition-all duration-300 hover:scale-105"
-                  >
-                    <Linkedin className="w-4 h-4 mr-2" />
-                    LinkedIn
-                  </a>
+                  {member.linkedin && (
+                    <a
+                      href={member.linkedin}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center justify-center bg-[#0077B5] hover:bg-[#005885] text-white px-4 py-2 rounded-lg transition-all duration-300 hover:scale-105"
+                    >
+                      <Linkedin className="w-4 h-4 mr-2" />
+                      LinkedIn
+                    </a>
+                  )}
                 </CardContent>
               </Card>
             ))}
