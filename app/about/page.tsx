@@ -49,6 +49,24 @@ export default function AboutPage() {
     }
   ]
 
+  const mentors = [
+    {
+      name: "Jade Alberts",
+      role: "Mentor",
+      image: "/jade-alberts.jpg"
+    },
+    {
+      name: "Jason Donkersgoed",
+      role: "Mentor",
+      image: "/jason-donkersgoed.jpg"
+    },
+    {
+      name: "Bita Asghari",
+      role: "Hardware Specialist, Ph.D.",
+      image: "/bita-asghari.jpg"
+    }
+  ]
+
   const milestones = [
     {
       year: "2024",
@@ -269,8 +287,8 @@ export default function AboutPage() {
                       className="w-full h-full object-cover rounded-full"
                       onError={(e) => {
                         const target = e.target as HTMLImageElement;
-                        target.style.display = 'none';
-                        target.nextElementSibling?.classList.remove('hidden');
+                        if (target.src.includes('/profile-placeholder.svg')) return;
+                        target.src = '/profile-placeholder.svg';
                       }}
                     />
                     <Users className="w-16 h-16 text-gray-400 hidden" />
@@ -286,6 +304,43 @@ export default function AboutPage() {
                     <Linkedin className="w-4 h-4 mr-2" />
                     LinkedIn
                   </a>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Our Mentors Section */}
+      <section className="py-20 bg-gray-50">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl font-bold text-[#2A5F36] mb-4">Our Mentors</h2>
+            <p className="text-xl text-[#637D59] max-w-3xl mx-auto">
+              Experienced advisors who guide our strategy and growth.
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {mentors.map((mentor, index) => (
+              <Card key={index} className="bg-white border border-gray-200 hover:shadow-lg transition-all duration-300 hover:scale-105 text-center">
+                <CardContent className="p-8">
+                  <div className="w-40 h-40 bg-gray-200 rounded-full mx-auto mb-6 flex items-center justify-center overflow-hidden">
+                    <Image
+                      src={mentor.image}
+                      alt={mentor.name}
+                      width={160}
+                      height={160}
+                      className="w-full h-full object-cover rounded-full"
+                      onError={(e) => {
+                        const target = e.target as HTMLImageElement;
+                        if (target.src.includes('/profile-placeholder.svg')) return;
+                        target.src = '/profile-placeholder.svg';
+                      }}
+                    />
+                  </div>
+                  <h3 className="text-xl font-semibold text-[#2A5F36] mb-2">{mentor.name}</h3>
+                  <p className="text-[#637D59] font-medium">{mentor.role}</p>
                 </CardContent>
               </Card>
             ))}
