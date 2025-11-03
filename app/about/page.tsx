@@ -32,20 +32,20 @@ export default function AboutPage() {
     {
       name: "Amirhossein Foroughi",
       role: "Chief Executive Officer",
-      bio: "Visionary leader passionate about revolutionizing agriculture through technology. Committed to helping farmers optimize their operations and improve animal welfare through innovative solutions.",
-      image: "/amirhossein-foroughi.jpg"
+      linkedin: "https://www.linkedin.com/in/ahforoughi/",
+      image: "/amirhossein-foroughi.jpeg"
     },
     {
       name: "Aminreza Abbasi",
       role: "Chief Technology Officer",
-      bio: "Technology expert focused on developing cutting-edge AI and IoT solutions for livestock management. Passionate about creating scalable, farmer-friendly technology that works in real-world conditions.",
-      image: "/aminreza-abbasi.jpg"
+      linkedin: "https://www.linkedin.com/in/aminrezaabbasi/",
+      image: "/aminreza-abbasi.JPG"
     },
     {
-      name: "Hayden Harrison",
+      name: "Haden Harrison",
       role: "Business Developer",
-      bio: "Business strategist dedicated to connecting farmers with the latest agricultural innovations. Focused on building partnerships and ensuring our solutions meet the real needs of farming communities.",
-      image: "/hayden-harrison.jpg"
+      linkedin: "https://www.linkedin.com/in/hadenharrison/",
+      image: "/hayden-harrison.jpeg"
     }
   ]
 
@@ -197,7 +197,7 @@ export default function AboutPage() {
                 to help farmers optimize their operations while improving animal welfare and farm efficiency.
               </p>
               <p className="text-lg text-gray-600 leading-relaxed mb-6">
-                Led by Amirhossein Foroughi (CEO), Aminreza Abbasi (CTO), and Hayden Harrison (Business Developer), 
+                Led by Amirhossein Foroughi (CEO), Aminreza Abbasi (CTO), and Haden Harrison (Business Developer), 
                 we recognized that traditional livestock management methods were outdated and inefficient. 
                 We saw an opportunity to apply cutting-edge AI and IoT technology to solve real-world farming challenges.
               </p>
@@ -260,12 +260,12 @@ export default function AboutPage() {
             {team.map((member, index) => (
               <Card key={index} className="bg-white border border-gray-200 hover:shadow-lg transition-all duration-300 hover:scale-105 text-center">
                 <CardContent className="p-8">
-                  <div className="w-32 h-32 bg-gray-200 rounded-full mx-auto mb-6 flex items-center justify-center overflow-hidden">
+                  <div className="w-40 h-40 bg-gray-200 rounded-full mx-auto mb-6 flex items-center justify-center overflow-hidden">
                     <Image
                       src={member.image}
                       alt={member.name}
-                      width={128}
-                      height={128}
+                      width={160}
+                      height={160}
                       className="w-full h-full object-cover rounded-full"
                       onError={(e) => {
                         const target = e.target as HTMLImageElement;
@@ -277,7 +277,15 @@ export default function AboutPage() {
                   </div>
                   <h3 className="text-xl font-semibold text-[#2A5F36] mb-2">{member.name}</h3>
                   <p className="text-[#637D59] font-medium mb-4">{member.role}</p>
-                  <p className="text-gray-600 leading-relaxed">{member.bio}</p>
+                  <a
+                    href={member.linkedin}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center justify-center bg-[#0077B5] hover:bg-[#005885] text-white px-4 py-2 rounded-lg transition-all duration-300 hover:scale-105"
+                  >
+                    <Linkedin className="w-4 h-4 mr-2" />
+                    LinkedIn
+                  </a>
                 </CardContent>
               </Card>
             ))}
