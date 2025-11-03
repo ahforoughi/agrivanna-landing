@@ -67,7 +67,7 @@ export default function AboutPage() {
     }
   ]
 
-  const mentors: never[] = []
+  
 
   const milestones = [
     {
