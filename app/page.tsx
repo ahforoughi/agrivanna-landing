@@ -210,9 +210,19 @@ export default function LandingPage() {
           muted
           loop
           playsInline
+          preload="auto"
           className="absolute inset-0 w-full h-full object-cover opacity-30"
+          onError={(e) => {
+            console.error("Video failed to load:", e);
+            // Fallback: hide video on error
+            const video = e.currentTarget;
+            if (video) {
+              video.style.display = "none";
+            }
+          }}
         >
           <source src="/hero.mp4" type="video/mp4" />
+          Your browser does not support the video tag.
         </video>
         
         {/* Content Overlay */}
