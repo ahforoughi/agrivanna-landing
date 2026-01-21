@@ -8,6 +8,11 @@ const nextConfig: NextConfig = {
         destination: "https://agrivanna.notion.site/agrivanna-data-room",
         permanent: true, // 308 redirect - SEO friendly
       },
+      {
+        source: "/pitch-deck",
+        destination: "https://agrivanna.notion.site/agrivanna-data-room",
+        permanent: true, // 308 redirect - SEO friendly
+      },
     ];
   },
   async headers() {
