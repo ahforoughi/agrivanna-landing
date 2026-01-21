@@ -43,7 +43,7 @@ export default function AboutPage() {
     },
     {
       name: "Haden Harrison",
-      role: "Business Developer",
+      role: "Chief Operating Officer",
       linkedin: "https://www.linkedin.com/in/hadenharrison/",
       image: "/hayden-harrison.jpeg"
     },
