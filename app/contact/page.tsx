@@ -3,14 +3,13 @@
 import { useState } from "react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
-import { ArrowRight, Menu, X, Mail, MapPin, Linkedin, Calendar } from "lucide-react"
+import { Menu, X, Mail, MapPin, Linkedin, Calendar } from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"
 import Script from "next/script"
 
 export default function ContactPage() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
-  const [isScriptLoaded, setIsScriptLoaded] = useState(false)
 
   return (
     <div className="min-h-screen bg-[#F2F2F2]">
@@ -133,15 +132,6 @@ export default function ContactPage() {
         <Script
           src="https://js-na3.hsforms.net/forms/embed/342489770.js"
           strategy="afterInteractive"
-          onLoad={() => {
-            setIsScriptLoaded(true)
-            // Give HubSpot a moment to process the form-frame divs
-            setTimeout(() => {
-              if (typeof window !== 'undefined' && window.hbspt?.forms?.loaded) {
-                window.hbspt.forms.loaded()
-              }
-            }, 100)
-          }}
           onError={() => console.error('Failed to load HubSpot forms script')}
         />
         <div className="container mx-auto px-4">
