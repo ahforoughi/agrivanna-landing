@@ -191,13 +191,13 @@ export default function AboutPage() {
       </header>
 
       {/* Hero Section */}
-      <section className="relative bg-gradient-to-br from-[#2A5F36] to-[#637D59] py-20 text-white overflow-hidden">
+      <section className="relative bg-gradient-to-br from-[#2A5F36] to-[#637D59] py-24 text-white overflow-hidden">
         <div className="container mx-auto px-4">
           <div className="text-center max-w-4xl mx-auto">
-            <h1 className="text-5xl lg:text-6xl font-bold mb-6 leading-tight">
+            <h1 className="text-5xl lg:text-6xl xl:text-7xl font-bold mb-6 leading-tight">
               About Agrivanna
             </h1>
-            <p className="text-xl mb-8 leading-relaxed opacity-90">
+            <p className="text-xl lg:text-2xl mb-8 leading-relaxed opacity-90">
               We&apos;re on a mission to revolutionize agriculture through innovative technology, 
               helping farmers sustainably feed our world while improving animal welfare and farm efficiency.
             </p>
@@ -206,11 +206,11 @@ export default function AboutPage() {
       </section>
 
       {/* Our Story Section */}
-      <section className="py-20 bg-white">
+      <section className="py-24 bg-white">
         <div className="container mx-auto px-4">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div>
-              <h2 className="text-4xl font-bold text-[#2A5F36] mb-6">Our Story</h2>
+              <h2 className="text-4xl lg:text-5xl font-bold text-[#2A5F36] mb-6">Our Story</h2>
               <p className="text-lg text-gray-600 leading-relaxed mb-6">
                 Founded in October 2024, Agrivanna was born from a shared passion for revolutionizing agriculture 
                 through innovative technology. Our founders came together with a simple yet powerful vision: 
@@ -227,13 +227,15 @@ export default function AboutPage() {
                 that actually works in their environment, helping them sustainably feed our world.
               </p>
             </div>
-            <div className="bg-gradient-to-br from-green-100 to-blue-100 rounded-2xl p-8 h-96 flex items-center justify-center">
-              <div className="text-center">
-                <div className="w-24 h-24 bg-[#2A5F36] rounded-full flex items-center justify-center mx-auto mb-4">
-                  <Target className="w-12 h-12 text-white" />
+            <div className="relative h-96 rounded-lg overflow-hidden bg-gray-100">
+              <div className="absolute inset-0 flex items-center justify-center">
+                <div className="text-center">
+                  <div className="w-16 h-16 bg-[#2A5F36] rounded-lg flex items-center justify-center mx-auto mb-4">
+                    <Target className="w-8 h-8 text-white" />
+                  </div>
+                  <h3 className="text-2xl font-bold text-[#2A5F36] mb-2">Our Mission</h3>
+                  <p className="text-gray-600">Empowering farmers with intelligent technology</p>
                 </div>
-                <h3 className="text-2xl font-bold text-[#2A5F36] mb-2">Our Mission</h3>
-                <p className="text-gray-600">Empowering farmers with intelligent technology</p>
               </div>
             </div>
           </div>
@@ -241,10 +243,10 @@ export default function AboutPage() {
       </section>
 
       {/* Our Values Section */}
-      <section className="py-20 bg-gray-50">
+      <section className="py-24 bg-gray-50">
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold text-[#2A5F36] mb-4">Our Values</h2>
+            <h2 className="text-4xl lg:text-5xl font-bold text-[#2A5F36] mb-4">Our Values</h2>
             <p className="text-xl text-[#637D59] max-w-3xl mx-auto">
               These core values guide everything we do, from product development to customer service.
             </p>
@@ -252,10 +254,10 @@ export default function AboutPage() {
 
           <div className="grid md:grid-cols-3 gap-8">
             {values.map((value, index) => (
-              <Card key={index} className="bg-white border border-gray-200 hover:shadow-lg transition-all duration-300 hover:scale-105 text-center">
+              <Card key={index} className="bg-white border border-gray-200 text-center">
                 <CardContent className="p-8">
-                  <div className="w-16 h-16 bg-[#2A5F36] rounded-full flex items-center justify-center mx-auto mb-6">
-                    <value.icon className="w-8 h-8 text-white" />
+                  <div className="w-12 h-12 bg-[#2A5F36] rounded-lg flex items-center justify-center mx-auto mb-6">
+                    <value.icon className="w-6 h-6 text-white" />
                   </div>
                   <h3 className="text-xl font-semibold text-[#2A5F36] mb-4">{value.title}</h3>
                   <p className="text-gray-600 leading-relaxed">{value.description}</p>
@@ -267,10 +269,10 @@ export default function AboutPage() {
       </section>
 
       {/* Our Team Section */}
-      <section className="py-20 bg-white">
+      <section className="py-24 bg-white">
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold text-[#2A5F36] mb-4">Meet Our Team</h2>
+            <h2 className="text-4xl lg:text-5xl font-bold text-[#2A5F36] mb-4">Meet Our Team</h2>
             <p className="text-xl text-[#637D59] max-w-3xl mx-auto">
               We&apos;re a diverse team of engineers, farmers, and innovators united by our passion for agriculture and technology.
             </p>
@@ -278,14 +280,14 @@ export default function AboutPage() {
 
           <div className="grid md:grid-cols-3 gap-8">
             {team.map((member, index) => (
-              <Card key={index} className="bg-white border border-gray-200 hover:shadow-lg transition-all duration-300 hover:scale-105 text-center">
+              <Card key={index} className="bg-white border border-gray-200 text-center">
                 <CardContent className="p-8">
-                  <div className="w-40 h-40 bg-gray-200 rounded-full mx-auto mb-6 flex items-center justify-center overflow-hidden">
+                  <div className="w-32 h-32 bg-gray-200 rounded-full mx-auto mb-6 flex items-center justify-center overflow-hidden">
                     <Image
                       src={member.image}
                       alt={member.name}
-                      width={160}
-                      height={160}
+                      width={128}
+                      height={128}
                       className="w-full h-full object-cover rounded-full"
                       onError={(e) => {
                         const target = e.target as HTMLImageElement;
@@ -302,7 +304,7 @@ export default function AboutPage() {
                       href={member.linkedin}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex items-center justify-center bg-[#0077B5] hover:bg-[#005885] text-white px-4 py-2 rounded-lg transition-all duration-300 hover:scale-105"
+                      className="inline-flex items-center justify-center bg-[#0077B5] hover:bg-[#005885] text-white px-4 py-2 rounded transition-colors"
                     >
                       <Linkedin className="w-4 h-4 mr-2" />
                       LinkedIn
@@ -318,30 +320,35 @@ export default function AboutPage() {
       {/* Mentors section removed; mentors are included in Our Team */}
 
       {/* Timeline Section */}
-      <section className="py-20 bg-gray-50">
+      <section className="py-24 bg-gray-50">
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold text-[#2A5F36] mb-4">Our Journey</h2>
+            <h2 className="text-4xl lg:text-5xl font-bold text-[#2A5F36] mb-4">Our Journey</h2>
             <p className="text-xl text-[#637D59] max-w-3xl mx-auto">
               From a small startup to a global leader in agricultural technology.
             </p>
           </div>
 
           <div className="max-w-4xl mx-auto">
-            <div className="space-y-8">
-              {milestones.map((milestone, index) => (
-                <div key={index} className="flex items-start space-x-6">
-                  <div className="flex-shrink-0">
-                    <div className="w-16 h-16 bg-[#2A5F36] rounded-full flex items-center justify-center">
-                      <span className="text-white font-bold text-lg">{milestone.year}</span>
+            <div className="relative">
+              {/* Timeline line */}
+              <div className="absolute left-8 top-0 bottom-0 w-0.5 bg-[#2A5F36]/30 hidden md:block"></div>
+              
+              <div className="space-y-12">
+                {milestones.map((milestone, index) => (
+                  <div key={index} className="flex items-start space-x-6 relative">
+                    <div className="flex-shrink-0 relative z-10">
+                      <div className="w-12 h-12 bg-[#2A5F36] rounded-lg flex items-center justify-center">
+                        <span className="text-white font-bold text-lg">{milestone.year}</span>
+                      </div>
+                    </div>
+                    <div className="flex-1 pt-1">
+                      <h3 className="text-xl font-semibold text-[#2A5F36] mb-2">{milestone.title}</h3>
+                      <p className="text-gray-600 leading-relaxed">{milestone.description}</p>
                     </div>
                   </div>
-                  <div className="flex-1">
-                    <h3 className="text-xl font-semibold text-[#2A5F36] mb-2">{milestone.title}</h3>
-                    <p className="text-gray-600 leading-relaxed">{milestone.description}</p>
-                  </div>
-                </div>
-              ))}
+                ))}
+              </div>
             </div>
           </div>
         </div>
@@ -349,17 +356,17 @@ export default function AboutPage() {
 
 
       {/* CTA Section */}
-      <section className="py-20 bg-white">
+      <section className="py-24 bg-[#2A5F36] text-white">
         <div className="container mx-auto px-4 text-center">
-          <h2 className="text-4xl font-bold text-[#2A5F36] mb-6">
+          <h2 className="text-4xl lg:text-5xl font-bold mb-6">
             Join Our Mission
           </h2>
-            <p className="text-xl text-gray-600 mb-8 max-w-3xl mx-auto">
+            <p className="text-xl mb-8 max-w-3xl mx-auto opacity-90">
               Whether you&apos;re a farmer looking to optimize your operation or a talented individual 
               passionate about agricultural technology, we&apos;d love to connect with you.
             </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button size="lg" className="bg-[#2A5F36] hover:bg-[#637D59] text-white text-lg px-8 py-3" asChild>
+            <Button size="lg" className="bg-white text-[#2A5F36] hover:bg-gray-100 text-lg px-8 py-3" asChild>
               <Link
                 href="https://calendly.com/aminrezaabbasi-agrivanna/meeting-with-agrivanna-team"
                 target="_blank"
@@ -369,7 +376,7 @@ export default function AboutPage() {
                 <ArrowRight className="ml-2 w-5 h-5" />
               </Link>
             </Button>
-            <Button size="lg" variant="outline" className="border-[#2A5F36] text-[#2A5F36] hover:bg-[#2A5F36] hover:text-white text-lg px-8 py-3" asChild>
+            <Button size="lg" variant="outline" className="border-white text-white hover:bg-white hover:text-[#2A5F36] text-lg px-8 py-3" asChild>
               <Link href="/careers">
                 View Careers
                 <ArrowRight className="ml-2 w-5 h-5" />

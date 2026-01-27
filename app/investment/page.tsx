@@ -144,18 +144,18 @@ export default function NewsPage() {
       </header>
 
       {/* Hero Section */}
-      <section className="relative bg-[#F2F2F2] py-20 overflow-hidden">
+      <section className="relative bg-gradient-to-br from-[#2A5F36] to-[#637D59] py-24 text-white overflow-hidden">
         <div className="container mx-auto px-4 text-center">
-          <h1 className="text-5xl lg:text-6xl font-bold text-[#2A5F36] leading-tight mb-6">
+          <h1 className="text-5xl lg:text-6xl xl:text-7xl font-bold leading-tight mb-6">
             Investment Opportunity
           </h1>
-          <p className="text-xl text-black leading-relaxed mb-8 max-w-3xl mx-auto">
+          <p className="text-xl lg:text-2xl leading-relaxed mb-8 max-w-3xl mx-auto opacity-90">
             Join Agrivanna in revolutionizing agriculture through innovative technology. 
             We&apos;re seeking strategic investors to accelerate our mission of transforming livestock management.
           </p>
           <Button
             size="lg"
-            className="bg-[#2A5F36] hover:bg-[#637D59] text-white text-lg px-8 py-3 rounded-lg transition-all duration-300 hover:scale-105 hover:shadow-lg"
+            className="bg-white text-[#2A5F36] hover:bg-gray-100 text-lg px-8 py-3 rounded-lg transition-all duration-300 hover:scale-105 hover:shadow-lg"
             asChild
           >
             <a
@@ -170,11 +170,50 @@ export default function NewsPage() {
         </div>
       </section>
 
+      {/* Partners Section */}
+      <section className="py-16 bg-white border-b border-gray-200">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-8">
+            <p className="text-sm font-medium text-gray-600 uppercase tracking-wide">Trusted Partners</p>
+          </div>
+          <div className="flex justify-center items-center space-x-12 flex-wrap gap-8">
+            <a 
+              href="https://www.plugandplaytechcenter.com/" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="hover:opacity-80 transition-opacity duration-300"
+            >
+              <Image
+                src="/pnp.svg"
+                alt="Plug and Play Logo"
+                width={120}
+                height={40}
+                className="h-8 w-auto"
+              />
+            </a>
+            <a 
+              href="https://thriveagrifood.com/" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="hover:opacity-80 transition-opacity duration-300"
+            >
+              <Image
+                src="/svg.png"
+                alt="THRIVE by SVG Ventures Logo"
+                width={100}
+                height={40}
+                className="h-8 w-auto"
+              />
+            </a>
+          </div>
+        </div>
+      </section>
+
       {/* Market Opportunity Section */}
-      <section className="py-20 bg-white">
+      <section className="py-24 bg-white">
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold text-[#2A5F36] mb-4">Market Opportunity</h2>
+            <h2 className="text-4xl lg:text-5xl font-bold text-[#2A5F36] mb-4">Market Opportunity</h2>
             <p className="text-xl text-[#637D59] max-w-3xl mx-auto">
               The agricultural technology market presents a massive $26B opportunity with AI in AgTech growing at 21.6% CAGR.
             </p>
@@ -182,10 +221,13 @@ export default function NewsPage() {
 
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 mb-16">
             {marketMetrics.map((item, index) => (
-              <Card key={index} className="bg-white border border-gray-200 hover:shadow-lg transition-all duration-300 text-center">
+              <Card key={index} className="bg-white border border-gray-200 text-center">
                 <CardContent className="p-8">
+                  <div className="w-12 h-12 bg-[#2A5F36]/10 rounded-lg flex items-center justify-center mx-auto mb-4">
+                    <TrendingUp className="w-8 h-8 text-[#2A5F36]" />
+                  </div>
                   <div className="text-4xl font-bold text-[#2A5F36] mb-2">{item.metric}</div>
-                  <div className="text-gray-600">{item.label}</div>
+                  <div className="text-gray-600 font-medium">{item.label}</div>
                 </CardContent>
               </Card>
             ))}
@@ -229,11 +271,13 @@ export default function NewsPage() {
                 </li>
               </ul>
             </div>
-            <div className="bg-gradient-to-br from-green-100 to-blue-100 rounded-2xl p-8 h-96 flex items-center justify-center">
-              <div className="text-center">
-                <DollarSign className="w-24 h-24 text-[#2A5F36] mx-auto mb-4" />
-                <h3 className="text-2xl font-bold text-gray-900 mb-2">Investment Focus</h3>
-                <p className="text-gray-600">Technology development, market expansion, and team scaling</p>
+            <div className="relative h-96 rounded-lg overflow-hidden bg-gray-100">
+              <div className="absolute inset-0 flex items-center justify-center">
+                <div className="text-center">
+                  <DollarSign className="w-24 h-24 text-[#2A5F36] mx-auto mb-4" />
+                  <h3 className="text-2xl font-bold text-gray-900 mb-2">Investment Focus</h3>
+                  <p className="text-gray-600">Technology development, market expansion, and team scaling</p>
+                </div>
               </div>
             </div>
           </div>
@@ -241,10 +285,10 @@ export default function NewsPage() {
       </section>
 
       {/* Investment Highlights */}
-      <section className="py-20 bg-gray-50">
+      <section className="py-24 bg-gray-50">
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold text-[#2A5F36] mb-4">Investment Highlights</h2>
+            <h2 className="text-4xl lg:text-5xl font-bold text-[#2A5F36] mb-4">Investment Highlights</h2>
             <p className="text-xl text-[#637D59] max-w-3xl mx-auto">
               Key factors that make Agrivanna an attractive investment opportunity.
             </p>
@@ -269,10 +313,10 @@ export default function NewsPage() {
       </section>
 
       {/* Technology Overview */}
-      <section className="py-20 bg-white">
+      <section className="py-24 bg-white">
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold text-[#2A5F36] mb-4">Our Technology Platform</h2>
+            <h2 className="text-4xl lg:text-5xl font-bold text-[#2A5F36] mb-4">Our Technology Platform</h2>
             <p className="text-xl text-[#637D59] max-w-3xl mx-auto">
               A comprehensive suite of integrated solutions that address the complete livestock management lifecycle.
             </p>
@@ -317,13 +361,15 @@ export default function NewsPage() {
                 </div>
               </div>
             </div>
-            <div className="bg-gradient-to-br from-green-100 to-blue-100 rounded-2xl p-8 h-96 flex items-center justify-center">
-              <div className="text-center">
-                <div className="w-24 h-24 bg-[#2A5F36] rounded-full flex items-center justify-center mx-auto mb-4">
-                  <Target className="w-12 h-12 text-white" />
+            <div className="relative h-96 rounded-lg overflow-hidden bg-gray-100">
+              <div className="absolute inset-0 flex items-center justify-center">
+                <div className="text-center">
+                  <div className="w-16 h-16 bg-[#2A5F36] rounded-lg flex items-center justify-center mx-auto mb-4">
+                    <Target className="w-12 h-12 text-white" />
+                  </div>
+                  <h3 className="text-2xl font-bold text-gray-900 mb-2">Integrated Platform</h3>
+                  <p className="text-gray-600">All solutions work together seamlessly for maximum impact</p>
                 </div>
-                <h3 className="text-2xl font-bold text-gray-900 mb-2">Integrated Platform</h3>
-                <p className="text-gray-600">All solutions work together seamlessly for maximum impact</p>
               </div>
             </div>
           </div>
@@ -331,9 +377,9 @@ export default function NewsPage() {
       </section>
 
       {/* Call to Action Section */}
-      <section className="py-20 bg-[#2A5F36] text-white">
+      <section className="py-24 bg-[#2A5F36] text-white">
         <div className="container mx-auto px-4 text-center">
-          <h2 className="text-4xl font-bold mb-6">
+          <h2 className="text-4xl lg:text-5xl font-bold mb-6">
             Ready to Invest in the Future of Agriculture?
           </h2>
           <p className="text-xl mb-8 max-w-3xl mx-auto opacity-90">

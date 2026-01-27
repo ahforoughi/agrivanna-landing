@@ -127,22 +127,22 @@ export default function NewsPage() {
       </header>
 
       {/* Hero Section */}
-      <section className="relative bg-[#F2F2F2] py-20 overflow-hidden">
+      <section className="relative bg-gradient-to-br from-[#2A5F36] to-[#637D59] py-24 text-white overflow-hidden">
         <div className="container mx-auto px-4 text-center">
-          <h1 className="text-5xl lg:text-6xl font-bold text-[#2A5F36] leading-tight mb-6">
+          <h1 className="text-5xl lg:text-6xl xl:text-7xl font-bold leading-tight mb-6">
             Agrivanna News & Updates
           </h1>
-          <p className="text-xl text-black leading-relaxed mb-8 max-w-3xl mx-auto">
+          <p className="text-xl lg:text-2xl leading-relaxed mb-8 max-w-3xl mx-auto opacity-90">
             Stay informed about our latest developments, company milestones, and industry insights as we revolutionize agriculture through technology.
           </p>
         </div>
       </section>
 
       {/* Featured Article Section */}
-      <section className="py-20 bg-white">
+      <section className="py-24 bg-white">
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold text-[#2A5F36] mb-4">Latest News</h2>
+            <h2 className="text-4xl lg:text-5xl font-bold text-[#2A5F36] mb-4">Latest News</h2>
             <p className="text-xl text-[#637D59] max-w-3xl mx-auto">
               Our most recent announcements and company updates.
             </p>
@@ -150,9 +150,9 @@ export default function NewsPage() {
 
           <div className="max-w-4xl mx-auto">
             {articles.map(article => (
-              <Card key={article.id} className="bg-white border border-gray-200 hover:shadow-lg transition-shadow overflow-hidden mb-8">
-                <div className="p-8">
-                  <div className="flex items-center space-x-4 text-sm text-gray-500 mb-4">
+              <Card key={article.id} className="bg-white border border-gray-200 overflow-hidden mb-8">
+                <div className="p-8 md:p-12">
+                  <div className="flex flex-wrap items-center gap-4 text-sm text-gray-500 mb-6">
                     <div className="flex items-center space-x-2">
                       <Tag className="w-4 h-4" />
                       <span className="bg-[#2A5F36] text-white px-3 py-1 rounded-full text-xs font-medium">{article.category}</span>
@@ -167,19 +167,19 @@ export default function NewsPage() {
                     </div>
                   </div>
                   
-                  <h3 className="text-3xl font-bold text-[#2A5F36] mb-4">
+                  <h3 className="text-3xl lg:text-4xl font-bold text-[#2A5F36] mb-6">
                     {article.title}
                   </h3>
                   
-                  <p className="text-xl text-gray-600 mb-6 leading-relaxed">
+                  <p className="text-xl text-gray-600 mb-8 leading-relaxed">
                     {article.excerpt}
                   </p>
 
-                  <div className="prose prose-lg max-w-none text-gray-700 leading-relaxed whitespace-pre-line">
+                  <div className="prose prose-lg max-w-none text-gray-700 leading-relaxed whitespace-pre-line mb-8">
                     {article.content}
                   </div>
 
-                  <div className="mt-8 pt-6 border-t border-gray-200">
+                  <div className="pt-6 border-t border-gray-200">
                     <Button 
                       size="lg" 
                       className="bg-[#2A5F36] hover:bg-[#637D59] text-white px-8 py-3"
@@ -203,23 +203,29 @@ export default function NewsPage() {
       </section>
 
       {/* Newsletter Signup Section */}
-      <section className="py-20 bg-[#2A5F36] text-white">
+      <section className="py-24 bg-[#2A5F36] text-white">
         <div className="container mx-auto px-4 text-center">
-          <h2 className="text-4xl font-bold mb-6">
+          <h2 className="text-4xl lg:text-5xl font-bold mb-6">
             Stay Connected
           </h2>
-          <p className="text-xl mb-8 max-w-3xl mx-auto opacity-90">
+          <p className="text-xl lg:text-2xl mb-8 max-w-3xl mx-auto opacity-90">
             Subscribe to our newsletter for the latest news, updates, and insights from Agrivanna.
           </p>
-          <div className="max-w-md mx-auto flex flex-col sm:flex-row gap-4">
-            <input
-              type="email"
-              placeholder="Enter your email"
-              className="flex-grow px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#637D59] text-gray-900"
-            />
-            <Button size="lg" className="bg-white text-[#2A5F36] hover:bg-gray-100 text-lg px-8 py-3">
-              Subscribe
-            </Button>
+          <div className="max-w-lg mx-auto">
+            <div className="flex flex-col sm:flex-row gap-4 bg-white/10 backdrop-blur-sm rounded-2xl p-2">
+              <input
+                type="email"
+                placeholder="Enter your email"
+                className="flex-grow px-6 py-4 rounded-xl border-0 focus:outline-none focus:ring-2 focus:ring-white/50 text-gray-900 placeholder-gray-500"
+              />
+              <Button size="lg" className="bg-white text-[#2A5F36] hover:bg-gray-100 text-lg px-8 py-4 whitespace-nowrap">
+                Subscribe
+                <ArrowRight className="ml-2 w-5 h-5" />
+              </Button>
+            </div>
+            <p className="text-sm text-white/70 mt-4">
+              We respect your privacy. Unsubscribe at any time.
+            </p>
           </div>
         </div>
       </section>

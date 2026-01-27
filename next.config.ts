@@ -19,7 +19,7 @@ const nextConfig: NextConfig = {
     return [
       {
         // Specific headers for video files
-        source: "/hero.mp4",
+        source: "/:path*.mp4",
         headers: [
           {
             key: "Content-Type",

@@ -133,28 +133,61 @@ export default function CareersPage() {
       </header>
 
       {/* Hero Section */}
-      <section className="relative bg-[#F2F2F2] py-20 overflow-hidden">
+      <section className="relative bg-gradient-to-br from-[#2A5F36] to-[#637D59] py-24 text-white overflow-hidden">
         <div className="container mx-auto px-4 text-center">
-          <h1 className="text-5xl lg:text-6xl font-bold text-[#2A5F36] leading-tight mb-6">
+          <h1 className="text-5xl lg:text-6xl xl:text-7xl font-bold leading-tight mb-6">
             Join Our Mission
           </h1>
-          <p className="text-xl text-black leading-relaxed mb-8 max-w-3xl mx-auto">
+          <p className="text-xl lg:text-2xl leading-relaxed mb-8 max-w-3xl mx-auto opacity-90">
             Help us revolutionize agriculture through innovative technology. We&apos;re building the future of farming, one innovation at a time.
           </p>
         </div>
       </section>
 
-      {/* Current Openings Section */}
-      <section className="py-20 bg-white">
+      {/* Life at Agrivanna Section */}
+      <section className="py-24 bg-white">
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold text-[#2A5F36] mb-4">Current Openings</h2>
+            <h2 className="text-4xl lg:text-5xl font-bold text-[#2A5F36] mb-4">Life at Agrivanna</h2>
+            <p className="text-xl text-[#637D59] max-w-3xl mx-auto">
+              Join a team that&apos;s passionate about making a real difference in agriculture
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-2 gap-8 mb-16">
+            <div className="relative h-64 rounded-lg overflow-hidden bg-gray-100">
+              <div className="absolute inset-0 flex items-center justify-center">
+                <div className="text-center">
+                  <Users className="w-16 h-16 text-[#2A5F36] mx-auto mb-4" />
+                  <h3 className="text-2xl font-bold text-gray-900 mb-2">Collaborative Culture</h3>
+                  <p className="text-gray-600">Work with passionate people who care about agriculture</p>
+                </div>
+              </div>
+            </div>
+            <div className="relative h-64 rounded-lg overflow-hidden bg-gray-100">
+              <div className="absolute inset-0 flex items-center justify-center">
+                <div className="text-center">
+                  <Target className="w-16 h-16 text-[#2A5F36] mx-auto mb-4" />
+                  <h3 className="text-2xl font-bold text-gray-900 mb-2">Impact-Driven Work</h3>
+                  <p className="text-gray-600">See your work directly help farmers and the environment</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Current Openings Section */}
+      <section className="py-24 bg-gray-50">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl lg:text-5xl font-bold text-[#2A5F36] mb-4">Current Openings</h2>
             <p className="text-xl text-[#637D59] max-w-3xl mx-auto">
               We&apos;re always looking for passionate individuals to join our team.
             </p>
           </div>
 
-          <Card className="bg-gray-50 border border-gray-200 max-w-2xl mx-auto">
+          <Card className="bg-white border border-gray-200 max-w-2xl mx-auto">
             <CardContent className="p-12 text-center">
               <div className="w-20 h-20 bg-[#637D59] rounded-full flex items-center justify-center mx-auto mb-6">
                 <Users className="w-10 h-10 text-white" />
@@ -174,10 +207,10 @@ export default function CareersPage() {
       </section>
 
       {/* Why Work With Us Section */}
-      <section className="py-20 bg-gray-50">
+      <section className="py-24 bg-white">
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold text-[#2A5F36] mb-4">Why Work With Us</h2>
+            <h2 className="text-4xl lg:text-5xl font-bold text-[#2A5F36] mb-4">Why Work With Us</h2>
             <p className="text-xl text-[#637D59] max-w-3xl mx-auto">
               Join a mission-driven team that&apos;s building the future of agriculture.
             </p>
@@ -185,9 +218,9 @@ export default function CareersPage() {
 
           <div className="grid md:grid-cols-3 gap-8">
             {values.map((value, index) => (
-              <Card key={index} className="bg-white border border-gray-200 hover:shadow-lg transition-all duration-300 hover:scale-105 text-center">
+              <Card key={index} className="bg-white border border-gray-200 text-center">
                 <CardContent className="p-8">
-                  <div className="w-16 h-16 bg-[#2A5F36] rounded-full flex items-center justify-center mx-auto mb-6">
+                  <div className="w-12 h-12 bg-[#2A5F36] rounded-lg flex items-center justify-center mx-auto mb-6">
                     <value.icon className="w-8 h-8 text-white" />
                   </div>
                   <h3 className="text-xl font-semibold text-[#2A5F36] mb-4">{value.title}</h3>
@@ -201,9 +234,9 @@ export default function CareersPage() {
 
 
       {/* Contact Section */}
-      <section className="py-20 bg-[#2A5F36] text-white">
+      <section className="py-24 bg-[#2A5F36] text-white">
         <div className="container mx-auto px-4 text-center">
-          <h2 className="text-4xl font-bold mb-6">
+          <h2 className="text-4xl lg:text-5xl font-bold mb-6">
             Interested in Our Mission?
           </h2>
           <p className="text-xl mb-8 max-w-3xl mx-auto opacity-90">

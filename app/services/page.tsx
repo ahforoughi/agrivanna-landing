@@ -207,7 +207,7 @@ export default function ServicesPage() {
 
             <div className="flex items-center space-x-4">
               <Button
-                className="bg-[#2A5F36] hover:bg-[#637D59] text-white rounded-lg px-6 py-2 transition-all duration-300 hover:scale-105 hover:shadow-lg"
+                className="bg-[#2A5F36] hover:bg-[#637D59] text-white rounded-lg px-6 py-2 transition-all duration-300 "
                 asChild
               >
                 <Link
@@ -257,20 +257,20 @@ export default function ServicesPage() {
       </header>
 
       {/* Hero Section */}
-      <section className="relative bg-gradient-to-br from-[#2A5F36] to-[#637D59] py-20 text-white overflow-hidden">
+      <section className="relative bg-gradient-to-br from-[#2A5F36] to-[#637D59] py-24 text-white overflow-hidden">
         <div className="container mx-auto px-4">
           <div className="text-center max-w-4xl mx-auto">
-            <h1 className="text-5xl lg:text-6xl font-bold mb-6 leading-tight">
+            <h1 className="text-5xl lg:text-6xl xl:text-7xl font-bold mb-6 leading-tight">
               Our Services
             </h1>
-            <p className="text-xl mb-8 leading-relaxed opacity-90">
+            <p className="text-xl lg:text-2xl mb-8 leading-relaxed opacity-90">
               Comprehensive livestock management solutions powered by cutting-edge AI technology. 
               From virtual fencing to health monitoring, we provide everything you need for modern farming.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Button
                 size="lg"
-                className="bg-white text-[#2A5F36] hover:bg-gray-100 text-lg px-8 py-3 rounded-lg transition-all duration-300 hover:scale-105 hover:shadow-lg"
+                className="bg-white text-[#2A5F36] hover:bg-gray-100 text-lg px-8 py-3 rounded-lg transition-all duration-300 "
                 asChild
               >
                 <Link
@@ -279,6 +279,7 @@ export default function ServicesPage() {
                   rel="noopener noreferrer"
                 >
                   Get Started Today
+                <ArrowRight className="ml-2 w-5 h-5" />
                 </Link>
               </Button>
             </div>
@@ -286,11 +287,52 @@ export default function ServicesPage() {
         </div>
       </section>
 
-      {/* Services Grid */}
-      <section className="py-20 bg-white">
+      {/* Solutions Overview Section */}
+      <section className="py-24 bg-white">
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold text-[#2A5F36] mb-4">Our Core Solutions</h2>
+            <h2 className="text-4xl lg:text-5xl font-bold text-[#2A5F36] mb-4">Solutions</h2>
+            <p className="text-xl text-[#637D59] max-w-3xl mx-auto">
+              Explore how Agrivanna can transform your farm operations
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
+            {coreServices.map((service, index) => (
+              <Link
+                key={index}
+                href={`#${service.title.toLowerCase().replace(/[^a-z0-9\s-]/g, '').replace(/\s+/g, '-').replace(/-+/g, '-').trim()}`}
+                className="group"
+              >
+                <Card className="bg-white border border-gray-200 h-full">
+                  <CardContent className="p-6 text-center">
+                    <div 
+                      className="w-12 h-12 rounded-lg flex items-center justify-center mx-auto mb-4"
+                      style={{ backgroundColor: `${service.color}20` }}
+                    >
+                      {(() => {
+                        const IconComponent = service.icon
+                        return <IconComponent 
+                          className="w-8 h-8" 
+                          style={{ color: service.color }}
+                        />
+                      })()}
+                    </div>
+                    <h3 className="text-lg font-bold text-[#2A5F36] mb-2">{service.title}</h3>
+                    <p className="text-sm text-gray-600 line-clamp-2">{service.shortDescription}</p>
+                  </CardContent>
+                </Card>
+              </Link>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Services Grid */}
+      <section className="py-24 bg-gray-50">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl lg:text-5xl font-bold text-[#2A5F36] mb-4">Our Core Solutions</h2>
             <p className="text-xl text-[#637D59] max-w-3xl mx-auto">
               Four powerful solutions working together to revolutionize your livestock management operations.
             </p>
@@ -304,13 +346,13 @@ export default function ServicesPage() {
                 .replace(/-+/g, '-')
                 .trim()
               return (
-              <Card key={index} id={anchorId} className="bg-white border border-gray-200 hover:shadow-xl transition-all duration-500 hover:scale-105 overflow-hidden scroll-mt-20">
+              <Card key={index} id={anchorId} className="bg-white border border-gray-200 overflow-hidden scroll-mt-20">
                 <CardContent className="p-0">
                   {/* Service Header */}
                   <div className="p-8 border-b border-gray-100">
                     <div className="flex items-center space-x-4 mb-4">
                       <div 
-                        className="w-16 h-16 rounded-2xl flex items-center justify-center"
+                        className="w-12 h-12 rounded-lg flex items-center justify-center"
                         style={{ backgroundColor: `${service.color}20` }}
                       >
                         {(() => {
@@ -362,8 +404,58 @@ export default function ServicesPage() {
         </div>
       </section>
 
+      {/* Use Cases Section */}
+      <section className="py-24 bg-white">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl lg:text-5xl font-bold text-[#2A5F36] mb-4">Real-World Use Cases</h2>
+            <p className="text-xl text-[#637D59] max-w-3xl mx-auto">
+              See how Agrivanna is being used by farmers across Alberta and beyond
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-3 gap-8">
+            <Card className="bg-white border border-gray-200">
+              <CardContent className="p-8">
+                <div className="w-12 h-12 bg-[#2A5F36] rounded-lg flex items-center justify-center mb-6">
+                  <Stethoscope className="w-6 h-6 text-white" />
+                </div>
+                <h3 className="text-xl font-bold text-[#2A5F36] mb-4">Pasture Rotation</h3>
+                <p className="text-gray-600 leading-relaxed">
+                  Rotate grazing zones instantly without moving physical fences. Protect regrowth areas and optimize pasture utilization throughout the season.
+                </p>
+              </CardContent>
+            </Card>
+
+            <Card className="bg-white border border-gray-200">
+              <CardContent className="p-8">
+                <div className="w-12 h-12 bg-[#637D59] rounded-lg flex items-center justify-center mb-6">
+                  <Brain className="w-6 h-6 text-white" />
+                </div>
+                <h3 className="text-xl font-bold text-[#2A5F36] mb-4">Feed Optimization</h3>
+                <p className="text-gray-600 leading-relaxed">
+                  AI-powered weight tracking suggests optimal feed rations based on individual animal needs, reducing costs while improving growth rates.
+                </p>
+              </CardContent>
+            </Card>
+
+            <Card className="bg-white border border-gray-200">
+              <CardContent className="p-8">
+                <div className="w-12 h-12 bg-[#4A90E2] rounded-lg flex items-center justify-center mb-6">
+                  <Shield className="w-6 h-6 text-white" />
+                </div>
+                <h3 className="text-xl font-bold text-[#2A5F36] mb-4">Early Health Detection</h3>
+                <p className="text-gray-600 leading-relaxed">
+                  Monitor animal behavior 24/7 and receive alerts for abnormal patterns, enabling early intervention and reducing treatment costs.
+                </p>
+              </CardContent>
+            </Card>
+          </div>
+        </div>
+      </section>
+
       {/* Additional Features Section */}
-      <section className="py-20 bg-gray-50">
+      <section className="py-24 bg-gray-50">
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
             <h2 className="text-4xl font-bold text-[#2A5F36] mb-4">Additional Features</h2>
@@ -374,7 +466,7 @@ export default function ServicesPage() {
 
           <div className="grid lg:grid-cols-2 gap-8">
             {additionalFeatures.map((feature, index) => (
-              <Card key={index} className="bg-white border border-gray-200 hover:shadow-lg transition-all duration-300 hover:scale-105">
+                <Card key={index} className="bg-white border border-gray-200">
                 <CardContent className="p-8">
                   <div className="flex items-center space-x-4 mb-6">
                     <div 
@@ -414,10 +506,10 @@ export default function ServicesPage() {
       </section>
 
       {/* Why Choose Us Section */}
-      <section className="py-20 bg-gray-50">
+      <section className="py-24 bg-white">
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold text-[#2A5F36] mb-4">Why Agrivanna Stands Apart</h2>
+            <h2 className="text-4xl lg:text-5xl font-bold text-[#2A5F36] mb-4">Why Agrivanna Stands Apart</h2>
             <p className="text-xl text-[#637D59] max-w-3xl mx-auto">
               Built for Alberta farmers, designed to evolve with your farm. More than a tool, it&apos;s a comprehensive system tailored for North American agriculture.
             </p>
@@ -468,19 +560,19 @@ export default function ServicesPage() {
       </section>
 
       {/* Technical Advantages Section */}
-      <section className="py-20 bg-white">
+      <section className="py-24 bg-gray-50">
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold text-[#2A5F36] mb-4">Built for Alberta&apos;s Unique Needs</h2>
+            <h2 className="text-4xl lg:text-5xl font-bold text-[#2A5F36] mb-4">Built for Alberta&apos;s Unique Needs</h2>
             <p className="text-xl text-[#637D59] max-w-3xl mx-auto">
               Designed specifically for Canadian farmers with flexible connectivity and modular scalability.
             </p>
           </div>
 
           <div className="grid lg:grid-cols-3 gap-8">
-            <Card className="bg-white border border-gray-200 hover:shadow-lg transition-all duration-300">
+            <Card className="bg-white border border-gray-200">
               <CardContent className="p-8 text-center">
-                <div className="w-16 h-16 bg-[#2A5F36] rounded-full flex items-center justify-center mx-auto mb-6">
+                <div className="w-12 h-12 bg-[#2A5F36] rounded-lg flex items-center justify-center mx-auto mb-6">
                   <Globe className="w-8 h-8 text-white" />
                 </div>
                 <h3 className="text-xl font-semibold text-[#2A5F36] mb-4">Flexible Connectivity</h3>
@@ -490,10 +582,10 @@ export default function ServicesPage() {
               </CardContent>
             </Card>
 
-            <Card className="bg-white border border-gray-200 hover:shadow-lg transition-all duration-300">
+            <Card className="bg-white border border-gray-200">
               <CardContent className="p-8 text-center">
-                <div className="w-16 h-16 bg-[#637D59] rounded-full flex items-center justify-center mx-auto mb-6">
-                  <Users className="w-8 h-8 text-white" />
+                <div className="w-12 h-12 bg-[#637D59] rounded-lg flex items-center justify-center mx-auto mb-6">
+                  <Users className="w-6 h-6 text-white" />
                 </div>
                 <h3 className="text-xl font-semibold text-[#2A5F36] mb-4">Modular & Scalable</h3>
                 <p className="text-gray-600 leading-relaxed">
@@ -502,10 +594,10 @@ export default function ServicesPage() {
               </CardContent>
             </Card>
 
-            <Card className="bg-white border border-gray-200 hover:shadow-lg transition-all duration-300">
+            <Card className="bg-white border border-gray-200">
               <CardContent className="p-8 text-center">
-                <div className="w-16 h-16 bg-[#4A90E2] rounded-full flex items-center justify-center mx-auto mb-6">
-                  <Shield className="w-8 h-8 text-white" />
+                <div className="w-12 h-12 bg-[#4A90E2] rounded-lg flex items-center justify-center mx-auto mb-6">
+                  <Shield className="w-6 h-6 text-white" />
                 </div>
                 <h3 className="text-xl font-semibold text-[#2A5F36] mb-4">Offline-First Design</h3>
                 <p className="text-gray-600 leading-relaxed">
@@ -518,9 +610,9 @@ export default function ServicesPage() {
       </section>
 
       {/* CTA Section */}
-      <section className="py-20 bg-[#2A5F36] text-white">
+      <section className="py-24 bg-[#2A5F36] text-white">
         <div className="container mx-auto px-4 text-center">
-          <h2 className="text-4xl font-bold mb-6">
+          <h2 className="text-4xl lg:text-5xl font-bold mb-6">
             Ready to Transform Your Farm?
           </h2>
           <p className="text-xl mb-8 max-w-3xl mx-auto opacity-90">
