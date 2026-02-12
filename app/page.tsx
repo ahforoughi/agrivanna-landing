@@ -14,10 +14,10 @@ export default function LandingPage() {
   return (
     <div className="min-h-screen bg-[#F2F2F2]">
       <SpeedInsights />
-      {/* Header */}
-      <header className="absolute top-0 left-0 right-0 z-50 bg-transparent">
+      {/* Header - crystal bar centered with rounded corners */}
+      <header className="absolute top-0 left-0 right-0 z-50 pt-4">
         <div className="container mx-auto px-4">
-          <div className="flex items-center justify-between py-6">
+          <div className="flex items-center justify-between py-6 px-6 max-w-4xl mx-auto rounded-2xl bg-white/5 backdrop-blur-xl border border-white/20 shadow-[0_8px_32px_rgba(255,255,255,0.08)]">
             {/* Logo */}
             <div className="flex items-center animate-fade-in">
               <Link href="/">
@@ -48,15 +48,6 @@ export default function LandingPage() {
                 <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-white transition-all duration-300 group-hover:w-full"></span>
               </Link>
 
-              <Link href="/investment" className="text-white hover:text-neutral-gray transition-all duration-300 hover:scale-105 relative group">
-                Investment
-                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-white transition-all duration-300 group-hover:w-full"></span>
-              </Link>
-
-              <Link href="/careers" className="text-white hover:text-neutral-gray transition-all duration-300 hover:scale-105 relative group">
-                Careers
-                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-white transition-all duration-300 group-hover:w-full"></span>
-              </Link>
               <Link href="/contact" className="text-white hover:text-neutral-gray transition-all duration-300 hover:scale-105 relative group">
                 Contact us
                 <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-white transition-all duration-300 group-hover:w-full"></span>
@@ -91,13 +82,11 @@ export default function LandingPage() {
 
           {/* Mobile Menu */}
           {mobileMenuOpen && (
-            <div className="lg:hidden border-t border-white/20 py-4 bg-primary-dark/95 backdrop-blur-sm rounded-lg mt-2">
+            <div className="lg:hidden border border-white/20 py-4 bg-white/10 backdrop-blur-xl rounded-xl mt-2 shadow-[0_8px_32px_rgba(255,255,255,0.12)]">
               <nav className="flex flex-col space-y-4">
                 <Link href="/services" className="text-white hover:text-neutral-gray">Services</Link>
                 <Link href="/about" className="text-white hover:text-neutral-gray">About us</Link>
                 <Link href="/news" className="text-white hover:text-neutral-gray">News</Link>
-                <Link href="/investment" className="text-white hover:text-neutral-gray">Investment</Link>
-                <Link href="/careers" className="text-white hover:text-neutral-gray">Careers</Link>
                 <Link href="/contact" className="text-white hover:text-neutral-gray">Contact us</Link>
                 <Button
                   className="!bg-primary-green hover:!bg-primary-green/90 !text-white w-full flex items-center justify-center gap-2"
@@ -146,7 +135,7 @@ export default function LandingPage() {
         <div className="absolute inset-0 bg-primary-dark opacity-60"></div>
         
         {/* Content Overlay */}
-        <div className="relative z-10 container mx-auto px-4 py-20">
+        <div className="relative z-10 container mx-auto px-4 pt-32 pb-20">
           <div className="max-w-3xl">
             <h1 className="text-5xl lg:text-6xl xl:text-7xl font-bold text-white leading-tight mb-6 animate-fade-in-up">
               <span className="block animate-slide-in-left" style={{ animationDelay: '0.1s' }}>Smarter livestock</span>
