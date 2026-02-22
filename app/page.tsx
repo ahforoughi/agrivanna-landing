@@ -426,12 +426,9 @@ export default function LandingPage() {
 
           <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
             <div className="bg-white rounded-lg p-8 border border-gray-200">
-              <div className="flex items-center mb-6">
-                <div className="w-12 h-12 bg-gray-200 rounded-full mr-4 flex-shrink-0"></div>
-                <div>
-                  <h4 className="font-bold text-[#2A5F36]">John & Sarah Miller</h4>
-                  <p className="text-sm text-gray-600">Alberta • 450 Head</p>
-                </div>
+              <div className="mb-6">
+                <h4 className="font-bold text-[#2A5F36]">John & Sarah Miller</h4>
+                <p className="text-sm text-gray-600">Alberta • 450 Head</p>
               </div>
               <p className="text-gray-700 leading-relaxed italic">
                 &quot;We didn&apos;t think it would work with our operation, but Agrivanna has transformed how we manage our herd. We&apos;re saving hours every day and our feed costs are down significantly.&quot;
@@ -439,12 +436,9 @@ export default function LandingPage() {
             </div>
 
             <div className="bg-white rounded-lg p-8 border border-gray-200">
-              <div className="flex items-center mb-6">
-                <div className="w-12 h-12 bg-gray-200 rounded-full mr-4 flex-shrink-0"></div>
-                <div>
-                  <h4 className="font-bold text-[#2A5F36]">Mike Thompson</h4>
-                  <p className="text-sm text-gray-600">Saskatchewan • 580 Cows</p>
-                </div>
+              <div className="mb-6">
+                <h4 className="font-bold text-[#2A5F36]">Mike Thompson</h4>
+                <p className="text-sm text-gray-600">Saskatchewan • 580 Cows</p>
               </div>
               <p className="text-gray-700 leading-relaxed italic">
                 &quot;I would say we are saving 3 hours of labor a day. The virtual fencing alone has paid for itself, and the health monitoring caught issues we would have missed.&quot;
@@ -452,12 +446,9 @@ export default function LandingPage() {
             </div>
 
             <div className="bg-white rounded-lg p-8 border border-gray-200">
-              <div className="flex items-center mb-6">
-                <div className="w-12 h-12 bg-gray-200 rounded-full mr-4 flex-shrink-0"></div>
-                <div>
-                  <h4 className="font-bold text-[#2A5F36]">Lisa & David Chen</h4>
-                  <p className="text-sm text-gray-600">Alberta • 320 Head</p>
-                </div>
+              <div className="mb-6">
+                <h4 className="font-bold text-[#2A5F36]">Lisa & David Chen</h4>
+                <p className="text-sm text-gray-600">Alberta • 320 Head</p>
               </div>
               <p className="text-gray-700 leading-relaxed italic">
                 &quot;Agrivanna doesn&apos;t replace being a farmer, it helps you be a better farmer. It&apos;s another set of hands so I can focus on what matters most.&quot;
