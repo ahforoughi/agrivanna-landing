@@ -217,7 +217,7 @@ export default function AboutPage() {
                 to help farmers optimize their operations while improving animal welfare and farm efficiency.
               </p>
               <p className="text-lg text-gray-600 leading-relaxed mb-6">
-                Led by Amirhossein Foroughi (CEO), Aminreza Abbasi (CTO), and Haden Harrison (Business Developer), 
+                Led by Amirhossein Foroughi (CEO), Aminreza Abbasi (CTO), and Haden Harrison (COO), 
                 we recognized that traditional livestock management methods were outdated and inefficient. 
                 We saw an opportunity to apply cutting-edge AI and IoT technology to solve real-world farming challenges.
               </p>
