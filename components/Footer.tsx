@@ -43,7 +43,7 @@ export default function Footer() {
                 alt="Agrivanna Logo"
                 width={200}
                 height={67}
-                className="h-16 w-auto"
+                className="h-16 w-auto brightness-0 invert"
               />
             </div>
             <p className="text-gray-300 mb-6">

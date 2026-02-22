@@ -177,6 +177,37 @@
   }
 }
 
+@keyframes softGlow {
+  0%, 100% {
+    opacity: 0.4;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.7;
+    transform: scale(1.02);
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+@keyframes fadeInScale {
+  from {
+    opacity: 0;
+    transform: scale(0.96) translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
 .animate-fade-in-up {
   animation: fadeInUp 0.8s ease-out forwards;
   opacity: 0;
@@ -199,4 +230,42 @@
 
 .animate-float {
   animation: float 3s ease-in-out infinite;
+}
+
+.animate-soft-glow {
+  animation: softGlow 4s ease-in-out infinite;
+}
+
+.animate-fade-in-scale {
+  animation: fadeInScale 0.8s ease-out forwards;
+}
+
+@keyframes gentlePulse {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.95;
+    transform: scale(1.01);
+  }
+}
+
+.animate-gentle-pulse {
+  animation: gentlePulse 5s ease-in-out infinite;
+}
+
+@keyframes lineReveal {
+  from {
+    transform: scaleX(0);
+    transform-origin: left;
+  }
+  to {
+    transform: scaleX(1);
+    transform-origin: left;
+  }
+}
+
+.animate-line-reveal {
+  animation: lineReveal 1s ease-out 0.5s forwards;
 }

@@ -72,20 +72,6 @@ export default function NewsPage() {
                 <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gray-600 transition-all duration-300 group-hover:w-full"></span>
               </Link>
 
-              <Link href="/news" className="text-black hover:text-gray-600 transition-all duration-300 hover:scale-105 relative group">
-                News
-                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gray-600 transition-all duration-300 group-hover:w-full"></span>
-              </Link>
-
-              <Link href="/investment" className="text-[#2A5F36] font-semibold relative group">
-                Investment
-                <span className="absolute -bottom-1 left-0 w-full h-0.5 bg-[#2A5F36]"></span>
-              </Link>
-
-              <Link href="/careers" className="text-black hover:text-gray-600 transition-all duration-300 hover:scale-105 relative group">
-                Careers
-                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gray-600 transition-all duration-300 group-hover:w-full"></span>
-              </Link>
               <Link href="/contact" className="text-black hover:text-gray-600 transition-all duration-300 hover:scale-105 relative group">
                 Contact us
                 <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gray-600 transition-all duration-300 group-hover:w-full"></span>
@@ -122,10 +108,7 @@ export default function NewsPage() {
               <nav className="flex flex-col space-y-4">
                 <Link href="/services" className="text-black hover:text-gray-600">Services</Link>
                 <Link href="/about" className="text-black hover:text-gray-600">About us</Link>
-                <Link href="/news" className="text-black hover:text-gray-600">News</Link>
-                <Link href="/investment" className="text-[#2A5F36] font-semibold">Investment</Link>
-                        <Link href="/careers" className="text-black hover:text-gray-600">Careers</Link>
-                        <Link href="/contact" className="text-black hover:text-gray-600">Contact us</Link>
+                <Link href="/contact" className="text-black hover:text-gray-600">Contact us</Link>
                 <Button
                   className="bg-[#2A5F36] hover:bg-[#637D59] text-white w-full"
                   asChild

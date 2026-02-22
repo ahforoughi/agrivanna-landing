@@ -2,7 +2,7 @@
 
 import { useState } from "react"
 import { Button } from "@/components/ui/button"
-import { Stethoscope, Shield, Users, ArrowRight, Menu, X, Smartphone, Radio, TrendingUp, Clock, DollarSign, Activity, Check, Sprout, Heart } from "lucide-react"
+import { Shield, Users, ArrowRight, Menu, X, Smartphone, Radio, TrendingUp, Clock, DollarSign, Activity, Check, Sprout, Heart } from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"
 import { SpeedInsights } from "@vercel/speed-insights/next"
@@ -44,11 +44,6 @@ export default function LandingPage() {
                 <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-white transition-all duration-300 group-hover:w-full"></span>
               </Link>
 
-              <Link href="/news" className="text-white hover:text-neutral-gray transition-all duration-300 hover:scale-105 relative group">
-                News
-                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-white transition-all duration-300 group-hover:w-full"></span>
-              </Link>
-
               <Link href="/contact" className="text-white hover:text-neutral-gray transition-all duration-300 hover:scale-105 relative group">
                 Contact us
                 <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-white transition-all duration-300 group-hover:w-full"></span>
@@ -87,7 +82,6 @@ export default function LandingPage() {
               <nav className="flex flex-col space-y-4">
                 <Link href="/services" className="text-white hover:text-neutral-gray">Services</Link>
                 <Link href="/about" className="text-white hover:text-neutral-gray">About us</Link>
-                <Link href="/news" className="text-white hover:text-neutral-gray">News</Link>
                 <Link href="/contact" className="text-white hover:text-neutral-gray">Contact us</Link>
                 <Button
                   className="!bg-primary-green hover:!bg-primary-green/90 !text-white w-full flex items-center justify-center gap-2"
@@ -197,123 +191,144 @@ export default function LandingPage() {
             </h2>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-8 lg:gap-12">
-            {/* Remote Fencing and Herd Moves */}
-            <div className="flex flex-col">
-              {/* Image */}
-              <div className="relative w-full h-64 rounded-lg overflow-hidden mb-4 bg-gray-100 shadow-sm">
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <div className="text-center">
-                    <Stethoscope className="w-24 h-24 text-[#2A5F36] opacity-30" />
+          {/* Featured: Remote Fencing and Herd Moves - Vertical card, inspired layout */}
+          <div className="mb-16 lg:mb-20 flex justify-center">
+            <div className="w-full max-w-2xl">
+              {/* Image - fills container, no empty space */}
+              <div className="relative aspect-[4/3] overflow-hidden mb-6 shadow-xl shadow-[#2A5F36]/10 bg-[#e8f0ea] rounded-2xl sm:rounded-3xl">
+                <Image
+                  src="/cow-with-collar.png"
+                  alt="Cow with Agrivanna smart collar in pasture"
+                  fill
+                  className="object-cover object-center"
+                  sizes="(max-width: 768px) 100vw, 672px"
+                  priority
+                />
+              </div>
+
+              {/* Icon + Title - below image */}
+              <div className="flex items-start gap-4 mb-5">
+                <div className="w-12 h-12 rounded-xl bg-[#2A5F36] flex items-center justify-center shadow-lg shadow-[#2A5F36]/20 shrink-0">
+                  <Radio className="w-6 h-6 text-white" />
+                </div>
+                <div>
+                  <h3 className="text-2xl sm:text-3xl font-bold text-[#2A5F36] tracking-tight leading-tight">
+                    Remote fencing and herd moves
+                  </h3>
+                  <p className="text-[#288A5C] font-medium text-base sm:text-lg mt-1 italic">
+                    At the press of a button.
+                  </p>
+                </div>
+              </div>
+
+              {/* Bullet list */}
+              <ul className="space-y-4">
+                <li className="flex items-start gap-4">
+                  <div className="w-7 h-7 rounded-full bg-[#288A5C]/15 flex items-center justify-center shrink-0 mt-0.5">
+                    <Check className="w-4 h-4 text-[#2A5F36]" strokeWidth={2.5} />
                   </div>
-                </div>
-              </div>
-              
-              {/* Icon */}
-              <div className="mb-4">
-                <div className="w-10 h-10 bg-[#2A5F36] rounded-lg flex items-center justify-center">
-                  <Stethoscope className="w-5 h-5 text-white" />
-                </div>
-              </div>
-              
-              {/* Title */}
-              <h3 className="text-xl font-bold text-[#2A5F36] mb-6">
-                Remote fencing and herd moves
-              </h3>
-              
-              {/* Features List */}
-              <ul className="space-y-3">
-                <li className="flex items-start space-x-3">
-                  <Check className="w-5 h-5 text-[#2A5F36] flex-shrink-0 mt-0.5" />
-                  <span className="text-gray-700 text-sm">Adjust grazing areas and move herds from your device</span>
+                  <span className="text-gray-700 text-base sm:text-lg leading-relaxed">Eliminate the need for physical fencing infrastructure</span>
                 </li>
-                <li className="flex items-start space-x-3">
-                  <Check className="w-5 h-5 text-[#2A5F36] flex-shrink-0 mt-0.5" />
-                  <span className="text-gray-700 text-sm">Create temporary paddocks without reels, posts, or tape</span>
+                <li className="flex items-start gap-4">
+                  <div className="w-7 h-7 rounded-full bg-[#288A5C]/15 flex items-center justify-center shrink-0 mt-0.5">
+                    <Check className="w-4 h-4 text-[#2A5F36]" strokeWidth={2.5} />
+                  </div>
+                  <span className="text-gray-700 text-base sm:text-lg leading-relaxed">Adjust grazing areas and move herds from your device</span>
                 </li>
-                <li className="flex items-start space-x-3">
-                  <Check className="w-5 h-5 text-[#2A5F36] flex-shrink-0 mt-0.5" />
-                  <span className="text-gray-700 text-sm">Advance to the next allocation in seconds</span>
+                <li className="flex items-start gap-4">
+                  <div className="w-7 h-7 rounded-full bg-[#288A5C]/15 flex items-center justify-center shrink-0 mt-0.5">
+                    <Check className="w-4 h-4 text-[#2A5F36]" strokeWidth={2.5} />
+                  </div>
+                  <span className="text-gray-700 text-base sm:text-lg leading-relaxed">Unlocks previously un-grazable land</span>
                 </li>
               </ul>
             </div>
+          </div>
 
-            {/* Grazing and Pasture Planning */}
-            <div className="flex flex-col">
-              {/* Image */}
-              <div className="relative w-full h-64 rounded-lg overflow-hidden mb-4 bg-gray-100 shadow-sm">
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <div className="text-center">
-                    <Smartphone className="w-24 h-24 text-[#2A5F36] opacity-30" />
-                  </div>
+          {/* Other two features - same design, same row */}
+          <div className="grid md:grid-cols-2 gap-8 lg:gap-12">
+            {/* Grazing and Automated Pasture Planning */}
+            <div>
+              <div className="relative aspect-[4/3] overflow-hidden mb-6 shadow-xl shadow-[#2A5F36]/10 bg-[#e8f0ea] rounded-2xl sm:rounded-3xl">
+                <Image
+                  src="/grazing-pasture-planning.png"
+                  alt="Aerial view of pasture with digital grazing boundaries and rotational planning grid"
+                  fill
+                  className="object-cover object-center"
+                  sizes="(max-width: 768px) 100vw, 50vw"
+                />
+              </div>
+              <div className="flex items-start gap-4 mb-5">
+                <div className="w-12 h-12 rounded-xl bg-[#2A5F36] flex items-center justify-center shadow-lg shadow-[#2A5F36]/20 shrink-0">
+                  <Sprout className="w-6 h-6 text-white" />
+                </div>
+                <div>
+                  <h3 className="text-xl sm:text-2xl font-bold text-[#2A5F36] tracking-tight leading-tight">
+                    Grazing and Automated Pasture Planning
+                  </h3>
                 </div>
               </div>
-              
-              {/* Icon */}
-              <div className="mb-4">
-                <div className="w-10 h-10 bg-[#2A5F36] rounded-lg flex items-center justify-center">
-                  <Sprout className="w-5 h-5 text-white" />
-                </div>
-              </div>
-              
-              {/* Title */}
-              <h3 className="text-xl font-bold text-[#2A5F36] mb-6">
-                Grazing and pasture planning
-              </h3>
-              
-              {/* Features List */}
               <ul className="space-y-3">
-                <li className="flex items-start space-x-3">
-                  <Check className="w-5 h-5 text-[#2A5F36] flex-shrink-0 mt-0.5" />
-                  <span className="text-gray-700 text-sm">Build grazing plans with paddock-level precision</span>
+                <li className="flex items-start gap-4">
+                  <div className="w-7 h-7 rounded-full bg-[#288A5C]/15 flex items-center justify-center shrink-0 mt-0.5">
+                    <Check className="w-4 h-4 text-[#2A5F36]" strokeWidth={2.5} />
+                  </div>
+                  <span className="text-gray-700 text-sm sm:text-base leading-relaxed">We tell when and where to graze your cattle</span>
                 </li>
-                <li className="flex items-start space-x-3">
-                  <Check className="w-5 h-5 text-[#2A5F36] flex-shrink-0 mt-0.5" />
-                  <span className="text-gray-700 text-sm">Allocate feed based on data, not guesswork</span>
+                <li className="flex items-start gap-4">
+                  <div className="w-7 h-7 rounded-full bg-[#288A5C]/15 flex items-center justify-center shrink-0 mt-0.5">
+                    <Check className="w-4 h-4 text-[#2A5F36]" strokeWidth={2.5} />
+                  </div>
+                  <span className="text-gray-700 text-sm sm:text-base leading-relaxed">Unlock rotational grazing (less feed costs)</span>
                 </li>
-                <li className="flex items-start space-x-3">
-                  <Check className="w-5 h-5 text-[#2A5F36] flex-shrink-0 mt-0.5" />
-                  <span className="text-gray-700 text-sm">Track pasture growth and condition in near real time</span>
+                <li className="flex items-start gap-4">
+                  <div className="w-7 h-7 rounded-full bg-[#288A5C]/15 flex items-center justify-center shrink-0 mt-0.5">
+                    <Check className="w-4 h-4 text-[#2A5F36]" strokeWidth={2.5} />
+                  </div>
+                  <span className="text-gray-700 text-sm sm:text-base leading-relaxed">Track pasture growth and condition in near real time</span>
                 </li>
               </ul>
             </div>
 
             {/* Reproduction and Animal Wellbeing Insights */}
-            <div className="flex flex-col">
-              {/* Image */}
-              <div className="relative w-full h-64 rounded-lg overflow-hidden mb-4 bg-gray-100 shadow-sm">
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <div className="text-center">
-                    <Shield className="w-24 h-24 text-[#2A5F36] opacity-30" />
-                  </div>
+            <div>
+              <div className="relative aspect-[4/3] overflow-hidden mb-6 shadow-xl shadow-[#2A5F36]/10 bg-[#e8f0ea] rounded-2xl sm:rounded-3xl">
+                <Image
+                  src="/reproduction-animal-wellbeing.png"
+                  alt="Veterinarian and farmer with cattle, tablet and drone for animal health monitoring"
+                  fill
+                  className="object-cover object-center"
+                  sizes="(max-width: 768px) 100vw, 50vw"
+                />
+              </div>
+              <div className="flex items-start gap-4 mb-5">
+                <div className="w-12 h-12 rounded-xl bg-[#2A5F36] flex items-center justify-center shadow-lg shadow-[#2A5F36]/20 shrink-0">
+                  <Heart className="w-6 h-6 text-white" />
+                </div>
+                <div>
+                  <h3 className="text-xl sm:text-2xl font-bold text-[#2A5F36] tracking-tight leading-tight">
+                    Reproduction and animal wellbeing insights
+                  </h3>
                 </div>
               </div>
-              
-              {/* Icon */}
-              <div className="mb-4">
-                <div className="w-10 h-10 bg-[#2A5F36] rounded-lg flex items-center justify-center">
-                  <Heart className="w-5 h-5 text-white" />
-                </div>
-              </div>
-              
-              {/* Title */}
-              <h3 className="text-xl font-bold text-[#2A5F36] mb-6">
-                Reproduction and animal wellbeing insights
-              </h3>
-              
-              {/* Features List */}
               <ul className="space-y-3">
-                <li className="flex items-start space-x-3">
-                  <Check className="w-5 h-5 text-[#2A5F36] flex-shrink-0 mt-0.5" />
-                  <span className="text-gray-700 text-sm">Detect heat activity automatically</span>
+                <li className="flex items-start gap-4">
+                  <div className="w-7 h-7 rounded-full bg-[#288A5C]/15 flex items-center justify-center shrink-0 mt-0.5">
+                    <Check className="w-4 h-4 text-[#2A5F36]" strokeWidth={2.5} />
+                  </div>
+                  <span className="text-gray-700 text-sm sm:text-base leading-relaxed">Cull smarter with complete animal profiles — ID, health history, birth weight, genetics, and pregnancy data</span>
                 </li>
-                <li className="flex items-start space-x-3">
-                  <Check className="w-5 h-5 text-[#2A5F36] flex-shrink-0 mt-0.5" />
-                  <span className="text-gray-700 text-sm">Get notifications for health or behavior changes</span>
+                <li className="flex items-start gap-4">
+                  <div className="w-7 h-7 rounded-full bg-[#288A5C]/15 flex items-center justify-center shrink-0 mt-0.5">
+                    <Check className="w-4 h-4 text-[#2A5F36]" strokeWidth={2.5} />
+                  </div>
+                  <span className="text-gray-700 text-sm sm:text-base leading-relaxed">Monitor animal location</span>
                 </li>
-                <li className="flex items-start space-x-3">
-                  <Check className="w-5 h-5 text-[#2A5F36] flex-shrink-0 mt-0.5" />
-                  <span className="text-gray-700 text-sm">Monitor animal locations around the clock</span>
+                <li className="flex items-start gap-4">
+                  <div className="w-7 h-7 rounded-full bg-[#288A5C]/15 flex items-center justify-center shrink-0 mt-0.5">
+                    <Check className="w-4 h-4 text-[#2A5F36]" strokeWidth={2.5} />
+                  </div>
+                  <span className="text-gray-700 text-sm sm:text-base leading-relaxed">Health/calving alerts</span>
                 </li>
               </ul>
             </div>
@@ -420,7 +435,7 @@ export default function LandingPage() {
           <div className="text-center mb-16">
             <h2 className="text-4xl lg:text-5xl font-bold text-[#2A5F36] mb-4">Real Farmers, Real Results</h2>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              Trusted by dairy and beef farmers from family operations to large-scale enterprises
+              Trusted by beef farmers from family operations to large-scale enterprises
             </p>
           </div>
 
@@ -478,15 +493,19 @@ export default function LandingPage() {
                 </Link>
               </Button>
             </div>
-            <div className="relative h-96 rounded-lg overflow-hidden bg-gray-100">
-              <div className="absolute inset-0 flex items-center justify-center">
-                <div className="text-center">
-                  <div className="w-16 h-16 bg-[#2A5F36] rounded-lg flex items-center justify-center mx-auto mb-4">
-                    <Shield className="w-8 h-8 text-white" />
-                  </div>
-                  <h3 className="text-2xl font-bold text-gray-900 mb-2">Sustainable Agriculture</h3>
-                  <p className="text-gray-600">Building a better future for farming</p>
-                </div>
+            <div className="relative h-96 rounded-lg overflow-hidden">
+              <Image
+                src="/sustainable-agriculture-family.png"
+                alt="Family walking with cattle in a pastoral farm landscape"
+                fill
+                className="object-cover"
+                sizes="(max-width: 1024px) 100vw, 50vw"
+              />
+              <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-transparent to-transparent" />
+              <div className="absolute top-0 left-0 right-0 p-6 text-white">
+                <p className="text-lg sm:text-xl font-semibold drop-shadow-lg">
+                  Sustainable agriculture and building a better future for farming and farmers
+                </p>
               </div>
             </div>
           </div>
