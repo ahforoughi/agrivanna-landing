@@ -2,7 +2,7 @@
 
 import { useState } from "react"
 import { Button } from "@/components/ui/button"
-import { Shield, Users, ArrowRight, Menu, X, Smartphone, Radio, TrendingUp, Clock, DollarSign, Activity, Check, Sprout, Heart } from "lucide-react"
+import { Users, ArrowRight, Menu, X, Smartphone, Radio, TrendingUp, Clock, DollarSign, Activity, Check, Sprout, Heart } from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"
 import { SpeedInsights } from "@vercel/speed-insights/next"
