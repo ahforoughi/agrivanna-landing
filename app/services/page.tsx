@@ -276,7 +276,7 @@ export default function ServicesPage() {
       <section className="py-24 bg-white">
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
-            <h2 className="text-4xl lg:text-5xl font-bold text-[#2A5F36] mb-4">Solutions</h2>
+            <h2 className="text-4xl lg:text-5xl font-medium text-[#2A5F36] mb-4">Solutions</h2>
             <p className="text-xl text-[#637D59] max-w-3xl mx-auto">
               Explore how Agrivanna can transform your farm operations
             </p>
@@ -317,7 +317,7 @@ export default function ServicesPage() {
       <section className="py-24 bg-gray-50">
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
-            <h2 className="text-4xl lg:text-5xl font-bold text-[#2A5F36] mb-4">Our Core Solutions</h2>
+            <h2 className="text-4xl lg:text-5xl font-medium text-[#2A5F36] mb-4">Our Core Solutions</h2>
             <p className="text-xl text-[#637D59] max-w-3xl mx-auto">
               Four powerful solutions working together to revolutionize your livestock management operations.
             </p>
@@ -393,7 +393,7 @@ export default function ServicesPage() {
       <section className="py-24 bg-white">
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
-            <h2 className="text-4xl lg:text-5xl font-bold text-[#2A5F36] mb-4">Real-World Use Cases</h2>
+            <h2 className="text-4xl lg:text-5xl font-medium text-[#2A5F36] mb-4">Real-World Use Cases</h2>
             <p className="text-xl text-[#637D59] max-w-3xl mx-auto">
               See how Agrivanna is being used by farmers across Alberta and beyond
             </p>
@@ -494,7 +494,7 @@ export default function ServicesPage() {
       <section className="py-24 bg-white">
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
-            <h2 className="text-4xl lg:text-5xl font-bold text-[#2A5F36] mb-4">Why Agrivanna Stands Apart</h2>
+            <h2 className="text-4xl lg:text-5xl font-medium text-[#2A5F36] mb-4">Why Agrivanna Stands Apart</h2>
             <p className="text-xl text-[#637D59] max-w-3xl mx-auto">
               Built for Alberta farmers, designed to evolve with your farm. More than a tool, it&apos;s a comprehensive system tailored for North American agriculture.
             </p>
@@ -548,7 +548,7 @@ export default function ServicesPage() {
       <section className="py-24 bg-gray-50">
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
-            <h2 className="text-4xl lg:text-5xl font-bold text-[#2A5F36] mb-4">Built for Alberta&apos;s Unique Needs</h2>
+            <h2 className="text-4xl lg:text-5xl font-medium text-[#2A5F36] mb-4">Built for Alberta&apos;s Unique Needs</h2>
             <p className="text-xl text-[#637D59] max-w-3xl mx-auto">
               Designed specifically for Canadian farmers with flexible connectivity and modular scalability.
             </p>

@@ -132,7 +132,7 @@ export default function CareersPage() {
       <section className="py-24 bg-white">
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
-            <h2 className="text-4xl lg:text-5xl font-bold text-[#2A5F36] mb-4">Life at Agrivanna</h2>
+            <h2 className="text-4xl lg:text-5xl font-medium text-[#2A5F36] mb-4">Life at Agrivanna</h2>
             <p className="text-xl text-[#637D59] max-w-3xl mx-auto">
               Join a team that&apos;s passionate about making a real difference in agriculture
             </p>
@@ -165,7 +165,7 @@ export default function CareersPage() {
       <section className="py-24 bg-gray-50">
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
-            <h2 className="text-4xl lg:text-5xl font-bold text-[#2A5F36] mb-4">Current Openings</h2>
+            <h2 className="text-4xl lg:text-5xl font-medium text-[#2A5F36] mb-4">Current Openings</h2>
             <p className="text-xl text-[#637D59] max-w-3xl mx-auto">
               We&apos;re always looking for passionate individuals to join our team.
             </p>
@@ -194,7 +194,7 @@ export default function CareersPage() {
       <section className="py-24 bg-white">
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
-            <h2 className="text-4xl lg:text-5xl font-bold text-[#2A5F36] mb-4">Why Work With Us</h2>
+            <h2 className="text-4xl lg:text-5xl font-medium text-[#2A5F36] mb-4">Why Work With Us</h2>
             <p className="text-xl text-[#637D59] max-w-3xl mx-auto">
               Join a mission-driven team that&apos;s building the future of agriculture.
             </p>

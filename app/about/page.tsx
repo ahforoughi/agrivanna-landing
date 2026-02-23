@@ -230,7 +230,7 @@ export default function AboutPage() {
       <section className="py-24 bg-gray-50">
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
-            <h2 className="text-4xl lg:text-5xl font-bold text-[#2A5F36] mb-4">Our Values</h2>
+            <h2 className="text-4xl lg:text-5xl font-medium text-[#2A5F36] mb-4">Our Values</h2>
             <p className="text-xl text-[#637D59] max-w-3xl mx-auto">
               These core values guide everything we do, from product development to customer service.
             </p>
@@ -256,7 +256,7 @@ export default function AboutPage() {
       <section className="py-24 bg-white">
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
-            <h2 className="text-4xl lg:text-5xl font-bold text-[#2A5F36] mb-4">Meet Our Team</h2>
+            <h2 className="text-4xl lg:text-5xl font-medium text-[#2A5F36] mb-4">Meet Our Team</h2>
             <p className="text-xl text-[#637D59] max-w-3xl mx-auto">
               We&apos;re a diverse team of engineers, farmers, and innovators united by our passion for agriculture and technology.
             </p>
@@ -307,7 +307,7 @@ export default function AboutPage() {
       <section className="py-24 bg-gray-50">
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
-            <h2 className="text-4xl lg:text-5xl font-bold text-[#2A5F36] mb-4">Our Journey</h2>
+            <h2 className="text-4xl lg:text-5xl font-medium text-[#2A5F36] mb-4">Our Journey</h2>
             <p className="text-xl text-[#637D59] max-w-3xl mx-auto">
               From a small startup to a global leader in agricultural technology.
             </p>

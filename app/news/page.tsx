@@ -126,7 +126,7 @@ export default function NewsPage() {
       <section className="py-24 bg-white">
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
-            <h2 className="text-4xl lg:text-5xl font-bold text-[#2A5F36] mb-4">Latest News</h2>
+            <h2 className="text-4xl lg:text-5xl font-medium text-[#2A5F36] mb-4">Latest News</h2>
             <p className="text-xl text-[#637D59] max-w-3xl mx-auto">
               Our most recent announcements and company updates.
             </p>

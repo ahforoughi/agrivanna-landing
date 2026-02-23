@@ -269,3 +269,115 @@
 .animate-line-reveal {
   animation: lineReveal 1s ease-out 0.5s forwards;
 }
+
+/* How It Works – tech section */
+@keyframes signalPulse {
+  0% {
+    transform: scale(0.6);
+    opacity: 0.6;
+  }
+  100% {
+    transform: scale(1.4);
+    opacity: 0;
+  }
+}
+
+@keyframes lineDraw {
+  from {
+    stroke-dashoffset: 1;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes softPulse {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.9;
+    transform: scale(1.03);
+  }
+}
+
+.animate-signal-pulse {
+  animation: signalPulse 2s ease-out infinite;
+}
+
+.animate-signal-pulse-delay {
+  animation: signalPulse 2s ease-out 0.7s infinite;
+}
+
+.animate-signal-pulse-delay-2 {
+  animation: signalPulse 2s ease-out 1.4s infinite;
+}
+
+.animate-line-draw {
+  stroke-dasharray: 1;
+  animation: lineDraw 1.2s ease-out forwards;
+}
+
+.animate-soft-pulse {
+  animation: softPulse 3s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-signal-pulse,
+  .animate-signal-pulse-delay,
+  .animate-signal-pulse-delay-2,
+  .animate-soft-pulse {
+    animation: none;
+  }
+  .animate-line-draw,
+  .how-it-works-line {
+    animation: none;
+    stroke-dashoffset: 0;
+    stroke-dasharray: none;
+  }
+  .how-it-works-animate .how-it-works-title,
+  .how-it-works-animate .how-it-works-subtitle,
+  .how-it-works-animate .how-it-works-card {
+    animation-duration: 0.2s;
+  }
+}
+
+/* How It Works scroll-triggered entrance */
+.how-it-works-title {
+  opacity: 0;
+}
+.how-it-works-subtitle {
+  opacity: 0;
+}
+.how-it-works-card {
+  opacity: 0;
+}
+.how-it-works-connector {
+  opacity: 0;
+}
+.how-it-works-animate .how-it-works-title {
+  animation: fadeInUp 0.8s ease-out forwards;
+}
+.how-it-works-animate .how-it-works-subtitle {
+  animation: fadeInUp 0.8s ease-out 0.15s forwards;
+}
+.how-it-works-animate .how-it-works-connector {
+  animation: fadeIn 0.6s ease-out 0.3s forwards;
+}
+.how-it-works-animate .how-it-works-card-1 {
+  animation: fadeInScale 0.8s ease-out 0.35s forwards;
+}
+.how-it-works-animate .how-it-works-card-2 {
+  animation: fadeInScale 0.8s ease-out 0.5s forwards;
+}
+.how-it-works-animate .how-it-works-card-3 {
+  animation: fadeInScale 0.8s ease-out 0.65s forwards;
+}
+.how-it-works-line {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+}
+.how-it-works-animate .how-it-works-line {
+  animation: lineDraw 1.2s ease-out 0.5s forwards;
+}

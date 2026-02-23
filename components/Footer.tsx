@@ -1,12 +1,12 @@
 import Image from "next/image"
 import Link from "next/link"
-import { FaLinkedinIn, FaInstagram, FaYoutube, FaEnvelope } from "react-icons/fa"
+import { Linkedin, Instagram, Youtube, Mail } from "lucide-react"
 
 const SOCIAL_LINKS = [
-  { href: "https://www.linkedin.com/company/agrivanna/", icon: FaLinkedinIn, label: "LinkedIn" },
-  { href: "https://www.instagram.com/agrivanna/", icon: FaInstagram, label: "Instagram" },
-  { href: "https://www.youtube.com/@Agrivanna", icon: FaYoutube, label: "YouTube" },
-  { href: "mailto:info@agrivanna.com", icon: FaEnvelope, label: "Email" },
+  { href: "https://www.linkedin.com/company/agrivanna/", icon: Linkedin, label: "LinkedIn" },
+  { href: "https://www.instagram.com/agrivanna/", icon: Instagram, label: "Instagram" },
+  { href: "https://www.youtube.com/@Agrivanna", icon: Youtube, label: "YouTube" },
+  { href: "mailto:info@agrivanna.com", icon: Mail, label: "Email" },
 ]
 
 function SocialLinks({ className = "" }: { className?: string }) {
@@ -67,10 +67,9 @@ export default function Footer() {
             <h3 className="text-lg font-semibold mb-6">Company</h3>
             <ul className="space-y-3">
               <li><Link href="/about" className="text-gray-300 hover:text-white transition-colors">About Us</Link></li>
-              <li><Link href="/careers" className="text-gray-300 hover:text-white transition-colors">Careers</Link></li>
-              <li><Link href="/news" className="text-gray-300 hover:text-white transition-colors">News</Link></li>
-              <li><Link href="/investment" className="text-gray-300 hover:text-white transition-colors">Investment</Link></li>
               <li><Link href="/contact" className="text-gray-300 hover:text-white transition-colors">Contact Us</Link></li>
+              <li><Link href="/service-terms" className="text-gray-300 hover:text-white transition-colors">Terms of Use</Link></li>
+              <li><Link href="/cookie-policy" className="text-gray-300 hover:text-white transition-colors">Cookie Policy</Link></li>
             </ul>
           </div>
 
@@ -84,14 +83,8 @@ export default function Footer() {
         <div className="border-t border-gray-800 pt-8">
           <div className="flex flex-col md:flex-row justify-between items-center">
             <p className="text-gray-400 text-sm mb-4 md:mb-0">
-              © 2024 Agrivanna Corporation. All Rights Reserved.
+              © 2026 Agrivanna Inc. All Rights Reserved.
             </p>
-            <div className="flex space-x-6 text-sm">
-              <a href="#privacy" className="text-gray-400 hover:text-white transition-colors">Privacy Center</a>
-              <a href="#terms" className="text-gray-400 hover:text-white transition-colors">Terms of Use</a>
-              <a href="#cookies" className="text-gray-400 hover:text-white transition-colors">Cookie Policy</a>
-              <a href="#accessibility" className="text-gray-400 hover:text-white transition-colors">Accessibility Statement</a>
-            </div>
           </div>
         </div>
       </div>
