@@ -3,6 +3,7 @@ import type { Metadata } from "next"
 import { dmSans, inter } from "@/lib/fonts"
 import { Analytics } from "@vercel/analytics/next"
 import HubSpotFormPopup from "@/components/HubSpotFormPopup"
+import AnnouncementBar from "@/components/AnnouncementBar"
 import "./globals.css"
 
 export const metadata: Metadata = {
@@ -24,6 +25,7 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${dmSans.variable} ${inter.variable}`}>
       <body className="font-inter antialiased" suppressHydrationWarning>
+        <AnnouncementBar />
         {children}
         <HubSpotFormPopup />
         <Analytics />

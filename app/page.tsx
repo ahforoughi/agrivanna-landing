@@ -18,7 +18,7 @@ export default function LandingPage() {
     <div className="min-h-screen bg-[#F2F2F2]">
       <SpeedInsights />
       {/* Header - crystal bar centered with rounded corners */}
-      <header className="absolute top-0 left-0 right-0 z-50 pt-4">
+      <header className="absolute left-0 right-0 z-50 pt-4 top-[var(--announcement-height)]">
         <div className="container mx-auto px-4">
           <div className="flex items-center justify-between py-6 px-6 max-w-4xl mx-auto rounded-2xl bg-white/5 backdrop-blur-xl border border-white/20 shadow-[0_8px_32px_rgba(255,255,255,0.08)]">
             {/* Logo */}
