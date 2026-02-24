@@ -65,8 +65,9 @@ export default function ContactPage() {
 
               {/* Mobile Menu Button */}
               <button
-                className="lg:hidden p-2"
+                className="lg:hidden p-3 -m-1 min-h-[44px] min-w-[44px] flex items-center justify-center"
                 onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+                aria-label={mobileMenuOpen ? "Close menu" : "Open menu"}
               >
                 {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
               </button>
@@ -99,29 +100,29 @@ export default function ContactPage() {
       </header>
 
       {/* Hero Section */}
-      <section className="relative bg-gradient-to-br from-[#2A5F36] to-[#637D59] py-24 text-white overflow-hidden">
+      <section className="relative bg-gradient-to-br from-[#2A5F36] to-[#637D59] py-12 sm:py-16 lg:py-24 text-white overflow-hidden">
         <div className="container mx-auto px-4 text-center">
-          <h1 className="text-5xl lg:text-6xl xl:text-7xl font-bold leading-tight mb-6">
+          <h1 className="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-bold leading-tight mb-4 sm:mb-6">
             Get in Touch
           </h1>
-          <p className="text-xl lg:text-2xl leading-relaxed mb-8 max-w-3xl mx-auto opacity-90">
+          <p className="text-base sm:text-lg lg:text-xl xl:text-2xl leading-relaxed mb-6 sm:mb-8 max-w-3xl mx-auto opacity-90">
             Ready to revolutionize your livestock management? Let&apos;s discuss how Agrivanna can help optimize your farm operations.
           </p>
         </div>
       </section>
 
       {/* Contact Form Section */}
-      <section className="py-24 bg-white">
+      <section className="py-12 sm:py-16 lg:py-24 bg-white">
         <Script
           src="https://js-na3.hsforms.net/forms/embed/342489770.js"
           strategy="afterInteractive"
           onError={() => console.error('Failed to load HubSpot forms script')}
         />
         <div className="container mx-auto px-4">
-          <div className="grid lg:grid-cols-2 gap-12">
+          <div className="grid lg:grid-cols-2 gap-8 sm:gap-10 lg:gap-12">
             {/* Contact Form */}
             <div>
-              <h2 className="text-3xl lg:text-4xl font-bold text-[#2A5F36] mb-6">Send us a Message</h2>
+              <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-[#2A5F36] mb-4 sm:mb-6">Send us a Message</h2>
               <p className="text-gray-600 mb-6">
                 Fill out the form below and we&apos;ll get back to you as soon as possible.
               </p>

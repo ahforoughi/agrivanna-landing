@@ -208,8 +208,9 @@ export default function ServicesPage() {
 
               {/* Mobile Menu Button */}
               <button
-                className="lg:hidden p-2"
+                className="lg:hidden p-3 -m-1 min-h-[44px] min-w-[44px] flex items-center justify-center"
                 onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+                aria-label={mobileMenuOpen ? "Close menu" : "Open menu"}
               >
                 {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
               </button>
@@ -242,13 +243,13 @@ export default function ServicesPage() {
       </header>
 
       {/* Hero Section */}
-      <section className="relative bg-gradient-to-br from-[#2A5F36] to-[#637D59] py-24 text-white overflow-hidden">
+      <section className="relative bg-gradient-to-br from-[#2A5F36] to-[#637D59] py-12 sm:py-16 lg:py-24 text-white overflow-hidden">
         <div className="container mx-auto px-4">
           <div className="text-center max-w-4xl mx-auto">
-            <h1 className="text-5xl lg:text-6xl xl:text-7xl font-bold mb-6 leading-tight">
+            <h1 className="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-bold mb-4 sm:mb-6 leading-tight">
               Our Services
             </h1>
-            <p className="text-xl lg:text-2xl mb-8 leading-relaxed opacity-90">
+            <p className="text-base sm:text-lg lg:text-xl xl:text-2xl mb-6 sm:mb-8 leading-relaxed opacity-90">
               Comprehensive livestock management solutions powered by cutting-edge AI technology. 
               From virtual fencing to health monitoring, we provide everything you need for modern farming.
             </p>

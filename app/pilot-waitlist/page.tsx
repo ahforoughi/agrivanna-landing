@@ -58,9 +58,9 @@ export default function PilotWaitlistPage() {
                 </a>
               </Button>
               <button
-                className="lg:hidden p-2"
+                className="lg:hidden p-3 -m-1 min-h-[44px] min-w-[44px] flex items-center justify-center"
                 onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                aria-label="Toggle menu"
+                aria-label={mobileMenuOpen ? "Close menu" : "Open menu"}
               >
                 {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
               </button>
@@ -104,11 +104,11 @@ export default function PilotWaitlistPage() {
       </section>
 
       {/* Form Section */}
-      <section className="py-16 lg:py-24">
+      <section className="py-10 sm:py-12 lg:py-24">
         <div className="container mx-auto px-4">
           <div className="max-w-2xl mx-auto">
-            <div className="bg-white rounded-2xl shadow-lg border border-gray-100 overflow-hidden">
-              <div className="p-8 lg:p-10">
+            <div className="bg-white rounded-xl sm:rounded-2xl shadow-lg border border-gray-100 overflow-hidden">
+              <div className="p-5 sm:p-6 lg:p-10">
                 <Script
                   src="https://js-na3.hsforms.net/forms/embed/342489770.js"
                   strategy="afterInteractive"

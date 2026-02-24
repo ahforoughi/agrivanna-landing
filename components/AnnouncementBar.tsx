@@ -45,14 +45,14 @@ export default function AnnouncementBar() {
           <div className="flex items-center gap-2">
             <Link
               href="/pilot-waitlist"
-              className="inline-flex items-center rounded-lg bg-white px-4 py-2 text-sm font-semibold text-[#2A5F36] transition hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-[#2A5F36]"
+              className="inline-flex items-center rounded-lg bg-white px-4 py-2.5 min-h-[44px] text-sm font-semibold text-[#2A5F36] transition hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-[#2A5F36]"
             >
               Join the waitlist
             </Link>
             <button
               type="button"
               onClick={handleDismiss}
-              className="rounded p-1.5 text-white/90 hover:bg-white/10 hover:text-white transition-colors focus:outline-none focus:ring-2 focus:ring-white/50"
+              className="rounded p-2.5 min-h-[44px] min-w-[44px] flex items-center justify-center text-white/90 hover:bg-white/10 hover:text-white transition-colors focus:outline-none focus:ring-2 focus:ring-white/50"
               aria-label="Dismiss announcement"
             >
               <X className="h-5 w-5" />

@@ -1,10 +1,17 @@
 import type React from "react"
-import type { Metadata } from "next"
+import type { Metadata, Viewport } from "next"
 import { dmSans, inter } from "@/lib/fonts"
 import { Analytics } from "@vercel/analytics/next"
 import HubSpotFormPopup from "@/components/HubSpotFormPopup"
 import AnnouncementBar from "@/components/AnnouncementBar"
 import "./globals.css"
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 5,
+  viewportFit: "cover",
+}
 
 export const metadata: Metadata = {
   title: "Agrivanna - AI-Powered Livestock Health Tracking",

@@ -20,7 +20,7 @@ export default function LandingPage() {
       {/* Header - crystal bar centered with rounded corners */}
       <header className="absolute left-0 right-0 z-50 pt-4 top-[var(--announcement-height)]">
         <div className="container mx-auto px-4">
-          <div className="flex items-center justify-between py-6 px-6 max-w-4xl mx-auto rounded-2xl bg-white/5 backdrop-blur-xl border border-white/20 shadow-[0_8px_32px_rgba(255,255,255,0.08)]">
+          <div className="flex items-center justify-between py-4 px-4 sm:py-6 sm:px-6 max-w-4xl mx-auto rounded-xl sm:rounded-2xl bg-white/5 backdrop-blur-xl border border-white/20 shadow-[0_8px_32px_rgba(255,255,255,0.08)]">
             {/* Logo */}
             <div className="flex items-center animate-fade-in">
               <Link href="/">
@@ -68,10 +68,11 @@ export default function LandingPage() {
                 </a>
               </Button>
 
-              {/* Mobile Menu Button */}
+              {/* Mobile Menu Button - 44px min touch target */}
               <button
-                className="lg:hidden p-2 text-white"
+                className="lg:hidden p-3 -m-1 text-white min-h-[44px] min-w-[44px] flex items-center justify-center"
                 onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+                aria-label={mobileMenuOpen ? "Close menu" : "Open menu"}
               >
                 {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
               </button>
@@ -106,7 +107,7 @@ export default function LandingPage() {
       </header>
 
       {/* Hero Section */}
-      <section className="relative min-h-[90vh] flex items-center overflow-hidden">
+      <section className="relative min-h-[70vh] sm:min-h-[80vh] lg:min-h-[90vh] flex items-center overflow-hidden">
         {/* Video Background */}
         <video
           autoPlay
@@ -132,24 +133,24 @@ export default function LandingPage() {
         <div className="absolute inset-0 bg-primary-dark opacity-60"></div>
         
         {/* Content Overlay */}
-        <div className="relative z-10 container mx-auto px-4 pt-32 pb-20">
+        <div className="relative z-10 container mx-auto px-4 pt-24 sm:pt-28 lg:pt-32 pb-12 sm:pb-20">
           <div className="max-w-3xl">
-            <h1 className="text-5xl lg:text-6xl xl:text-7xl font-bold text-white leading-tight mb-6 animate-fade-in-up">
+            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold text-white leading-tight mb-4 sm:mb-6 animate-fade-in-up">
               <span className="block animate-slide-in-left" style={{ animationDelay: '0.1s' }}>Smarter livestock</span>
               <span className="block animate-slide-in-left" style={{ animationDelay: '0.2s' }}>tracking, minimal</span>
               <span className="block animate-slide-in-left" style={{ animationDelay: '0.3s' }}>effort.</span>
             </h1>
-            <p className="text-xl lg:text-2xl text-white/90 leading-relaxed animate-fade-in" style={{ animationDelay: '0.4s' }}>
+            <p className="text-base sm:text-lg lg:text-xl xl:text-2xl text-white/90 leading-relaxed animate-fade-in max-w-xl sm:max-w-none" style={{ animationDelay: '0.4s' }}>
               Virtual grazing management, AI-enhanced smart weighing, health monitoring, and livestock lifecycle management in one platform.
             </p>
           </div>
           
           {/* Partners Section */}
-          <div className="relative z-10 mt-16">
-            <div className="text-center mb-4">
-              <p className="text-white text-sm font-medium">Trusted Partners</p>
+          <div className="relative z-10 mt-10 sm:mt-16">
+            <div className="text-center mb-3 sm:mb-4">
+              <p className="text-white text-xs sm:text-sm font-medium">Trusted Partners</p>
             </div>
-            <div className="flex justify-center items-center space-x-12">
+            <div className="flex flex-wrap justify-center items-center gap-6 sm:gap-8 sm:space-x-0">
               <a 
                 href="https://www.plugandplaytechcenter.com/" 
                 target="_blank" 
@@ -185,15 +186,15 @@ export default function LandingPage() {
 
 
       {/* Features Section - 3 equal blocks */}
-      <section id="product" className="py-24 px-4" style={{ backgroundColor: '#F5F5F0' }}>
+      <section id="product" className="py-12 sm:py-16 lg:py-24 px-4" style={{ backgroundColor: '#F5F5F0' }}>
         <div className="container mx-auto">
-          <div className="text-center mb-16 lg:mb-20">
-            <h2 className="text-4xl lg:text-5xl font-medium text-left text-[#2A5F36] mb-4">
+          <div className="text-center mb-10 sm:mb-16 lg:mb-20">
+            <h2 className="text-2xl sm:text-3xl lg:text-4xl xl:text-5xl font-medium text-left text-[#2A5F36] mb-4">
               The leading digital platform for managing pasture-based operations
             </h2>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-8 lg:gap-10 max-w-6xl mx-auto">
+          <div className="grid md:grid-cols-3 gap-6 sm:gap-8 lg:gap-10 max-w-6xl mx-auto">
             {/* Block 1: Remote fencing and herd moves */}
             <div className="bg-white rounded-2xl sm:rounded-3xl shadow-lg overflow-hidden flex flex-col">
               <div className="relative aspect-[4/3] overflow-hidden bg-[#e8f0ea]">
@@ -206,13 +207,13 @@ export default function LandingPage() {
                   priority
                 />
               </div>
-              <div className="p-6 lg:p-7 flex-1 flex flex-col">
-                <div className="flex items-start gap-4 mb-4">
-                  <div className="w-11 h-11 rounded-lg bg-[#2A5F36] border-2 border-[#637D59] flex items-center justify-center shrink-0">
+              <div className="p-4 sm:p-6 lg:p-7 flex-1 flex flex-col">
+                <div className="flex items-start gap-3 sm:gap-4 mb-3 sm:mb-4">
+                  <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-lg bg-[#2A5F36] border-2 border-[#637D59] flex items-center justify-center shrink-0">
                     <Radio className="w-5 h-5 text-[#C5E1C8]" strokeWidth={2} />
                   </div>
-                  <div>
-                    <h3 className="text-xl font-bold text-[#2A5F36] tracking-tight leading-tight">
+                  <div className="min-w-0">
+                    <h3 className="text-lg sm:text-xl font-bold text-[#2A5F36] tracking-tight leading-tight">
                       Remote fencing and herd moves
                     </h3>
                     <p className="text-[#288A5C] font-medium text-sm mt-0.5 italic">
@@ -248,12 +249,12 @@ export default function LandingPage() {
                   sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
                 />
               </div>
-              <div className="p-6 lg:p-7 flex-1 flex flex-col">
-                <div className="flex items-start gap-4 mb-4">
-                  <div className="w-11 h-11 rounded-lg bg-[#2A5F36] border-2 border-[#637D59] flex items-center justify-center shrink-0">
+              <div className="p-4 sm:p-6 lg:p-7 flex-1 flex flex-col">
+                <div className="flex items-start gap-3 sm:gap-4 mb-3 sm:mb-4">
+                  <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-lg bg-[#2A5F36] border-2 border-[#637D59] flex items-center justify-center shrink-0">
                     <Sprout className="w-5 h-5 text-[#C5E1C8]" strokeWidth={2} />
                   </div>
-                  <h3 className="text-xl font-bold text-[#2A5F36] tracking-tight leading-tight">
+                  <h3 className="text-lg sm:text-xl font-bold text-[#2A5F36] tracking-tight leading-tight min-w-0">
                     Grazing and Automated Pasture Planning
                   </h3>
                 </div>
@@ -285,12 +286,12 @@ export default function LandingPage() {
                   sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
                 />
               </div>
-              <div className="p-6 lg:p-7 flex-1 flex flex-col">
-                <div className="flex items-start gap-4 mb-4">
-                  <div className="w-11 h-11 rounded-lg bg-[#2A5F36] border-2 border-[#637D59] flex items-center justify-center shrink-0">
+              <div className="p-4 sm:p-6 lg:p-7 flex-1 flex flex-col">
+                <div className="flex items-start gap-3 sm:gap-4 mb-3 sm:mb-4">
+                  <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-lg bg-[#2A5F36] border-2 border-[#637D59] flex items-center justify-center shrink-0">
                     <Heart className="w-5 h-5 text-[#C5E1C8]" strokeWidth={2} />
                   </div>
-                  <h3 className="text-xl font-bold text-[#2A5F36] tracking-tight leading-tight">
+                  <h3 className="text-lg sm:text-xl font-bold text-[#2A5F36] tracking-tight leading-tight min-w-0">
                     Reproduction and animal wellbeing insights
                   </h3>
                 </div>
@@ -316,42 +317,42 @@ export default function LandingPage() {
 
 
       {/* Statistics Section */}
-      <section className="py-20 bg-[#2A5F36] text-white">
+      <section className="py-12 sm:py-16 lg:py-20 bg-[#2A5F36] text-white">
         <div className="container mx-auto px-4">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl lg:text-5xl font-medium mb-4">Real Results, Real Impact</h2>
-            <p className="text-xl text-white/90 max-w-3xl mx-auto">
+          <div className="text-center mb-10 sm:mb-16">
+            <h2 className="text-2xl sm:text-3xl lg:text-4xl xl:text-5xl font-medium mb-3 sm:mb-4">Real Results, Real Impact</h2>
+            <p className="text-base sm:text-lg lg:text-xl text-white/90 max-w-3xl mx-auto px-1">
               See how Agrivanna is transforming farms across Alberta and beyond
             </p>
           </div>
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 lg:gap-8">
             <div className="text-center">
-              <div className="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center mx-auto mb-4">
-                <TrendingUp className="w-8 h-8 text-white" />
+              <div className="w-12 h-12 sm:w-16 sm:h-16 bg-white/20 rounded-full flex items-center justify-center mx-auto mb-3 sm:mb-4">
+                <TrendingUp className="w-6 h-6 sm:w-8 sm:h-8 text-white" />
               </div>
-              <div className="text-5xl font-bold mb-2">30%</div>
-              <div className="text-white/80 text-lg">Reduction in Labor Costs</div>
+              <div className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-1 sm:mb-2">30%</div>
+              <div className="text-white/80 text-xs sm:text-base lg:text-lg">Reduction in Labor Costs</div>
             </div>
             <div className="text-center">
-              <div className="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center mx-auto mb-4">
-                <Clock className="w-8 h-8 text-white" />
+              <div className="w-12 h-12 sm:w-16 sm:h-16 bg-white/20 rounded-full flex items-center justify-center mx-auto mb-3 sm:mb-4">
+                <Clock className="w-6 h-6 sm:w-8 sm:h-8 text-white" />
               </div>
-              <div className="text-5xl font-bold mb-2">3hrs</div>
-              <div className="text-white/80 text-lg">Saved Per Day on Average</div>
+              <div className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-1 sm:mb-2">3hrs</div>
+              <div className="text-white/80 text-xs sm:text-base lg:text-lg">Saved Per Day on Average</div>
             </div>
             <div className="text-center">
-              <div className="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center mx-auto mb-4">
-                <DollarSign className="w-8 h-8 text-white" />
+              <div className="w-12 h-12 sm:w-16 sm:h-16 bg-white/20 rounded-full flex items-center justify-center mx-auto mb-3 sm:mb-4">
+                <DollarSign className="w-6 h-6 sm:w-8 sm:h-8 text-white" />
               </div>
-              <div className="text-5xl font-bold mb-2">20%</div>
-              <div className="text-white/80 text-lg">Increase in Feed Efficiency</div>
+              <div className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-1 sm:mb-2">20%</div>
+              <div className="text-white/80 text-xs sm:text-base lg:text-lg">Increase in Feed Efficiency</div>
             </div>
             <div className="text-center">
-              <div className="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center mx-auto mb-4">
-                <Activity className="w-8 h-8 text-white" />
+              <div className="w-12 h-12 sm:w-16 sm:h-16 bg-white/20 rounded-full flex items-center justify-center mx-auto mb-3 sm:mb-4">
+                <Activity className="w-6 h-6 sm:w-8 sm:h-8 text-white" />
               </div>
-              <div className="text-5xl font-bold mb-2">95%</div>
-              <div className="text-white/80 text-lg">Early Health Detection Rate</div>
+              <div className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-1 sm:mb-2">95%</div>
+              <div className="text-white/80 text-xs sm:text-base lg:text-lg">Early Health Detection Rate</div>
             </div>
           </div>
         </div>
@@ -361,7 +362,7 @@ export default function LandingPage() {
       <section
         id="how-it-works"
         ref={howItWorksRef}
-        className={`relative py-24 px-4 overflow-hidden ${howItWorksInView ? "how-it-works-animate" : ""}`}
+        className={`relative py-12 sm:py-16 lg:py-24 px-4 overflow-hidden ${howItWorksInView ? "how-it-works-animate" : ""}`}
         style={{
           background: "linear-gradient(180deg, #0f2d1f 0%, #1a3d2a 50%, #152a1f 100%)",
           backgroundImage: "linear-gradient(180deg, #0f2d1f 0%, #1a3d2a 50%, #152a1f 100%), radial-gradient(ellipse 80% 50% at 50% 0%, rgba(42, 95, 54, 0.15) 0%, transparent 50%)",
@@ -376,9 +377,9 @@ export default function LandingPage() {
           }}
         />
         <div className="container mx-auto relative">
-          <div className="text-center mb-16">
-            <h2 className="how-it-works-title text-4xl lg:text-5xl font-medium text-white mb-4">How It Works</h2>
-            <p className="how-it-works-subtitle text-xl text-white/80 max-w-3xl mx-auto">
+          <div className="text-center mb-10 sm:mb-16">
+            <h2 className="how-it-works-title text-2xl sm:text-3xl lg:text-4xl xl:text-5xl font-medium text-white mb-3 sm:mb-4">How It Works</h2>
+            <p className="how-it-works-subtitle text-base sm:text-lg lg:text-xl text-white/80 max-w-3xl mx-auto">
               Hardware, connectivity, and control—one integrated system
             </p>
           </div>
@@ -396,23 +397,23 @@ export default function LandingPage() {
               </svg>
             </div>
 
-            <div className="grid md:grid-cols-3 gap-8 md:gap-6">
+            <div className="grid md:grid-cols-3 gap-5 sm:gap-6 md:gap-6">
               {/* Card 1 – The Collar */}
-              <div className="how-it-works-card how-it-works-card-1 group relative text-center rounded-xl border border-white/10 bg-white/5 backdrop-blur-sm p-8 transition-all duration-300 hover:scale-[1.02] hover:shadow-xl hover:shadow-[#2A5F36]/10 hover:ring-2 hover:ring-[#2A5F36]/50 focus-within:ring-2 focus-within:ring-[#2A5F36]/50">
+              <div className="how-it-works-card how-it-works-card-1 group relative text-center rounded-xl border border-white/10 bg-white/5 backdrop-blur-sm p-5 sm:p-6 lg:p-8 transition-all duration-300 hover:scale-[1.02] hover:shadow-xl hover:shadow-[#2A5F36]/10 hover:ring-2 hover:ring-[#2A5F36]/50 focus-within:ring-2 focus-within:ring-[#2A5F36]/50">
                 <span className="font-mono text-sm text-[#2A5F36] tracking-wider">01</span>
                 <div className="mt-4 mb-6 relative flex justify-center">
                   <div className="relative w-16 h-16 bg-[#2A5F36] rounded-lg flex items-center justify-center">
                     <CircleDot className="w-8 h-8 text-white" />
                   </div>
                 </div>
-                <h3 className="text-2xl font-bold text-white mb-2">The Collar</h3>
+                <h3 className="text-xl sm:text-2xl font-bold text-white mb-2">The Collar</h3>
                 <p className="text-white/70 leading-relaxed text-sm">
                   Lightweight, solar-powered collars guide your livestock with gentle audio cues and vibration. Built to last in harsh farming conditions.
                 </p>
               </div>
 
               {/* Card 2 – The Tower (signal rings) */}
-              <div className="how-it-works-card how-it-works-card-2 group relative text-center rounded-xl border border-white/10 bg-white/5 backdrop-blur-sm p-8 transition-all duration-300 hover:scale-[1.02] hover:shadow-xl hover:shadow-[#2A5F36]/10 hover:ring-2 hover:ring-[#2A5F36]/50 focus-within:ring-2 focus-within:ring-[#2A5F36]/50">
+              <div className="how-it-works-card how-it-works-card-2 group relative text-center rounded-xl border border-white/10 bg-white/5 backdrop-blur-sm p-5 sm:p-6 lg:p-8 transition-all duration-300 hover:scale-[1.02] hover:shadow-xl hover:shadow-[#2A5F36]/10 hover:ring-2 hover:ring-[#2A5F36]/50 focus-within:ring-2 focus-within:ring-[#2A5F36]/50">
                 <span className="font-mono text-sm text-[#2A5F36] tracking-wider">02</span>
                 <div className="mt-4 mb-6 relative flex justify-center">
                   <div className="absolute inset-0 flex items-center justify-center" aria-hidden>
@@ -424,21 +425,21 @@ export default function LandingPage() {
                     <Radio className="w-8 h-8 text-white" />
                   </div>
                 </div>
-                <h3 className="text-2xl font-bold text-white mb-2">The Tower</h3>
+                <h3 className="text-xl sm:text-2xl font-bold text-white mb-2">The Tower</h3>
                 <p className="text-white/70 leading-relaxed text-sm">
                   Connects collars and app with no cell coverage needed. Solar-powered and easy to install, designed for remote Alberta farms.
                 </p>
               </div>
 
               {/* Card 3 – The App (soft glow) */}
-              <div className="how-it-works-card how-it-works-card-3 group relative text-center rounded-xl border border-white/10 bg-white/5 backdrop-blur-sm p-8 transition-all duration-300 hover:scale-[1.02] hover:shadow-xl hover:shadow-[#2A5F36]/10 hover:ring-2 hover:ring-[#2A5F36]/50 focus-within:ring-2 focus-within:ring-[#2A5F36]/50">
+              <div className="how-it-works-card how-it-works-card-3 group relative text-center rounded-xl border border-white/10 bg-white/5 backdrop-blur-sm p-5 sm:p-6 lg:p-8 transition-all duration-300 hover:scale-[1.02] hover:shadow-xl hover:shadow-[#2A5F36]/10 hover:ring-2 hover:ring-[#2A5F36]/50 focus-within:ring-2 focus-within:ring-[#2A5F36]/50">
                 <span className="font-mono text-sm text-[#2A5F36] tracking-wider">03</span>
                 <div className="mt-4 mb-6 relative flex justify-center">
                   <div className="relative w-16 h-16 bg-[#4A90E2] rounded-lg flex items-center justify-center">
                     <Smartphone className="w-8 h-8 text-white" />
                   </div>
                 </div>
-                <h3 className="text-2xl font-bold text-white mb-2">The App</h3>
+                <h3 className="text-xl sm:text-2xl font-bold text-white mb-2">The App</h3>
                 <p className="text-white/70 leading-relaxed text-sm">
                   Remotely manage and shift livestock, optimize grazing and feed management with virtual fencing. Access your farm anywhere, anytime.
                 </p>
@@ -449,18 +450,18 @@ export default function LandingPage() {
       </section>
 
       {/* Farmer Testimonials Section */}
-      <section className="py-24 px-4 bg-gray-50">
+      <section className="py-12 sm:py-16 lg:py-24 px-4 bg-gray-50">
         <div className="container mx-auto">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl lg:text-5xl font-medium text-[#2A5F36] mb-4">Real Farmers, Real Results</h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+          <div className="text-center mb-10 sm:mb-16">
+            <h2 className="text-2xl sm:text-3xl lg:text-4xl xl:text-5xl font-medium text-[#2A5F36] mb-3 sm:mb-4">Real Farmers, Real Results</h2>
+            <p className="text-base sm:text-lg lg:text-xl text-gray-600 max-w-3xl mx-auto">
               Trusted by beef farmers from family operations to large-scale enterprises
             </p>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
-            <div className="bg-white rounded-lg p-8 border border-gray-200">
-              <div className="mb-6">
+          <div className="grid md:grid-cols-3 gap-5 sm:gap-6 lg:gap-8 max-w-6xl mx-auto">
+            <div className="bg-white rounded-lg p-5 sm:p-6 lg:p-8 border border-gray-200">
+              <div className="mb-4 sm:mb-6">
                 <h4 className="font-bold text-[#2A5F36]">John & Sarah Miller</h4>
                 <p className="text-sm text-gray-600">Alberta • 450 Head</p>
               </div>
@@ -469,8 +470,8 @@ export default function LandingPage() {
               </p>
             </div>
 
-            <div className="bg-white rounded-lg p-8 border border-gray-200">
-              <div className="mb-6">
+            <div className="bg-white rounded-lg p-5 sm:p-6 lg:p-8 border border-gray-200">
+              <div className="mb-4 sm:mb-6">
                 <h4 className="font-bold text-[#2A5F36]">Mike Thompson</h4>
                 <p className="text-sm text-gray-600">Saskatchewan • 580 Cows</p>
               </div>
@@ -479,8 +480,8 @@ export default function LandingPage() {
               </p>
             </div>
 
-            <div className="bg-white rounded-lg p-8 border border-gray-200">
-              <div className="mb-6">
+            <div className="bg-white rounded-lg p-5 sm:p-6 lg:p-8 border border-gray-200">
+              <div className="mb-4 sm:mb-6">
                 <h4 className="font-bold text-[#2A5F36]">Lisa & David Chen</h4>
                 <p className="text-sm text-gray-600">Alberta • 320 Head</p>
               </div>
@@ -493,17 +494,17 @@ export default function LandingPage() {
       </section>
 
       {/* Sustainability Section */}
-      <section className="py-24 bg-white">
+      <section className="py-12 sm:py-16 lg:py-24 bg-white">
         <div className="container mx-auto px-4">
-          <div className="grid lg:grid-cols-2 gap-12 items-center">
-            <div>
-              <h2 className="text-4xl lg:text-5xl font-bold text-[#2A5F36] mb-6">Today&apos;s challenges are tomorrow&apos;s possibilities.</h2>
-              <p className="text-xl text-gray-600 leading-relaxed mb-8">
+          <div className="grid lg:grid-cols-2 gap-8 sm:gap-10 lg:gap-12 items-center">
+            <div className="order-2 lg:order-1">
+              <h2 className="text-2xl sm:text-3xl lg:text-4xl xl:text-5xl font-bold text-[#2A5F36] mb-4 sm:mb-6">Today&apos;s challenges are tomorrow&apos;s possibilities.</h2>
+              <p className="text-base sm:text-lg lg:text-xl text-gray-600 leading-relaxed mb-6 sm:mb-8">
                 Our purpose at Agrivanna is to provide farmer-focused solutions to sustainably feed our world. Our ambition is to accelerate innovation and efficiency to drive positive outcomes for farmers and the planet.
               </p>
               <Button
                 size="lg"
-                className="bg-[#2A5F36] hover:bg-[#637D59] text-white text-lg px-8 py-3"
+                className="bg-[#2A5F36] hover:bg-[#637D59] text-white text-base sm:text-lg px-6 sm:px-8 py-3 min-h-[44px]"
                 asChild
               >
                 <Link href="/about">
@@ -512,7 +513,7 @@ export default function LandingPage() {
                 </Link>
               </Button>
             </div>
-            <div className="relative h-96 rounded-lg overflow-hidden">
+            <div className="relative h-64 sm:h-80 lg:h-96 rounded-lg overflow-hidden order-1 lg:order-2">
               <Image
                 src="/sustainable-agriculture-family.png"
                 alt="Family walking with cattle in a pastoral farm landscape"
@@ -576,16 +577,16 @@ export default function LandingPage() {
       </section> */}
 
       {/* CTA Section */}
-      <section className="py-24 px-4 bg-primary-green" style={{ backgroundColor: '#288A5C' }}>
+      <section className="py-12 sm:py-16 lg:py-24 px-4 bg-primary-green" style={{ backgroundColor: '#288A5C' }}>
         <div className="container mx-auto text-center">
-          <h2 className="text-4xl lg:text-5xl font-bold text-white mb-6" style={{ 
+          <h2 className="text-2xl sm:text-3xl lg:text-4xl xl:text-5xl font-bold text-white mb-4 sm:mb-6 px-1" style={{ 
             textRendering: 'optimizeLegibility',
             WebkitFontSmoothing: 'antialiased',
             MozOsxFontSmoothing: 'grayscale'
           }}>
             Together, we&apos;re helping change the world for good.
           </h2>
-          <p className="text-xl text-white/90 mb-8 max-w-3xl mx-auto" style={{ 
+          <p className="text-base sm:text-lg lg:text-xl text-white/90 mb-6 sm:mb-8 max-w-3xl mx-auto px-1" style={{ 
             textRendering: 'optimizeLegibility',
             WebkitFontSmoothing: 'antialiased',
             MozOsxFontSmoothing: 'grayscale'
@@ -593,7 +594,7 @@ export default function LandingPage() {
             Not everyone can claim to feed the world, but it is part of our every day. Behind everything we do for our farmers, there is one Agrivanna team making it happen. We are proud to put our curiosity to work, building a better and more sustainable world.
           </p>
           <div className="flex justify-center">
-            <Button size="lg" className="!bg-white !text-primary-green hover:!bg-background-light text-lg px-8 py-3 flex items-center gap-2" style={{ backgroundColor: '#ffffff', color: '#288A5C' }} asChild>
+            <Button size="lg" className="!bg-white !text-primary-green hover:!bg-background-light text-base sm:text-lg px-6 sm:px-8 py-3 min-h-[44px] flex items-center gap-2" style={{ backgroundColor: '#ffffff', color: '#288A5C' }} asChild>
               <a
                 href="https://calendly.com/aminrezaabbasi-agrivanna/meeting-with-agrivanna-team"
                 target="_blank"
