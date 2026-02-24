@@ -354,7 +354,7 @@ export default function AboutPage() {
               Whether you&apos;re a farmer looking to optimize your operation or a talented individual 
               passionate about agricultural technology, we&apos;d love to connect with you.
             </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+          <div className="flex justify-center">
             <Button size="lg" className="bg-white text-[#2A5F36] hover:bg-gray-100 text-lg px-8 py-3" asChild>
               <Link
                 href="https://calendly.com/aminrezaabbasi-agrivanna/meeting-with-agrivanna-team"
@@ -362,12 +362,6 @@ export default function AboutPage() {
                 rel="noopener noreferrer"
               >
                 Partner With Us
-                <ArrowRight className="ml-2 w-5 h-5" />
-              </Link>
-            </Button>
-            <Button size="lg" variant="outline" className="border-white bg-transparent text-white hover:bg-white hover:text-[#2A5F36] text-lg px-8 py-3" asChild>
-              <Link href="/careers">
-                View Careers
                 <ArrowRight className="ml-2 w-5 h-5" />
               </Link>
             </Button>
