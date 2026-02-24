@@ -18,18 +18,18 @@ export default function LandingPage() {
     <div className="min-h-screen bg-[#F2F2F2]">
       <SpeedInsights />
       {/* Header - crystal bar centered with rounded corners */}
-      <header className="absolute left-0 right-0 z-50 pt-4 top-[var(--announcement-height)]">
-        <div className="container mx-auto px-4">
-          <div className="flex items-center justify-between py-4 px-4 sm:py-6 sm:px-6 max-w-4xl mx-auto rounded-xl sm:rounded-2xl bg-white/5 backdrop-blur-xl border border-white/20 shadow-[0_8px_32px_rgba(255,255,255,0.08)]">
+      <header className="absolute left-0 right-0 z-50 pt-3 sm:pt-4 top-[var(--announcement-height)] px-3 sm:px-4">
+        <div className="container mx-auto">
+          <div className="flex items-center justify-between py-3 px-3 sm:py-6 sm:px-6 max-w-4xl mx-auto rounded-xl sm:rounded-2xl bg-white/5 backdrop-blur-xl border border-white/20 border-t-white/10 shadow-[0_8px_32px_rgba(255,255,255,0.08)]">
             {/* Logo */}
-            <div className="flex items-center animate-fade-in">
+            <div className="flex items-center animate-fade-in min-w-0 shrink">
               <Link href="/">
                 <Image
                   src="/LOGO-black.png"
                   alt="Agrivanna Logo"
                   width={222}
                   height={75}
-                  className="h-6 w-auto hover:scale-105 transition-transform duration-300 brightness-0 invert"
+                  className="h-5 sm:h-6 w-auto hover:scale-105 transition-transform duration-300 brightness-0 invert"
                 />
               </Link>
             </div>
@@ -52,9 +52,9 @@ export default function LandingPage() {
               </Link>
             </nav>
 
-            <div className="flex items-center space-x-4">
+            <div className="flex items-center gap-2 sm:gap-4 shrink-0">
               <Button
-                className="!bg-primary-green hover:!bg-primary-green/90 !text-white rounded-lg px-6 py-2 transition-all duration-300 hover:scale-105 hover:shadow-lg flex items-center gap-2"
+                className="!bg-primary-green hover:!bg-primary-green/90 !text-white rounded-lg px-3 py-2 sm:px-6 sm:py-2 text-sm sm:text-base transition-all duration-300 hover:scale-105 hover:shadow-lg flex items-center gap-1.5 sm:gap-2 min-h-[44px]"
                 style={{ backgroundColor: '#288A5C' }}
                 asChild
               >
@@ -63,8 +63,9 @@ export default function LandingPage() {
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  Chat with us
-                  <ArrowRight className="w-4 h-4" />
+                  <span className="hidden min-[480px]:inline">Chat with us</span>
+                  <span className="inline min-[480px]:hidden">Chat</span>
+                  <ArrowRight className="w-4 h-4 shrink-0" />
                 </a>
               </Button>
 
@@ -133,7 +134,7 @@ export default function LandingPage() {
         <div className="absolute inset-0 bg-primary-dark opacity-60"></div>
         
         {/* Content Overlay */}
-        <div className="relative z-10 container mx-auto px-4 pt-24 sm:pt-28 lg:pt-32 pb-12 sm:pb-20">
+        <div className="relative z-10 container mx-auto px-4 pt-24 sm:pt-28 lg:pt-32 pb-20 sm:pb-24">
           <div className="max-w-3xl">
             <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold text-white leading-tight mb-4 sm:mb-6 animate-fade-in-up">
               <span className="block animate-slide-in-left" style={{ animationDelay: '0.1s' }}>Smarter livestock</span>
@@ -148,35 +149,35 @@ export default function LandingPage() {
           {/* Partners Section */}
           <div className="relative z-10 mt-10 sm:mt-16">
             <div className="text-center mb-3 sm:mb-4">
-              <p className="text-white text-xs sm:text-sm font-medium">Trusted Partners</p>
+              <p className="text-white/95 text-xs sm:text-sm font-medium drop-shadow-sm">Trusted Partners</p>
             </div>
-            <div className="flex flex-wrap justify-center items-center gap-6 sm:gap-8 sm:space-x-0">
+            <div className="flex flex-wrap justify-center items-center gap-6 sm:gap-8">
               <a 
                 href="https://www.plugandplaytechcenter.com/" 
                 target="_blank" 
                 rel="noopener noreferrer"
-                className="hover:opacity-80 transition-opacity duration-300"
+                className="hover:opacity-80 transition-opacity duration-300 min-h-[44px] flex items-center"
               >
                 <Image
                   src="/pnp.svg"
                   alt="Plug and Play Logo"
                   width={120}
                   height={40}
-                  className="h-8 w-auto"
+                  className="h-7 sm:h-8 w-auto"
                 />
               </a>
               <a 
                 href="https://thriveagrifood.com/" 
                 target="_blank" 
                 rel="noopener noreferrer"
-                className="hover:opacity-80 transition-opacity duration-300"
+                className="hover:opacity-80 transition-opacity duration-300 min-h-[44px] flex items-center"
               >
                 <Image
                   src="/svg.png"
                   alt="THRIVE by SVG Ventures Logo"
                   width={100}
                   height={40}
-                  className="h-8 w-auto"
+                  className="h-7 sm:h-8 w-auto"
                 />
               </a>
             </div>
@@ -186,7 +187,7 @@ export default function LandingPage() {
 
 
       {/* Features Section - 3 equal blocks */}
-      <section id="product" className="py-12 sm:py-16 lg:py-24 px-4" style={{ backgroundColor: '#F5F5F0' }}>
+      <section id="product" className="py-12 sm:py-16 lg:py-24 px-4 -mt-px" style={{ backgroundColor: '#F5F5F0' }}>
         <div className="container mx-auto">
           <div className="text-center mb-10 sm:mb-16 lg:mb-20">
             <h2 className="text-2xl sm:text-3xl lg:text-4xl xl:text-5xl font-medium text-left text-[#2A5F36] mb-4">

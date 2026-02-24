@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { useState, useEffect, useRef } from "react"
 import Link from "next/link"
 import { X } from "lucide-react"
 
@@ -8,18 +8,34 @@ const STORAGE_KEY = "agrivanna-announcement-dismissed"
 
 export default function AnnouncementBar() {
   const [isVisible, setIsVisible] = useState(false)
+  const barRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     const dismissed = typeof window !== "undefined" && localStorage.getItem(STORAGE_KEY)
     if (!dismissed) setIsVisible(true)
   }, [])
 
+  // Sync --announcement-height with actual bar height so the header never overlaps
   useEffect(() => {
-    if (typeof document === "undefined") return
-    document.documentElement.style.setProperty(
-      "--announcement-height",
-      isVisible ? "3.5rem" : "0"
-    )
+    if (!isVisible || typeof document === "undefined") {
+      document.documentElement.style.setProperty("--announcement-height", "0")
+      return
+    }
+    const el = barRef.current
+    if (!el) {
+      document.documentElement.style.setProperty("--announcement-height", "3.5rem")
+      return
+    }
+    const setHeight = () => {
+      document.documentElement.style.setProperty(
+        "--announcement-height",
+        `${el.getBoundingClientRect().height}px`
+      )
+    }
+    setHeight()
+    const ro = new ResizeObserver(setHeight)
+    ro.observe(el)
+    return () => ro.disconnect()
   }, [isVisible])
 
   const handleDismiss = () => {
@@ -33,19 +49,21 @@ export default function AnnouncementBar() {
 
   return (
     <div
-      className="w-full min-h-[3.5rem] bg-[#2A5F36] text-white shadow-md flex items-center"
+      ref={barRef}
+      className="w-full min-h-[3.5rem] bg-[#2A5F36] text-white flex items-center"
       role="banner"
       aria-label="Announcement"
     >
-      <div className="container mx-auto px-4 py-3 w-full">
-        <div className="flex flex-wrap items-center justify-center gap-3 sm:gap-4">
-          <p className="text-center text-sm sm:text-base font-medium">
+      <div className="container mx-auto px-3 sm:px-4 py-2.5 sm:py-3 w-full">
+        {/* Mobile: stack text then buttons so height is predictable and no overlap */}
+        <div className="flex flex-col sm:flex-row sm:flex-wrap items-center justify-center gap-2 sm:gap-4">
+          <p className="text-center text-xs sm:text-sm md:text-base font-medium px-1 order-1">
             We&apos;re launching our <strong>Pasture Management app</strong> with satellite integration soon.
           </p>
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2 order-2 shrink-0">
             <Link
               href="/pilot-waitlist"
-              className="inline-flex items-center rounded-lg bg-white px-4 py-2.5 min-h-[44px] text-sm font-semibold text-[#2A5F36] transition hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-[#2A5F36]"
+              className="inline-flex items-center rounded-lg bg-white px-3 py-2 sm:px-4 sm:py-2.5 min-h-[44px] text-xs sm:text-sm font-semibold text-[#2A5F36] transition hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-[#2A5F36]"
             >
               Join the waitlist
             </Link>
