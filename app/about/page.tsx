@@ -211,14 +211,18 @@ export default function AboutPage() {
                 that actually works in their environment, helping them sustainably feed our world.
               </p>
             </div>
-            <div className="relative h-96 rounded-lg overflow-hidden bg-gray-100">
-              <div className="absolute inset-0 flex items-center justify-center">
-                <div className="text-center">
-                  <div className="w-16 h-16 bg-[#2A5F36] rounded-lg flex items-center justify-center mx-auto mb-4">
-                    <Target className="w-8 h-8 text-white" />
-                  </div>
-                  <h3 className="text-2xl font-bold text-[#2A5F36] mb-2">Our Mission</h3>
-                  <p className="text-gray-600">Empowering farmers with intelligent technology</p>
+            <div>
+              <p className="text-lg font-semibold text-[#2A5F36] mb-4">Our mission: Empowering farmers with intelligent technology</p>
+              <div className="relative aspect-[4/3] min-h-80 rounded-xl overflow-hidden bg-[#e8f0ea]">
+                <Image
+                  src="/team-photo.png"
+                  alt="Agrivanna team members"
+                  fill
+                  className="object-contain object-center rotate-90 rounded-xl"
+                  sizes="(max-width: 1024px) 100vw, 50vw"
+                />
+                <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/60 to-transparent p-4">
+                  <p className="text-white font-medium text-center">Yep, this is us. 👋</p>
                 </div>
               </div>
             </div>
@@ -258,7 +262,7 @@ export default function AboutPage() {
           <div className="text-center mb-16">
             <h2 className="text-4xl lg:text-5xl font-medium text-[#2A5F36] mb-4">Meet Our Team</h2>
             <p className="text-xl text-[#637D59] max-w-3xl mx-auto">
-              We&apos;re a diverse team of engineers, farmers, and innovators united by our passion for agriculture and technology.
+              Engineers by day, ag-tech enthusiasts by choice. We&apos;re the kind of people who get genuinely excited about pasture rotation algorithms—yes, really. From debugging code to dreaming up the future of farming, we&apos;re a quirky crew united by bad puns and good coffee.
             </p>
           </div>
 
@@ -360,7 +364,7 @@ export default function AboutPage() {
                 <ArrowRight className="ml-2 w-5 h-5" />
               </Link>
             </Button>
-            <Button size="lg" variant="outline" className="border-white text-white hover:bg-white hover:text-[#2A5F36] text-lg px-8 py-3" asChild>
+            <Button size="lg" variant="outline" className="border-white bg-transparent text-white hover:bg-white hover:text-[#2A5F36] text-lg px-8 py-3" asChild>
               <Link href="/careers">
                 View Careers
                 <ArrowRight className="ml-2 w-5 h-5" />
