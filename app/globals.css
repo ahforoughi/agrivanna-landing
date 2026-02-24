@@ -389,6 +389,15 @@
 }
 
 /* Pilot waitlist HubSpot form */
+.pilot-waitlist-form {
+  overflow: visible;
+  min-width: 0;
+}
+.pilot-waitlist-form img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
 .pilot-waitlist-form .hs-form fieldset {
   max-width: 100%;
 }

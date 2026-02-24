@@ -106,9 +106,9 @@ export default function PilotWaitlistPage() {
       {/* Form Section */}
       <section className="py-10 sm:py-12 lg:py-24">
         <div className="container mx-auto px-4">
-          <div className="max-w-2xl mx-auto">
-            <div className="bg-white rounded-xl sm:rounded-2xl shadow-lg border border-gray-100 overflow-hidden">
-              <div className="p-5 sm:p-6 lg:p-10">
+          <div className="max-w-4xl mx-auto">
+            <div className="bg-white rounded-xl sm:rounded-2xl shadow-lg border border-gray-100 overflow-visible">
+              <div className="p-8 sm:p-10 lg:p-14">
                 <Script
                   src="https://js-na3.hsforms.net/forms/embed/342489770.js"
                   strategy="afterInteractive"
