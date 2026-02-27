@@ -219,11 +219,11 @@ export default function AboutPage() {
                   src="/team-photo.png"
                   alt="Agrivanna team members"
                   fill
-                  className="object-contain object-center rotate-90 rounded-xl"
+                  className="object-contain object-center scale-135 rotate-90 rounded-xl"
                   sizes="(max-width: 1024px) 100vw, 50vw"
                 />
-                <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/60 to-transparent p-4">
-                  <p className="text-white font-medium text-center">Yep, this is us. 👋</p>
+                <div className="absolute bottom-0 left-0 bg-gradient-to-t from-black/60 to-transparent p-4">
+                  <p className="text-white font-medium">Yep, this is us. 👋</p>
                 </div>
               </div>
             </div>
