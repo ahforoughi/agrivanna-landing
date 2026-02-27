@@ -36,8 +36,8 @@ export default function LandingPage() {
 
             {/* Desktop Navigation */}
             <nav className="hidden lg:flex items-center space-x-8">
-              <Link href="/services" className="text-white hover:text-neutral-gray transition-all duration-300 hover:scale-105 relative group">
-                Services
+              <Link href="/products" className="text-white hover:text-neutral-gray transition-all duration-300 hover:scale-105 relative group">
+                Products
                 <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-white transition-all duration-300 group-hover:w-full"></span>
               </Link>
 
@@ -84,7 +84,7 @@ export default function LandingPage() {
           {mobileMenuOpen && (
             <div className="lg:hidden border border-white/20 py-4 bg-white/10 backdrop-blur-xl rounded-xl mt-2 shadow-[0_8px_32px_rgba(255,255,255,0.12)]">
               <nav className="flex flex-col space-y-4">
-                <Link href="/services" className="text-white hover:text-neutral-gray">Services</Link>
+                <Link href="/products" className="text-white hover:text-neutral-gray">Products</Link>
                 <Link href="/about" className="text-white hover:text-neutral-gray">About us</Link>
                 <Link href="/contact" className="text-white hover:text-neutral-gray">Contact us</Link>
                 <Button

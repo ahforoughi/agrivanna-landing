@@ -51,14 +51,12 @@ export default function Footer() {
             </p>
           </div>
 
-          {/* Services */}
+          {/* Products */}
           <div>
-            <h3 className="text-base sm:text-lg font-semibold mb-4 sm:mb-6">Services</h3>
+            <h3 className="text-base sm:text-lg font-semibold mb-4 sm:mb-6">Products</h3>
             <ul className="space-y-1 sm:space-y-3">
-              <li><Link href="/services#virtual-grazing-management" className="text-gray-300 hover:text-white transition-colors py-2 sm:py-0 block text-sm sm:text-base">Virtual Grazing Management</Link></li>
-              <li><Link href="/services#ai-enhanced-smart-weighing" className="text-gray-300 hover:text-white transition-colors py-2 sm:py-0 block text-sm sm:text-base">AI-Enhanced Smart Weighing</Link></li>
-              <li><Link href="/services#health--behavior-monitoring" className="text-gray-300 hover:text-white transition-colors py-2 sm:py-0 block text-sm sm:text-base">Health & Behavior Monitoring</Link></li>
-              <li><Link href="/services#livestock-lifecycle-management" className="text-gray-300 hover:text-white transition-colors py-2 sm:py-0 block text-sm sm:text-base">Livestock Lifecycle Management</Link></li>
+              <li><Link href="/products#pasture-readiness-score" className="text-gray-300 hover:text-white transition-colors py-2 sm:py-0 block text-sm sm:text-base">Pasture Readiness Score</Link></li>
+              <li><Link href="/products#virtual-fencing-collar" className="text-gray-300 hover:text-white transition-colors py-2 sm:py-0 block text-sm sm:text-base">Virtual Fencing Collar</Link></li>
             </ul>
           </div>
 

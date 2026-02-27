@@ -45,7 +45,7 @@ export default function NewsPage() {
 
             {/* Desktop Navigation */}
             <nav className="hidden lg:flex items-center space-x-8">
-              <Link href="/services" className="text-black hover:text-gray-600 transition-all duration-300 hover:scale-105 relative group">
+              <Link href="/products" className="text-black hover:text-gray-600 transition-all duration-300 hover:scale-105 relative group">
                 Services
                 <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gray-600 transition-all duration-300 group-hover:w-full"></span>
               </Link>
@@ -89,7 +89,7 @@ export default function NewsPage() {
           {mobileMenuOpen && (
             <div className="lg:hidden border-t border-gray-300 py-4">
               <nav className="flex flex-col space-y-4">
-                <Link href="/services" className="text-black hover:text-gray-600">Services</Link>
+                <Link href="/products" className="text-black hover:text-gray-600">Products</Link>
                 <Link href="/about" className="text-black hover:text-gray-600">About us</Link>
                 <Link href="/contact" className="text-black hover:text-gray-600">Contact us</Link>
                 <Button
