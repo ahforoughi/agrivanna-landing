@@ -186,20 +186,20 @@ export default function ProductsPage() {
 
                 <h4 className="text-lg font-semibold text-[#2A5F36] mb-4">Core Features</h4>
                 <div className="space-y-3 mb-6">
-                  <div className="flex items-start space-x-3">
-                    <CheckCircle className="w-5 h-5 text-[#2A5F36] flex-shrink-0 mt-0.5" />
+                  <div className="flex items-center space-x-3">
+                    <CheckCircle className="w-5 h-5 text-[#2A5F36] flex-shrink-0" />
                     <span className="text-gray-700"><strong>Paddock Analysis:</strong> Assess forage availability in real time</span>
                   </div>
-                  <div className="flex items-start space-x-3">
-                    <CheckCircle className="w-5 h-5 text-[#2A5F36] flex-shrink-0 mt-0.5" />
+                  <div className="flex items-center space-x-3">
+                    <CheckCircle className="w-5 h-5 text-[#2A5F36] flex-shrink-0" />
                     <span className="text-gray-700"><strong>Herd Management:</strong> Add herds in bulk (e.g., 150 yearlings, 900 lbs each)</span>
                   </div>
-                  <div className="flex items-start space-x-3">
-                    <CheckCircle className="w-5 h-5 text-[#2A5F36] flex-shrink-0 mt-0.5" />
+                  <div className="flex items-center space-x-3">
+                    <CheckCircle className="w-5 h-5 text-[#2A5F36] flex-shrink-0" />
                     <span className="text-gray-700"><strong>Grazing Plans:</strong> Calculate forage needs and match herds to paddocks</span>
                   </div>
-                  <div className="flex items-start space-x-3">
-                    <CheckCircle className="w-5 h-5 text-[#2A5F36] flex-shrink-0 mt-0.5" />
+                  <div className="flex items-center space-x-3">
+                    <CheckCircle className="w-5 h-5 text-[#2A5F36] flex-shrink-0" />
                     <span className="text-gray-700"><strong>Smart Onboarding:</strong> Quick setup predicts your farm infrastructure</span>
                   </div>
                 </div>
@@ -229,20 +229,20 @@ export default function ProductsPage() {
 
                 <h4 className="text-lg font-semibold text-[#2A5F36] mb-4">How It Works</h4>
                 <div className="space-y-3 mb-6">
-                  <div className="flex items-start space-x-3">
-                    <CheckCircle className="w-5 h-5 text-[#637D59] flex-shrink-0 mt-0.5" />
+                  <div className="flex items-center space-x-3">
+                    <CheckCircle className="w-5 h-5 text-[#637D59] flex-shrink-0" />
                     <span className="text-gray-700"><strong>Automated Movement:</strong> Move cattle paddock to paddock without physical fences</span>
                   </div>
-                  <div className="flex items-start space-x-3">
-                    <CheckCircle className="w-5 h-5 text-[#637D59] flex-shrink-0 mt-0.5" />
+                  <div className="flex items-center space-x-3">
+                    <CheckCircle className="w-5 h-5 text-[#637D59] flex-shrink-0" />
                     <span className="text-gray-700"><strong>Health Alerts:</strong> Get notified when animals show concerning behavior</span>
                   </div>
-                  <div className="flex items-start space-x-3">
-                    <CheckCircle className="w-5 h-5 text-[#637D59] flex-shrink-0 mt-0.5" />
+                  <div className="flex items-center space-x-3">
+                    <CheckCircle className="w-5 h-5 text-[#637D59] flex-shrink-0" />
                     <span className="text-gray-700"><strong>Preventative Care:</strong> Flag animals not keeping up with the herd, or detect stolen/lost cattle</span>
                   </div>
-                  <div className="flex items-start space-x-3">
-                    <CheckCircle className="w-5 h-5 text-[#637D59] flex-shrink-0 mt-0.5" />
+                  <div className="flex items-center space-x-3">
+                    <CheckCircle className="w-5 h-5 text-[#637D59] flex-shrink-0" />
                     <span className="text-gray-700"><strong>Data Tracking:</strong> Vaccinations, birth weights, and breeding records</span>
                   </div>
                 </div>
