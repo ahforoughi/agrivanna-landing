@@ -139,14 +139,16 @@ export default function ProductsPage() {
 
             <div className="max-w-5xl mx-auto">
             <div className="relative rounded-2xl overflow-hidden shadow-2xl bg-black aspect-video">
-              <video 
-                controls 
+              <iframe 
+                width="100%" 
+                height="100%" 
+                src="https://www.youtube.com/embed/3jRNbjB9XeI" 
+                title="Pasture Readiness Score MVP Demo"
+                frameBorder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                allowFullScreen
                 className="w-full h-full"
-                poster="/video-thumbnail.jpg"
-              >
-                <source src="/pasture-readiness-mvp-demo.mp4" type="video/mp4" />
-                Your browser does not support the video tag.
-              </video>
+              ></iframe>
             </div>
           </div>
         </div>

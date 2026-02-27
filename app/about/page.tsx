@@ -207,7 +207,7 @@ export default function AboutPage() {
                 We saw an opportunity to apply cutting-edge AI and IoT technology to solve real-world farming challenges.
               </p>
               <p className="text-lg text-gray-600 leading-relaxed">
-                Today, we&apos;re building a comprehensive platform that combines virtual fencing, AI weight tracking, 
+                Today, we&apos;re building a comprehensive platform that combines virtual fencing, grazing management, 
                 health monitoring, and farm management tools. Our mission is to empower farmers with technology 
                 that actually works in their environment, helping them sustainably feed our world.
               </p>
