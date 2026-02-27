@@ -3,7 +3,7 @@
 import { useState } from "react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
-import { Stethoscope, Brain, Shield, Users, ArrowRight, Menu, X, CheckCircle, Globe } from "lucide-react"
+import { ArrowRight, Menu, X, CheckCircle } from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"
 import Footer from "@/components/Footer"
@@ -156,7 +156,7 @@ export default function ProductsPage() {
       <section className="py-24 bg-gray-50">
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
-            <h2 className="text-4xl lg:text-5xl font-medium text-[#2A5F36] mb-4">What We're Building</h2>
+            <h2 className="text-4xl lg:text-5xl font-medium text-[#2A5F36] mb-4">What We&apos;re Building</h2>
             <p className="text-xl text-[#637D59] max-w-3xl mx-auto">
               Two products working together: software that tells you where to graze, hardware that moves your herd there automatically
             </p>
@@ -181,7 +181,7 @@ export default function ProductsPage() {
                 </div>
 
                 <p className="text-gray-700 leading-relaxed mb-6">
-                  Draw your paddocks on a map. Our system analyzes satellite imagery to tell you which areas are ready to graze and which need rest. Red means don't graze. Green means go.
+                  Draw your paddocks on a map. Our system analyzes satellite imagery to tell you which areas are ready to graze and which need rest. Red means don&apos;t graze. Green means go.
                 </p>
 
                 <h4 className="text-lg font-semibold text-[#2A5F36] mb-4">Core Features</h4>
@@ -379,7 +379,7 @@ export default function ProductsPage() {
                   </div>
                   <div className="bg-white/60 p-4 rounded-lg">
                     <h5 className="font-semibold text-[#2d8659] mb-2">Stay Informed</h5>
-                    <p className="text-gray-700 text-sm">Get alerts when something's wrong</p>
+                    <p className="text-gray-700 text-sm">Get alerts when something&apos;s wrong</p>
                   </div>
                 </div>
               </div>
@@ -412,7 +412,7 @@ export default function ProductsPage() {
           <div className="text-center mb-16">
             <h2 className="text-4xl lg:text-5xl font-medium text-[#2A5F36] mb-4">What You Can Do</h2>
             <p className="text-xl text-[#637D59] max-w-3xl mx-auto">
-              See how ranchers use Agrivanna's platform and smart collar technology
+              See how ranchers use Agrivanna&apos;s platform and smart collar technology
             </p>
           </div>
 
@@ -456,7 +456,7 @@ export default function ProductsPage() {
           <div className="text-center mb-16">
             <h2 className="text-4xl lg:text-5xl font-medium text-[#2A5F36] mb-4">Why Ranchers Choose Agrivanna</h2>
             <p className="text-xl text-[#637D59] max-w-3xl mx-auto">
-              We're not selling magic AI. We're building practical tools that solve actual ranching problems.
+              We&apos;re not selling magic AI. We&apos;re building practical tools that solve actual ranching problems.
             </p>
           </div>
 
