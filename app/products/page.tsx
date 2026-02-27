@@ -133,7 +133,7 @@ export default function ProductsPage() {
           <div className="text-center mb-12">
             <h2 className="text-4xl lg:text-5xl font-medium text-[#2A5F36] mb-4">See It In Action</h2>
             <p className="text-xl text-[#637D59] max-w-3xl mx-auto">
-              Watch Hayden (Our COO) walk through our Pasture Readiness Scoring system and grazing management platform.
+              Watch Haden (Our COO) walk through our Pasture Readiness Scoring system and grazing management platform.
             </p>
           </div>
 
