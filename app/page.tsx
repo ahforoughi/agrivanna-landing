@@ -142,7 +142,7 @@ export default function LandingPage() {
               <span className="block animate-slide-in-left" style={{ animationDelay: '0.3s' }}>effort.</span>
             </h1>
             <p className="text-base sm:text-lg lg:text-xl xl:text-2xl text-white/90 leading-relaxed animate-fade-in max-w-xl sm:max-w-none" style={{ animationDelay: '0.4s' }}>
-              Virtual grazing management, AI-enhanced smart weighing, health monitoring, and livestock lifecycle management in one platform.
+              AI-powered virtual fencing, automated rotational grazing, real-time herd tracking, lower fencing and labour costs.
             </p>
           </div>
           
