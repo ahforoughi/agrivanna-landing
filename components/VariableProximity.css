@@ -1,0 +1,5 @@
+.variable-proximity {
+  font-family: var(--font-geist), system-ui, sans-serif;
+  font-variation-settings: "wght" 400;
+  will-change: font-variation-settings;
+}

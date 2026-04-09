@@ -1,0 +1,219 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  /* Dark charcoal, not flat black */
+  --ink-950: #14161A;
+  --ink-900: #191C21;
+  --ink-800: #21242A;
+  --ink-700: #2B2F36;
+  --lime-400: #A6FF3D;
+  --lime-500: #8AF51E;
+  --bone-50: #F6F6F4;
+  --bone-300: #B6B6AE;
+  --bone-400: #8C8C85;
+  --cream-50: #FAFAF7;
+  --cream-100: #F3F2EC;
+  --announcement-height: 0px;
+}
+
+html {
+  background: var(--ink-950);
+  color: var(--bone-50);
+  -webkit-font-smoothing: antialiased;
+  scroll-behavior: smooth;
+  font-size: 16.5px;
+}
+
+body {
+  background: var(--ink-950);
+  color: var(--bone-50);
+  font-family: var(--font-geist), system-ui, sans-serif;
+  font-feature-settings: "ss01", "cv11";
+}
+
+::selection {
+  background: var(--lime-400);
+  color: var(--ink-950);
+}
+
+/* Light/cream section */
+.section-light {
+  background: var(--cream-50);
+  color: var(--ink-950);
+}
+.section-light .eyebrow { color: #2F6A14; }
+.section-light .eyebrow::before { background: #2F6A14; }
+
+/* Hairline grid backdrop — tuned for charcoal */
+.grid-backdrop {
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.045) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.045) 1px, transparent 1px);
+  background-size: 64px 64px;
+  mask-image: radial-gradient(ellipse at center, black 40%, transparent 85%);
+}
+.section-light .grid-backdrop {
+  background-image:
+    linear-gradient(rgba(20, 22, 26, 0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(20, 22, 26, 0.06) 1px, transparent 1px);
+}
+
+/* Noise overlay */
+.noise {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.55'/%3E%3C/svg%3E");
+  opacity: 0.05;
+  mix-blend-mode: overlay;
+}
+
+/* Ticker / marquee */
+.marquee-track {
+  display: flex;
+  gap: 3rem;
+  width: max-content;
+  animation: marquee 38s linear infinite;
+}
+.marquee-track:hover { animation-play-state: paused; }
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+/* ======================================================================
+   BUTTONS — fixed so hover text is always readable
+   ====================================================================== */
+
+/* Outline button (dark bg) */
+.btn {
+  --btn-text: var(--bone-50);
+  --btn-text-hover: var(--ink-950);
+  --btn-border: rgba(246, 246, 244, 0.22);
+  --btn-fill: var(--lime-400);
+  position: relative;
+  isolation: isolate;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.95rem 1.5rem;
+  border-radius: 999px;
+  border: 1px solid var(--btn-border);
+  color: var(--btn-text);
+  font-weight: 500;
+  font-size: 0.98rem;
+  overflow: hidden;
+  transition: color 0.45s ease, border-color 0.45s ease;
+  white-space: nowrap;
+}
+.btn::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--btn-fill);
+  transform: translateY(101%);
+  transition: transform 0.55s cubic-bezier(0.22, 1, 0.36, 1);
+  z-index: -1;
+}
+.btn:hover {
+  color: var(--btn-text-hover);
+  border-color: var(--btn-fill);
+}
+.btn:hover::before { transform: translateY(0); }
+
+/* Outline button on light sections */
+.section-light .btn {
+  --btn-text: var(--ink-950);
+  --btn-text-hover: var(--ink-950);
+  --btn-border: rgba(20, 22, 26, 0.25);
+}
+
+/* Solid button — lime fill, hover flips to dark bg with lime text */
+.btn-solid {
+  --btn-text: var(--ink-950);
+  --btn-text-hover: var(--lime-400);
+  --btn-border: var(--lime-400);
+  --btn-fill: var(--ink-950);
+  background: var(--lime-400);
+}
+.btn-solid:hover {
+  color: var(--btn-text-hover);
+  border-color: var(--lime-400);
+}
+
+/* Compact button variant for tight mobile areas */
+.btn-sm {
+  padding: 0.55rem 0.95rem;
+  font-size: 0.82rem;
+  gap: 0.35rem;
+}
+
+/* ======================================================================
+   Cards, dividers, eyebrows
+   ====================================================================== */
+
+.stat-divider {
+  width: 1px;
+  background: linear-gradient(180deg, transparent, rgba(166, 255, 61, 0.55), transparent);
+}
+
+.glow-card {
+  position: relative;
+  background: linear-gradient(180deg, #1E2128 0%, #191C21 100%);
+  border: 1px solid rgba(246, 246, 244, 0.08);
+  border-radius: 24px;
+  transition: border-color 0.35s ease, transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.glow-card:hover {
+  border-color: rgba(166, 255, 61, 0.35);
+  transform: translateY(-4px);
+}
+
+.section-light .glow-card {
+  background: #ffffff;
+  border-color: rgba(20, 22, 26, 0.08);
+}
+.section-light .glow-card:hover {
+  border-color: rgba(47, 106, 20, 0.4);
+}
+
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.7rem;
+  font-size: 0.84rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--lime-400);
+  font-weight: 500;
+}
+.eyebrow::before {
+  content: "";
+  display: block;
+  width: 32px;
+  height: 1px;
+  background: var(--lime-400);
+}
+
+/* Uniformly rounded media wrappers — applied across the site */
+.media {
+  border-radius: 2rem;
+  overflow: hidden;
+  border: 1px solid rgba(246, 246, 244, 0.06);
+}
+.media-sm { border-radius: 1.25rem; }
+.section-light .media { border-color: rgba(20, 22, 26, 0.08); }
+
+/* Variable proximity */
+.variable-proximity { cursor: default; }
+.sr-only {
+  position: absolute;
+  width: 1px; height: 1px; padding: 0; margin: -1px;
+  overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0;
+}
+
+/* Timeline slider scrollbar reset */
+.no-scrollbar::-webkit-scrollbar { display: none; }
+.no-scrollbar { scrollbar-width: none; }
