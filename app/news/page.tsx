@@ -1,220 +1,125 @@
-"use client"
+import Image from "next/image";
+import Link from "next/link";
+import { ArrowUpRight } from "lucide-react";
+import { NEWS } from "@/lib/news";
+import Reveal from "@/components/Reveal";
+import TimelineSlider from "@/components/TimelineSlider";
 
-import { useState } from "react"
-import { Button } from "@/components/ui/button"
-import { Card } from "@/components/ui/card"
-import { ArrowRight, Menu, X, Calendar, Tag, TrendingUp } from "lucide-react"
-import Image from "next/image"
-import Link from "next/link"
-import Footer from "@/components/Footer"
+export const metadata = {
+  title: "News & Timeline — Agrivanna",
+  description:
+    "Press, awards, and accelerator news from Agrivanna — plus our story from founding to first ranch pilots.",
+};
 
 export default function NewsPage() {
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
-
-  const articles = [
-    {
-      id: 1,
-      title: "Agrivanna Seeks Strategic Investors to Accelerate Agricultural Innovation",
-      category: "Investment",
-      date: "January 2025",
-      author: "Agrivanna Team",
-      image: "/investment-news.jpg",
-      excerpt: "Agrivanna is actively seeking strategic investors and partners to accelerate the development and deployment of our revolutionary livestock management platform. Join us in transforming the future of agriculture.",
-      content: "Agrivanna Corporation, a leading innovator in agricultural technology, announced today that it is actively seeking strategic investors to accelerate the development and deployment of its comprehensive livestock management platform. The company is looking for partners who share their vision of revolutionizing agriculture through cutting-edge technology.\n\nFounded in October 2024, Agrivanna has developed a suite of integrated solutions including virtual grazing management, AI-enhanced smart weighing, health and behavior monitoring, and livestock lifecycle management. The platform addresses the growing need for efficient, sustainable, and technology-driven farming solutions.\n\n'We're at an exciting inflection point in our journey,' said Amirhossein Foroughi, CEO of Agrivanna. 'The agricultural technology market presents a massive $26B opportunity, and we're well-positioned to capture significant market share with our innovative approach to livestock management.'\n\nThe company is seeking investors who can provide not only capital but also strategic guidance and industry connections to help scale the business across North America and beyond. With the AI in AgTech sector growing at 21.6% CAGR, Agrivanna represents a compelling investment opportunity in a rapidly expanding market.\n\nInterested investors are encouraged to schedule a call with the Agrivanna team to learn more about the investment opportunity and how they can be part of transforming the agricultural industry."
-    }
-  ]
-
   return (
-    <div className="min-h-screen bg-[#F2F2F2]">
+    <>
       {/* Header */}
-      <header className="bg-white sticky top-0 z-50 shadow-sm">
-        <div className="container mx-auto px-4">
-          <div className="flex items-center justify-between py-6">
-            {/* Logo */}
-            <div className="flex items-center animate-fade-in">
-              <Link href="/">
-                <Image
-                  src="/LOGO-black.png"
-                  alt="Agrivanna Logo"
-                  width={222}
-                  height={75}
-                  className="h-6 w-auto hover:scale-105 transition-transform duration-300"
-                />
-              </Link>
-            </div>
-
-            {/* Desktop Navigation */}
-            <nav className="hidden lg:flex items-center space-x-8">
-              <Link href="/products" className="text-black hover:text-gray-600 transition-all duration-300 hover:scale-105 relative group">
-                Services
-                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gray-600 transition-all duration-300 group-hover:w-full"></span>
-              </Link>
-
-              <Link href="/about" className="text-black hover:text-gray-600 transition-all duration-300 hover:scale-105 relative group">
-                About us
-                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gray-600 transition-all duration-300 group-hover:w-full"></span>
-              </Link>
-
-              <Link href="/contact" className="text-black hover:text-gray-600 transition-all duration-300 hover:scale-105 relative group">
-                Contact us
-                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gray-600 transition-all duration-300 group-hover:w-full"></span>
-              </Link>
-            </nav>
-
-            <div className="flex items-center space-x-4">
-              <Button
-                className="bg-[#2A5F36] hover:bg-[#637D59] text-white rounded-lg px-6 py-2 transition-all duration-300 hover:scale-105 hover:shadow-lg"
-                asChild
-              >
-                <a
-                  href="https://calendly.com/aminrezaabbasi-agrivanna/meeting-with-agrivanna-team"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  Book demo
-                </a>
-              </Button>
-
-              {/* Mobile Menu Button */}
-              <button
-                className="lg:hidden p-2"
-                onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              >
-                {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
-              </button>
-            </div>
-          </div>
-
-          {/* Mobile Menu */}
-          {mobileMenuOpen && (
-            <div className="lg:hidden border-t border-gray-300 py-4">
-              <nav className="flex flex-col space-y-4">
-                <Link href="/products" className="text-black hover:text-gray-600">Products</Link>
-                <Link href="/about" className="text-black hover:text-gray-600">About us</Link>
-                <Link href="/contact" className="text-black hover:text-gray-600">Contact us</Link>
-                <Button
-                  className="bg-[#2A5F36] hover:bg-[#637D59] text-white w-full"
-                  asChild
-                >
-                  <a
-                    href="https://calendly.com/aminrezaabbasi-agrivanna/meeting-with-agrivanna-team"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    Book demo
-                  </a>
-                </Button>
-              </nav>
-            </div>
-          )}
-        </div>
-      </header>
-
-      {/* Hero Section */}
-      <section className="relative bg-gradient-to-br from-[#2A5F36] to-[#637D59] py-24 text-white overflow-hidden">
-        <div className="container mx-auto px-4 text-center">
-          <h1 className="text-5xl lg:text-6xl xl:text-7xl font-bold leading-tight mb-6">
-            Agrivanna News & Updates
-          </h1>
-          <p className="text-xl lg:text-2xl leading-relaxed mb-8 max-w-3xl mx-auto opacity-90">
-            Stay informed about our latest developments, company milestones, and industry insights as we revolutionize agriculture through technology.
-          </p>
+      <section className="relative overflow-hidden pt-40 pb-20">
+        <div className="absolute inset-0 grid-backdrop" aria-hidden="true" />
+        <div className="relative mx-auto max-w-6xl px-4">
+          <Reveal>
+            <p className="eyebrow">Press · Awards · Milestones</p>
+          </Reveal>
+          <Reveal delay={0.05}>
+            <h1 className="mt-6 max-w-4xl text-5xl font-medium tracking-tightest sm:text-7xl lg:text-8xl">
+              What we&apos;re
+              <br />
+              <span className="text-lime-400">building in public.</span>
+            </h1>
+          </Reveal>
+          <Reveal delay={0.15}>
+            <p className="mt-10 max-w-xl text-base text-bone-300">
+              Every accelerator, award, and article the company has picked up along the way,
+              plus the story from founding to first ranch pilots.
+            </p>
+          </Reveal>
         </div>
       </section>
 
-      {/* Featured Article Section */}
-      <section className="py-24 bg-white">
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl lg:text-5xl font-medium text-[#2A5F36] mb-4">Latest News</h2>
-            <p className="text-xl text-[#637D59] max-w-3xl mx-auto">
-              Our most recent announcements and company updates.
-            </p>
+      {/* News list */}
+      <section className="relative border-t border-white/5 py-24">
+        <div className="mx-auto max-w-6xl px-4">
+          <div className="mb-12 flex items-end justify-between">
+            <div>
+              <p className="eyebrow">Latest</p>
+              <h2 className="mt-4 text-3xl font-medium tracking-tighter sm:text-4xl">
+                In the news.
+              </h2>
+            </div>
+            <span className="hidden font-mono text-[11px] uppercase tracking-[0.18em] text-bone-300 md:inline">
+              {NEWS.length} stories
+            </span>
           </div>
 
-          <div className="max-w-4xl mx-auto">
-            {articles.map(article => (
-              <Card key={article.id} className="bg-white border border-gray-200 overflow-hidden mb-8">
-                <div className="p-8 md:p-12">
-                  <div className="flex flex-wrap items-center gap-4 text-sm text-gray-500 mb-6">
-                    <div className="flex items-center space-x-2">
-                      <Tag className="w-4 h-4" />
-                      <span className="bg-[#2A5F36] text-white px-3 py-1 rounded-full text-xs font-medium">{article.category}</span>
-                    </div>
-                    <div className="flex items-center space-x-2">
-                      <Calendar className="w-4 h-4" />
-                      <span>{article.date}</span>
-                    </div>
-                    <div className="flex items-center space-x-2">
-                      <TrendingUp className="w-4 h-4" />
-                      <span>{article.author}</span>
-                    </div>
+          <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+            {NEWS.map((n, i) => (
+              <Reveal key={n.title} delay={(i % 3) * 0.08}>
+                <Link
+                  href={n.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group flex h-full flex-col overflow-hidden rounded-3xl border border-white/5 bg-ink-900 transition-colors hover:border-lime-400/40"
+                >
+                  <div className="relative aspect-[16/10] overflow-hidden bg-ink-800">
+                    <Image
+                      src={n.image}
+                      alt={n.title}
+                      fill
+                      quality={95}
+                      className="object-cover transition-transform duration-700 group-hover:scale-105"
+                      sizes="(min-width: 1280px) 420px, (min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw"
+                    />
+                    <span className="absolute left-4 top-4 rounded-full border border-white/20 bg-ink-950/70 px-3 py-1 font-mono text-[10px] uppercase tracking-[0.14em] text-bone-50 backdrop-blur">
+                      {n.tag}
+                    </span>
                   </div>
-                  
-                  <h3 className="text-3xl lg:text-4xl font-bold text-[#2A5F36] mb-6">
-                    {article.title}
-                  </h3>
-                  
-                  <p className="text-xl text-gray-600 mb-8 leading-relaxed">
-                    {article.excerpt}
-                  </p>
-
-                  <div className="prose prose-lg max-w-none text-gray-700 leading-relaxed whitespace-pre-line mb-8">
-                    {article.content}
+                  <div className="flex flex-1 flex-col p-6">
+                    <p className="font-mono text-[11px] uppercase tracking-[0.14em] text-bone-300">
+                      {n.date} · {n.source}
+                    </p>
+                    <h3 className="mt-4 text-lg font-medium leading-snug tracking-tight text-bone-50 group-hover:text-lime-400">
+                      {n.title}
+                    </h3>
+                    <p className="mt-3 line-clamp-3 text-sm text-bone-300">{n.summary}</p>
+                    <span className="mt-auto pt-6 inline-flex items-center gap-2 text-xs uppercase tracking-[0.14em] text-lime-400">
+                      Read more <ArrowUpRight className="h-3.5 w-3.5" />
+                    </span>
                   </div>
-
-                  <div className="pt-6 border-t border-gray-200">
-                    <Button 
-                      size="lg" 
-                      className="bg-[#2A5F36] hover:bg-[#637D59] text-white px-8 py-3"
-                      asChild
-                    >
-                      <a
-                        href="https://calendly.com/aminrezaabbasi-agrivanna/meeting-with-agrivanna-team"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                      >
-                        Schedule Investment Call
-                        <ArrowRight className="ml-2 w-5 h-5" />
-                      </a>
-                    </Button>
-                  </div>
-                </div>
-              </Card>
+                </Link>
+              </Reveal>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Newsletter Signup Section */}
-      <section className="py-24 bg-[#2A5F36] text-white">
-        <div className="container mx-auto px-4 text-center">
-          <h2 className="text-4xl lg:text-5xl font-bold mb-6">
-            Stay Connected
-          </h2>
-          <p className="text-xl lg:text-2xl mb-8 max-w-3xl mx-auto opacity-90">
-            Subscribe to our newsletter for the latest news, updates, and insights from Agrivanna.
-          </p>
-          <div className="max-w-lg mx-auto">
-            <div className="flex flex-col sm:flex-row gap-4 bg-white/10 backdrop-blur-sm rounded-2xl p-2">
-              <input
-                type="email"
-                placeholder="Enter your email"
-                className="flex-grow px-6 py-4 rounded-xl border-0 focus:outline-none focus:ring-2 focus:ring-white/50 text-gray-900 placeholder-gray-500"
-              />
-              <Button size="lg" className="bg-white text-[#2A5F36] hover:bg-gray-100 text-lg px-8 py-4 whitespace-nowrap">
-                Subscribe
-                <ArrowRight className="ml-2 w-5 h-5" />
-              </Button>
+      {/* Timeline — Greenlyte-style horizontal card slider */}
+      <section className="relative overflow-hidden border-t border-white/5 py-28">
+        <div className="absolute inset-0 grid-backdrop" aria-hidden="true" />
+        <div className="relative mx-auto max-w-6xl px-4">
+          <div className="mb-16 flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
+            <div>
+              <Reveal>
+                <p className="eyebrow">Our story so far</p>
+              </Reveal>
+              <Reveal delay={0.05}>
+                <h2 className="mt-4 max-w-3xl text-4xl font-medium tracking-tighter sm:text-5xl">
+                  From Calgary to the herd — and beyond.
+                </h2>
+              </Reveal>
             </div>
-            <p className="text-sm text-white/70 mt-4">
-              We respect your privacy. Unsubscribe at any time.
-            </p>
+            <Reveal delay={0.1}>
+              <p className="max-w-sm text-base text-bone-300">
+                Every milestone since October 2024, plus what we&apos;re building toward next.
+              </p>
+            </Reveal>
           </div>
+
+          <Reveal delay={0.15}>
+            <TimelineSlider />
+          </Reveal>
         </div>
       </section>
-
-      <Footer />
-    </div>
-  )
+    </>
+  );
 }

@@ -1,138 +1,91 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Agrivanna Website v2
 
-## Getting Started
+A fresh rebuild of the Agrivanna site, inspired by [greenlyte.tech](https://www.greenlyte.tech/). Dark editorial look, Geist type, bright lime accent, interactive hero, rotating partners, magazine-grid news, and a roadmap timeline.
 
-First, run the development server:
+Zero styling is carried from the previous site. Only the **functional** pieces (HubSpot portal/form IDs, Vercel caching headers, redirects) were preserved.
+
+---
+
+## Stack
+
+- **Next.js 15** (App Router, TypeScript)
+- **Tailwind CSS v3**
+- **Geist** (Vercel variable font — Sans + Mono)
+- **motion** / `motion/react` (Framer Motion successor) — used by `VariableProximity` and `Reveal`
+- **lucide-react** icons
+- **HubSpot Forms** embed (`portalId 342489770`, `formId 7a9b5027-edb2-4e96-96cd-840d6cd13b1d`)
+- **Vercel Analytics**
+
+## Run locally
 
 ```bash
+cd "Agrivanna Website v2"
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open http://localhost:3000.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Pages
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+| Route | Purpose |
+|---|---|
+| `/` | Hero with interactive `VariableProximity` letterform + the problem + pillars + partners marquee + pilot CTA |
+| `/solutions` | Three-part system (collar, drone base, PRS software) + impact stats + pricing card |
+| `/team` | Cofounders + advisory board with bios |
+| `/news` | Magazine grid of press/awards + vertical roadmap timeline |
 
-## Design System
+## Key design choices
 
-This project uses a consistent design system with a carefully selected color palette. All colors are defined in `tailwind.config.ts` and can be used throughout the application using Tailwind CSS classes.
+### Color palette (from supplied reference image)
+- **Ink (backgrounds):** `#050607`, `#0A0B0D`, `#111316`, `#1A1D21`
+- **Lime (accent):** `#A6FF3D` · `#8AF51E`
+- **Bone (text):** `#F6F6F4`, `#9A9A93`
 
-### Color Palette
+### Typography
+- **Geist Sans 400** for body and headlines (matches inspiration site)
+- **Geist Mono** for eyebrows, labels, timecodes
+- Tracking is deliberately tight on display headlines (`tracking-tightest` = `-0.04em`)
 
-#### Primary Dark (`primary-dark`)
-- **Hex**: `#1D212B`
-- **Usage**: Primary text color, dark accents, overlays
-- **Tailwind Class**: `text-primary-dark`, `bg-primary-dark`, `border-primary-dark`
-- **When to use**: 
-  - Main headings and important text
-  - Dark overlays for video/image backgrounds
-  - Primary UI elements that need strong contrast
+### Interactions
+- **VariableProximity** — the exact component from the brief. Used in the home hero on the word "fence." It lives in `components/VariableProximity.tsx` and uses `motion/react` via `useAnimationFrame` + mouse-position proximity to interpolate font variation settings letter by letter.
+- **Reveal** — a lightweight `motion` wrapper for scroll-in staggers across every page.
+- **PartnersMarquee** — horizontal rotating slider of trusted partners with transparent logos, hover to pause, edge fades, each logo is a link directly relevant to Agrivanna's relationship (NuWest → nuwestinteriors.com, Plug and Play → LinkedIn cohort post, THRIVE → Academy Cohort VII, Hunter Hub → Liftoff post). Hover reveals a context caption.
+- **Navbar** — floating pill navbar that compacts on scroll, blurs, and highlights active route.
+- **HubSpotFormPopup** — same portal/form IDs as v1 so leads keep flowing to the existing CRM; completely restyled.
 
-#### Primary Green (`primary-green`)
-- **Hex**: `#288A5C`
-- **Usage**: Primary actions, buttons, CTAs, brand highlights
-- **Tailwind Class**: `text-primary-green`, `bg-primary-green`, `border-primary-green`
-- **When to use**:
-  - Primary call-to-action buttons
-  - Active states and selected items
-  - Brand highlights and accents
-  - Success states and positive indicators
+## Code organization (intentionally varied)
 
-#### Secondary Blue (`secondary-blue`)
-- **Hex**: `#3D5A80`
-- **Usage**: Secondary elements, links, informational content
-- **Tailwind Class**: `text-secondary-blue`, `bg-secondary-blue`, `border-secondary-blue`
-- **When to use**:
-  - Secondary buttons and actions
-  - Links and interactive elements
-  - Informational badges and labels
-  - Supporting UI elements
+Three distinct patterns are used so the codebase doesn't feel templated:
 
-#### Neutral Gray (`neutral-gray`)
-- **Hex**: `#98A2B3`
-- **Usage**: Muted text, borders, secondary information
-- **Tailwind Class**: `text-neutral-gray`, `bg-neutral-gray`, `border-neutral-gray`
-- **When to use**:
-  - Body text and descriptions
-  - Borders and dividers
-  - Placeholder text
-  - Disabled states
-  - Secondary information that needs less emphasis
+1. **Hooks-heavy interactive** — `Navbar.tsx`, `HubSpotFormPopup.tsx`, `VariableProximity.tsx` (client-side, effects, refs)
+2. **Config-object-driven layout** — `Footer.tsx`, `PartnersMarquee.tsx`, `app/solutions/page.tsx` (arrays → map → UI, easy to edit content without touching JSX structure)
+3. **Data in `/lib`, UI in `/components`** — `/team`, `/news` pull typed data from `lib/team.ts` and `lib/news.ts` into dedicated card components (`PersonCard.tsx`)
 
-#### Background Light (`background-light`)
-- **Hex**: `#F9FAFB`
-- **Usage**: Light backgrounds, cards, sections
-- **Tailwind Class**: `bg-background-light`
-- **When to use**:
-  - Page backgrounds
-  - Card backgrounds
-  - Section backgrounds
-  - Light overlays
+## What carries over from the old site
 
-### Usage Examples
+Only the plumbing:
+- HubSpot portal ID `342489770` / form ID `7a9b5027-edb2-4e96-96cd-840d6cd13b1d` / region `na3`
+- Calendly demo link
+- `/data-room` and `/pitch-deck` → Notion redirects
+- Vercel caching headers for `/:path*.mp4` and image paths
+- Social link URLs (LinkedIn / Instagram / YouTube / Mail)
 
-```tsx
-// Primary button
-<Button className="bg-primary-green text-white">
-  Chat with us
-</Button>
+No CSS, components, or page structure was reused.
 
-// Dark text on light background
-<h1 className="text-primary-dark">Heading</h1>
+## Assets
 
-// Muted description text
-<p className="text-neutral-gray">Description text</p>
+All imagery lives in `public/`:
+- `team/` — founders and advisors
+- `products/` — collar, drone, PRS software (transparent backgrounds)
+- `partners/` — NuWest, Plug and Play, THRIVE SVG
+- `story/` — team ranch shots, pitch comp wins, rancher interviews
+- `logos/` — Agrivanna wordmark + mark
+- `video/collar-loop.mp4` — hero-ready collar footage
 
-// Dark overlay for video background
-<div className="bg-primary-dark opacity-60"></div>
+## Things to edit later
 
-// Light background section
-<section className="bg-background-light">
-  Content
-</section>
-```
-
-### Color Accessibility
-
-All color combinations have been tested for WCAG AA compliance:
-- Primary Green on white: ✅ AA compliant
-- Primary Dark on white: ✅ AA compliant
-- White on Primary Green: ✅ AA compliant
-- White on Primary Dark: ✅ AA compliant
-- Neutral Gray on white: ✅ AA compliant (for body text)
-
-### Implementation
-
-Colors are defined in `tailwind.config.ts` under the `extend.colors` section:
-
-```typescript
-colors: {
-  "primary-dark": "#1D212B",
-  "primary-green": "#288A5C",
-  "secondary-blue": "#3D5A80",
-  "neutral-gray": "#98A2B3",
-  "background-light": "#F9FAFB",
-}
-```
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- Add a real `favicon.ico`
+- Drop in a hero video behind the headline if desired (there's a `public/video/collar-loop.mp4` ready to wire up)
+- The advisor photos are grayscale-on-default; if you'd rather they stay color, remove `grayscale` from `PersonCard.tsx`
+- Press summaries in `lib/news.ts` were written from the article titles — update the copy if you want specific quotes

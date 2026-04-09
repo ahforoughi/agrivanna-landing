@@ -1,615 +1,343 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import { Button } from "@/components/ui/button"
-import { CircleDot, ArrowRight, Menu, X, Smartphone, Radio, TrendingUp, Clock, DollarSign, Activity, Check, Sprout, Heart } from "lucide-react"
-import Image from "next/image"
-import Link from "next/link"
-import { SpeedInsights } from "@vercel/speed-insights/next"
-import Footer from "@/components/Footer"
-import { useInView } from "@/hooks/useInView"
+import { useRef } from "react";
+import Link from "next/link";
+import Image from "next/image";
+import { ArrowUpRight, Wifi, Sprout, Activity, HeartPulse } from "lucide-react";
+import VariableProximity from "@/components/VariableProximity";
+import PartnersMarquee from "@/components/PartnersMarquee";
+import Reveal from "@/components/Reveal";
 
-export default function LandingPage() {
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
-  const { ref: howItWorksRef, isInView: howItWorksInView } = useInView()
+const PROBLEM_STATS = [
+  { value: "83%", label: "of ranchers want rotational grazing but can't afford the fence" },
+  { value: "$10K", label: "per mile to build traditional wire fencing" },
+  { value: "100K+", label: "agricultural jobs unfilled by 2030" },
+] as const;
 
+const PILLARS = [
+  {
+    icon: Activity,
+    title: "Offline-first",
+    body: "Built for places cell towers forgot. Drones carry the network to the herd.",
+  },
+  {
+    icon: Sprout,
+    title: "Grazing intelligence",
+    body: "The Pasture Readiness Score tells you where to move cattle, and when.",
+  },
+  {
+    icon: Wifi,
+    title: "Virtual boundaries",
+    body: "Fence mountains, riparian zones, and leased land without wire or posts.",
+  },
+  {
+    icon: HeartPulse,
+    title: "Animal health",
+    body: "Behavior and movement data surface sickness and calving events before you'd catch them by eye.",
+  },
+] as const;
+
+const STATUS_ITEMS = [
+  { k: "Status", v: "MVP · TRL 5" },
+  { k: "Pilots", v: "Summer 2026" },
+  { k: "Waitlist", v: "10+ ranches" },
+  { k: "Interviews", v: "50+ ranchers" },
+];
+
+export default function HomePage() {
+  const heroRef = useRef<HTMLElement>(null);
 
   return (
-    <div className="min-h-screen bg-[#F2F2F2]">
-      <SpeedInsights />
-      {/* Header - crystal bar centered with rounded corners */}
-      <header className="absolute left-0 right-0 z-50 pt-3 sm:pt-4 top-[var(--announcement-height)] px-3 sm:px-4">
-        <div className="container mx-auto">
-          <div className="flex items-center justify-between py-3 px-3 sm:py-6 sm:px-6 max-w-4xl mx-auto rounded-xl sm:rounded-2xl bg-white/5 backdrop-blur-xl border border-white/20 border-t-white/10 shadow-[0_8px_32px_rgba(255,255,255,0.08)]">
-            {/* Logo */}
-            <div className="flex items-center animate-fade-in min-w-0 shrink">
-              <Link href="/">
-                <Image
-                  src="/LOGO-black.png"
-                  alt="Agrivanna Logo"
-                  width={222}
-                  height={75}
-                  className="h-5 sm:h-6 w-auto hover:scale-105 transition-transform duration-300 brightness-0 invert"
-                />
-              </Link>
-            </div>
-
-            {/* Desktop Navigation */}
-            <nav className="hidden lg:flex items-center space-x-8">
-              <Link href="/products" className="text-white hover:text-neutral-gray transition-all duration-300 hover:scale-105 relative group">
-                Products
-                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-white transition-all duration-300 group-hover:w-full"></span>
-              </Link>
-
-              <Link href="/about" className="text-white hover:text-neutral-gray transition-all duration-300 hover:scale-105 relative group">
-                About us
-                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-white transition-all duration-300 group-hover:w-full"></span>
-              </Link>
-
-              <Link href="/contact" className="text-white hover:text-neutral-gray transition-all duration-300 hover:scale-105 relative group">
-                Contact us
-                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-white transition-all duration-300 group-hover:w-full"></span>
-              </Link>
-            </nav>
-
-            <div className="flex items-center gap-2 sm:gap-4 shrink-0">
-              <Button
-                className="!bg-primary-green hover:!bg-primary-green/90 !text-white rounded-lg px-3 py-2 sm:px-6 sm:py-2 text-sm sm:text-base transition-all duration-300 hover:scale-105 hover:shadow-lg flex items-center gap-1.5 sm:gap-2 min-h-[44px]"
-                style={{ backgroundColor: '#288A5C' }}
-                asChild
-              >
-                <a
-                  href="https://calendly.com/aminrezaabbasi-agrivanna/meeting-with-agrivanna-team"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <span className="hidden min-[480px]:inline">Chat with us</span>
-                  <span className="inline min-[480px]:hidden">Chat</span>
-                  <ArrowRight className="w-4 h-4 shrink-0" />
-                </a>
-              </Button>
-
-              {/* Mobile Menu Button - 44px min touch target */}
-              <button
-                className="lg:hidden p-3 -m-1 text-white min-h-[44px] min-w-[44px] flex items-center justify-center"
-                onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                aria-label={mobileMenuOpen ? "Close menu" : "Open menu"}
-              >
-                {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
-              </button>
-            </div>
-          </div>
-
-          {/* Mobile Menu */}
-          {mobileMenuOpen && (
-            <div className="lg:hidden border border-white/20 py-4 bg-white/10 backdrop-blur-xl rounded-xl mt-2 shadow-[0_8px_32px_rgba(255,255,255,0.12)]">
-              <nav className="flex flex-col space-y-4">
-                <Link href="/products" className="text-white hover:text-neutral-gray">Products</Link>
-                <Link href="/about" className="text-white hover:text-neutral-gray">About us</Link>
-                <Link href="/contact" className="text-white hover:text-neutral-gray">Contact us</Link>
-                <Button
-                  className="!bg-primary-green hover:!bg-primary-green/90 !text-white w-full flex items-center justify-center gap-2"
-                  style={{ backgroundColor: '#288A5C', color: '#ffffff' }}
-                  asChild
-                >
-                  <a
-                    href="https://calendly.com/aminrezaabbasi-agrivanna/meeting-with-agrivanna-team"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    Chat with us
-                    <ArrowRight className="w-4 h-4" />
-                  </a>
-                </Button>
-              </nav>
-            </div>
-          )}
-        </div>
-      </header>
-
-      {/* Hero Section */}
-      <section className="relative min-h-[70vh] sm:min-h-[80vh] lg:min-h-[90vh] flex items-center overflow-hidden">
-        {/* Video Background */}
-        <video
-          autoPlay
-          muted
-          loop
-          playsInline
-          preload="auto"
-          className="absolute inset-0 w-full h-full object-cover"
-          onError={(e) => {
-            console.error("Video failed to load:", e);
-            // Fallback: hide video on error
-            const video = e.currentTarget;
-            if (video) {
-              video.style.display = "none";
-            }
-          }}
-        >
-          <source src="/cow-grazing-hero.mp4" type="video/mp4" />
-          Your browser does not support the video tag.
-        </video>
-        
-        {/* Dark Overlay for Text Readability */}
-        <div className="absolute inset-0 bg-primary-dark opacity-60"></div>
-        
-        {/* Content Overlay */}
-        <div className="relative z-10 container mx-auto px-4 pt-24 sm:pt-28 lg:pt-32 pb-20 sm:pb-24">
-          <div className="max-w-3xl">
-            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold text-white leading-tight mb-4 sm:mb-6 animate-fade-in-up">
-              <span className="block animate-slide-in-left" style={{ animationDelay: '0.1s' }}>Smarter livestock</span>
-              <span className="block animate-slide-in-left" style={{ animationDelay: '0.2s' }}>tracking, minimal</span>
-              <span className="block animate-slide-in-left" style={{ animationDelay: '0.3s' }}>effort.</span>
-            </h1>
-            <p className="text-base sm:text-lg lg:text-xl xl:text-2xl text-white/90 leading-relaxed animate-fade-in max-w-xl sm:max-w-none" style={{ animationDelay: '0.4s' }}>
-              AI-powered virtual fencing, automated rotational grazing, real-time herd tracking, lower fencing and labour costs.
-            </p>
-          </div>
-          
-          {/* Partners Section */}
-          <div className="relative z-10 mt-10 sm:mt-16">
-            <div className="text-center mb-3 sm:mb-4">
-              <p className="text-white/95 text-xs sm:text-sm font-medium drop-shadow-sm">Trusted Partners</p>
-            </div>
-            <div className="flex flex-wrap justify-center items-center gap-6 sm:gap-8">
-              <a 
-                href="https://www.plugandplaytechcenter.com/" 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="hover:opacity-80 transition-opacity duration-300 min-h-[44px] flex items-center"
-              >
-                <Image
-                  src="/pnp.svg"
-                  alt="Plug and Play Logo"
-                  width={120}
-                  height={40}
-                  className="h-7 sm:h-8 w-auto"
-                />
-              </a>
-              <a 
-                href="https://thriveagrifood.com/" 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="hover:opacity-80 transition-opacity duration-300 min-h-[44px] flex items-center"
-              >
-                <Image
-                  src="/svg.png"
-                  alt="THRIVE by SVG Ventures Logo"
-                  width={100}
-                  height={40}
-                  className="h-7 sm:h-8 w-auto"
-                />
-              </a>
-            </div>
-          </div>
-        </div>
-      </section>
-
-
-      {/* Features Section - 3 equal blocks */}
-      <section id="product" className="py-12 sm:py-16 lg:py-24 px-4 -mt-px" style={{ backgroundColor: '#F5F5F0' }}>
-        <div className="container mx-auto">
-          <div className="text-center mb-10 sm:mb-16 lg:mb-20">
-            <h2 className="text-2xl sm:text-3xl lg:text-4xl xl:text-5xl font-medium text-left text-[#2A5F36] mb-4">
-              The leading digital platform for managing pasture-based operations
-            </h2>
-          </div>
-
-          <div className="grid md:grid-cols-3 gap-6 sm:gap-8 lg:gap-10 max-w-6xl mx-auto">
-            {/* Block 1: Remote fencing and herd moves */}
-            <div className="bg-white rounded-2xl sm:rounded-3xl shadow-lg overflow-hidden flex flex-col">
-              <div className="relative aspect-[4/3] overflow-hidden bg-[#e8f0ea]">
-                <Image
-                  src="/cow-with-collar.png"
-                  alt="Cow with Agrivanna smart collar in pasture"
-                  fill
-                  className="object-cover object-center"
-                  sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                  priority
-                />
-              </div>
-              <div className="p-4 sm:p-6 lg:p-7 flex-1 flex flex-col">
-                <div className="flex items-start gap-3 sm:gap-4 mb-3 sm:mb-4">
-                  <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-lg bg-[#2A5F36] border-2 border-[#637D59] flex items-center justify-center shrink-0">
-                    <Radio className="w-5 h-5 text-[#C5E1C8]" strokeWidth={2} />
-                  </div>
-                  <div className="min-w-0">
-                    <h3 className="text-lg sm:text-xl font-bold text-[#2A5F36] tracking-tight leading-tight">
-                      Remote fencing and herd moves
-                    </h3>
-                    <p className="text-[#288A5C] font-medium text-sm mt-0.5 italic">
-                      At the press of a button.
-                    </p>
-                  </div>
-                </div>
-                <ul className="space-y-3 mt-auto">
-                  <li className="flex items-start gap-3">
-                    <Check className="w-5 h-5 text-[#2A5F36] shrink-0 mt-0.5" strokeWidth={2.5} />
-                    <span className="text-gray-700 text-sm leading-relaxed">Eliminate the need for physical fencing infrastructure</span>
-                  </li>
-                  <li className="flex items-start gap-3">
-                    <Check className="w-5 h-5 text-[#2A5F36] shrink-0 mt-0.5" strokeWidth={2.5} />
-                    <span className="text-gray-700 text-sm leading-relaxed">Adjust grazing areas and move herds from your device</span>
-                  </li>
-                  <li className="flex items-start gap-3">
-                    <Check className="w-5 h-5 text-[#2A5F36] shrink-0 mt-0.5" strokeWidth={2.5} />
-                    <span className="text-gray-700 text-sm leading-relaxed">Unlocks previously un-grazable land</span>
-                  </li>
-                </ul>
-              </div>
-            </div>
-
-            {/* Block 2: Grazing and Automated Pasture Planning */}
-            <div className="bg-white rounded-2xl sm:rounded-3xl shadow-lg overflow-hidden flex flex-col">
-              <div className="relative aspect-[4/3] overflow-hidden bg-[#e8f0ea]">
-                <Image
-                  src="/grazing-pasture-planning.png"
-                  alt="Aerial view of pasture with digital grazing boundaries and rotational planning grid"
-                  fill
-                  className="object-cover object-center"
-                  sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                />
-              </div>
-              <div className="p-4 sm:p-6 lg:p-7 flex-1 flex flex-col">
-                <div className="flex items-start gap-3 sm:gap-4 mb-3 sm:mb-4">
-                  <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-lg bg-[#2A5F36] border-2 border-[#637D59] flex items-center justify-center shrink-0">
-                    <Sprout className="w-5 h-5 text-[#C5E1C8]" strokeWidth={2} />
-                  </div>
-                  <h3 className="text-lg sm:text-xl font-bold text-[#2A5F36] tracking-tight leading-tight min-w-0">
-                    Grazing and Automated Pasture Planning
-                  </h3>
-                </div>
-                <ul className="space-y-3 mt-auto">
-                  <li className="flex items-start gap-3">
-                    <Check className="w-5 h-5 text-[#2A5F36] shrink-0 mt-0.5" strokeWidth={2.5} />
-                    <span className="text-gray-700 text-sm leading-relaxed">We tell when and where to graze your cattle</span>
-                  </li>
-                  <li className="flex items-start gap-3">
-                    <Check className="w-5 h-5 text-[#2A5F36] shrink-0 mt-0.5" strokeWidth={2.5} />
-                    <span className="text-gray-700 text-sm leading-relaxed">Unlock rotational grazing (less feed costs)</span>
-                  </li>
-                  <li className="flex items-start gap-3">
-                    <Check className="w-5 h-5 text-[#2A5F36] shrink-0 mt-0.5" strokeWidth={2.5} />
-                    <span className="text-gray-700 text-sm leading-relaxed">Track pasture growth and condition in near real time</span>
-                  </li>
-                </ul>
-              </div>
-            </div>
-
-            {/* Block 3: Reproduction and Animal Wellbeing Insights */}
-            <div className="bg-white rounded-2xl sm:rounded-3xl shadow-lg overflow-hidden flex flex-col">
-              <div className="relative aspect-[4/3] overflow-hidden bg-[#e8f0ea]">
-                <Image
-                  src="/reproduction-animal-wellbeing.png"
-                  alt="Veterinarian and farmer with cattle, tablet and drone for animal health monitoring"
-                  fill
-                  className="object-cover object-center"
-                  sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                />
-              </div>
-              <div className="p-4 sm:p-6 lg:p-7 flex-1 flex flex-col">
-                <div className="flex items-start gap-3 sm:gap-4 mb-3 sm:mb-4">
-                  <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-lg bg-[#2A5F36] border-2 border-[#637D59] flex items-center justify-center shrink-0">
-                    <Heart className="w-5 h-5 text-[#C5E1C8]" strokeWidth={2} />
-                  </div>
-                  <h3 className="text-lg sm:text-xl font-bold text-[#2A5F36] tracking-tight leading-tight min-w-0">
-                    Reproduction and animal wellbeing insights
-                  </h3>
-                </div>
-                <ul className="space-y-3 mt-auto">
-                  <li className="flex items-start gap-3">
-                    <Check className="w-5 h-5 text-[#2A5F36] shrink-0 mt-0.5" strokeWidth={2.5} />
-                    <span className="text-gray-700 text-sm leading-relaxed">Cull smarter with complete animal profiles — ID, health history, birth weight, genetics, and pregnancy data</span>
-                  </li>
-                  <li className="flex items-start gap-3">
-                    <Check className="w-5 h-5 text-[#2A5F36] shrink-0 mt-0.5" strokeWidth={2.5} />
-                    <span className="text-gray-700 text-sm leading-relaxed">Monitor animal location</span>
-                  </li>
-                  <li className="flex items-start gap-3">
-                    <Check className="w-5 h-5 text-[#2A5F36] shrink-0 mt-0.5" strokeWidth={2.5} />
-                    <span className="text-gray-700 text-sm leading-relaxed">Health/calving alerts</span>
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-
-      {/* Statistics Section */}
-      <section className="py-12 sm:py-16 lg:py-20 bg-[#2A5F36] text-white">
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-10 sm:mb-16">
-            <h2 className="text-2xl sm:text-3xl lg:text-4xl xl:text-5xl font-medium mb-3 sm:mb-4">Real Results, Real Impact</h2>
-            <p className="text-base sm:text-lg lg:text-xl text-white/90 max-w-3xl mx-auto px-1">
-              See how Agrivanna is transforming farms across Alberta and beyond
-            </p>
-          </div>
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 lg:gap-8">
-            <div className="text-center">
-              <div className="w-12 h-12 sm:w-16 sm:h-16 bg-white/20 rounded-full flex items-center justify-center mx-auto mb-3 sm:mb-4">
-                <TrendingUp className="w-6 h-6 sm:w-8 sm:h-8 text-white" />
-              </div>
-              <div className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-1 sm:mb-2">30%</div>
-              <div className="text-white/80 text-xs sm:text-base lg:text-lg">Reduction in Labor Costs</div>
-            </div>
-            <div className="text-center">
-              <div className="w-12 h-12 sm:w-16 sm:h-16 bg-white/20 rounded-full flex items-center justify-center mx-auto mb-3 sm:mb-4">
-                <Clock className="w-6 h-6 sm:w-8 sm:h-8 text-white" />
-              </div>
-              <div className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-1 sm:mb-2">3hrs</div>
-              <div className="text-white/80 text-xs sm:text-base lg:text-lg">Saved Per Day on Average</div>
-            </div>
-            <div className="text-center">
-              <div className="w-12 h-12 sm:w-16 sm:h-16 bg-white/20 rounded-full flex items-center justify-center mx-auto mb-3 sm:mb-4">
-                <DollarSign className="w-6 h-6 sm:w-8 sm:h-8 text-white" />
-              </div>
-              <div className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-1 sm:mb-2">20%</div>
-              <div className="text-white/80 text-xs sm:text-base lg:text-lg">Increase in Feed Efficiency</div>
-            </div>
-            <div className="text-center">
-              <div className="w-12 h-12 sm:w-16 sm:h-16 bg-white/20 rounded-full flex items-center justify-center mx-auto mb-3 sm:mb-4">
-                <Activity className="w-6 h-6 sm:w-8 sm:h-8 text-white" />
-              </div>
-              <div className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-1 sm:mb-2">95%</div>
-              <div className="text-white/80 text-xs sm:text-base lg:text-lg">Early Health Detection Rate</div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* How It Works Section – tech-forward */}
+    <>
+      {/* ──────────────────────────── HERO ──────────────────────────── */}
       <section
-        id="how-it-works"
-        ref={howItWorksRef}
-        className={`relative py-12 sm:py-16 lg:py-24 px-4 overflow-hidden ${howItWorksInView ? "how-it-works-animate" : ""}`}
-        style={{
-          background: "linear-gradient(180deg, #0f2d1f 0%, #1a3d2a 50%, #152a1f 100%)",
-          backgroundImage: "linear-gradient(180deg, #0f2d1f 0%, #1a3d2a 50%, #152a1f 100%), radial-gradient(ellipse 80% 50% at 50% 0%, rgba(42, 95, 54, 0.15) 0%, transparent 50%)",
-        }}
+        ref={heroRef}
+        className="relative flex min-h-[100svh] items-center overflow-hidden pt-36 pb-20"
       >
-        {/* Subtle grid texture */}
+        <div className="absolute inset-0 grid-backdrop" aria-hidden="true" />
+        <div className="noise" />
+
         <div
-          className="absolute inset-0 opacity-[0.04] pointer-events-none"
+          className="pointer-events-none absolute -top-40 left-1/2 h-[60rem] w-[60rem] -translate-x-1/2 rounded-full"
           style={{
-            backgroundImage: "linear-gradient(rgba(255,255,255,.08) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.08) 1px, transparent 1px)",
-            backgroundSize: "48px 48px",
+            background:
+              "radial-gradient(circle at center, rgba(166,255,61,0.12), transparent 55%)",
           }}
+          aria-hidden="true"
         />
-        <div className="container mx-auto relative">
-          <div className="text-center mb-10 sm:mb-16">
-            <h2 className="how-it-works-title text-2xl sm:text-3xl lg:text-4xl xl:text-5xl font-medium text-white mb-3 sm:mb-4">How It Works</h2>
-            <p className="how-it-works-subtitle text-base sm:text-lg lg:text-xl text-white/80 max-w-3xl mx-auto">
-              Hardware, connectivity, and control—one integrated system
-            </p>
-          </div>
 
-          <div className="relative max-w-6xl mx-auto">
-            {/* Connector line (desktop) – SVG with pathLength for line-draw */}
-            <div className="how-it-works-connector absolute top-[7.5rem] left-0 right-0 h-0 hidden md:block" aria-hidden>
-              <svg className="w-full h-2 overflow-visible" viewBox="0 0 400 8" fill="none" preserveAspectRatio="none">
-                <path
-                  className="how-it-works-line stroke-[#2A5F36] stroke-[2]"
-                  d="M 20 4 L 190 4 L 210 4 L 380 4"
-                  pathLength={1}
-                  strokeLinecap="round"
+        <div className="relative mx-auto w-full max-w-6xl px-4">
+          <Reveal>
+            <p className="eyebrow">Grazing intelligence · Calgary, AB</p>
+          </Reveal>
+
+          {/* Virtual fence photo — sits BEHIND the word "ranch" on lg+ for a layered look.
+              On mobile it stacks inline below the heading. Rendered before the heading
+              in markup so the heading's relative z-10 paints on top on lg+. */}
+          <div className="pointer-events-none absolute right-4 top-16 z-0 hidden w-[42%] max-w-[520px] lg:block xl:top-10 xl:w-[42%] xl:max-w-[520px]">
+            <Reveal delay={0.3}>
+              <div className="media relative aspect-[4/3] opacity-90">
+                <Image
+                  src="/story/hero-virtual-fence.png"
+                  alt="Cows grazing inside an Agrivanna virtual fence"
+                  fill
+                  priority
+                  quality={95}
+                  className="object-cover"
+                  sizes="(min-width: 1280px) 580px, 520px"
                 />
-              </svg>
-            </div>
-
-            <div className="grid md:grid-cols-3 gap-5 sm:gap-6 md:gap-6">
-              {/* Card 1 – The Collar */}
-              <div className="how-it-works-card how-it-works-card-1 group relative text-center rounded-xl border border-white/10 bg-white/5 backdrop-blur-sm p-5 sm:p-6 lg:p-8 transition-all duration-300 hover:scale-[1.02] hover:shadow-xl hover:shadow-[#2A5F36]/10 hover:ring-2 hover:ring-[#2A5F36]/50 focus-within:ring-2 focus-within:ring-[#2A5F36]/50">
-                <span className="font-mono text-sm text-[#2A5F36] tracking-wider">01</span>
-                <div className="mt-4 mb-6 relative flex justify-center">
-                  <div className="relative w-16 h-16 bg-[#2A5F36] rounded-lg flex items-center justify-center">
-                    <CircleDot className="w-8 h-8 text-white" />
-                  </div>
-                </div>
-                <h3 className="text-xl sm:text-2xl font-bold text-white mb-2">The Collar</h3>
-                <p className="text-white/70 leading-relaxed text-sm">
-                  Lightweight, solar-powered collars guide your livestock with gentle audio cues and vibration. Built to last in harsh farming conditions.
-                </p>
+                {/* Left-edge gradient blends the image into the dark background
+                    where it overlaps with the word "ranch" */}
+                <div
+                  className="pointer-events-none absolute inset-0"
+                  style={{
+                    background:
+                      "linear-gradient(90deg, rgba(20,22,26,0.92) 0%, rgba(20,22,26,0.45) 24%, rgba(20,22,26,0) 58%)",
+                  }}
+                />
               </div>
-
-              {/* Card 2 – The Tower (signal rings) */}
-              <div className="how-it-works-card how-it-works-card-2 group relative text-center rounded-xl border border-white/10 bg-white/5 backdrop-blur-sm p-5 sm:p-6 lg:p-8 transition-all duration-300 hover:scale-[1.02] hover:shadow-xl hover:shadow-[#2A5F36]/10 hover:ring-2 hover:ring-[#2A5F36]/50 focus-within:ring-2 focus-within:ring-[#2A5F36]/50">
-                <span className="font-mono text-sm text-[#2A5F36] tracking-wider">02</span>
-                <div className="mt-4 mb-6 relative flex justify-center">
-                  <div className="absolute inset-0 flex items-center justify-center" aria-hidden>
-                    <span className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-20 h-20 rounded-full border-2 border-[#637D59]/60 animate-signal-pulse" aria-hidden />
-                    <span className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-20 h-20 rounded-full border-2 border-[#637D59]/50 animate-signal-pulse-delay" aria-hidden />
-                    <span className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-20 h-20 rounded-full border-2 border-[#637D59]/40 animate-signal-pulse-delay-2" aria-hidden />
-                  </div>
-                  <div className="relative w-16 h-16 bg-[#637D59] rounded-lg flex items-center justify-center z-10">
-                    <Radio className="w-8 h-8 text-white" />
-                  </div>
-                </div>
-                <h3 className="text-xl sm:text-2xl font-bold text-white mb-2">The Tower</h3>
-                <p className="text-white/70 leading-relaxed text-sm">
-                  Connects collars and app with no cell coverage needed. Solar-powered and easy to install, designed for remote Alberta farms.
-                </p>
-              </div>
-
-              {/* Card 3 – The App (soft glow) */}
-              <div className="how-it-works-card how-it-works-card-3 group relative text-center rounded-xl border border-white/10 bg-white/5 backdrop-blur-sm p-5 sm:p-6 lg:p-8 transition-all duration-300 hover:scale-[1.02] hover:shadow-xl hover:shadow-[#2A5F36]/10 hover:ring-2 hover:ring-[#2A5F36]/50 focus-within:ring-2 focus-within:ring-[#2A5F36]/50">
-                <span className="font-mono text-sm text-[#2A5F36] tracking-wider">03</span>
-                <div className="mt-4 mb-6 relative flex justify-center">
-                  <div className="relative w-16 h-16 bg-[#4A90E2] rounded-lg flex items-center justify-center">
-                    <Smartphone className="w-8 h-8 text-white" />
-                  </div>
-                </div>
-                <h3 className="text-xl sm:text-2xl font-bold text-white mb-2">The App</h3>
-                <p className="text-white/70 leading-relaxed text-sm">
-                  Remotely manage and shift livestock, optimize grazing and feed management with virtual fencing. Access your farm anywhere, anytime.
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Farmer Testimonials Section */}
-      <section className="py-12 sm:py-16 lg:py-24 px-4 bg-gray-50">
-        <div className="container mx-auto">
-          <div className="text-center mb-10 sm:mb-16">
-            <h2 className="text-2xl sm:text-3xl lg:text-4xl xl:text-5xl font-medium text-[#2A5F36] mb-3 sm:mb-4">Real Farmers, Real Results</h2>
-            <p className="text-base sm:text-lg lg:text-xl text-gray-600 max-w-3xl mx-auto">
-              Trusted by beef farmers from family operations to large-scale enterprises
-            </p>
+            </Reveal>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-5 sm:gap-6 lg:gap-8 max-w-6xl mx-auto">
-            <div className="bg-white rounded-lg p-5 sm:p-6 lg:p-8 border border-gray-200">
-              <div className="mb-4 sm:mb-6">
-                <h4 className="font-bold text-[#2A5F36]">John & Sarah Miller</h4>
-                <p className="text-sm text-gray-600">Alberta • 450 Head</p>
-              </div>
-              <p className="text-gray-700 leading-relaxed italic">
-                &quot;We didn&apos;t think it would work with our operation, but Agrivanna has transformed how we manage our herd. We&apos;re saving hours every day and our feed costs are down significantly.&quot;
-              </p>
-            </div>
-
-            <div className="bg-white rounded-lg p-5 sm:p-6 lg:p-8 border border-gray-200">
-              <div className="mb-4 sm:mb-6">
-                <h4 className="font-bold text-[#2A5F36]">Mike Thompson</h4>
-                <p className="text-sm text-gray-600">Saskatchewan • 580 Cows</p>
-              </div>
-              <p className="text-gray-700 leading-relaxed italic">
-                &quot;I would say we are saving 3 hours of labor a day. The virtual fencing alone has paid for itself, and the health monitoring caught issues we would have missed.&quot;
-              </p>
-            </div>
-
-            <div className="bg-white rounded-lg p-5 sm:p-6 lg:p-8 border border-gray-200">
-              <div className="mb-4 sm:mb-6">
-                <h4 className="font-bold text-[#2A5F36]">Lisa & David Chen</h4>
-                <p className="text-sm text-gray-600">Alberta • 320 Head</p>
-              </div>
-              <p className="text-gray-700 leading-relaxed italic">
-                &quot;Agrivanna doesn&apos;t replace being a farmer, it helps you be a better farmer. It&apos;s another set of hands so I can focus on what matters most.&quot;
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Sustainability Section */}
-      <section className="py-12 sm:py-16 lg:py-24 bg-white">
-        <div className="container mx-auto px-4">
-          <div className="grid lg:grid-cols-2 gap-8 sm:gap-10 lg:gap-12 items-center">
-            <div className="order-2 lg:order-1">
-              <h2 className="text-2xl sm:text-3xl lg:text-4xl xl:text-5xl font-bold text-[#2A5F36] mb-4 sm:mb-6">Today&apos;s challenges are tomorrow&apos;s possibilities.</h2>
-              <p className="text-base sm:text-lg lg:text-xl text-gray-600 leading-relaxed mb-6 sm:mb-8">
-                Our purpose at Agrivanna is to provide farmer-focused solutions to sustainably feed our world. Our ambition is to accelerate innovation and efficiency to drive positive outcomes for farmers and the planet.
-              </p>
-              <Button
-                size="lg"
-                className="bg-[#2A5F36] hover:bg-[#637D59] text-white text-base sm:text-lg px-6 sm:px-8 py-3 min-h-[44px]"
-                asChild
-              >
-                <Link href="/about">
-                  Learn More About Us
-                  <ArrowRight className="ml-2 w-5 h-5" />
-                </Link>
-              </Button>
-            </div>
-            <div className="relative h-64 sm:h-80 lg:h-96 rounded-lg overflow-hidden order-1 lg:order-2">
-              <Image
-                src="/sustainable-agriculture-family.png"
-                alt="Family walking with cattle in a pastoral farm landscape"
-                fill
-                className="object-cover"
-                sizes="(max-width: 1024px) 100vw, 50vw"
+          <h1 className="relative z-10 mt-8 max-w-4xl text-6xl font-medium leading-[0.95] tracking-tightest sm:text-7xl lg:text-[7.5rem] xl:text-[8rem]">
+            <Reveal delay={0.05}>
+              <span className="block text-bone-50">Run the ranch.</span>
+            </Reveal>
+            <Reveal delay={0.15}>
+              <span className="block text-bone-300">Not the&nbsp;</span>
+            </Reveal>
+            <Reveal delay={0.25}>
+              <VariableProximity
+                label="fence."
+                className="inline-block text-lime-400"
+                fromFontVariationSettings="'wght' 400"
+                toFontVariationSettings="'wght' 900"
+                containerRef={heroRef}
+                radius={160}
+                falloff="gaussian"
               />
-              <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-transparent to-transparent" />
-              <div className="absolute top-0 left-0 right-0 p-6 text-white">
-                <p className="text-lg sm:text-xl font-semibold drop-shadow-lg">
-                  Sustainable agriculture and building a better future for farming and farmers
-                </p>
+            </Reveal>
+          </h1>
+
+          {/* Mobile-only: inline virtual fence photo below heading */}
+          <Reveal delay={0.3}>
+            <div className="media relative mt-12 aspect-[4/3] w-full max-w-lg lg:hidden">
+              <Image
+                src="/story/hero-virtual-fence.png"
+                alt="Cows grazing inside an Agrivanna virtual fence"
+                fill
+                priority
+                quality={95}
+                className="object-cover"
+                sizes="(min-width: 640px) 32rem, 100vw"
+              />
+            </div>
+          </Reveal>
+
+          <Reveal delay={0.4}>
+            <div className="mt-16 flex max-w-2xl flex-col gap-8 md:flex-row md:items-end md:justify-between lg:mt-14">
+              <p className="text-lg leading-snug text-bone-300 md:max-w-md">
+                Agrivanna is the operating system for grazing-based agriculture — virtual
+                fencing, AI recommendations, and offline-first hardware built for working ranches.
+              </p>
+              <div className="pointer-events-auto flex flex-wrap gap-3">
+                <Link href="/solutions" className="btn btn-solid">
+                  See the system <ArrowUpRight className="h-4 w-4" />
+                </Link>
+                <Link href="#problem" className="btn">
+                  Why it matters
+                </Link>
               </div>
+            </div>
+          </Reveal>
+        </div>
+      </section>
+
+      {/* ──────────────── STATUS STRIP (WHITE / cream) ──────────────── */}
+      <section className="section-light relative border-y border-ink-950/10">
+        <div className="mx-auto grid max-w-6xl grid-cols-2 gap-y-10 px-4 py-14 md:grid-cols-4 md:py-16">
+          {STATUS_ITEMS.map((item) => (
+            <div key={item.k} className="flex flex-col gap-2">
+              <span className="font-mono text-[11px] uppercase tracking-[0.18em] text-bone-400">
+                {item.k}
+              </span>
+              <span className="text-2xl font-medium tracking-tight text-ink-950 sm:text-3xl">
+                {item.v}
+              </span>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* ──────────────────────────── PROBLEM ──────────────────────────── */}
+      <section
+        id="problem"
+        className="relative overflow-hidden border-t border-white/5 py-28 sm:py-36"
+      >
+        <div className="mx-auto max-w-6xl px-4">
+          <div className="grid gap-16 lg:grid-cols-12">
+            <div className="lg:col-span-5">
+              <Reveal>
+                <p className="eyebrow">The problem</p>
+              </Reveal>
+              <Reveal delay={0.05}>
+                <h2 className="mt-6 text-4xl font-medium tracking-tighter text-bone-50 sm:text-5xl lg:text-6xl">
+                  Rotational grazing works.
+                  <br />
+                  <span className="text-bone-300">
+                    The fence is the bottleneck.
+                  </span>
+                </h2>
+              </Reveal>
+              <Reveal delay={0.15}>
+                <p className="mt-8 max-w-md text-base leading-relaxed text-bone-300">
+                  Ranchers know rotational grazing improves soil, forage, and herd health. What
+                  they don&apos;t have is time, labour, or ten grand a mile to build the fences
+                  that make it possible.
+                </p>
+              </Reveal>
+              <Reveal delay={0.25}>
+                <Link href="/solutions" className="mt-10 inline-flex btn">
+                  How we fix it <ArrowUpRight className="h-4 w-4" />
+                </Link>
+              </Reveal>
+            </div>
+
+            <div className="lg:col-span-7">
+              <ul className="divide-y divide-white/5 border-y border-white/5">
+                {PROBLEM_STATS.map((stat, i) => (
+                  <Reveal key={stat.value} delay={0.1 + i * 0.08}>
+                    <li className="flex flex-col items-start justify-between gap-4 py-10 md:flex-row md:items-end">
+                      <span className="text-6xl font-medium tracking-tighter text-lime-400 md:text-8xl">
+                        {stat.value}
+                      </span>
+                      <span className="max-w-xs text-base text-bone-300 md:text-right">
+                        {stat.label}
+                      </span>
+                    </li>
+                  </Reveal>
+                ))}
+              </ul>
             </div>
           </div>
         </div>
       </section>
 
-      {/* How It Works
-      <section id="how-it-works" className="py-20 px-4 bg-black">
-        <div className="container mx-auto">
-          <div className="text-center mb-16">
-            <h2 className="font-dm-sans text-4xl font-bold text-white mb-4">How Agrivanna Works</h2>
-            <p className="font-inter text-xl text-gray-300 max-w-2xl mx-auto">
-              Simple, effective livestock health management in three easy steps
-            </p>
+      {/* ─────────────── PILLARS / STORY — WHITE SECTION ─────────────── */}
+      <section className="section-light relative overflow-hidden border-t border-ink-950/10 py-28">
+        <div className="mx-auto max-w-6xl px-4">
+          <div className="mb-16 flex flex-col items-start justify-between gap-6 md:flex-row md:items-end">
+            <div>
+              <Reveal>
+                <p className="eyebrow">What Agrivanna is</p>
+              </Reveal>
+              <Reveal delay={0.05}>
+                <h2 className="mt-6 max-w-2xl text-4xl font-medium tracking-tighter text-ink-950 sm:text-5xl">
+                  Four parts of a single system.
+                </h2>
+              </Reveal>
+            </div>
+            <Reveal delay={0.1}>
+              <p className="max-w-sm text-base text-ink-700">
+                Hardware, network, software, and a layer of animal-health intelligence. Together
+                they are the operating system for the ranch.
+              </p>
+            </Reveal>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-8">
-            <div className="text-center">
-              <div className="w-16 h-16 bg-gradient-to-r from-blue-600 to-purple-600 rounded-full flex items-center justify-center mx-auto mb-6">
-                <span className="font-dm-sans text-2xl font-bold text-white">1</span>
-              </div>
-              <h3 className="font-dm-sans text-2xl font-semibold text-white mb-4">Monitor</h3>
-              <p className="font-inter text-gray-300 leading-relaxed">
-                Use your smartphone to capture symptoms and behavioral changes in your livestock.
-              </p>
-            </div>
-
-            <div className="text-center">
-              <div className="w-16 h-16 bg-gradient-to-r from-purple-600 to-pink-600 rounded-full flex items-center justify-center mx-auto mb-6">
-                <span className="font-dm-sans text-2xl font-bold text-white">2</span>
-              </div>
-              <h3 className="font-dm-sans text-2xl font-semibold text-white mb-4">Analyze</h3>
-              <p className="font-inter text-gray-300 leading-relaxed">
-                Our AI analyzes the data and provides instant health assessments and treatment suggestions.
-              </p>
-            </div>
-
-            <div className="text-center">
-              <div className="w-16 h-16 bg-gradient-to-r from-indigo-600 to-blue-600 rounded-full flex items-center justify-center mx-auto mb-6">
-                <span className="font-dm-sans text-2xl font-bold text-white">3</span>
-              </div>
-              <h3 className="font-dm-sans text-2xl font-semibold text-white mb-4">Connect</h3>
-              <p className="font-inter text-gray-300 leading-relaxed">
-                Connect with veterinarians when needed and maintain compliance records automatically.
-              </p>
-            </div>
+          <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-4">
+            {PILLARS.map((p, i) => (
+              <Reveal key={p.title} delay={0.05 * i}>
+                <div className="glow-card flex h-full flex-col p-8">
+                  <p.icon className="h-6 w-6 text-[#2F6A14]" />
+                  <h3 className="mt-10 text-xl font-medium tracking-tight text-ink-950">
+                    {p.title}
+                  </h3>
+                  <p className="mt-3 text-base leading-relaxed text-ink-700">{p.body}</p>
+                </div>
+              </Reveal>
+            ))}
           </div>
+
+          {/* Hero story strip — correctly captioned */}
+          <Reveal delay={0.1}>
+            <div className="mt-24 grid gap-6 md:grid-cols-2">
+              <div className="media relative aspect-[4/3]">
+                <Image
+                  src="/story/team-ranch.jpg"
+                  alt="Ranch near Rosetown, Saskatchewan"
+                  fill
+                  quality={95}
+                  className="object-cover"
+                  sizes="(min-width: 1280px) 720px, (min-width: 768px) 50vw, 100vw"
+                />
+                <div className="absolute inset-x-6 bottom-6 rounded-full bg-white/90 px-4 py-2 backdrop-blur w-max">
+                  <p className="font-mono text-[11px] uppercase tracking-[0.16em] text-ink-950">
+                    Ranch near Rosetown, SK
+                  </p>
+                </div>
+              </div>
+              <div className="media relative aspect-[4/3]">
+                <Image
+                  src="/story/rancher-interview.jpg"
+                  alt="Ranch near Nanton, Alberta"
+                  fill
+                  quality={95}
+                  className="object-cover"
+                  sizes="(min-width: 1280px) 720px, (min-width: 768px) 50vw, 100vw"
+                />
+                <div className="absolute inset-x-6 bottom-6 rounded-full bg-white/90 px-4 py-2 backdrop-blur w-max">
+                  <p className="font-mono text-[11px] uppercase tracking-[0.16em] text-ink-950">
+                    Ranch near Nanton, AB
+                  </p>
+                </div>
+              </div>
+            </div>
+          </Reveal>
         </div>
-      </section> */}
+      </section>
 
-      {/* CTA Section */}
-      <section className="py-12 sm:py-16 lg:py-24 px-4 bg-primary-green" style={{ backgroundColor: '#288A5C' }}>
-        <div className="container mx-auto text-center">
-          <h2 className="text-2xl sm:text-3xl lg:text-4xl xl:text-5xl font-bold text-white mb-4 sm:mb-6 px-1" style={{ 
-            textRendering: 'optimizeLegibility',
-            WebkitFontSmoothing: 'antialiased',
-            MozOsxFontSmoothing: 'grayscale'
-          }}>
-            Together, we&apos;re helping change the world for good.
-          </h2>
-          <p className="text-base sm:text-lg lg:text-xl text-white/90 mb-6 sm:mb-8 max-w-3xl mx-auto px-1" style={{ 
-            textRendering: 'optimizeLegibility',
-            WebkitFontSmoothing: 'antialiased',
-            MozOsxFontSmoothing: 'grayscale'
-          }}>
-            Not everyone can claim to feed the world, but it is part of our every day. Behind everything we do for our farmers, there is one Agrivanna team making it happen. We are proud to put our curiosity to work, building a better and more sustainable world.
-          </p>
-          <div className="flex justify-center">
-            <Button size="lg" className="!bg-white !text-primary-green hover:!bg-background-light text-base sm:text-lg px-6 sm:px-8 py-3 min-h-[44px] flex items-center gap-2" style={{ backgroundColor: '#ffffff', color: '#288A5C' }} asChild>
-              <a
+      {/* ─────────────────────── PARTNERS MARQUEE ─────────────────────── */}
+      <PartnersMarquee />
+
+      {/* ─────────────────────── CTA ─────────────────────── */}
+      <section id="pilot" className="relative overflow-hidden py-32">
+        <div className="absolute inset-0 grid-backdrop" aria-hidden="true" />
+        <div className="relative mx-auto max-w-4xl px-4 text-center">
+          <Reveal>
+            <div className="flex justify-center">
+              <p className="eyebrow">Summer 2026 pilots</p>
+            </div>
+          </Reveal>
+          <Reveal delay={0.05}>
+            <h2 className="mt-6 text-4xl font-medium tracking-tighter sm:text-6xl">
+              Put the PRS
+              <br />
+              <span className="text-lime-400">on your ranch first.</span>
+            </h2>
+          </Reveal>
+          <Reveal delay={0.15}>
+            <p className="mx-auto mt-8 max-w-xl text-base text-bone-300">
+              We&apos;re selecting a small number of ranches for the first commercial
+              deployment. Join the waitlist to be considered.
+            </p>
+          </Reveal>
+          <Reveal delay={0.25}>
+            <div className="mt-10 flex flex-wrap justify-center gap-3">
+              <Link
                 href="https://calendly.com/aminrezaabbasi-agrivanna/meeting-with-agrivanna-team"
                 target="_blank"
-                rel="noopener noreferrer"
+                className="btn btn-solid"
               >
-                Get Started Today
-                <ArrowRight className="w-5 h-5" />
+                Book a call <ArrowUpRight className="h-4 w-4" />
+              </Link>
+              <a href="mailto:info@agrivanna.com" className="btn">
+                Email us
               </a>
-            </Button>
-          </div>
+            </div>
+          </Reveal>
         </div>
       </section>
-
-      <Footer />
-    </div>
-  )
+    </>
+  );
 }

@@ -1,78 +1,112 @@
-"use client"
+"use client";
 
-import { useState, useEffect } from "react"
-import { X } from "lucide-react"
-import Script from "next/script"
+import { useEffect, useRef, useState } from "react";
+import Script from "next/script";
+import { X } from "lucide-react";
+
+// HubSpot config — carried forward from the existing site so CRM pipeline stays intact.
+const HS = {
+  portalId: "342489770",
+  formId: "7a9b5027-edb2-4e96-96cd-840d6cd13b1d",
+  region: "na3",
+  script: "https://js-na3.hsforms.net/forms/embed/342489770.js",
+} as const;
+
+const STORAGE_KEY = "agrivanna-v2-form-popup";
 
 export default function HubSpotFormPopup() {
-  const [isOpen, setIsOpen] = useState(false)
-  const [isScriptLoaded, setIsScriptLoaded] = useState(false)
+  const [open, setOpen] = useState(false);
+  const [formReady, setFormReady] = useState(false);
+  const frameRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    // Check if user has already seen the popup
-    const hasSeenPopup = localStorage.getItem("agrivanna-form-popup-seen")
-    
-    if (!hasSeenPopup) {
-      // Show popup immediately
-      setIsOpen(true)
+    if (typeof window === "undefined") return;
+    const seen = window.localStorage.getItem(STORAGE_KEY);
+    if (!seen) {
+      const t = window.setTimeout(() => setOpen(true), 4000);
+      return () => window.clearTimeout(t);
     }
-  }, [])
+  }, []);
 
-  const handleClose = () => {
-    setIsOpen(false)
-    // Mark that the user has seen the popup
-    localStorage.setItem("agrivanna-form-popup-seen", "true")
-  }
+  // Watch the frame for HubSpot's injected form so we can hide the spinner.
+  useEffect(() => {
+    if (!open) return;
+    const node = frameRef.current;
+    if (!node) return;
 
-  // Don't render anything if popup shouldn't be shown
-  if (!isOpen) return null
+    const check = () => {
+      if (node.querySelector("form, iframe")) {
+        setFormReady(true);
+        return true;
+      }
+      return false;
+    };
+
+    if (check()) return;
+
+    const observer = new MutationObserver(() => {
+      if (check()) observer.disconnect();
+    });
+    observer.observe(node, { childList: true, subtree: true });
+    return () => observer.disconnect();
+  }, [open]);
+
+  const dismiss = () => {
+    setOpen(false);
+    if (typeof window !== "undefined") {
+      window.localStorage.setItem(STORAGE_KEY, "true");
+    }
+  };
+
+  if (!open) return null;
 
   return (
     <>
-      <Script
-        src="https://js-na3.hsforms.net/forms/embed/342489770.js"
-        strategy="lazyOnload"
-        onLoad={() => setIsScriptLoaded(true)}
-      />
-      
-      {/* Overlay */}
-      <div 
-        className="fixed inset-0 z-[100] flex items-center justify-center p-4"
-        style={{ 
-          backgroundColor: 'rgba(0, 0, 0, 0.3)', 
-          backdropFilter: 'blur(8px)', 
-          WebkitBackdropFilter: 'blur(8px)' 
-        }}
+      <Script src={HS.script} strategy="afterInteractive" />
+      <div
+        className="fixed inset-0 z-[120] flex items-center justify-center p-4"
+        style={{ background: "rgba(5, 6, 7, 0.7)", backdropFilter: "blur(12px)" }}
+        onClick={dismiss}
       >
-        {/* Popup */}
-        <div className="relative bg-white rounded-lg shadow-xl max-w-xl w-full max-h-[90vh] overflow-auto">
-          {/* Close Button */}
+        <div
+          className="relative w-full max-w-lg overflow-hidden rounded-3xl border border-white/10 bg-ink-900"
+          onClick={(e) => e.stopPropagation()}
+        >
           <button
-            onClick={handleClose}
-            className="absolute top-4 right-4 text-gray-400 hover:text-gray-600 transition-colors z-10"
-            aria-label="Close popup"
+            onClick={dismiss}
+            aria-label="Close"
+            className="absolute right-4 top-4 z-10 flex h-9 w-9 items-center justify-center rounded-full border border-white/10 text-bone-50/70 transition-colors hover:border-lime-400 hover:text-lime-400"
           >
-            <X className="w-6 h-6" />
+            <X className="h-4 w-4" />
           </button>
+          <div className="p-8">
+            <p className="eyebrow">Pilot waitlist</p>
+            <h3 className="mt-3 text-2xl font-medium tracking-tight text-bone-50">
+              Run your ranch smarter.
+            </h3>
+            <p className="mt-2 text-sm text-bone-300">
+              Summer 2026 pilots are filling up. Drop your details and we&apos;ll be in touch.
+            </p>
 
-          {/* Form Container */}
-          <div className="p-6">
-            {!isScriptLoaded && (
-              <div className="flex items-center justify-center py-12">
-                <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#2A5F36]"></div>
-              </div>
-            )}
-            {isScriptLoaded && (
-              <div 
-                className="hs-form-frame" 
-                data-region="na3" 
-                data-form-id="7a9b5027-edb2-4e96-96cd-840d6cd13b1d" 
-                data-portal-id="342489770"
+            <div className="relative mt-6 min-h-[260px] [&_input]:!bg-ink-800 [&_input]:!text-bone-50 [&_label]:!text-bone-300">
+              {/* HubSpot mounts the form into this frame. It MUST be in the DOM
+                  before the embed script scans, so we render it unconditionally. */}
+              <div
+                ref={frameRef}
+                className="hs-form-frame"
+                data-region={HS.region}
+                data-form-id={HS.formId}
+                data-portal-id={HS.portalId}
               />
-            )}
+              {!formReady && (
+                <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
+                  <div className="h-8 w-8 animate-spin rounded-full border-b-2 border-lime-400" />
+                </div>
+              )}
+            </div>
           </div>
         </div>
       </div>
     </>
-  )
+  );
 }

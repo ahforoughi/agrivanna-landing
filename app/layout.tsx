@@ -1,42 +1,53 @@
-import type React from "react"
-import type { Metadata, Viewport } from "next"
-import { dmSans, inter } from "@/lib/fonts"
-import { Analytics } from "@vercel/analytics/next"
-import HubSpotFormPopup from "@/components/HubSpotFormPopup"
-import AnnouncementBar from "@/components/AnnouncementBar"
-import "./globals.css"
+import type { Metadata, Viewport } from "next";
+import { Geist, Geist_Mono } from "next/font/google";
+import { Analytics } from "@vercel/analytics/next";
+import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
+import HubSpotFormPopup from "@/components/HubSpotFormPopup";
+import "./globals.css";
+
+// Real Geist variable font (not the geist npm package — pulled from Google Fonts).
+const geist = Geist({
+  subsets: ["latin"],
+  variable: "--font-geist",
+  display: "swap",
+});
+
+const geistMono = Geist_Mono({
+  subsets: ["latin"],
+  variable: "--font-geist-mono",
+  display: "swap",
+});
 
 export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
-  maximumScale: 5,
-  viewportFit: "cover",
-}
+  themeColor: "#14161A",
+};
 
 export const metadata: Metadata = {
-  title: "Agrivanna - AI-Powered Livestock Health Tracking",
+  title: "Agrivanna — Grazing intelligence for working ranches",
   description:
-    "An AI-powered livestock health tracking system with a built-in vet marketplace, enabling farmers to monitor symptoms, get treatment recommendations, connect with veterinarians, and ensure seamless regulatory compliance.",
-  icons: {
-    icon: '/logo-typo.png',
-    shortcut: '/logo-typo.png',
-    apple: '/logo-typo.png',
+    "Agrivanna is the operating system for grazing-based agriculture. Virtual fencing collars, offline drone base stations, and the Pasture Readiness Score.",
+  icons: { icon: "/logos/logo-mark.png" },
+  metadataBase: new URL("https://agrivanna.com"),
+  openGraph: {
+    title: "Agrivanna — Run the ranch, not the fence",
+    description: "Virtual fencing, AI grazing intelligence, and offline-first ranch operations.",
+    type: "website",
   },
-}
+};
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode
-}) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`${dmSans.variable} ${inter.variable}`}>
-      <body className="font-inter antialiased" suppressHydrationWarning>
-        <AnnouncementBar />
-        {children}
+    <html lang="en" className={`${geist.variable} ${geistMono.variable}`}>
+      <body className="bg-ink-950 font-sans text-bone-50 antialiased">
+        <Navbar />
+        <main className="relative">{children}</main>
+        <Footer />
         <HubSpotFormPopup />
         <Analytics />
       </body>
     </html>
-  )
+  );
 }
