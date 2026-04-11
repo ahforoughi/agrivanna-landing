@@ -37,7 +37,7 @@ export default function Navbar() {
     >
       <div className="mx-auto max-w-6xl px-4">
         <nav
-          className={`flex items-center justify-between rounded-full border border-white/10 px-5 py-3 backdrop-blur-xl transition-all duration-500 ${
+          className={`flex items-center justify-between rounded-full border border-white/10 px-3 py-2.5 sm:px-5 sm:py-3 backdrop-blur-xl transition-all duration-500 ${
             scrolled
               ? "bg-ink-900/80 shadow-[0_20px_60px_-20px_rgba(0,0,0,0.8)]"
               : "bg-white/5"
@@ -49,7 +49,7 @@ export default function Navbar() {
               alt="Agrivanna"
               width={160}
               height={36}
-              className="h-5 w-auto brightness-0 invert sm:h-6"
+              className="h-4 w-auto brightness-0 invert sm:h-5 lg:h-6"
               priority
             />
           </Link>
@@ -92,7 +92,7 @@ export default function Navbar() {
             <button
               type="button"
               onClick={() => setOpen((v) => !v)}
-              className="flex h-11 w-11 items-center justify-center rounded-full border border-white/15 bg-white/5 lg:hidden"
+              className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-white/15 bg-white/5 lg:hidden"
               aria-label={open ? "Close menu" : "Open menu"}
               aria-expanded={open}
             >
