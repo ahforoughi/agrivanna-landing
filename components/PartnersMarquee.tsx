@@ -5,6 +5,22 @@ import Image from "next/image";
 // Each partner includes a link directly relevant to Agrivanna's relationship.
 const PARTNERS = [
   {
+    name: "NVIDIA",
+    src: "/partners/nvidia.png",
+    href: "https://www.nvidia.com/en-us/startups/",
+    alt: "NVIDIA",
+    context: "Inception Program",
+    tall: true,
+  },
+  {
+    name: "Google Cloud",
+    src: "/partners/google-cloud.png",
+    href: "https://cloud.google.com/startup",
+    alt: "Google Cloud",
+    context: "Startup credits",
+    tall: true,
+  },
+  {
     name: "NuWest Interiors",
     src: "/partners/nuwest.png",
     href: "https://www.nuwestinteriors.com/",
@@ -25,7 +41,7 @@ const PARTNERS = [
     alt: "THRIVE SVG AgTech Accelerator",
     context: "Academy Cohort VII",
   },
-];
+] as const;
 
 export default function PartnersMarquee() {
   // Duplicate for seamless loop; tripled so the strip always fills wide viewports.
@@ -58,9 +74,9 @@ export default function PartnersMarquee() {
             <Image
               src={p.src}
               alt={p.alt}
-              width={180}
-              height={60}
-              className="max-h-10 w-auto object-contain brightness-0 invert opacity-70 transition-all duration-500 group-hover:opacity-100 group-hover:[filter:none]"
+              width={220}
+              height={80}
+              className={`w-auto object-contain brightness-0 invert opacity-70 transition-all duration-500 group-hover:opacity-100 group-hover:[filter:none] ${"tall" in p && p.tall ? "max-h-14" : "max-h-10"}`}
             />
             <span className="pointer-events-none absolute -bottom-6 left-1/2 -translate-x-1/2 whitespace-nowrap text-[10px] uppercase tracking-[0.18em] text-bone-300 opacity-0 transition-opacity duration-500 group-hover:opacity-100">
               {p.context}

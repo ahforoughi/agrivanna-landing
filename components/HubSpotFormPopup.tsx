@@ -64,24 +64,24 @@ export default function HubSpotFormPopup() {
     <>
       <Script src={HS.script} strategy="afterInteractive" />
       <div
-        className="fixed inset-0 z-[120] flex items-center justify-center p-4"
+        className="fixed inset-0 z-[120] flex items-end sm:items-center justify-center p-0 sm:p-4"
         style={{ background: "rgba(5, 6, 7, 0.7)", backdropFilter: "blur(12px)" }}
         onClick={dismiss}
       >
         <div
-          className="relative w-full max-w-lg overflow-hidden rounded-3xl border border-white/10 bg-ink-900"
+          className="relative w-full max-h-[85svh] overflow-y-auto rounded-t-2xl sm:rounded-3xl sm:max-w-lg border border-white/10 bg-ink-900"
           onClick={(e) => e.stopPropagation()}
         >
           <button
             onClick={dismiss}
             aria-label="Close"
-            className="absolute right-4 top-4 z-10 flex h-9 w-9 items-center justify-center rounded-full border border-white/10 text-bone-50/70 transition-colors hover:border-lime-400 hover:text-lime-400"
+            className="sticky right-0 top-0 z-10 ml-auto mr-3 mt-3 flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-white/10 bg-ink-900/80 text-bone-50/70 transition-colors hover:border-lime-400 hover:text-lime-400"
           >
-            <X className="h-4 w-4" />
+            <X className="h-5 w-5" />
           </button>
-          <div className="p-8">
+          <div className="px-6 pb-8 sm:px-8 -mt-4">
             <p className="eyebrow">Pilot waitlist</p>
-            <h3 className="mt-3 text-2xl font-medium tracking-tight text-bone-50">
+            <h3 className="mt-3 text-xl sm:text-2xl font-medium tracking-tight text-bone-50">
               Run your ranch smarter.
             </h3>
             <p className="mt-2 text-sm text-bone-300">
