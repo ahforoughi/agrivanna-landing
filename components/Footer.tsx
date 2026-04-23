@@ -24,7 +24,6 @@ const COLUMNS = [
     links: [
       { href: "/team", label: "Team" },
       { href: "/news", label: "News & timeline" },
-      { href: "https://agrivanna.notion.site/agrivanna-data-room", label: "Data room" },
       { href: "mailto:info@agrivanna.com", label: "Contact" },
     ],
   },
