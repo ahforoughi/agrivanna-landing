@@ -41,6 +41,13 @@ const PARTNERS = [
     alt: "THRIVE SVG AgTech Accelerator",
     context: "Academy Cohort VII",
   },
+  {
+    name: "DeepSense",
+    src: "/partners/deepsense.png",
+    href: "https://deepsense.ca/",
+    alt: "DeepSense",
+    context: "AI partner",
+  },
 ] as const;
 
 export default function PartnersMarquee() {

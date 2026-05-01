@@ -49,7 +49,7 @@ export default function Navbar() {
               alt="Agrivanna"
               width={160}
               height={36}
-              className="h-4 w-auto brightness-0 invert sm:h-5 lg:h-6"
+              className="h-5 w-auto brightness-0 invert sm:h-6 lg:h-7"
               priority
             />
           </Link>
@@ -78,17 +78,16 @@ export default function Navbar() {
           </ul>
 
           <div className="flex items-center gap-2">
-            {/* Desktop only: Book a demo */}
+            {/* Book a demo — compact on mobile, full-size on desktop */}
             <Link
               href="https://calendly.com/aminrezaabbasi-agrivanna/meeting-with-agrivanna-team"
               target="_blank"
               rel="noopener noreferrer"
-              className="btn btn-solid hidden lg:inline-flex"
+              className="btn btn-solid !py-1 !px-3 !text-[0.72rem] !gap-1 lg:!py-[0.95rem] lg:!px-6 lg:!text-[0.98rem] lg:!gap-[0.6rem]"
             >
               <span>Book a demo</span>
-              <ArrowUpRight className="h-4 w-4" />
+              <ArrowUpRight className="h-2.5 w-2.5 lg:h-4 lg:w-4" />
             </Link>
-            {/* Mobile/tablet: hamburger only — keeps the bar uncluttered */}
             <button
               type="button"
               onClick={() => setOpen((v) => !v)}
