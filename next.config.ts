@@ -9,10 +9,7 @@ const nextConfig: NextConfig = {
     imageSizes: [16, 32, 48, 64, 96, 128, 256, 384, 512, 768, 1024],
   },
   async redirects() {
-    return [
-      { source: "/data-room", destination: "https://agrivanna.notion.site/agrivanna-data-room", permanent: true },
-      { source: "/pitch-deck", destination: "https://agrivanna.notion.site/agrivanna-data-room", permanent: true },
-    ];
+    return [];
   },
   async headers() {
     return [

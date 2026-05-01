@@ -67,7 +67,6 @@ Three distinct patterns are used so the codebase doesn't feel templated:
 Only the plumbing:
 - HubSpot portal ID `342489770` / form ID `7a9b5027-edb2-4e96-96cd-840d6cd13b1d` / region `na3`
 - Calendly demo link
-- `/data-room` and `/pitch-deck` → Notion redirects
 - Vercel caching headers for `/:path*.mp4` and image paths
 - Social link URLs (LinkedIn / Instagram / YouTube / Mail)
 
