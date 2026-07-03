@@ -5,7 +5,7 @@ import Link from "next/link";
 import { ArrowUpRight, CircleDot, Radio, BrainCircuit, HeartPulse } from "lucide-react";
 import Reveal from "@/components/Reveal";
 
-type SolutionLayout = "single" | "offset" | "devices";
+type SolutionLayout = "single" | "offset" | "offsetTop" | "devices";
 type Solution = {
   id: string;
   index: string;
@@ -34,7 +34,7 @@ const SOLUTIONS: Solution[] = [
     ],
     layout: "offset",
     images: [
-      { src: "/products/collar-cow.png", alt: "Cow wearing the Agrivanna collar in pasture" },
+      { src: "/products/cow-with-collar-real-v2.jpg", alt: "Pilot animal wearing the Agrivanna collar in pasture" },
       { src: "/products/collar-alt.png", alt: "Agrivanna virtual fencing collar render" },
     ],
     icon: CircleDot,
@@ -52,8 +52,11 @@ const SOLUTIONS: Solution[] = [
       "Reaches canyons, leased land, and mountains",
       "Built for the weather that breaks radios",
     ],
-    layout: "single",
-    images: [{ src: "/products/drone.png", alt: "Agrivanna mobile drone base station" }],
+    layout: "offsetTop",
+    images: [
+      { src: "/products/cow-tracking-software.jpg", alt: "PRS software tracking collared cattle positions on a pasture map" },
+      { src: "/products/drone.png", alt: "Agrivanna mobile drone base station" },
+    ],
     icon: Radio,
   },
   {
@@ -206,6 +209,40 @@ export default function SolutionsPage() {
                         </div>
                         {/* Secondary render (offset bottom-right, transparent bg) */}
                         <div className="absolute bottom-0 right-0 h-[55%] w-[42%]">
+                          <div className="relative h-full w-full">
+                            <Image
+                              src={s.images[1].src}
+                              alt={s.images[1].alt}
+                              fill
+                              quality={100}
+                              className="object-contain drop-shadow-[0_30px_40px_rgba(0,0,0,0.6)]"
+                              sizes="(min-width: 1280px) 600px, (min-width: 1024px) 500px, 60vw"
+                            />
+                          </div>
+                        </div>
+                      </div>
+                    )}
+
+                    {s.layout === "offsetTop" && (
+                      /* Tracking software main, drone render offset up and to the right, overlapping */
+                      <div className="relative aspect-[4/3]">
+                        {/* Primary screenshot */}
+                        <div className="media absolute bottom-0 left-0 h-[88%] w-[88%] overflow-hidden bg-gradient-to-br from-ink-800 via-ink-900 to-ink-950">
+                          <div className="absolute inset-0 grid-backdrop opacity-40" />
+                          <span className="absolute left-6 top-5 z-10 font-mono text-[11px] uppercase tracking-[0.2em] text-bone-50/90">
+                            Agrivanna / {s.index}
+                          </span>
+                          <Image
+                            src={s.images[0].src}
+                            alt={s.images[0].alt}
+                            fill
+                            quality={95}
+                            className="object-contain p-10"
+                            sizes="(min-width: 1280px) 1100px, (min-width: 1024px) 900px, 100vw"
+                          />
+                        </div>
+                        {/* Secondary render (drone, offset top-right, overlapping) */}
+                        <div className="absolute -top-4 -right-4 h-[55%] w-[48%]">
                           <div className="relative h-full w-full">
                             <Image
                               src={s.images[1].src}

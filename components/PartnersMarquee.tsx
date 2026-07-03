@@ -83,7 +83,7 @@ export default function PartnersMarquee() {
               alt={p.alt}
               width={220}
               height={80}
-              className={`w-auto object-contain brightness-0 invert opacity-70 transition-all duration-500 group-hover:opacity-100 group-hover:[filter:none] ${"tall" in p && p.tall ? "max-h-14" : "max-h-10"}`}
+              className={`w-auto object-contain brightness-0 invert opacity-70 transition-opacity duration-500 group-hover:opacity-100 ${"tall" in p && p.tall ? "max-h-14" : "max-h-10"}`}
             />
             <span className="pointer-events-none absolute -bottom-6 left-1/2 -translate-x-1/2 whitespace-nowrap text-[10px] uppercase tracking-[0.18em] text-bone-300 opacity-0 transition-opacity duration-500 group-hover:opacity-100">
               {p.context}

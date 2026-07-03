@@ -5,10 +5,32 @@ export type NewsItem = {
   summary: string;
   href: string;
   image: string;
+  // Optional extra zoom to crop out edge artifacts in the source photo (e.g. a scan border).
+  imageZoom?: boolean;
   tag: "Press" | "Award" | "Accelerator" | "Competition";
 };
 
 export const NEWS: NewsItem[] = [
+  {
+    title: "Selected for Spring's Elevate Round Ready program",
+    source: "Spring",
+    date: "June 2026",
+    summary:
+      "Agrivanna joined the Summer 2026 cohort of Spring's Elevate Round Ready program — a Vancouver-based accelerator whose ventures have raised over $17M since mid-2025. The program pairs the team with curated investor introductions while it raises its seed round.",
+    href: "https://spring.is",
+    image: "/story/spring-scale-ready.jpg",
+    tag: "Accelerator",
+  },
+  {
+    title: "1st place — Start Something Summit",
+    source: "University of Calgary · Hunter Hub",
+    date: "June 2026",
+    summary:
+      "Agrivanna won $10,000 for 1st place in the Launchpad Stream at the University of Calgary's Start Something Summit — the latest in a run of Hunter Hub pitch wins.",
+    href: "https://ucalgary.ca/news/agrivanna-student-built-ai-agtech-startup-helps-ranchers-herd-cattle-quicker-saving-money-time",
+    image: "/story/start-something-winning.jpg",
+    tag: "Award",
+  },
   {
     title: "Agrivanna takes 1st at The Arena Pitch Competition",
     source: "Arthur L. Irving Entrepreneurship Centre",
@@ -57,6 +79,7 @@ export const NEWS: NewsItem[] = [
       "Agrivanna was selected for THRIVE's agtech venture cohort — the leading global network for agrifood innovation.",
     href: "https://thriveagrifood.com/academy-cohort-vii/",
     image: "/story/thrive-cohort.jpg",
+    imageZoom: true,
     tag: "Accelerator",
   },
   {
@@ -99,6 +122,7 @@ export const TIMELINE: Milestone[] = [
     title: "THRIVE Cohort VII",
     body: "Joined the THRIVE SVG Academy — global agrifood innovation network.",
     status: "past",
+    image: "/story/thrive-cohort-2-v2.jpg",
   },
   {
     date: "Nov 2025",
@@ -133,18 +157,20 @@ export const TIMELINE: Milestone[] = [
     title: "First ranch pilots",
     body: "First real-world deployments at partner ranches in Alberta.",
     status: "now",
+    image: "/story/timeline-ranch-pilot-collars-v2.jpg",
   },
   {
     date: "Late 2026",
     title: "Product refinement",
     body: "Iterate on hardware and software from pilot data.",
     status: "future",
-    image: "/story/timeline-mvp.jpg",
+    image: "/story/timeline-bench-testing-v2.jpg",
   },
   {
     date: "2027",
     title: "Western Canada",
     body: "Expand pilots and commercial deployments across the prairies.",
     status: "future",
+    image: "/story/canada-flag.jpg",
   },
 ];
