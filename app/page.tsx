@@ -41,8 +41,26 @@ const STATUS_ITEMS = [
   { k: "Status", v: "MVP · TRL 5" },
   { k: "Pilots", v: "Summer 2026" },
   { k: "Waitlist", v: "10+ ranches" },
-  { k: "Interviews", v: "50+ ranchers" },
+  { k: "Interviews", v: "60+ ranchers" },
 ];
+
+const VALUE_GROUPS = [
+  {
+    label: "Direct savings",
+    items: [
+      "Skip $10,000+ per mile in wire, posts, and labour that traditional fencing costs to build.",
+      "No fixed infrastructure bill — no cell towers, no Starlink subscription, no base-station install.",
+    ],
+  },
+  {
+    label: "Indirect savings",
+    items: [
+      "20–40% more usable forage per acre from properly timed rotational grazing, a smaller hay and feed bill.",
+      "Hours back every week that used to go into building, checking, and repairing physical fence.",
+      "Earlier illness and calving detection means fewer losses and fewer vet call-outs.",
+    ],
+  },
+] as const;
 
 export default function HomePage() {
   const heroRef = useRef<HTMLElement>(null);
@@ -74,7 +92,7 @@ export default function HomePage() {
           {/* Virtual fence photo — sits BEHIND the word "ranch" on lg+ for a layered look.
               On mobile it stacks inline below the heading. Rendered before the heading
               in markup so the heading's relative z-10 paints on top on lg+. */}
-          <div className="pointer-events-none absolute right-4 top-16 z-0 hidden w-[42%] max-w-[520px] lg:block xl:top-10 xl:w-[42%] xl:max-w-[520px]">
+          <div className="pointer-events-none absolute right-4 top-28 z-0 hidden w-[42%] max-w-[520px] lg:block xl:top-24 xl:w-[42%] xl:max-w-[520px]">
             <Reveal delay={0.3}>
               <div className="media relative aspect-[4/3] opacity-90">
                 <Image
@@ -218,6 +236,82 @@ export default function HomePage() {
                   </Reveal>
                 ))}
               </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ──────────────────────────── VALUE TO THE RANCHER ──────────────────────────── */}
+      <section className="relative overflow-hidden border-t border-white/5 py-28 sm:py-36">
+        <div className="mx-auto max-w-6xl px-4">
+          <div className="grid gap-16 lg:grid-cols-12">
+            <div className="lg:col-span-5">
+              <Reveal>
+                <p className="eyebrow">The payoff</p>
+              </Reveal>
+              <Reveal delay={0.05}>
+                <h2 className="mt-6 text-4xl font-medium tracking-tighter text-bone-50 sm:text-5xl lg:text-6xl">
+                  What it&apos;s worth
+                  <br />
+                  <span className="text-bone-300">on your operation.</span>
+                </h2>
+              </Reveal>
+              <Reveal delay={0.15}>
+                <p className="mt-8 max-w-md text-base leading-relaxed text-bone-300">
+                  Virtual fencing pays for itself twice — once in the capital you don&apos;t
+                  spend on wire, and again in the forage and labour it frees up.
+                </p>
+              </Reveal>
+              <Reveal delay={0.2}>
+                <div className="mt-10 max-w-sm rounded-3xl border border-white/5 bg-white/[0.02] p-8">
+                  <p className="text-5xl font-medium tracking-tighter text-lime-400 sm:text-6xl">
+                    $60,000+
+                  </p>
+                  <p className="mt-3 text-sm text-bone-300">
+                    CAD, estimated annual savings for a 150-head operation
+                  </p>
+                </div>
+              </Reveal>
+            </div>
+
+            <div className="lg:col-span-7">
+              <Reveal delay={0.1}>
+                <div className="media relative mb-10 aspect-[16/9]">
+                  <Image
+                    src="/story/cows-on-pasture.jpg"
+                    alt="Cattle on open pasture"
+                    fill
+                    quality={95}
+                    className="object-cover"
+                    sizes="(min-width: 1280px) 720px, (min-width: 1024px) 60vw, 100vw"
+                  />
+                </div>
+              </Reveal>
+              <div className="grid gap-10 sm:grid-cols-2">
+                {VALUE_GROUPS.map((group, i) => (
+                  <Reveal key={group.label} delay={0.1 + i * 0.08}>
+                    <div>
+                      <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-lime-400">
+                        {group.label}
+                      </p>
+                      <ul className="mt-6 space-y-4">
+                        {group.items.map((item) => (
+                          <li
+                            key={item}
+                            className="flex items-start gap-3 border-t border-white/5 pt-4 text-base leading-relaxed text-bone-300"
+                          >
+                            <span
+                              aria-hidden="true"
+                              className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-lime-400"
+                            />
+                            {item}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </Reveal>
+                ))}
+              </div>
             </div>
           </div>
         </div>

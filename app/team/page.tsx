@@ -16,25 +16,43 @@ export default function TeamPage() {
       <section className="relative overflow-hidden pt-40 pb-20">
         <div className="absolute inset-0 grid-backdrop" aria-hidden="true" />
         <div className="relative mx-auto max-w-6xl px-4">
-          <Reveal>
-            <p className="eyebrow">Who we are</p>
-          </Reveal>
-          <Reveal delay={0.05}>
-            <h1 className="mt-6 max-w-4xl text-5xl font-medium tracking-tightest sm:text-7xl lg:text-8xl">
-              Engineers,
-              <br />
-              <span className="text-bone-300">ranchers,</span>
-              <br />
-              <span className="text-lime-400">operators.</span>
-            </h1>
-          </Reveal>
-          <Reveal delay={0.15}>
-            <p className="mt-10 max-w-xl text-bone-300">
-              Agrivanna is a small team that built a system most of the industry said couldn&apos;t
-              exist: offline grazing intelligence that works on working ranches. Here&apos;s who&apos;s
-              behind it.
-            </p>
-          </Reveal>
+          <div className="grid gap-12 lg:grid-cols-12 lg:items-end">
+            <div className="lg:col-span-7">
+              <Reveal>
+                <p className="eyebrow">Who we are</p>
+              </Reveal>
+              <Reveal delay={0.05}>
+                <h1 className="mt-6 max-w-4xl text-5xl font-medium tracking-tightest sm:text-7xl lg:text-8xl">
+                  Engineers,
+                  <br />
+                  <span className="text-bone-300">ranchers,</span>
+                  <br />
+                  <span className="text-lime-400">operators.</span>
+                </h1>
+              </Reveal>
+              <Reveal delay={0.15}>
+                <p className="mt-10 max-w-xl text-bone-300">
+                  Agrivanna is a small team that built a system most of the industry said couldn&apos;t
+                  exist: offline grazing intelligence that works on working ranches. Here&apos;s who&apos;s
+                  behind it.
+                </p>
+              </Reveal>
+            </div>
+            <div className="lg:col-span-5">
+              <Reveal delay={0.2}>
+                <div className="media relative aspect-[4/3]">
+                  <Image
+                    src="/story/founding-team-collar.jpg"
+                    alt="The Agrivanna founders with an early collar prototype"
+                    fill
+                    quality={95}
+                    className="object-cover"
+                    sizes="(min-width: 1024px) 480px, 100vw"
+                  />
+                </div>
+              </Reveal>
+            </div>
+          </div>
         </div>
       </section>
 

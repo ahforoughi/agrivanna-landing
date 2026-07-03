@@ -18,22 +18,40 @@ export default function NewsPage() {
       <section className="relative overflow-hidden pt-40 pb-20">
         <div className="absolute inset-0 grid-backdrop" aria-hidden="true" />
         <div className="relative mx-auto max-w-6xl px-4">
-          <Reveal>
-            <p className="eyebrow">Press · Awards · Milestones</p>
-          </Reveal>
-          <Reveal delay={0.05}>
-            <h1 className="mt-6 max-w-4xl text-5xl font-medium tracking-tightest sm:text-7xl lg:text-8xl">
-              What we&apos;re
-              <br />
-              <span className="text-lime-400">building in public.</span>
-            </h1>
-          </Reveal>
-          <Reveal delay={0.15}>
-            <p className="mt-10 max-w-xl text-base text-bone-300">
-              Every accelerator, award, and article the company has picked up along the way,
-              plus the story from founding to first ranch pilots.
-            </p>
-          </Reveal>
+          <div className="grid gap-12 lg:grid-cols-12 lg:items-end">
+            <div className="lg:col-span-7">
+              <Reveal>
+                <p className="eyebrow">Press · Awards · Milestones</p>
+              </Reveal>
+              <Reveal delay={0.05}>
+                <h1 className="mt-6 max-w-4xl text-5xl font-medium tracking-tightest sm:text-7xl lg:text-8xl">
+                  What we&apos;re
+                  <br />
+                  <span className="text-lime-400">building in public.</span>
+                </h1>
+              </Reveal>
+              <Reveal delay={0.15}>
+                <p className="mt-10 max-w-xl text-base text-bone-300">
+                  Every accelerator, award, and article the company has picked up along the way,
+                  plus the story from founding to first ranch pilots.
+                </p>
+              </Reveal>
+            </div>
+            <div className="lg:col-span-5">
+              <Reveal delay={0.2}>
+                <div className="media relative aspect-[4/3]">
+                  <Image
+                    src="/story/base-station-drone.jpg"
+                    alt="Agrivanna's mobile drone base station in the workshop"
+                    fill
+                    quality={95}
+                    className="object-cover"
+                    sizes="(min-width: 1024px) 480px, 100vw"
+                  />
+                </div>
+              </Reveal>
+            </div>
+          </div>
         </div>
       </section>
 
@@ -67,7 +85,7 @@ export default function NewsPage() {
                       alt={n.title}
                       fill
                       quality={95}
-                      className="object-cover transition-transform duration-700 group-hover:scale-105"
+                      className={`object-cover transition-transform duration-700 group-hover:scale-105 ${n.imageZoom ? "scale-110" : ""}`}
                       sizes="(min-width: 1280px) 420px, (min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw"
                     />
                     <span className="absolute left-4 top-4 rounded-full border border-white/20 bg-ink-950/70 px-3 py-1 font-mono text-[10px] uppercase tracking-[0.14em] text-bone-50 backdrop-blur">
@@ -90,6 +108,33 @@ export default function NewsPage() {
               </Reveal>
             ))}
           </div>
+        </div>
+      </section>
+
+      {/* Featured video */}
+      <section className="relative border-t border-white/5 py-24">
+        <div className="mx-auto max-w-6xl px-4">
+          <div className="mb-12">
+            <Reveal>
+              <p className="eyebrow">Watch</p>
+            </Reveal>
+            <Reveal delay={0.05}>
+              <h2 className="mt-4 text-3xl font-medium tracking-tighter sm:text-4xl">
+                Agrivanna, on video.
+              </h2>
+            </Reveal>
+          </div>
+          <Reveal delay={0.1}>
+            <div className="media relative aspect-video">
+              <iframe
+                src="https://www.youtube.com/embed/tWXcF0qAMlM"
+                title="Agrivanna"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                allowFullScreen
+                className="absolute inset-0 h-full w-full"
+              />
+            </div>
+          </Reveal>
         </div>
       </section>
 

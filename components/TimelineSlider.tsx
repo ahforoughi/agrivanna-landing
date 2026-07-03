@@ -100,6 +100,7 @@ export default function TimelineSlider() {
                     alt={m.title}
                     fill
                     quality={95}
+                    unoptimized={m.image.endsWith(".svg")}
                     className="object-cover transition-transform duration-700 group-hover:scale-105"
                     sizes="(min-width: 768px) 420px, 80vw"
                   />
