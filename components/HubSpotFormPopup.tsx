@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { usePathname } from "next/navigation";
 import Script from "next/script";
 import { X } from "lucide-react";
 
@@ -14,19 +15,30 @@ const HS = {
 
 const STORAGE_KEY = "agrivanna-v2-form-popup";
 
+// Pages that already lead with their own form — a second one on top competes.
+const SUPPRESSED_PATHS = ["/software-leads", "/pilot-waitlist", "/contact"];
+
 export default function HubSpotFormPopup() {
   const [open, setOpen] = useState(false);
   const [formReady, setFormReady] = useState(false);
   const frameRef = useRef<HTMLDivElement>(null);
+  const pathname = usePathname();
+  const suppressed = SUPPRESSED_PATHS.includes(pathname);
 
   useEffect(() => {
     if (typeof window === "undefined") return;
+    // Re-runs on route change, so navigating into a suppressed page cancels a
+    // pending timer and closes the popup if it already opened.
+    if (suppressed) {
+      setOpen(false);
+      return;
+    }
     const seen = window.localStorage.getItem(STORAGE_KEY);
     if (!seen) {
       const t = window.setTimeout(() => setOpen(true), 4000);
       return () => window.clearTimeout(t);
     }
-  }, []);
+  }, [suppressed]);
 
   // Watch the frame for HubSpot's injected form so we can hide the spinner.
   useEffect(() => {
