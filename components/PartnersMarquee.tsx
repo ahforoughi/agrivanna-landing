@@ -48,6 +48,13 @@ const PARTNERS = [
     alt: "DeepSense",
     context: "AI partner",
   },
+  {
+    name: "Huber Ag Equipment",
+    src: "/partners/huber-ag-equipment.png",
+    href: "https://www.huberequipment.com",
+    alt: "Huber Ag Equipment Ltd.",
+    context: "Equipment partner",
+  },
 ] as const;
 
 export default function PartnersMarquee() {
