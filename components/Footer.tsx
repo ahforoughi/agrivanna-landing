@@ -136,6 +136,21 @@ export default function Footer() {
 
         <div className="flex flex-col items-start justify-between gap-4 pt-8 text-xs text-bone-300 md:flex-row md:items-center">
           <p>© {new Date().getFullYear()} Agrivanna Inc. Calgary, Alberta.</p>
+          <a
+            href="https://albertainnovates.ca/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="group inline-flex items-center gap-2.5 text-bone-300 transition-colors hover:text-lime-400"
+          >
+            <span>With the support of Alberta Innovates</span>
+            <Image
+              src="/partners/alberta-innovates.png"
+              alt="Alberta Innovates"
+              width={220}
+              height={86}
+              className="h-5 w-auto object-contain brightness-0 invert opacity-60 transition-opacity group-hover:opacity-100"
+            />
+          </a>
           <p className="font-mono uppercase tracking-widest">
             TRL 5 · MVP complete · Pilots Summer 2026
           </p>

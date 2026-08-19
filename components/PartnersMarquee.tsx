@@ -21,6 +21,13 @@ const PARTNERS = [
     tall: true,
   },
   {
+    name: "Alberta Innovates",
+    src: "/partners/alberta-innovates.png",
+    href: "https://albertainnovates.ca/",
+    alt: "Alberta Innovates",
+    context: "Funding partner",
+  },
+  {
     name: "NuWest Interiors",
     src: "/partners/nuwest.png",
     href: "https://www.nuwestinteriors.com/",
