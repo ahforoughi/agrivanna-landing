@@ -9,7 +9,7 @@ const PARTNERS = [
     src: "/partners/nvidia.png",
     href: "https://www.nvidia.com/en-us/startups/",
     alt: "NVIDIA",
-    context: "Inception Program",
+    context: "Technology partner",
     tall: true,
   },
   {
@@ -39,14 +39,14 @@ const PARTNERS = [
     src: "/partners/plug-and-play.png",
     href: "https://www.linkedin.com/posts/ahforoughi_agtech-aiinagriculture-aginnovation-activity-7397013956038488065-gNdZ",
     alt: "Plug and Play",
-    context: "Kananaskis accelerator cohort",
+    context: "Agtech program",
   },
   {
     name: "THRIVE SVG",
     src: "/partners/thrive-svg.png",
     href: "https://thriveagrifood.com/academy-cohort-vii/",
     alt: "THRIVE SVG AgTech Accelerator",
-    context: "Academy Cohort VII",
+    context: "Agrifood program",
   },
   {
     name: "DeepSense",
@@ -72,9 +72,9 @@ export default function PartnersMarquee() {
     <section className="relative overflow-hidden border-y border-white/5 py-16">
       <div className="noise" />
       <div className="relative mx-auto mb-10 max-w-6xl px-4">
-        <p className="eyebrow">Backed by</p>
+        <p className="eyebrow">Working with</p>
         <h3 className="mt-3 max-w-xl text-2xl font-medium tracking-tight text-bone-50 sm:text-3xl">
-          The institutions and investors betting on grazing intelligence.
+          Built with Canadian research, funding, and ag equipment partners.
         </h3>
       </div>
 

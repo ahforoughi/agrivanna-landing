@@ -1,6 +1,8 @@
 import Link from "next/link";
 import Image from "next/image";
 import { Linkedin, Instagram, Youtube, Mail, ArrowUpRight } from "lucide-react";
+import { DEMO_CALENDLY } from "@/lib/cta";
+import TrialButton from "@/components/TrialButton";
 
 const SOCIAL = [
   { href: "https://www.linkedin.com/company/agrivanna/", icon: Linkedin, label: "LinkedIn" },
@@ -13,10 +15,11 @@ const COLUMNS = [
   {
     title: "Product",
     links: [
-      { href: "/solutions#collar", label: "Virtual fencing collar" },
-      { href: "/solutions#drone", label: "Mobile drone base" },
-      { href: "/solutions#prs", label: "PRS software" },
-      { href: "/solutions#impact", label: "Rancher impact" },
+      { href: "/#recording", label: "Voice records" },
+      { href: "/#offline", label: "Works offline" },
+      { href: "/#pasture", label: "Pasture & grazing" },
+      { href: "/#features", label: "Full feature list" },
+      { href: "/#pricing", label: "Pricing" },
     ],
   },
   {
@@ -28,10 +31,10 @@ const COLUMNS = [
     ],
   },
   {
-    title: "For ranchers",
+    title: "Legal",
     links: [
-      { href: "/#pilot", label: "Join the pilot" },
-      { href: "/#problem", label: "The problem" },
+      { href: "/cookie-policy", label: "Cookie policy" },
+      { href: "/service-terms", label: "Terms of service" },
     ],
   },
 ] as const;
@@ -41,42 +44,25 @@ export default function Footer() {
     <footer className="relative overflow-hidden border-t border-white/5 bg-ink-950">
       <div className="noise" />
       <div className="relative mx-auto max-w-6xl px-4 pt-20 pb-10">
-        {/* Big brand mark */}
-        <div className="relative mb-16 flex flex-col gap-10 md:flex-row md:items-end md:justify-between">
-          <div className="relative z-10 max-w-lg">
-            <p className="eyebrow mb-5">The ranch, rewired</p>
+        <div className="mb-16 flex flex-col gap-10 md:flex-row md:items-end md:justify-between">
+          <div className="max-w-lg">
+            <p className="eyebrow mb-5">Start today</p>
             <h2 className="text-4xl font-medium tracking-tighter text-bone-50 sm:text-5xl">
-              Less fence. More forage.
+              Get it out of your head.
               <br />
-              <span className="text-lime-400">Run the ranch.</span>
+              <span className="text-lime-400">And into the record.</span>
             </h2>
           </div>
 
-          {/* Speckled Park cow — transparent PNG anchored beside the brand line.
-              Sits center-right on lg+, bottom-right on mobile, behind the CTA buttons. */}
-          <div className="pointer-events-none absolute right-0 bottom-0 z-0 hidden h-[140%] w-[42%] max-w-[460px] sm:block md:right-[max(0px,calc((100%-40rem)/2))] md:h-[130%] md:w-[38%] lg:right-[22%] lg:h-[150%] lg:w-[34%]">
-            <Image
-              src="/story/hero-speckled-park.png"
-              alt=""
-              aria-hidden="true"
-              fill
-              quality={100}
-              className="object-contain object-right-bottom drop-shadow-[0_30px_50px_rgba(0,0,0,0.7)]"
-              sizes="(min-width: 1024px) 440px, (min-width: 768px) 360px, 260px"
-            />
-          </div>
-
-          <div className="relative z-10 flex flex-wrap gap-3">
+          <div className="flex flex-wrap gap-3">
+            <TrialButton source="footer" />
             <Link
-              href="https://calendly.com/aminrezaabbasi-agrivanna/meeting-with-agrivanna-team"
+              href={DEMO_CALENDLY}
               target="_blank"
               rel="noopener noreferrer"
-              className="btn btn-solid"
+              className="btn"
             >
-              Book a demo <ArrowUpRight className="h-4 w-4" />
-            </Link>
-            <Link href="/news" className="btn">
-              Latest updates <ArrowUpRight className="h-4 w-4" />
+              Book a call <ArrowUpRight className="h-4 w-4" />
             </Link>
           </div>
         </div>
@@ -92,8 +78,8 @@ export default function Footer() {
               className="h-9 w-auto brightness-0 invert"
             />
             <p className="mt-5 max-w-xs text-sm leading-relaxed text-bone-300">
-              Canadian agtech. Grazing intelligence built for the working ranch —
-              no signal, no fences, no problem.
+              Canadian agtech. Herd and pasture records built for dirty hands, heavy gloves, and
+              country with no signal.
             </p>
             <ul className="mt-6 flex gap-2">
               {SOCIAL.map(({ href, icon: Icon, label }) => (
@@ -151,9 +137,6 @@ export default function Footer() {
               className="h-5 w-auto object-contain brightness-0 invert opacity-60 transition-opacity group-hover:opacity-100"
             />
           </a>
-          <p className="font-mono uppercase tracking-widest">
-            TRL 5 · MVP complete · Pilots Summer 2026
-          </p>
         </div>
       </div>
     </footer>

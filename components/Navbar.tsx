@@ -5,12 +5,13 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 import { Menu, X, ArrowUpRight } from "lucide-react";
 import { usePathname } from "next/navigation";
+import TrialButton from "@/components/TrialButton";
 
 const NAV_ITEMS = [
   { href: "/", label: "Home" },
-  { href: "/solutions", label: "Solutions" },
+  { href: "/#pricing", label: "Pricing" },
   { href: "/team", label: "Team" },
-  { href: "/news", label: "News & Timeline" },
+  { href: "/news", label: "News" },
 ];
 
 export default function Navbar() {
@@ -78,16 +79,14 @@ export default function Navbar() {
           </ul>
 
           <div className="flex items-center gap-2">
-            {/* Book a demo — compact on mobile, full-size on desktop */}
-            <Link
-              href="https://calendly.com/aminrezaabbasi-agrivanna/meeting-with-agrivanna-team"
-              target="_blank"
-              rel="noopener noreferrer"
+            {/* Free trial — compact on mobile, full-size on desktop */}
+            <TrialButton
+              source="navbar"
+              arrow={false}
               className="btn btn-solid !py-1 !px-3 !text-[0.72rem] !gap-1 lg:!py-[0.95rem] lg:!px-6 lg:!text-[0.98rem] lg:!gap-[0.6rem]"
             >
-              <span>Book a demo</span>
-              <ArrowUpRight className="h-2.5 w-2.5 lg:h-4 lg:w-4" />
-            </Link>
+              Free trial
+            </TrialButton>
             <button
               type="button"
               onClick={() => setOpen((v) => !v)}
@@ -120,15 +119,7 @@ export default function Navbar() {
                 );
               })}
             </ul>
-            <Link
-              href="https://calendly.com/aminrezaabbasi-agrivanna/meeting-with-agrivanna-team"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="btn btn-solid mt-5 w-full justify-center"
-            >
-              <span>Book a demo</span>
-              <ArrowUpRight className="h-4 w-4" />
-            </Link>
+            <TrialButton source="navbar-mobile" className="btn btn-solid mt-5 w-full justify-center" />
           </div>
         )}
       </div>

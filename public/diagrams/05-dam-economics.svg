@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="460" viewBox="0 0 960 460" role="img" aria-labelledby="av5-t av5-d" font-family="Geist, ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, Roboto, Helvetica, Arial, sans-serif">
+  <title id="av5-t">Lifetime performance per dam</title>
+  <desc id="av5-d">Two cows compared. Cow 44 has raised 8 calves at a 610 pound average weaning weight with no missed cycles and is bred in cycle one, grading A plus. Cow 102 has raised 3 calves at 505 pounds, missed 2 cycles and is open this fall, grading D.</desc>
+
+  <text x="44" y="44" font-size="11.5" font-weight="700" letter-spacing="1.6" fill="#A6FF3D">HERD ECONOMICS</text>
+  <text x="44" y="79" font-size="27" font-weight="600" fill="#F6F6F4">Know which cows pay for themselves.</text>
+  <text x="44" y="106" font-size="14.5" fill="#B6B6AE">Lifetime performance per dam, built from records you already spoke into the app.</text>
+
+  <rect x="44" y="140" width="424" height="252" rx="14" fill="#F6F6F4" fill-opacity="0.04" stroke="#F6F6F4" stroke-opacity="0.10" stroke-width="1.5"/>
+  <text x="68" y="177" font-size="21" font-weight="700" fill="#F6F6F4">COW #44</text>
+  <rect x="392.75" y="156.75" width="50.5" height="26.5" rx="13.25" fill="none" stroke="#A6FF3D" stroke-width="1.5"/>
+  <text x="418" y="175" font-size="14" font-weight="700" fill="#A6FF3D" text-anchor="middle">A+</text>
+  <line x1="68" y1="196" x2="444" y2="196" stroke="#F6F6F4" stroke-opacity="0.12" stroke-width="1.5"/>
+  <text x="68" y="228" font-size="13.5" fill="#B6B6AE">Calves raised</text>
+  <text x="444" y="228" font-size="14.5" font-weight="600" fill="#F6F6F4" text-anchor="end">8</text>
+  <text x="68" y="260" font-size="13.5" fill="#B6B6AE">Avg weaning weight</text>
+  <text x="444" y="260" font-size="14.5" font-weight="600" fill="#F6F6F4" text-anchor="end">610 lb</text>
+  <text x="68" y="292" font-size="13.5" fill="#B6B6AE">Missed 21-day cycles</text>
+  <text x="444" y="292" font-size="14.5" font-weight="600" fill="#F6F6F4" text-anchor="end">0</text>
+  <text x="68" y="324" font-size="13.5" fill="#B6B6AE">Status this fall</text>
+  <text x="444" y="324" font-size="14.5" font-weight="600" fill="#F6F6F4" text-anchor="end">Bred, cycle 1</text>
+  <rect x="68.75" y="342.75" width="374.5" height="34.5" rx="9.5" fill="none" stroke="#A6FF3D" stroke-width="1.5"/>
+  <text x="256" y="365" font-size="13.5" font-weight="600" fill="#A6FF3D" text-anchor="middle">+$4,250 lifetime margin — keep her line</text>
+
+  <rect x="492" y="140" width="424" height="252" rx="14" fill="#F6F6F4" fill-opacity="0.04" stroke="#F6F6F4" stroke-opacity="0.10" stroke-width="1.5"/>
+  <text x="516" y="177" font-size="21" font-weight="700" fill="#F6F6F4">COW #102</text>
+  <rect x="840.75" y="156.75" width="50.5" height="26.5" rx="13.25" fill="none" stroke="#FF9280" stroke-width="1.5"/>
+  <text x="866" y="175" font-size="14" font-weight="700" fill="#FF9280" text-anchor="middle">D</text>
+  <line x1="516" y1="196" x2="892" y2="196" stroke="#F6F6F4" stroke-opacity="0.12" stroke-width="1.5"/>
+  <text x="516" y="228" font-size="13.5" fill="#B6B6AE">Calves raised</text>
+  <text x="892" y="228" font-size="14.5" font-weight="600" fill="#F6F6F4" text-anchor="end">3</text>
+  <text x="516" y="260" font-size="13.5" fill="#B6B6AE">Avg weaning weight</text>
+  <text x="892" y="260" font-size="14.5" font-weight="600" fill="#F6F6F4" text-anchor="end">505 lb</text>
+  <text x="516" y="292" font-size="13.5" fill="#B6B6AE">Missed 21-day cycles</text>
+  <text x="892" y="292" font-size="14.5" font-weight="600" fill="#F6F6F4" text-anchor="end">2</text>
+  <text x="516" y="324" font-size="13.5" fill="#B6B6AE">Status this fall</text>
+  <text x="892" y="324" font-size="14.5" font-weight="600" fill="#F6F6F4" text-anchor="end">Open</text>
+  <rect x="516.75" y="342.75" width="374.5" height="34.5" rx="9.5" fill="none" stroke="#FF9280" stroke-width="1.5"/>
+  <text x="704" y="365" font-size="13.5" font-weight="600" fill="#FF9280" text-anchor="middle">-$400 to overwinter — cull at fall auction</text>
+
+  <text x="44" y="422" font-size="11.5" fill="#8C8C85">Illustrative record. Benchmarks follow BCRC and Canfax; the numbers on your screen come from your own herd.</text>
+</svg>

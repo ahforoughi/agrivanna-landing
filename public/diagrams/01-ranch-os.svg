@@ -1,0 +1,70 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="620" viewBox="0 0 960 620" role="img" aria-labelledby="av1-t av1-d" font-family="Geist, ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, Roboto, Helvetica, Arial, sans-serif">
+  <title id="av1-t">The Agrivanna Ranch OS</title>
+  <desc id="av1-d">Voice, NFC and RFID hardware, and Sentinel-2 satellite imagery feed one offline-first record on the phone. That record powers three modules: field records, pasture readiness, and herd economics. The output is audit-ready herd history.</desc>
+  <defs>
+    <marker id="av1-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="10" markerHeight="10" markerUnits="userSpaceOnUse" orient="auto">
+      <path d="M0 0 L10 5 L0 10 Z" fill="#8C8C85"/>
+    </marker>
+  </defs>
+
+  <text x="44" y="44" font-size="11.5" font-weight="700" letter-spacing="1.6" fill="#A6FF3D">RANCH OPERATING SYSTEM</text>
+  <text x="44" y="79" font-size="27" font-weight="600" fill="#F6F6F4">One record spine for the whole outfit.</text>
+  <text x="44" y="106" font-size="14.5" fill="#B6B6AE">Everything the ranch does, captured once — then used everywhere.</text>
+
+  <rect x="44" y="136" width="278" height="64" rx="12" fill="#F6F6F4" fill-opacity="0.04" stroke="#F6F6F4" stroke-opacity="0.10" stroke-width="1.5"/>
+  <circle cx="66" cy="158" r="4.5" fill="#A6FF3D"/>
+  <text x="82" y="163" font-size="14.5" font-weight="600" fill="#F6F6F4">Voice</text>
+  <text x="82" y="182" font-size="12" fill="#B6B6AE">Spoken chute-side, gloves on</text>
+
+  <rect x="341" y="136" width="278" height="64" rx="12" fill="#F6F6F4" fill-opacity="0.04" stroke="#F6F6F4" stroke-opacity="0.10" stroke-width="1.5"/>
+  <circle cx="363" cy="158" r="4.5" fill="#A6FF3D"/>
+  <text x="379" y="163" font-size="14.5" font-weight="600" fill="#F6F6F4">NFC + RFID</text>
+  <text x="379" y="182" font-size="12" fill="#B6B6AE">Visor tag, wand, scale head</text>
+
+  <rect x="638" y="136" width="278" height="64" rx="12" fill="#F6F6F4" fill-opacity="0.04" stroke="#F6F6F4" stroke-opacity="0.10" stroke-width="1.5"/>
+  <circle cx="660" cy="158" r="4.5" fill="#A6FF3D"/>
+  <text x="676" y="163" font-size="14.5" font-weight="600" fill="#F6F6F4">Satellite</text>
+  <text x="676" y="182" font-size="12" fill="#B6B6AE">Sentinel-2, every 5 days</text>
+
+  <line x1="183" y1="204" x2="183" y2="230" stroke="#8C8C85" stroke-width="2" marker-end="url(#av1-arrow)"/>
+  <line x1="480" y1="204" x2="480" y2="230" stroke="#8C8C85" stroke-width="2" marker-end="url(#av1-arrow)"/>
+  <line x1="777" y1="204" x2="777" y2="230" stroke="#8C8C85" stroke-width="2" marker-end="url(#av1-arrow)"/>
+
+  <rect x="44" y="236" width="872" height="76" rx="14" fill="#A6FF3D"/>
+  <text x="68" y="267" font-size="11.5" font-weight="700" letter-spacing="1.4" fill="#14161A" fill-opacity="0.72">AGRIVANNA RANCH OS</text>
+  <text x="68" y="291" font-size="14.5" font-weight="500" fill="#14161A">One offline-first record on the phone you already carry.</text>
+  <rect x="656" y="259" width="236" height="30" rx="15" fill="#14161A" fill-opacity="0.12" stroke="#14161A" stroke-opacity="0.35" stroke-width="1.5"/>
+  <text x="774" y="279" font-size="12.5" font-weight="600" fill="#14161A" text-anchor="middle">Works with zero cell signal</text>
+
+  <line x1="480" y1="316" x2="480" y2="340" stroke="#8C8C85" stroke-width="2" marker-end="url(#av1-arrow)"/>
+
+  <rect x="44" y="344" width="278" height="148" rx="14" fill="#F6F6F4" fill-opacity="0.04" stroke="#F6F6F4" stroke-opacity="0.10" stroke-width="1.5"/>
+  <rect x="64" y="366" width="30" height="30" rx="9" fill="#A6FF3D"/>
+  <text x="79" y="386" font-size="14" font-weight="700" fill="#14161A" text-anchor="middle">1</text>
+  <text x="106" y="386" font-size="16.5" font-weight="600" fill="#F6F6F4">Field records</text>
+  <circle cx="70" cy="418" r="2.5" fill="#A6FF3D" fill-opacity="0.55"/><text x="84" y="422" font-size="13" fill="#B6B6AE">Voice + NFC capture</text>
+  <circle cx="70" cy="442" r="2.5" fill="#A6FF3D" fill-opacity="0.55"/><text x="84" y="446" font-size="13" fill="#B6B6AE">RFID wand and scale sync</text>
+  <circle cx="70" cy="466" r="2.5" fill="#A6FF3D" fill-opacity="0.55"/><text x="84" y="470" font-size="13" fill="#B6B6AE">Offline first, syncs later</text>
+
+  <rect x="341" y="344" width="278" height="148" rx="14" fill="#F6F6F4" fill-opacity="0.04" stroke="#F6F6F4" stroke-opacity="0.10" stroke-width="1.5"/>
+  <rect x="361" y="366" width="30" height="30" rx="9" fill="#A6FF3D"/>
+  <text x="376" y="386" font-size="14" font-weight="700" fill="#14161A" text-anchor="middle">2</text>
+  <text x="403" y="386" font-size="16.5" font-weight="600" fill="#F6F6F4">Pasture readiness</text>
+  <circle cx="367" cy="418" r="2.5" fill="#A6FF3D" fill-opacity="0.55"/><text x="381" y="422" font-size="13" fill="#B6B6AE">NDVI every 5 days</text>
+  <circle cx="367" cy="442" r="2.5" fill="#A6FF3D" fill-opacity="0.55"/><text x="381" y="446" font-size="13" fill="#B6B6AE">AUM supply vs. herd demand</text>
+  <circle cx="367" cy="466" r="2.5" fill="#A6FF3D" fill-opacity="0.55"/><text x="381" y="470" font-size="13" fill="#B6B6AE">Move alerts and rest curves</text>
+
+  <rect x="638" y="344" width="278" height="148" rx="14" fill="#F6F6F4" fill-opacity="0.04" stroke="#F6F6F4" stroke-opacity="0.10" stroke-width="1.5"/>
+  <rect x="658" y="366" width="30" height="30" rx="9" fill="#A6FF3D"/>
+  <text x="673" y="386" font-size="14" font-weight="700" fill="#14161A" text-anchor="middle">3</text>
+  <text x="700" y="386" font-size="16.5" font-weight="600" fill="#F6F6F4">Herd economics</text>
+  <circle cx="664" cy="418" r="2.5" fill="#A6FF3D" fill-opacity="0.55"/><text x="678" y="422" font-size="13" fill="#B6B6AE">21-day calving window</text>
+  <circle cx="664" cy="442" r="2.5" fill="#A6FF3D" fill-opacity="0.55"/><text x="678" y="446" font-size="13" fill="#B6B6AE">Fetal-age cull calculator</text>
+  <circle cx="664" cy="466" r="2.5" fill="#A6FF3D" fill-opacity="0.55"/><text x="678" y="470" font-size="13" fill="#B6B6AE">VBP+, CRSB, CCIA exports</text>
+
+  <line x1="480" y1="496" x2="480" y2="516" stroke="#8C8C85" stroke-width="2" marker-end="url(#av1-arrow)"/>
+
+  <rect x="44" y="520" width="872" height="64" rx="14" fill="#F6F6F4" fill-opacity="0.04" stroke="#F6F6F4" stroke-opacity="0.10" stroke-width="1.5"/>
+  <text x="68" y="545" font-size="11.5" font-weight="700" letter-spacing="1.4" fill="#A6FF3D">WHAT COMES OUT</text>
+  <text x="68" y="566" font-size="14.5" fill="#B6B6AE">A herd history you can hand to a buyer, a vet, or an auditor — in one tap.</text>
+</svg>

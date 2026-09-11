@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="500" viewBox="0 0 960 500" role="img" aria-labelledby="av3-t av3-d" font-family="Geist, ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, Roboto, Helvetica, Arial, sans-serif">
+  <title id="av3-t">Automated pasture logistics</title>
+  <desc id="av3-d">A six-paddock ranch map coloured by satellite-measured readiness. Paddocks 1, 2 and 5 are ready to graze, Paddock 3 is being grazed now, and Paddocks 4 and 6 are resting. Agrivanna recommends moving 180 head from Paddock 3 to Paddock 1 by Friday.</desc>
+  <defs>
+    <clipPath id="av3-map"><rect x="44" y="140" width="556" height="320" rx="14"/></clipPath>
+    <marker id="av3-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="11" markerHeight="11" markerUnits="userSpaceOnUse" orient="auto">
+      <path d="M0 0 L10 5 L0 10 Z" fill="#14161A"/>
+    </marker>
+  </defs>
+
+  <text x="44" y="44" font-size="11.5" font-weight="700" letter-spacing="1.6" fill="#A6FF3D">AUTOMATED PASTURE LOGISTICS</text>
+  <text x="44" y="79" font-size="27" font-weight="600" fill="#F6F6F4">The grass tells you when to move.</text>
+  <text x="44" y="106" font-size="14.5" fill="#B6B6AE">Sentinel-2 measures recovery every five days. Agrivanna turns it into a move order.</text>
+
+  <rect x="44" y="140" width="556" height="320" rx="14" fill="#2B2F36"/>
+  <g clip-path="url(#av3-map)" stroke="#14161A" stroke-width="2" stroke-linejoin="round">
+    <polygon points="44,140 222,140 212,294 44,282" fill="#A6FF3D"/>
+    <polygon points="222,140 392,140 404,276 212,294" fill="#A6FF3D"/>
+    <polygon points="392,140 600,140 600,286 404,276" fill="#FFB020"/>
+    <polygon points="44,282 212,294 228,460 44,460" fill="#2B2F36"/>
+    <polygon points="212,294 404,276 386,460 228,460" fill="#A6FF3D"/>
+    <polygon points="404,276 600,286 600,460 386,460" fill="#2B2F36"/>
+  </g>
+
+  <g text-anchor="middle">
+    <text x="130" y="212" font-size="14" font-weight="600" fill="#14161A">Paddock 1</text>
+    <text x="130" y="231" font-size="12" fill="#14161A" opacity="0.75">1,450 lb DM/ac</text>
+    <text x="307" y="210" font-size="14" font-weight="600" fill="#14161A">Paddock 2</text>
+    <text x="307" y="229" font-size="12" fill="#14161A" opacity="0.75">1,290 lb DM/ac</text>
+    <text x="499" y="210" font-size="14" font-weight="600" fill="#14161A">Paddock 3</text>
+    <text x="499" y="229" font-size="12" fill="#14161A" opacity="0.75">720 lb DM/ac</text>
+    <text x="132" y="372" font-size="14" font-weight="600" fill="#F6F6F4">Paddock 4</text>
+    <text x="132" y="391" font-size="12" fill="#F6F6F4" opacity="0.7">410 lb DM/ac</text>
+    <text x="307" y="370" font-size="14" font-weight="600" fill="#14161A">Paddock 5</text>
+    <text x="307" y="389" font-size="12" fill="#14161A" opacity="0.75">1,180 lb DM/ac</text>
+    <text x="497" y="368" font-size="14" font-weight="600" fill="#F6F6F4">Paddock 6</text>
+    <text x="497" y="387" font-size="12" fill="#F6F6F4" opacity="0.7">365 lb DM/ac</text>
+  </g>
+
+  <circle cx="460" cy="185" r="5" fill="#14161A"/>
+  <path d="M460 185 Q 300 110 175 185" fill="none" stroke="#14161A" stroke-width="3.5" stroke-linecap="round" marker-end="url(#av3-arrow)"/>
+
+  <rect x="620" y="140" width="296" height="132" rx="14" fill="#F6F6F4" fill-opacity="0.04" stroke="#F6F6F4" stroke-opacity="0.10" stroke-width="1.5"/>
+  <text x="644" y="168" font-size="11.5" font-weight="700" letter-spacing="1.4" fill="#B6B6AE">PADDOCK STATUS</text>
+  <rect x="644" y="184" width="14" height="14" rx="4" fill="#A6FF3D"/>
+  <text x="668" y="195" font-size="13.5" fill="#F6F6F4">Ready to graze</text>
+  <rect x="644" y="212" width="14" height="14" rx="4" fill="#FFB020"/>
+  <text x="668" y="223" font-size="13.5" fill="#F6F6F4">Grazing now</text>
+  <rect x="644" y="240" width="14" height="14" rx="4" fill="#2B2F36" stroke="#F6F6F4" stroke-opacity="0.25" stroke-width="1.5"/>
+  <text x="668" y="251" font-size="13.5" fill="#F6F6F4">Resting — keep off</text>
+
+  <rect x="620" y="288" width="296" height="172" rx="14" fill="#A6FF3D"/>
+  <text x="644" y="318" font-size="11" font-weight="700" letter-spacing="1.2" fill="#14161A" fill-opacity="0.72">AGRIVANNA RECOMMENDS</text>
+  <text x="644" y="348" font-size="15" font-weight="500" fill="#14161A">Move 180 head to Paddock 1</text>
+  <text x="644" y="370" font-size="15" font-weight="500" fill="#14161A">by Friday. Paddock 3 holds</text>
+  <text x="644" y="392" font-size="15" font-weight="500" fill="#14161A">45 days of rest.</text>
+  <line x1="644" y1="414" x2="892" y2="414" stroke="#14161A" stroke-opacity="0.22" stroke-width="1.5"/>
+  <text x="644" y="438" font-size="12" fill="#14161A" fill-opacity="0.68">Recalculated every 5 days</text>
+</svg>

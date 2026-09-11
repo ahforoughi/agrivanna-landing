@@ -1,8 +1,5 @@
 import Reveal from "@/components/Reveal";
-import TallyEmbed from "@/components/TallyEmbed";
-
-const TALLY_SRC =
-  "https://tally.so/embed/Np96PO?dynamicHeight=1&formEventsForwarding=1&hideTitle=1&transparentBackground=1";
+import TrialForm from "@/components/TrialForm";
 
 export const metadata = {
   title: "Get started — Agrivanna",
@@ -56,21 +53,19 @@ export default function SoftwareLeadsPage() {
       </section>
 
       {/* Form */}
-      <section className="section-light relative border-t border-ink-950/10 py-20 sm:py-24">
-        <div className="mx-auto max-w-3xl px-4">
+      <section className="relative border-t border-white/5 py-20 sm:py-24">
+        <div className="mx-auto max-w-2xl px-4">
           <Reveal>
-            <div className="rounded-4xl border border-ink-950/10 bg-white p-6 shadow-[0_1px_2px_rgba(20,22,26,0.04)] sm:p-10">
-              <TallyEmbed src={TALLY_SRC} title="Agrivanna sign-up form" />
-            </div>
+            <TrialForm inline />
           </Reveal>
           <Reveal delay={0.1}>
-            <p className="mt-8 text-center text-sm text-ink-700">
-              Questions before you sign up? Email{" "}
+            <p className="mt-8 text-center text-sm text-bone-300">
+              Questions before you start? Email{" "}
               <a
-                href="mailto:info@agrivanna.com"
-                className="underline underline-offset-4 hover:text-[#2F6A14]"
+                href="mailto:haden@agrivanna.com"
+                className="underline underline-offset-4 hover:text-lime-400"
               >
-                info@agrivanna.com
+                haden@agrivanna.com
               </a>
               .
             </p>

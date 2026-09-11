@@ -1,9 +1,10 @@
 import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
-import { Analytics } from "@vercel/analytics/next";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
-import HubSpotFormPopup from "@/components/HubSpotFormPopup";
+import CookieConsent from "@/components/CookieConsent";
+import TrialForm from "@/components/TrialForm";
+import ConsentGatedAnalytics from "@/components/ConsentGatedAnalytics";
 import "./globals.css";
 
 // Real Geist variable font (not the geist npm package — pulled from Google Fonts).
@@ -26,14 +27,15 @@ export const viewport: Viewport = {
 };
 
 export const metadata: Metadata = {
-  title: "Agrivanna — Grazing intelligence for working ranches",
+  title: "Agrivanna — Ranch records you can speak instead of type",
   description:
-    "Agrivanna is the operating system for grazing-based agriculture. Virtual fencing collars, offline drone base stations, and the Pasture Readiness Score.",
+    "Speak your herd and pasture records with gloves on. Works with no signal, syncs when you're back in range, and builds rotational grazing plans from satellite imagery. $50/month.",
   icons: { icon: "/logos/logo-mark.png" },
   metadataBase: new URL("https://agrivanna.com"),
   openGraph: {
-    title: "Agrivanna — Run the ranch, not the fence",
-    description: "Virtual fencing, AI grazing intelligence, and offline-first ranch operations.",
+    title: "Agrivanna — Run the herd, not the software",
+    description:
+      "Voice-first ranch records that work offline, plus pasture mapping and rotational grazing plans.",
     type: "website",
   },
 };
@@ -45,8 +47,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <Navbar />
         <main className="relative">{children}</main>
         <Footer />
-        <HubSpotFormPopup />
-        <Analytics />
+        <TrialForm />
+        <CookieConsent />
+        <ConsentGatedAnalytics />
       </body>
     </html>
   );

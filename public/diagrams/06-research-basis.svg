@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="372" viewBox="0 0 960 372" role="img" aria-labelledby="av6-t av6-d" font-family="Geist, ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, Roboto, Helvetica, Arial, sans-serif">
+  <title id="av6-t">The research behind the product</title>
+  <desc id="av6-d">Four cited figures: 60 pounds more weaned per exposed cow that keeps records; 39 pounds lost for every missed 21-day breeding cycle; 400 dollars to overwinter one open cow; and 20 to 40 percent more forage per acre under planned rotation.</desc>
+
+  <text x="44" y="44" font-size="11.5" font-weight="700" letter-spacing="1.6" fill="#A6FF3D">THE NUMBERS BEHIND THE PRODUCT</text>
+  <text x="44" y="79" font-size="27" font-weight="600" fill="#F6F6F4">Peer-reviewed, not pitched.</text>
+  <text x="44" y="106" font-size="14.5" fill="#B6B6AE">Every economic claim on this site traces back to published livestock research.</text>
+
+  <g text-anchor="middle">
+    <rect x="44" y="140" width="203" height="196" rx="14" fill="#F6F6F4" fill-opacity="0.04" stroke="#F6F6F4" stroke-opacity="0.10" stroke-width="1.5"/>
+    <text x="145.5" y="198" font-size="34" font-weight="700" fill="#A6FF3D">+60 lb</text>
+    <text x="145.5" y="228" font-size="13.5" font-weight="600" fill="#F6F6F4">weaned per exposed</text>
+    <text x="145.5" y="246" font-size="13.5" font-weight="600" fill="#F6F6F4">cow that keeps records</text>
+    <line x1="72" y1="270" x2="219" y2="270" stroke="#F6F6F4" stroke-opacity="0.12" stroke-width="1.5"/>
+    <text x="145.5" y="294" font-size="11.5" fill="#8C8C85">BCRC &amp; Canfax</text>
+    <text x="145.5" y="310" font-size="11.5" fill="#8C8C85">(Manglai, 2016)</text>
+
+    <rect x="267" y="140" width="203" height="196" rx="14" fill="#F6F6F4" fill-opacity="0.04" stroke="#F6F6F4" stroke-opacity="0.10" stroke-width="1.5"/>
+    <text x="368.5" y="198" font-size="34" font-weight="700" fill="#FF9280">39 lb</text>
+    <text x="368.5" y="228" font-size="13.5" font-weight="600" fill="#F6F6F4">lost for every missed</text>
+    <text x="368.5" y="246" font-size="13.5" font-weight="600" fill="#F6F6F4">21-day breeding cycle</text>
+    <line x1="295" y1="270" x2="442" y2="270" stroke="#F6F6F4" stroke-opacity="0.12" stroke-width="1.5"/>
+    <text x="368.5" y="302" font-size="11.5" fill="#8C8C85">Funston et al., 2012</text>
+
+    <rect x="490" y="140" width="203" height="196" rx="14" fill="#F6F6F4" fill-opacity="0.04" stroke="#F6F6F4" stroke-opacity="0.10" stroke-width="1.5"/>
+    <text x="591.5" y="198" font-size="34" font-weight="700" fill="#FF9280">$400</text>
+    <text x="591.5" y="228" font-size="13.5" font-weight="600" fill="#F6F6F4">to overwinter</text>
+    <text x="591.5" y="246" font-size="13.5" font-weight="600" fill="#F6F6F4">one open cow</text>
+    <line x1="518" y1="270" x2="665" y2="270" stroke="#F6F6F4" stroke-opacity="0.12" stroke-width="1.5"/>
+    <text x="591.5" y="302" font-size="11.5" fill="#8C8C85">BCRC, Western Canada</text>
+
+    <rect x="713" y="140" width="203" height="196" rx="14" fill="#F6F6F4" fill-opacity="0.04" stroke="#F6F6F4" stroke-opacity="0.10" stroke-width="1.5"/>
+    <text x="814.5" y="198" font-size="34" font-weight="700" fill="#A6FF3D">20–40%</text>
+    <text x="814.5" y="228" font-size="13.5" font-weight="600" fill="#F6F6F4">more forage per acre</text>
+    <text x="814.5" y="246" font-size="13.5" font-weight="600" fill="#F6F6F4">under planned rotation</text>
+    <line x1="741" y1="270" x2="888" y2="270" stroke="#F6F6F4" stroke-opacity="0.12" stroke-width="1.5"/>
+    <text x="814.5" y="302" font-size="11.5" fill="#8C8C85">CFGA &amp; AAFC</text>
+  </g>
+</svg>

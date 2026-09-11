@@ -1,0 +1,80 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="480" viewBox="0 0 960 480" role="img" aria-labelledby="av2-t av2-d" font-family="Geist, ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, Roboto, Helvetica, Arial, sans-serif">
+  <title id="av2-t">Screenless field ingestion in three steps</title>
+  <desc id="av2-d">Step one, tap an NFC tag on the visor, chute or sleeve. Step two, speak for ten seconds in plain cattle talk, parsed on the device. Step three, confirm with one thumb and the record syncs when signal returns.</desc>
+  <defs>
+    <marker id="av2-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="10" markerHeight="10" markerUnits="userSpaceOnUse" orient="auto">
+      <path d="M0 0 L10 5 L0 10 Z" fill="#8C8C85"/>
+    </marker>
+  </defs>
+
+  <text x="44" y="44" font-size="11.5" font-weight="700" letter-spacing="1.6" fill="#A6FF3D">SCREENLESS FIELD INGESTION</text>
+  <text x="44" y="79" font-size="27" font-weight="600" fill="#F6F6F4">Ten seconds, gloves on, no signal.</text>
+  <text x="44" y="106" font-size="14.5" fill="#B6B6AE">Tap, speak, confirm. The record is written before you open the gate.</text>
+
+  <rect x="44" y="140" width="260" height="230" rx="14" fill="#F6F6F4" fill-opacity="0.04" stroke="#F6F6F4" stroke-opacity="0.10" stroke-width="1.5"/>
+  <rect x="64" y="160" width="28" height="28" rx="8" fill="#A6FF3D"/>
+  <text x="78" y="179" font-size="14" font-weight="700" fill="#14161A" text-anchor="middle">1</text>
+  <text x="102" y="179" font-size="16.5" font-weight="600" fill="#F6F6F4">Tap the tag</text>
+  <text x="64" y="208" font-size="13" fill="#B6B6AE">NFC on the visor, chute,</text>
+  <text x="64" y="226" font-size="13" fill="#B6B6AE">or jacket sleeve.</text>
+  <rect x="120" y="242" width="58" height="100" rx="10" fill="#F6F6F4" fill-opacity="0.06" stroke="#F6F6F4" stroke-opacity="0.55" stroke-width="2"/>
+  <rect x="138" y="332" width="22" height="3" rx="1.5" fill="#F6F6F4" fill-opacity="0.28"/>
+  <path d="M199.2 278.9 A 16 16 0 0 1 199.2 305.1" fill="none" stroke="#A6FF3D" stroke-width="2.5" stroke-linecap="round"/>
+  <path d="M205.5 269.9 A 27 27 0 0 1 205.5 314.1" fill="none" stroke="#A6FF3D" stroke-width="2.5" stroke-linecap="round" opacity="0.7"/>
+  <path d="M211.8 260.9 A 38 38 0 0 1 211.8 323.1" fill="none" stroke="#A6FF3D" stroke-width="2.5" stroke-linecap="round" opacity="0.4"/>
+
+  <line x1="312" y1="292" x2="342" y2="292" stroke="#8C8C85" stroke-width="2" marker-end="url(#av2-arrow)"/>
+
+  <rect x="350" y="140" width="260" height="230" rx="14" fill="#F6F6F4" fill-opacity="0.04" stroke="#F6F6F4" stroke-opacity="0.10" stroke-width="1.5"/>
+  <rect x="370" y="160" width="28" height="28" rx="8" fill="#A6FF3D"/>
+  <text x="384" y="179" font-size="14" font-weight="700" fill="#14161A" text-anchor="middle">2</text>
+  <text x="408" y="179" font-size="16.5" font-weight="600" fill="#F6F6F4">Speak it</text>
+  <text x="370" y="208" font-size="13" fill="#B6B6AE">Ten seconds of plain cattle</text>
+  <text x="370" y="226" font-size="13" fill="#B6B6AE">talk. Parsed on-device.</text>
+  <g fill="#A6FF3D">
+    <rect x="382" y="285" width="5" height="14" rx="2.5"/>
+    <rect x="391.5" y="281" width="5" height="22" rx="2.5"/>
+    <rect x="401" y="275" width="5" height="34" rx="2.5"/>
+    <rect x="410.5" y="268" width="5" height="48" rx="2.5"/>
+    <rect x="420" y="277" width="5" height="30" rx="2.5"/>
+    <rect x="429.5" y="264" width="5" height="56" rx="2.5"/>
+    <rect x="439" y="256" width="5" height="72" rx="2.5"/>
+    <rect x="448.5" y="270" width="5" height="44" rx="2.5"/>
+    <rect x="458" y="261" width="5" height="62" rx="2.5"/>
+    <rect x="467.5" y="250" width="5" height="84" rx="2.5"/>
+    <rect x="477" y="263" width="5" height="58" rx="2.5"/>
+    <rect x="486.5" y="254" width="5" height="76" rx="2.5"/>
+    <rect x="496" y="272" width="5" height="40" rx="2.5"/>
+    <rect x="505.5" y="259" width="5" height="66" rx="2.5"/>
+    <rect x="515" y="266" width="5" height="52" rx="2.5"/>
+    <rect x="524.5" y="277" width="5" height="30" rx="2.5"/>
+    <rect x="534" y="270" width="5" height="44" rx="2.5"/>
+    <rect x="543.5" y="279" width="5" height="26" rx="2.5"/>
+    <rect x="553" y="275" width="5" height="34" rx="2.5"/>
+    <rect x="562.5" y="283" width="5" height="18" rx="2.5"/>
+    <rect x="572" y="286" width="5" height="12" rx="2.5"/>
+  </g>
+
+  <line x1="618" y1="292" x2="648" y2="292" stroke="#8C8C85" stroke-width="2" marker-end="url(#av2-arrow)"/>
+
+  <rect x="656" y="140" width="260" height="230" rx="14" fill="#F6F6F4" fill-opacity="0.04" stroke="#F6F6F4" stroke-opacity="0.10" stroke-width="1.5"/>
+  <rect x="676" y="160" width="28" height="28" rx="8" fill="#A6FF3D"/>
+  <text x="690" y="179" font-size="14" font-weight="700" fill="#14161A" text-anchor="middle">3</text>
+  <text x="714" y="179" font-size="16.5" font-weight="600" fill="#F6F6F4">Confirm</text>
+  <text x="676" y="208" font-size="13" fill="#B6B6AE">One thumb. Then it syncs</text>
+  <text x="676" y="226" font-size="13" fill="#B6B6AE">when you find signal.</text>
+  <rect x="676" y="242" width="220" height="106" rx="10" fill="#F6F6F4" fill-opacity="0.06" stroke="#F6F6F4" stroke-opacity="0.09" stroke-width="1.5"/>
+  <text x="690" y="266" font-size="11" font-weight="600" letter-spacing="0.6" fill="#B6B6AE">TAG</text>
+  <text x="882" y="266" font-size="13" font-weight="600" fill="#F6F6F4" text-anchor="end">142B</text>
+  <text x="690" y="286" font-size="11" font-weight="600" letter-spacing="0.6" fill="#B6B6AE">SEX</text>
+  <text x="882" y="286" font-size="13" font-weight="600" fill="#F6F6F4" text-anchor="end">Bull calf</text>
+  <text x="690" y="306" font-size="11" font-weight="600" letter-spacing="0.6" fill="#B6B6AE">BIRTH WT</text>
+  <text x="882" y="306" font-size="13" font-weight="600" fill="#F6F6F4" text-anchor="end">88 lb</text>
+  <text x="690" y="326" font-size="11" font-weight="600" letter-spacing="0.6" fill="#B6B6AE">EASE</text>
+  <text x="882" y="326" font-size="13" font-weight="600" fill="#F6F6F4" text-anchor="end">Unassisted</text>
+
+  <rect x="44" y="386" width="872" height="56" rx="14" fill="#A6FF3D"/>
+  <circle cx="68" cy="414" r="5" fill="#14161A"/>
+  <text x="84" y="418" font-size="11.5" font-weight="700" letter-spacing="1.3" fill="#14161A" fill-opacity="0.72">SPOKEN</text>
+  <text x="152" y="418" font-size="15" font-weight="500" fill="#14161A">“Cow 142, bull calf, 88 pounds, unassisted, green tag 142B.”</text>
+</svg>

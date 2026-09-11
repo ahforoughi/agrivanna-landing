@@ -9,7 +9,17 @@ const nextConfig: NextConfig = {
     imageSizes: [16, 32, 48, 64, 96, 128, 256, 384, 512, 768, 1024],
   },
   async redirects() {
-    return [];
+    // Retired 2024-design pages. Kept as redirects so old bookmarks and search
+    // results land somewhere current instead of a 404.
+    return [
+      { source: "/solutions", destination: "/", permanent: true },
+      { source: "/products", destination: "/", permanent: true },
+      { source: "/pilot-waitlist", destination: "/", permanent: true },
+      { source: "/about", destination: "/team", permanent: true },
+      { source: "/careers", destination: "/team", permanent: true },
+      { source: "/contact", destination: "/#trial", permanent: true },
+      { source: "/investment", destination: "/", permanent: true },
+    ];
   },
   async headers() {
     return [
