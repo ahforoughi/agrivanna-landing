@@ -4,6 +4,9 @@ export const TRIAL_EMAILS = ["haden@agrivanna.com", "info@agrivanna.com"] as con
 /** The one address we print when copy has to name a single inbox. */
 export const TRIAL_EMAIL = TRIAL_EMAILS[0]
 
+/** Where we tell a rancher to write with questions. */
+export const CONTACT_EMAIL = "info@agrivanna.com"
+
 export const DEMO_CALENDLY =
   "https://calendly.com/aminrezaabbasi-agrivanna/meeting-with-agrivanna-team"
 
@@ -63,12 +66,56 @@ const LABELS: Record<keyof Omit<TrialSubmission, "source">, string> = {
   notes: "Notes",
 }
 
-/** Plain-text body shared by the email we send and the mailto fallback. */
-export function trialBody(d: TrialSubmission) {
-  const lines = (Object.keys(LABELS) as (keyof typeof LABELS)[])
+/** The submitted fields as labelled lines, echoed to us and back to the rancher. */
+function submissionLines(d: TrialSubmission) {
+  return (Object.keys(LABELS) as (keyof typeof LABELS)[])
     .map((k) => `${LABELS[k]}: ${d[k] || "—"}`)
     .join("\n")
-  return `New free trial request\n\n${lines}\n\nCame from: ${d.source}`
+}
+
+/** Plain-text body shared by the email we send and the mailto fallback. */
+export function trialBody(d: TrialSubmission) {
+  return `New free trial request\n\n${submissionLines(d)}\n\nCame from: ${d.source}`
+}
+
+export const CONFIRMATION_SUBJECT = "We have your Agrivanna trial request"
+
+/** House style: 16 September 2026, in the ranch's own time zone. */
+function today() {
+  return new Intl.DateTimeFormat("en-GB", {
+    day: "numeric",
+    month: "long",
+    year: "numeric",
+    timeZone: "America/Edmonton",
+  }).format(new Date())
+}
+
+/**
+ * The automatic reply a rancher gets. Says what happens next and who does it,
+ * repeats back what they sent so a wrong tag or town is easy to catch, and
+ * points at CONTACT_EMAIL for anything they want to ask in the meantime.
+ */
+export function confirmationBody(d: TrialSubmission) {
+  const greeting = d.name.trim().split(/\s+/)[0] || "there"
+  const outfit = d.ranch ? `try Agrivanna on ${d.ranch}` : "try Agrivanna"
+
+  return [
+    `Hello ${greeting},`,
+    "",
+    `We have your request to ${outfit}. It reached us on ${today()}.`,
+    "",
+    "Haden Harrison will write back within one business day and set the ranch up before you touch it: pastures mapped, herds loaded, and your wand or scale head paired.",
+    "",
+    "Here is what you sent, so you can tell us if anything is wrong:",
+    "",
+    submissionLines(d),
+    "",
+    `If something above is off, or you have questions before Haden writes, reply to this email or write to ${CONTACT_EMAIL}.`,
+    "",
+    "Agrivanna Inc.",
+    "1315 Northmount Dr NW, Calgary, AB T2L 0C9",
+    CONTACT_EMAIL,
+  ].join("\n")
 }
 
 /** Used only if the server has no mail credentials configured. */
