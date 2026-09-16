@@ -1,5 +1,8 @@
-/** Where trial enquiries land. */
-export const TRIAL_EMAIL = "haden@agrivanna.com"
+/** Where trial enquiries land. Every submission goes to all of these. */
+export const TRIAL_EMAILS = ["haden@agrivanna.com", "info@agrivanna.com"] as const
+
+/** The one address we print when copy has to name a single inbox. */
+export const TRIAL_EMAIL = TRIAL_EMAILS[0]
 
 export const DEMO_CALENDLY =
   "https://calendly.com/aminrezaabbasi-agrivanna/meeting-with-agrivanna-team"
@@ -71,7 +74,7 @@ export function trialBody(d: TrialSubmission) {
 /** Used only if the server has no mail credentials configured. */
 export function trialMailto(d: TrialSubmission) {
   const subject = `Free trial — ${d.ranch || d.name || "Agrivanna"}`
-  return `mailto:${TRIAL_EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(
+  return `mailto:${TRIAL_EMAILS.join(",")}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(
     trialBody(d)
   )}`
 }
