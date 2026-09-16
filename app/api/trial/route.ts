@@ -1,15 +1,17 @@
 import { NextResponse } from "next/server";
-import { TRIAL_EMAIL, trialBody, type TrialSubmission } from "@/lib/cta";
+import { TRIAL_EMAILS, trialBody, type TrialSubmission } from "@/lib/cta";
 
 /**
- * Sends a trial request to TRIAL_EMAIL through Resend's REST API — no SDK, so
+ * Sends a trial request to TRIAL_EMAILS through Resend's REST API — no SDK, so
  * nothing to install. Set RESEND_API_KEY (and optionally TRIAL_FROM, which must
  * be on a domain verified in Resend) to turn it on.
  *
  * With no key configured the route reports `fallback: true` and the form opens a
  * prefilled email instead, so an enquiry is never silently dropped.
  */
-const FROM = process.env.TRIAL_FROM ?? "Agrivanna Website <noreply@agrivanna.com>";
+// Must be on a domain verified in Resend. notify.agrivanna.com is the verified
+// one — sending from bare agrivanna.com gets a 403 and the enquiry falls back.
+const FROM = process.env.TRIAL_FROM ?? "Agrivanna Website <noreply@notify.agrivanna.com>";
 
 function clean(v: unknown, max = 400) {
   return typeof v === "string" ? v.trim().slice(0, max) : "";
@@ -60,7 +62,7 @@ export async function POST(request: Request) {
       },
       body: JSON.stringify({
         from: FROM,
-        to: [TRIAL_EMAIL],
+        to: [...TRIAL_EMAILS],
         reply_to: data.email,
         subject: `Free trial — ${data.ranch || data.name}`,
         text: trialBody(data),
