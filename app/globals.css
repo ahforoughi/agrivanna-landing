@@ -228,6 +228,8 @@ body {
   color: var(--ink-950);
   margin-top: 3.5rem;
   margin-bottom: 1rem;
+  /* Clears the fixed navbar when a section is reached by anchor link */
+  scroll-margin-top: 7rem;
 }
 .legal-prose h2:first-child { margin-top: 0; }
 .legal-prose h3 {

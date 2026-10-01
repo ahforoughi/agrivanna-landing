@@ -4,7 +4,7 @@ import Reveal from "@/components/Reveal";
 
 export const metadata: Metadata = {
   title: "Terms of service — Agrivanna",
-  description: "Agrivanna's service terms, privacy summary, and data use.",
+  description: "The terms for using the Agrivanna app and website.",
 };
 
 export default function ServiceTermsPage() {
@@ -23,7 +23,7 @@ export default function ServiceTermsPage() {
           </Reveal>
           <Reveal delay={0.15}>
             <p className="mt-8 max-w-xl text-base leading-relaxed text-bone-300">
-              Service terms, privacy summary, and how your ranch data is handled.
+              The terms for using the Agrivanna app and website.
             </p>
           </Reveal>
         </div>
@@ -61,48 +61,10 @@ export default function ServiceTermsPage() {
             <li>Terms may be updated. Continued use after an update means acceptance.</li>
           </ul>
 
-          <h2>Privacy and data use</h2>
-          <p>Agrivanna may collect and use:</p>
-          <ul>
-            <li>
-              <strong>Account data.</strong> Name, email or phone, organization, role, login
-              credentials (hashed), and support messages.
-            </li>
-            <li>
-              <strong>Ranch and livestock data you enter.</strong> Herd records, health notes,
-              treatments, tasks, compliance logs, pasture boundaries, and attachments or photos.
-            </li>
-            <li>
-              <strong>Device and app data.</strong> Device identifiers, app version, crash logs,
-              performance analytics, approximate location if enabled, timestamps, and IP address.
-            </li>
-          </ul>
-          <h3>How data is used</h3>
+          <h2>Privacy</h2>
           <p>
-            To provide features, generate AI insights, improve accuracy, support customers, prevent
-            fraud, handle billing, and meet legal obligations.
-          </p>
-          <h3>AI processing</h3>
-          <p>
-            Your inputs may be processed by AI models to generate outputs, such as turning a spoken
-            note into a structured record. Data may be retained to improve service quality unless
-            you opt out where that option is offered.
-          </p>
-          <h3>Sharing</h3>
-          <p>
-            Only with vetted vendors — hosting, analytics, AI, customer support, payments — under
-            confidentiality and only as needed; where required by law; or with your explicit
-            permission. We do not sell your ranch data.
-          </p>
-          <h3>Retention</h3>
-          <p>
-            Kept as long as needed for the service, legal obligations, and backups. Deleted or
-            anonymized on request where legally and technically feasible.
-          </p>
-          <h3>Your rights</h3>
-          <p>
-            Request access, correction, or deletion, export your data, withdraw marketing consent,
-            manage permissions such as location, and contact us for privacy requests.
+            What we collect, how we use and share it, how long we keep it, and your choices are
+            covered separately in the <Link href="/privacy">privacy policy</Link>.
           </p>
 
           <h2>Decision support and veterinary disclaimer</h2>

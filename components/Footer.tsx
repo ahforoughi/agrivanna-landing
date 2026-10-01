@@ -33,6 +33,7 @@ const COLUMNS = [
   {
     title: "Legal",
     links: [
+      { href: "/privacy", label: "Privacy policy" },
       { href: "/cookie-policy", label: "Cookie policy" },
       { href: "/service-terms", label: "Terms of service" },
     ],
