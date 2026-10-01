@@ -72,9 +72,9 @@ export default function PrivacyPage() {
 
           <h2 id="what-we-collect">2. What we collect</h2>
           <p>
-            <strong>Your account.</strong> Your email address and name. Accounts are created on
-            the Agrivanna website; the app only signs in. We never see your password — it&apos;s
-            handled by our sign-in provider.
+            <strong>Your account.</strong> Your email address and name. Accounts are created at{" "}
+            <a href="https://app.agrivanna.com">app.agrivanna.com</a>; the app only signs in. We
+            never see your password — it&apos;s handled by our sign-in provider.
           </p>
           <p>
             <strong>Your ranch records.</strong> What you and the people on your ranch enter:
@@ -211,7 +211,8 @@ export default function PrivacyPage() {
               <strong>Sign-in data</strong> is held by Supabase in its Canada (Central) region.
             </li>
             <li>
-              <strong>Online mode</strong> uses Google services that may process data.
+              <strong>Online mode</strong> uses Google services that may process data outside
+              Canada.
             </li>
             <li>
               <strong>This website</strong> is hosted by Vercel and sends email through Resend, in
@@ -246,8 +247,8 @@ export default function PrivacyPage() {
 
           <h2 id="delete-account">8. Deleting your account</h2>
           <p>
-            You can delete your account in the app — <strong>Account → Delete account</strong> —
-            or on the Agrivanna website. You can also ask us to do it; see{" "}
+            You can delete your account in the app — <strong>Account → Delete account</strong>.
+            You can also ask us to do it; see{" "}
             <a href="#contact">section 14</a>.
           </p>
           <p>Deletion happens straight away and can&apos;t be undone.</p>
