@@ -19,6 +19,7 @@ const nextConfig: NextConfig = {
       { source: "/careers", destination: "/team", permanent: true },
       { source: "/contact", destination: "/#trial", permanent: true },
       { source: "/investment", destination: "/", permanent: true },
+      { source: "/privacy-policy", destination: "/privacy", permanent: true },
     ];
   },
   async headers() {
