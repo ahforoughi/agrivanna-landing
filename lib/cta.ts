@@ -71,14 +71,14 @@ export const OPTION_LABELS_FR: Record<OptionValue, string> = {
   "Under 100": "Moins de 100",
   "100 – 300": "100 à 300",
   "300 – 800": "300 à 800",
-  "800 – 2,000": "800 à 2 000",
-  "Over 2,000": "Plus de 2 000",
+  "800 – 2,000": "800 à 2 000",
+  "Over 2,000": "Plus de 2 000",
   "Cow-calf": "Vache-veau",
   "Cow-calf plus backgrounding": "Vache-veau et semi-finition",
   "Backgrounding or feedlot": "Semi-finition ou parc d’engraissement",
   "Community pasture or grazing association": "Pâturage communautaire ou association de pâturage",
   "Seedstock / purebred": "Sujets reproducteurs / race pure",
-  "Something else": "Autre chose",
+  "Something else": "Autre",
   "Notebook, calving book, or whiteboard": "Calepin, registre de vêlage ou tableau blanc",
   Spreadsheets: "Feuilles de calcul",
   "Another ranch program": "Un autre logiciel de ranch",
@@ -110,9 +110,9 @@ const LABELS: Record<Locale, Record<Field, string>> = {
     phone: "Téléphone",
     ranch: "Ranch",
     location: "Lieu",
-    head: "Têtes",
+    head: "Nombre de têtes",
     operation: "Exploitation",
-    records: "Registres tenus",
+    records: "Tenue des registres",
     notes: "Notes",
   },
 }
@@ -184,14 +184,14 @@ export function confirmationBody(d: TrialSubmission) {
 /** The same reply, for a rancher who used the French site. */
 function confirmationBodyFr(d: TrialSubmission) {
   const first = d.name.trim().split(/\s+/)[0]
-  const outfit = d.ranch ? `essayer Agrivanna sur ${d.ranch}` : "essayer Agrivanna"
+  const outfit = d.ranch ? `d’essai d’Agrivanna pour votre ranch, ${d.ranch}` : "d’essai d’Agrivanna"
 
   return [
-    first ? `Bonjour ${first},` : "Bonjour,",
+    first ? `Bonjour ${first},` : "Bonjour,",
     "",
-    `Nous avons bien reçu votre demande pour ${outfit}. Elle nous est parvenue le ${today("fr")}.`,
+    `Nous avons bien reçu votre demande ${outfit}. Elle nous est parvenue le ${today("fr")}.`,
     "",
-    "Haden Harrison vous répondra d’ici un jour ouvrable et configurera le ranch avant que vous l’utilisiez : pâturages cartographiés, troupeaux chargés, et votre lecteur ou votre indicateur de balance jumelé.",
+    "Haden Harrison vous répondra d’ici un jour ouvrable et configurera votre compte avant même que vous ayez à y toucher : pâturages cartographiés, troupeaux importés et lecteur ou indicateur de balance jumelé.",
     "",
     "Voici ce que vous nous avez envoyé, pour que vous puissiez nous signaler toute erreur :",
     "",

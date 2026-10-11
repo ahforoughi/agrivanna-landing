@@ -22,9 +22,8 @@ const page: LegalPage = {
           Agrivanna ne remplace pas un vétérinaire autorisé ni un avis professionnel.
         </li>
         <li>
-          Vous utiliserez l’application de manière légale et n’en ferez pas un usage abusif —
-          aucun piratage, moissonnage de données, rétro-ingénierie ni partage de compte — et vous
-          fournirez des renseignements exacts.
+          Vous vous engagez à utiliser l’application conformément à la loi et à ne pas en faire un usage abusif —
+          aucun piratage, moissonnage de données, rétro-ingénierie ni partage de compte — et à fournir des renseignements exacts.
         </li>
         <li>
           Votre compte et votre contenu vous appartiennent. Vous autorisez Agrivanna à les
@@ -35,8 +34,7 @@ const page: LegalPage = {
           fraude ou de risque pour la sécurité.
         </li>
         <li>
-          La responsabilité est limitée dans la mesure permise par la loi, sans dommages indirects
-          ou consécutifs.
+          La responsabilité d’Agrivanna est limitée dans la mesure permise par la loi et exclut tout dommage indirect ou consécutif.
         </li>
         <li>
           Les conditions peuvent être mises à jour. Continuer d’utiliser le service après une mise
@@ -51,7 +49,7 @@ const page: LegalPage = {
         <Link href="/fr/privacy">politique de confidentialité</Link>.
       </p>
 
-      <h2>Aide à la décision et avis vétérinaire</h2>
+      <h2>Aide à la décision et avertissement vétérinaire</h2>
       <p>
         Les résultats sont fournis à titre informatif et ne remplacent pas un vétérinaire
         autorisé.
@@ -65,7 +63,7 @@ const page: LegalPage = {
 
       <h2>Communications liées au service</h2>
       <p>
-        Agrivanna peut communiquer avec vous pour l’intégration, le soutien et les avis
+        Agrivanna peut communiquer avec vous pour la mise en route, le soutien et les avis
         importants concernant le service.
       </p>
 

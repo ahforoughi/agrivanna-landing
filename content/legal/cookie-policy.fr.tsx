@@ -43,7 +43,7 @@ const page: LegalPage = {
         <li>Retenir vos paramètres et préférences, y compris votre choix de témoins et de langue</li>
         <li>Comprendre comment notre site Web et notre application sont utilisés</li>
         <li>Améliorer la performance, la sécurité et la fiabilité</li>
-        <li>Faire fonctionner des fonctions comme les formulaires et les outils de soutien</li>
+        <li>Permettre certaines fonctions, comme les formulaires et les outils d’assistance</li>
       </ul>
 
       <h2>Types de témoins utilisés</h2>

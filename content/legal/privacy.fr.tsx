@@ -96,7 +96,7 @@ const page: LegalPage = {
         vocales — les mots que chaque outil de reconnaissance a entendus et la façon dont la
         commande s’est terminée — pour nous aider à améliorer la reconnaissance. Il ne contient
         que du texte et des chiffres, sans audio, et il reste sur votre téléphone. Il ne nous
-        parvient que si vous choisissez de le partager à partir de l’écran Compte.
+        parvient que si vous choisissez de le partager à partir de l’écran Account (Compte).
       </p>
       <p>
         <strong>Journaux des serveurs.</strong> Comme la plupart des services en ligne, nos
@@ -159,7 +159,7 @@ const page: LegalPage = {
         registres de ce ranch. Les entrées que vous saisissez leur sont communiquées.
       </p>
       <p>
-        <strong>Les fournisseurs de services qui exploitent des parties d’Agrivanna pour nous :</strong>
+        <strong>Les fournisseurs de services qui exploitent des parties d’Agrivanna pour nous :</strong>
       </p>
       <ul>
         <li>
@@ -191,8 +191,7 @@ const page: LegalPage = {
       <ul>
         <li>
           <strong>Sur votre téléphone.</strong> Une copie des registres de votre ranch est
-          conservée sur le téléphone pour que l’application fonctionne sans signal. Votre
-          connexion est enregistrée dans le trousseau de l’iPhone.
+          conservée sur le téléphone pour que l’application fonctionne sans signal. Vos identifiants de connexion sont conservés dans le trousseau de l’iPhone.
         </li>
         <li>
           <strong>Nos serveurs</strong> fonctionnent sur Google Cloud, à Montréal, au Canada.
@@ -234,8 +233,7 @@ const page: LegalPage = {
           <strong>Les journaux des serveurs</strong> sont conservés pendant un mois.
         </li>
         <li>
-          <strong>Les sauvegardes</strong> peuvent contenir des renseignements supprimés pendant
-          trois mois avant d’être écrasées.
+          <strong>Les sauvegardes</strong> peuvent conserver des renseignements supprimés pendant trois mois avant d’être écrasées.
         </li>
       </ul>
 
@@ -247,12 +245,12 @@ const page: LegalPage = {
       </p>
       <p>La suppression est immédiate et irréversible.</p>
       <p>
-        <strong>Ce qui est supprimé :</strong> votre identifiant de connexion, votre adresse
+        <strong>Ce qui est supprimé :</strong> votre identifiant de connexion, votre adresse
         courriel, votre nom et votre profil, votre appartenance au ranch et vos conversations
         avec l’assistant.
       </p>
       <p>
-        <strong>Ce qui est conservé :</strong> les registres du ranch — troupeaux, animaux,
+        <strong>Ce qui est conservé :</strong> les registres du ranch — troupeaux, animaux,
         étiquettes, événements, poids, traitements, délais d’attente, pâturage et alimentation —
         parce qu’ils constituent le registre officiel du ranch. Les entrées que vous avez saisies
         restent, mais elles ne sont plus liées à votre nom.
@@ -262,8 +260,7 @@ const page: LegalPage = {
         conservés sans aucun membre, et les invitations que vous aviez envoyées sont annulées.
       </p>
       <p>
-        <strong>S’il reste d’autres personnes dans le ranch et que vous en êtes le dernier
-        propriétaire,</strong> nommez d’abord quelqu’un d’autre comme propriétaire.
+        <strong>S’il reste d’autres personnes dans le ranch et que vous en êtes le seul propriétaire,</strong> nommez d’abord quelqu’un d’autre comme propriétaire.
         L’application vous l’indiquera.
       </p>
       <p>
@@ -305,14 +302,14 @@ const page: LegalPage = {
       <h2 id="security">10. Sécurité</h2>
       <p>
         Les renseignements circulent entre l’application et nos serveurs par des connexions
-        chiffrées. Votre connexion est conservée dans le trousseau de l’iPhone. Le service ne
+        chiffrées. Vos identifiants de connexion sont conservés dans le trousseau de l’iPhone. Le service ne
         montre les registres d’un ranch qu’aux membres de ce ranch. Aucun système n’est
         parfaitement sûr, mais nous travaillons à protéger vos renseignements et à corriger
         rapidement les problèmes.
       </p>
 
       <h2 id="website">11. Ce site Web</h2>
-      <p>agrivanna.com ne comporte aucune connexion. Voici ce qu’il recueille :</p>
+      <p>agrivanna.com n’exige aucune ouverture de session. Voici ce qu’il recueille :</p>
       <p>
         <strong>Demandes d’essai.</strong> Quand vous demandez un essai gratuit, le formulaire
         envoie par courriel à notre équipe votre nom et votre courriel, ainsi que tout ce que
@@ -341,7 +338,7 @@ const page: LegalPage = {
       <h2 id="children">12. Enfants</h2>
       <p>
         Agrivanna est un outil de gestion d’entreprise agricole. Il ne s’adresse pas aux enfants,
-        et nous ne recueillons pas sciemment de renseignements à leur sujet.
+        et nous ne recueillons pas sciemment de renseignements auprès d’eux.
       </p>
 
       <h2 id="changes">13. Modifications de cette politique</h2>
