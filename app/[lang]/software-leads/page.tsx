@@ -1,13 +1,22 @@
+import type { Metadata } from "next";
 import Reveal from "@/components/Reveal";
 import TrialForm from "@/components/TrialForm";
+import { getDictionary } from "@/lib/dictionaries";
+import { alternates, pageLocale, type PageProps } from "@/lib/i18n";
 
-export const metadata = {
-  title: "Get started — Agrivanna",
-  description:
-    "Tell us about your operation and get set up with Agrivanna grazing intelligence software.",
-};
+export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+  const locale = await pageLocale(params);
+  const t = getDictionary(locale).softwareLeads;
+  return {
+    title: t.metaTitle,
+    description: t.metaDescription,
+    alternates: alternates(locale, "/software-leads"),
+  };
+}
 
-export default function SoftwareLeadsPage() {
+export default async function SoftwareLeadsPage({ params }: PageProps) {
+  const t = getDictionary(await pageLocale(params)).softwareLeads;
+
   return (
     <>
       {/* Header */}
@@ -17,34 +26,32 @@ export default function SoftwareLeadsPage() {
           <div className="grid gap-12 lg:grid-cols-12 lg:items-end">
             <div className="lg:col-span-7">
               <Reveal>
-                <p className="eyebrow">Get started</p>
+                <p className="eyebrow">{t.eyebrow}</p>
               </Reveal>
               <Reveal delay={0.05}>
                 <h1 className="mt-6 max-w-3xl text-5xl font-medium tracking-tightest sm:text-6xl lg:text-7xl">
-                  Put Agrivanna
+                  {t.headLine1}
                   <br />
-                  <span className="text-lime-400">on your ranch.</span>
+                  <span className="text-lime-400">{t.headLine2}</span>
                 </h1>
               </Reveal>
               <Reveal delay={0.15}>
                 <p className="mt-10 max-w-xl text-bone-300">
-                  Tell us about your operation and we&apos;ll get you set up. It takes a couple of
-                  minutes — the questions below are the same ones we ask on a first call.
+                  {t.intro}
                 </p>
               </Reveal>
             </div>
             <div className="lg:col-span-5">
               <Reveal delay={0.2}>
                 <ul className="space-y-4 border-l border-white/10 pl-6">
-                  <li className="font-mono text-[11px] uppercase tracking-[0.18em] text-bone-300">
-                    Where you run cattle
-                  </li>
-                  <li className="font-mono text-[11px] uppercase tracking-[0.18em] text-bone-300">
-                    Operation type &amp; herd size
-                  </li>
-                  <li className="font-mono text-[11px] uppercase tracking-[0.18em] text-bone-300">
-                    Pasture boundaries, if you have them
-                  </li>
+                  {t.asks.map((ask) => (
+                    <li
+                      key={ask}
+                      className="font-mono text-[11px] uppercase tracking-[0.18em] text-bone-300"
+                    >
+                      {ask}
+                    </li>
+                  ))}
                 </ul>
               </Reveal>
             </div>
@@ -60,14 +67,14 @@ export default function SoftwareLeadsPage() {
           </Reveal>
           <Reveal delay={0.1}>
             <p className="mt-8 text-center text-sm text-bone-300">
-              Questions before you start? Email{" "}
+              {t.questionsBefore}
               <a
                 href="mailto:haden@agrivanna.com"
                 className="underline underline-offset-4 hover:text-lime-400"
               >
                 haden@agrivanna.com
               </a>
-              .
+              {t.questionsAfter}
             </p>
           </Reveal>
         </div>

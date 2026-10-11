@@ -2,6 +2,7 @@
 
 import { ArrowUpRight } from "lucide-react";
 import { openTrialForm } from "@/lib/cta";
+import { useI18n } from "@/components/LocaleProvider";
 
 /**
  * Every path into the trial form. `source` is passed through to the email so we
@@ -9,7 +10,7 @@ import { openTrialForm } from "@/lib/cta";
  */
 export default function TrialButton({
   source,
-  children = "Start a free trial",
+  children,
   className = "btn btn-solid",
   arrow = true,
 }: {
@@ -18,9 +19,10 @@ export default function TrialButton({
   className?: string;
   arrow?: boolean;
 }) {
+  const { t } = useI18n();
   return (
     <button type="button" onClick={() => openTrialForm(source)} className={className}>
-      <span>{children}</span>
+      <span>{children ?? t.trialButton}</span>
       {arrow && <ArrowUpRight className="h-4 w-4" />}
     </button>
   );

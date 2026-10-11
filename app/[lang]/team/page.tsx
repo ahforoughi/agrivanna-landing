@@ -1,15 +1,25 @@
+import type { Metadata } from "next";
 import Image from "next/image";
-import { COFOUNDERS, ADVISORS } from "@/lib/team";
+import { COFOUNDERS, ADVISORS, type TeamMember, type TeamSlug } from "@/lib/team";
 import PersonCard from "@/components/PersonCard";
 import Reveal from "@/components/Reveal";
+import { getDictionary } from "@/lib/dictionaries";
+import { alternates, fmt, pageLocale, type PageProps } from "@/lib/i18n";
 
-export const metadata = {
-  title: "Team — Agrivanna",
-  description:
-    "The founders and advisors building Agrivanna — AI researchers, FPGA engineers, ranchers, and operators.",
-};
+export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+  const locale = await pageLocale(params);
+  const t = getDictionary(locale).team;
+  return {
+    title: t.metaTitle,
+    description: t.metaDescription,
+    alternates: alternates(locale, "/team"),
+  };
+}
 
-export default function TeamPage() {
+export default async function TeamPage({ params }: PageProps) {
+  const t = getDictionary(await pageLocale(params)).team;
+  const person = (m: TeamMember & { slug: TeamSlug }) => ({ ...m, ...t.people[m.slug] });
+
   return (
     <>
       {/* Header */}
@@ -19,22 +29,20 @@ export default function TeamPage() {
           <div className="grid gap-12 lg:grid-cols-12 lg:items-end">
             <div className="lg:col-span-7">
               <Reveal>
-                <p className="eyebrow">Who we are</p>
+                <p className="eyebrow">{t.eyebrow}</p>
               </Reveal>
               <Reveal delay={0.05}>
                 <h1 className="mt-6 max-w-4xl text-5xl font-medium tracking-tightest sm:text-7xl lg:text-8xl">
-                  Engineers,
+                  {t.headLine1}
                   <br />
-                  <span className="text-bone-300">ranchers,</span>
+                  <span className="text-bone-300">{t.headLine2}</span>
                   <br />
-                  <span className="text-lime-400">operators.</span>
+                  <span className="text-lime-400">{t.headLine3}</span>
                 </h1>
               </Reveal>
               <Reveal delay={0.15}>
                 <p className="mt-10 max-w-xl text-bone-300">
-                  Agrivanna is a small team that built a system most of the industry said couldn&apos;t
-                  exist: offline grazing intelligence that works on working ranches. Here&apos;s who&apos;s
-                  behind it.
+                  {t.intro}
                 </p>
               </Reveal>
             </div>
@@ -43,7 +51,7 @@ export default function TeamPage() {
                 <div className="media relative aspect-[4/3]">
                   <Image
                     src="/story/founding-team-collar.jpg"
-                    alt="The Agrivanna founders with an early collar prototype"
+                    alt={t.photoAlt}
                     fill
                     quality={95}
                     className="object-cover"
@@ -61,19 +69,24 @@ export default function TeamPage() {
         <div className="mx-auto max-w-6xl px-4">
           <div className="mb-12 flex items-end justify-between">
             <div>
-              <p className="eyebrow">Co-founders</p>
+              <p className="eyebrow">{t.cofoundersEyebrow}</p>
               <h2 className="mt-4 text-3xl font-medium tracking-tighter sm:text-4xl">
-                The three building the company.
+                {t.cofoundersHeading}
               </h2>
             </div>
             <p className="hidden max-w-xs font-mono text-[11px] uppercase tracking-[0.18em] text-bone-300 md:block">
-              Calgary, AB · Founded Oct 2024
+              {t.founded}
             </p>
           </div>
           <div className="grid gap-6 md:grid-cols-3">
             {COFOUNDERS.map((p, i) => (
               <Reveal key={p.slug} delay={i * 0.08}>
-                <PersonCard person={p} variant="founder" index={i} />
+                <PersonCard
+                  person={person(p)}
+                  variant="founder"
+                  index={i}
+                  linkedinAria={fmt(t.linkedinAria, { name: p.name })}
+                />
               </Reveal>
             ))}
           </div>
@@ -85,15 +98,21 @@ export default function TeamPage() {
         <div className="mx-auto max-w-6xl px-4">
           <div className="mb-6 flex items-end justify-between">
             <div>
-              <p className="eyebrow">Advisory board</p>
+              <p className="eyebrow">{t.advisorsEyebrow}</p>
               <h2 className="mt-4 text-3xl font-medium tracking-tighter sm:text-4xl">
-                The people we call when it counts.
+                {t.advisorsHeading}
               </h2>
             </div>
           </div>
           <div>
             {ADVISORS.map((p, i) => (
-              <PersonCard key={p.slug} person={p} variant="advisor" index={i} />
+              <PersonCard
+                key={p.slug}
+                person={person(p)}
+                variant="advisor"
+                index={i}
+                linkedinAria={fmt(t.linkedinAria, { name: p.name })}
+              />
             ))}
           </div>
         </div>
@@ -106,7 +125,7 @@ export default function TeamPage() {
             <div className="relative aspect-[16/9] overflow-hidden rounded-3xl border border-white/5">
               <Image
                 src="/story/team-photo.jpg"
-                alt="The Agrivanna team"
+                alt={t.teamPhotoAlt}
                 fill
                 className="object-cover"
                 sizes="(min-width: 1024px) 1100px, 100vw"
@@ -114,12 +133,12 @@ export default function TeamPage() {
               <div className="absolute inset-0 bg-gradient-to-t from-ink-950/80 via-transparent to-transparent" />
               <div className="absolute inset-x-8 bottom-8 flex items-end justify-between">
                 <p className="max-w-md text-lg font-medium tracking-tight text-bone-50 sm:text-2xl">
-                  Built in Calgary.
+                  {t.closingLine1}
                   <br />
-                  Tested on Alberta ranches.
+                  {t.closingLine2}
                 </p>
                 <p className="hidden font-mono text-[10px] uppercase tracking-[0.18em] text-bone-50/80 md:block">
-                  Agrivanna / Team
+                  {t.closingTag}
                 </p>
               </div>
             </div>

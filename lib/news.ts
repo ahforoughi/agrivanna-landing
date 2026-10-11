@@ -1,176 +1,83 @@
-export type NewsItem = {
-  title: string;
-  source: string;
-  date: string;
-  summary: string;
-  href: string;
-  image: string;
-  // Optional extra zoom to crop out edge artifacts in the source photo (e.g. a scan border).
-  imageZoom?: boolean;
-  tag: "Press" | "Award" | "Accelerator" | "Competition";
-};
+/** Press and milestones. Titles, dates and summaries are per-language, in lib/dictionaries. */
+export type NewsTag = "Press" | "Award" | "Accelerator" | "Competition";
 
-export const NEWS: NewsItem[] = [
+export const NEWS = [
   {
-    title: "Selected for Spring's Elevate Round Ready program",
-    source: "Spring",
-    date: "June 2026",
-    summary:
-      "Agrivanna joined the Summer 2026 cohort of Spring's Elevate Round Ready program — a Vancouver-based accelerator whose ventures have raised over $17M since mid-2025. The program pairs the team with curated investor introductions while it raises its seed round.",
+    id: "spring",
     href: "https://spring.is",
     image: "/story/spring-scale-ready.jpg",
     tag: "Accelerator",
   },
   {
-    title: "1st place — Start Something Summit",
-    source: "University of Calgary · Hunter Hub",
-    date: "June 2026",
-    summary:
-      "Agrivanna won $10,000 for 1st place in the Launchpad Stream at the University of Calgary's Start Something Summit — the latest in a run of Hunter Hub pitch wins.",
+    id: "start-something",
     href: "https://ucalgary.ca/news/agrivanna-student-built-ai-agtech-startup-helps-ranchers-herd-cattle-quicker-saving-money-time",
     image: "/story/start-something-winning.jpg",
     tag: "Award",
   },
   {
-    title: "Agrivanna takes 1st at The Arena Pitch Competition",
-    source: "Arthur L. Irving Entrepreneurship Centre",
-    date: "March 2026",
-    summary:
-      "Agrivanna placed first at the Arena Pitch Competition — named a top Canadian university startup and earning a national spotlight for grazing intelligence.",
+    id: "arena",
     href: "https://arthurlirvingentrepreneurshipcentre.ca/thearena/",
     image: "/story/arena-win.png",
     tag: "Award",
   },
   {
-    title: "2nd place at Hunter Hub Liftoff",
-    source: "University of Calgary · Hunter Hub",
-    date: "March 2026",
-    summary:
-      "Agrivanna took second place at the Hunter Hub Liftoff competition, backed by the University of Calgary's entrepreneurial thinking program.",
+    id: "liftoff",
     href: "https://www.linkedin.com/posts/agrivanna_agrivanna-agtech-virtualabrfencing-activity-7443470146116935680-Tv0b",
     image: "/story/liftoff.jpg",
     tag: "Competition",
   },
   {
-    title: "1st place at Aurrin Ventures Pitch Competition",
-    source: "Aurrin Ventures",
-    date: "February 2026",
-    summary:
-      "Won the Most Investible Company Award at the Aurrin Ventures pitch competition in YYC's startup community.",
+    id: "aurrin",
     href: "https://www.linkedin.com/posts/aurrinventures_aurrinventures-yycstartups-startupcommunity-activity-7432893362451660800-tYK0",
     image: "/story/aurrin-win.png",
     tag: "Award",
   },
   {
-    title: "Selected for Plug and Play Kananaskis accelerator",
-    source: "Plug and Play",
-    date: "November 2025",
-    summary:
-      "Agrivanna joined the Plug and Play Kananaskis cohort, connecting the team with global corporate partners and investors in agtech.",
+    id: "plug-and-play",
     href: "https://www.linkedin.com/posts/ahforoughi_agtech-aiinagriculture-aginnovation-activity-7397013956038488065-gNdZ",
     image: "/story/pnp-photo.jpg",
     tag: "Accelerator",
   },
   {
-    title: "Joined THRIVE SVG Academy Cohort VII",
-    source: "THRIVE Agrifood",
-    date: "November 2025",
-    summary:
-      "Agrivanna was selected for THRIVE's agtech venture cohort — the leading global network for agrifood innovation.",
+    id: "thrive",
     href: "https://thriveagrifood.com/academy-cohort-vii/",
     image: "/story/thrive-cohort.jpg",
+    // Extra zoom crops the scan border out of the source photo.
     imageZoom: true,
     tag: "Accelerator",
   },
   {
-    title: "1st place — Student Startup of the Year",
-    source: "TechStart UCalgary",
-    date: "May 2025",
-    summary:
-      "Agrivanna won TechStart UCalgary's top student startup award, validating the vision in front of Calgary's tech community.",
+    id: "techstart",
     href: "https://techstartucalgary.com/projects",
     image: "/story/techstart.jpg",
     tag: "Award",
   },
-];
+] as const satisfies readonly {
+  id: string;
+  href: string;
+  image: string;
+  imageZoom?: boolean;
+  tag: NewsTag;
+}[];
 
-export type Milestone = {
-  date: string;
-  title: string;
-  body: string;
-  status: "past" | "now" | "future";
-  image?: string;
-};
+export type NewsId = (typeof NEWS)[number]["id"];
 
 // Kept deliberately simple — no overpromising. Future items stay vague.
-export const TIMELINE: Milestone[] = [
-  {
-    date: "Oct 2024",
-    title: "Agrivanna founded",
-    body: "Three co-founders start the company in Calgary, Alberta.",
-    status: "past",
-  },
-  {
-    date: "May 2025",
-    title: "TechStart UCalgary",
-    body: "Named Student Startup of the Year.",
-    status: "past",
-    image: "/story/techstart.jpg",
-  },
-  {
-    date: "Nov 2025",
-    title: "THRIVE Cohort VII",
-    body: "Joined the THRIVE SVG Academy — global agrifood innovation network.",
-    status: "past",
-    image: "/story/thrive-cohort-2-v2.jpg",
-  },
-  {
-    date: "Nov 2025",
-    title: "Plug and Play",
-    body: "Accepted into the Plug and Play Kananaskis accelerator.",
-    status: "past",
-    image: "/story/timeline-pnp.jpg",
-  },
-  {
-    date: "Feb 2026",
-    title: "Aurrin Ventures",
-    body: "Won Most Investible Company at the Aurrin pitch competition.",
-    status: "past",
-    image: "/story/timeline-aurrin.jpg",
-  },
-  {
-    date: "Mar 2026",
-    title: "Hunter Hub Liftoff",
-    body: "Second place at UCalgary's flagship startup competition.",
-    status: "past",
-    image: "/story/timeline-liftoff.jpg",
-  },
-  {
-    date: "Mar 2026",
-    title: "The Arena · 1st place",
-    body: "Top Canadian university startup at The Arena pitch competition.",
-    status: "past",
-    image: "/story/timeline-arena.webp",
-  },
-  {
-    date: "Summer 2026",
-    title: "First ranch pilots",
-    body: "First real-world deployments at partner ranches in Alberta.",
-    status: "now",
-    image: "/story/timeline-ranch-pilot-collars-v2.jpg",
-  },
-  {
-    date: "Late 2026",
-    title: "Product refinement",
-    body: "Iterate on hardware and software from pilot data.",
-    status: "future",
-    image: "/story/timeline-bench-testing-v2.jpg",
-  },
-  {
-    date: "2027",
-    title: "Western Canada",
-    body: "Expand pilots and commercial deployments across the prairies.",
-    status: "future",
-    image: "/story/canada-flag.jpg",
-  },
-];
+export const TIMELINE = [
+  { id: "founded", status: "past" },
+  { id: "techstart", status: "past", image: "/story/techstart.jpg" },
+  { id: "thrive", status: "past", image: "/story/thrive-cohort-2-v2.jpg" },
+  { id: "plug-and-play", status: "past", image: "/story/timeline-pnp.jpg" },
+  { id: "aurrin", status: "past", image: "/story/timeline-aurrin.jpg" },
+  { id: "liftoff", status: "past", image: "/story/timeline-liftoff.jpg" },
+  { id: "arena", status: "past", image: "/story/timeline-arena.webp" },
+  { id: "pilots", status: "now", image: "/story/timeline-ranch-pilot-collars-v2.jpg" },
+  { id: "refinement", status: "future", image: "/story/timeline-bench-testing-v2.jpg" },
+  { id: "western-canada", status: "future", image: "/story/canada-flag.jpg" },
+] as const satisfies readonly {
+  id: string;
+  status: "past" | "now" | "future";
+  image?: string;
+}[];
+
+export type MilestoneId = (typeof TIMELINE)[number]["id"];

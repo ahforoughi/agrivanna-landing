@@ -4,6 +4,7 @@ import { useRef, useState, useEffect, useCallback } from "react";
 import Image from "next/image";
 import { ChevronLeft, ChevronRight, Sparkles, Compass, Flag } from "lucide-react";
 import { TIMELINE } from "@/lib/news";
+import { useI18n } from "@/components/LocaleProvider";
 
 /**
  * Horizontal card slider inspired by the Greenlyte "Our story so far" section.
@@ -13,6 +14,8 @@ import { TIMELINE } from "@/lib/news";
 export default function TimelineSlider() {
   const trackRef = useRef<HTMLDivElement>(null);
   const [activeIndex, setActiveIndex] = useState(0);
+  const { t } = useI18n();
+  const milestones = TIMELINE.map((m) => ({ ...m, ...t.timeline.items[m.id] }));
 
   const scrollBy = useCallback((dir: 1 | -1) => {
     const track = trackRef.current;
@@ -54,7 +57,7 @@ export default function TimelineSlider() {
         ref={trackRef}
         className="no-scrollbar -mx-4 flex snap-x snap-mandatory gap-5 overflow-x-auto scroll-smooth px-4 pb-8 sm:gap-6"
       >
-        {TIMELINE.map((m, i) => {
+        {milestones.map((m, i) => {
           const isActive = i === activeIndex;
           const isFuture = m.status === "future";
           const isNow = m.status === "now";
@@ -88,13 +91,13 @@ export default function TimelineSlider() {
                       : "text-bone-300"
                   }`}
                 >
-                  {isFuture ? "Planned" : isNow ? "In progress" : "Complete"}
+                  {isFuture ? t.timeline.planned : isNow ? t.timeline.inProgress : t.timeline.complete}
                 </span>
               </div>
 
               {/* Image or icon placeholder */}
               <div className="relative mt-5 aspect-[4/3] overflow-hidden bg-ink-800">
-                {m.image ? (
+                {"image" in m ? (
                   <Image
                     src={m.image}
                     alt={m.title}
@@ -146,7 +149,7 @@ export default function TimelineSlider() {
 
       {/* Date strip underneath (clickable) */}
       <div className="mt-8 flex flex-wrap items-center gap-x-6 gap-y-3 border-t border-white/10 pt-6 overflow-x-auto no-scrollbar">
-        {TIMELINE.map((m, i) => (
+        {milestones.map((m, i) => (
           <button
             key={`${m.date}-dot-${i}`}
             type="button"
@@ -170,7 +173,7 @@ export default function TimelineSlider() {
           type="button"
           onClick={() => scrollBy(-1)}
           className="flex h-11 w-11 items-center justify-center rounded-full border border-white/15 bg-ink-900 text-bone-50 transition-colors hover:border-lime-400 hover:text-lime-400"
-          aria-label="Previous milestone"
+          aria-label={t.timeline.previous}
         >
           <ChevronLeft className="h-4 w-4" />
         </button>
@@ -178,7 +181,7 @@ export default function TimelineSlider() {
           type="button"
           onClick={() => scrollBy(1)}
           className="flex h-11 w-11 items-center justify-center rounded-full bg-lime-400 text-ink-950 transition-colors hover:bg-bone-50"
-          aria-label="Next milestone"
+          aria-label={t.timeline.next}
         >
           <ChevronRight className="h-4 w-4" />
         </button>

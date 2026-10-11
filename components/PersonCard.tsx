@@ -9,8 +9,11 @@ export default function PersonCard({
   person,
   variant = "founder",
   index,
+  linkedinAria,
 }: {
   person: Person;
+  /** e.g. "Bita Asghari on LinkedIn", already in the page's language. */
+  linkedinAria: string;
   variant?: Variant;
   index: number;
 }) {
@@ -37,7 +40,7 @@ export default function PersonCard({
             target="_blank"
             rel="noopener noreferrer"
             className="absolute right-5 top-5 flex h-10 w-10 items-center justify-center rounded-full border border-white/20 bg-ink-950/50 backdrop-blur transition-colors hover:border-lime-400 hover:text-lime-400"
-            aria-label={`${person.name} on LinkedIn`}
+            aria-label={linkedinAria}
           >
             <Linkedin className="h-4 w-4" />
           </Link>
@@ -83,7 +86,7 @@ export default function PersonCard({
         target="_blank"
         rel="noopener noreferrer"
         className="btn justify-self-start md:justify-self-end"
-        aria-label={`${person.name} on LinkedIn`}
+        aria-label={linkedinAria}
       >
         LinkedIn <ArrowUpRight className="h-4 w-4" />
       </Link>

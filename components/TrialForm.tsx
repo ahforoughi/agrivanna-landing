@@ -7,9 +7,11 @@ import {
   OPERATION_OPTIONS,
   OPEN_TRIAL_EVENT,
   RECORD_OPTIONS,
+  optionLabel,
   trialMailto,
   type TrialSubmission,
 } from "@/lib/cta";
+import { useI18n } from "@/components/LocaleProvider";
 
 const EMPTY: TrialSubmission = {
   name: "",
@@ -22,6 +24,7 @@ const EMPTY: TrialSubmission = {
   records: "",
   notes: "",
   source: "website",
+  lang: "en",
 };
 
 const field =
@@ -33,8 +36,10 @@ const label = "mb-2 block text-sm text-bone-300";
  * (see openTrialForm in lib/cta), and also rendered inline via `inline`.
  */
 export default function TrialForm({ inline = false }: { inline?: boolean }) {
+  const { locale, t: dict } = useI18n();
+  const t = dict.trial;
   const [open, setOpen] = useState(inline);
-  const [data, setData] = useState<TrialSubmission>(EMPTY);
+  const [data, setData] = useState<TrialSubmission>({ ...EMPTY, lang: locale });
   const [state, setState] = useState<"idle" | "sending" | "done" | "error">("idle");
   const [error, setError] = useState("");
   const firstField = useRef<HTMLInputElement>(null);
@@ -97,7 +102,7 @@ export default function TrialForm({ inline = false }: { inline?: boolean }) {
         return;
       }
       setState("error");
-      setError(body?.error || "That didn't go through. Email haden@agrivanna.com and we'll sort it.");
+      setError(body?.error || t.error);
     } catch {
       window.location.href = trialMailto(data);
       setState("done");
@@ -113,15 +118,14 @@ export default function TrialForm({ inline = false }: { inline?: boolean }) {
           <Check className="h-6 w-6 text-ink-950" />
         </div>
         <h3 className="mt-6 text-2xl font-medium tracking-tight text-bone-50">
-          Got it. Talk soon.
+          {t.doneTitle}
         </h3>
         <p className="mx-auto mt-3 max-w-sm text-base text-bone-300">
-          We&apos;ll be in touch within a day to get the ranch set up — pastures mapped, herds
-          in, wand paired.
+          {t.doneBody}
         </p>
         {!inline && (
           <button type="button" onClick={close} className="btn mt-8">
-            Close
+            {t.close}
           </button>
         )}
       </div>
@@ -130,7 +134,7 @@ export default function TrialForm({ inline = false }: { inline?: boolean }) {
         <div className="grid gap-5 sm:grid-cols-2">
           <div>
             <label className={label} htmlFor="tf-name">
-              Your name <span className="text-lime-400">*</span>
+              {t.name} <span className="text-lime-400">*</span>
             </label>
             <input
               id="tf-name"
@@ -144,7 +148,7 @@ export default function TrialForm({ inline = false }: { inline?: boolean }) {
           </div>
           <div>
             <label className={label} htmlFor="tf-email">
-              Email <span className="text-lime-400">*</span>
+              {t.email} <span className="text-lime-400">*</span>
             </label>
             <input
               id="tf-email"
@@ -158,7 +162,7 @@ export default function TrialForm({ inline = false }: { inline?: boolean }) {
           </div>
           <div>
             <label className={label} htmlFor="tf-phone">
-              Phone
+              {t.phone}
             </label>
             <input
               id="tf-phone"
@@ -171,7 +175,7 @@ export default function TrialForm({ inline = false }: { inline?: boolean }) {
           </div>
           <div>
             <label className={label} htmlFor="tf-ranch">
-              Ranch name
+              {t.ranch}
             </label>
             <input
               id="tf-ranch"
@@ -184,11 +188,11 @@ export default function TrialForm({ inline = false }: { inline?: boolean }) {
 
         <div>
           <label className={label} htmlFor="tf-location">
-            Nearest town and province
+            {t.location}
           </label>
           <input
             id="tf-location"
-            placeholder="e.g. Nanton, AB"
+            placeholder={t.locationPlaceholder}
             className={field}
             value={data.location}
             onChange={(e) => set("location")(e.target.value)}
@@ -198,7 +202,7 @@ export default function TrialForm({ inline = false }: { inline?: boolean }) {
         <div className="grid gap-5 sm:grid-cols-2">
           <div>
             <label className={label} htmlFor="tf-head">
-              How many head
+              {t.head}
             </label>
             <select
               id="tf-head"
@@ -206,17 +210,17 @@ export default function TrialForm({ inline = false }: { inline?: boolean }) {
               value={data.head}
               onChange={(e) => set("head")(e.target.value)}
             >
-              <option value="">Choose one</option>
+              <option value="">{t.choose}</option>
               {HEAD_OPTIONS.map((o) => (
                 <option key={o} value={o}>
-                  {o}
+                  {optionLabel(o, locale)}
                 </option>
               ))}
             </select>
           </div>
           <div>
             <label className={label} htmlFor="tf-operation">
-              What you run
+              {t.operation}
             </label>
             <select
               id="tf-operation"
@@ -224,10 +228,10 @@ export default function TrialForm({ inline = false }: { inline?: boolean }) {
               value={data.operation}
               onChange={(e) => set("operation")(e.target.value)}
             >
-              <option value="">Choose one</option>
+              <option value="">{t.choose}</option>
               {OPERATION_OPTIONS.map((o) => (
                 <option key={o} value={o}>
-                  {o}
+                  {optionLabel(o, locale)}
                 </option>
               ))}
             </select>
@@ -236,7 +240,7 @@ export default function TrialForm({ inline = false }: { inline?: boolean }) {
 
         <div>
           <label className={label} htmlFor="tf-records">
-            Where your records live now
+            {t.records}
           </label>
           <select
             id="tf-records"
@@ -244,10 +248,10 @@ export default function TrialForm({ inline = false }: { inline?: boolean }) {
             value={data.records}
             onChange={(e) => set("records")(e.target.value)}
           >
-            <option value="">Choose one</option>
+            <option value="">{t.choose}</option>
             {RECORD_OPTIONS.map((o) => (
               <option key={o} value={o}>
-                {o}
+                {optionLabel(o, locale)}
               </option>
             ))}
           </select>
@@ -255,12 +259,12 @@ export default function TrialForm({ inline = false }: { inline?: boolean }) {
 
         <div>
           <label className={label} htmlFor="tf-notes">
-            Anything we should know
+            {t.notes}
           </label>
           <textarea
             id="tf-notes"
             rows={3}
-            placeholder="Wand or scale you use, how many pastures, what you're hoping to fix."
+            placeholder={t.notesPlaceholder}
             className={`${field} resize-y`}
             value={data.notes}
             onChange={(e) => set("notes")(e.target.value)}
@@ -278,11 +282,11 @@ export default function TrialForm({ inline = false }: { inline?: boolean }) {
           disabled={state === "sending"}
           className="btn btn-solid w-full justify-center disabled:opacity-60"
         >
-          {state === "sending" ? "Sending…" : "Send it"}
+          {state === "sending" ? t.sending : t.send}
           {state !== "sending" && <ArrowUpRight className="h-4 w-4" />}
         </button>
         <p className="text-sm text-bone-400">
-          No credit card. We read every one of these ourselves.
+          {t.reassurance}
         </p>
       </form>
     );
@@ -313,7 +317,7 @@ export default function TrialForm({ inline = false }: { inline?: boolean }) {
         <button
           type="button"
           onClick={close}
-          aria-label="Close"
+          aria-label={t.close}
           className="absolute right-4 top-4 flex h-11 w-11 items-center justify-center rounded-full border border-white/10 text-bone-50/70 transition-colors hover:border-lime-400 hover:text-lime-400"
         >
           <X className="h-5 w-5" />
@@ -322,16 +326,15 @@ export default function TrialForm({ inline = false }: { inline?: boolean }) {
         <div className="px-6 pb-8 pt-8 sm:px-8">
           {state !== "done" && (
             <div className="mb-7 max-w-md">
-              <p className="eyebrow">Free trial</p>
+              <p className="eyebrow">{t.eyebrow}</p>
               <h2
                 id="tf-title"
                 className="mt-4 text-2xl font-medium tracking-tight text-bone-50 sm:text-3xl"
               >
-                Tell us about the outfit.
+                {t.title}
               </h2>
               <p className="mt-3 text-base leading-relaxed text-bone-300">
-                We set the ranch up by hand so it works on day one. Takes a minute — these are
-                the same questions we&apos;d ask on a call.
+                {t.intro}
               </p>
             </div>
           )}
