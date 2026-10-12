@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import { useI18n } from "@/components/LocaleProvider";
 
 const STORAGE_KEY = "agrivanna-cookie-consent";
 
@@ -13,6 +14,7 @@ type Choice = "accepted" | "rejected";
  */
 export default function CookieConsent() {
   const [visible, setVisible] = useState(false);
+  const { t, href } = useI18n();
 
   useEffect(() => {
     try {
@@ -39,17 +41,16 @@ export default function CookieConsent() {
     <div
       role="dialog"
       aria-live="polite"
-      aria-label="Cookie choices"
+      aria-label={t.cookie.aria}
       className="fixed inset-x-0 bottom-0 z-[60] px-4 pb-4 sm:px-6 sm:pb-6"
     >
       <div className="mx-auto flex max-w-3xl flex-col gap-5 rounded-3xl border border-white/10 bg-ink-900/95 p-5 shadow-[0_20px_60px_-20px_rgba(0,0,0,0.9)] backdrop-blur-xl sm:flex-row sm:items-center sm:gap-6 sm:p-6">
         <p className="text-sm leading-relaxed text-bone-300">
-          We use a few cookies to see which pages ranchers actually read. Nothing is sold, and
-          nothing tracks you across other sites. Read the{" "}
-          <Link href="/cookie-policy" className="text-lime-400 underline underline-offset-4">
-            cookie policy
+          {t.cookie.textBefore}
+          <Link href={href("/cookie-policy")} className="text-lime-400 underline underline-offset-4">
+            {t.cookie.link}
           </Link>
-          .
+          {t.cookie.textAfter}
         </p>
         <div className="flex shrink-0 gap-2.5">
           <button
@@ -57,14 +58,14 @@ export default function CookieConsent() {
             onClick={() => choose("rejected")}
             className="btn btn-sm min-h-11 justify-center px-5"
           >
-            Reject
+            {t.cookie.reject}
           </button>
           <button
             type="button"
             onClick={() => choose("accepted")}
             className="btn btn-solid btn-sm min-h-11 justify-center px-5"
           >
-            Accept
+            {t.cookie.accept}
           </button>
         </div>
       </div>

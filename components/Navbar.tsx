@@ -6,18 +6,21 @@ import { useEffect, useState } from "react";
 import { Menu, X, ArrowUpRight } from "lucide-react";
 import { usePathname } from "next/navigation";
 import TrialButton from "@/components/TrialButton";
-
-const NAV_ITEMS = [
-  { href: "/", label: "Home" },
-  { href: "/#pricing", label: "Pricing" },
-  { href: "/team", label: "Team" },
-  { href: "/news", label: "News" },
-];
+import LanguageToggle from "@/components/LanguageToggle";
+import { useI18n } from "@/components/LocaleProvider";
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
   const pathname = usePathname();
+  const { t, href } = useI18n();
+
+  const NAV_ITEMS = [
+    { href: href("/"), label: t.nav.home },
+    { href: href("/#pricing"), label: t.nav.pricing },
+    { href: href("/team"), label: t.nav.team },
+    { href: href("/news"), label: t.nav.news },
+  ];
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 24);
@@ -36,7 +39,7 @@ export default function Navbar() {
         scrolled ? "pt-3" : "pt-6"
       }`}
     >
-      <div className="mx-auto max-w-6xl px-4">
+      <div className="mx-auto max-w-6xl px-3 sm:px-4">
         <nav
           className={`flex items-center justify-between rounded-full border border-white/10 px-3 py-2.5 sm:px-5 sm:py-3 backdrop-blur-xl transition-all duration-500 ${
             scrolled
@@ -44,7 +47,7 @@ export default function Navbar() {
               : "bg-white/5"
           }`}
         >
-          <Link href="/" className="flex shrink-0 items-center gap-2" aria-label="Agrivanna home">
+          <Link href={href("/")} className="flex shrink-0 items-center gap-2" aria-label={t.nav.homeAria}>
             <Image
               src="/logos/logo-dark.png"
               alt="Agrivanna"
@@ -78,20 +81,22 @@ export default function Navbar() {
             })}
           </ul>
 
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-1.5 sm:gap-2">
+            {/* Phones get it inside the menu instead — there's no room in the bar */}
+            <LanguageToggle className="hidden sm:flex" />
             {/* Free trial — compact on mobile, full-size on desktop */}
             <TrialButton
               source="navbar"
               arrow={false}
-              className="btn btn-solid !py-1 !px-3 !text-[0.72rem] !gap-1 lg:!py-[0.95rem] lg:!px-6 lg:!text-[0.98rem] lg:!gap-[0.6rem]"
+              className="btn btn-solid !py-1 !px-2.5 sm:!px-3 !text-[0.72rem] !gap-1 lg:!py-[0.95rem] lg:!px-6 lg:!text-[0.98rem] lg:!gap-[0.6rem]"
             >
-              Free trial
+              {t.nav.freeTrial}
             </TrialButton>
             <button
               type="button"
               onClick={() => setOpen((v) => !v)}
               className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-white/15 bg-white/5 lg:hidden"
-              aria-label={open ? "Close menu" : "Open menu"}
+              aria-label={open ? t.nav.closeMenu : t.nav.openMenu}
               aria-expanded={open}
             >
               {open ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
@@ -119,6 +124,10 @@ export default function Navbar() {
                 );
               })}
             </ul>
+            <div className="mt-5 flex items-center justify-between sm:hidden">
+              <span className="text-sm text-bone-300">{t.language.label}</span>
+              <LanguageToggle />
+            </div>
             <TrialButton source="navbar-mobile" className="btn btn-solid mt-5 w-full justify-center" />
           </div>
         )}

@@ -35,6 +35,16 @@ Open http://localhost:3000.
 | `/team` | Cofounders + advisory board with bios |
 | `/news` | Magazine grid of press/awards + vertical roadmap timeline |
 
+## Languages (English and French)
+
+English is at the normal URLs (`/team`). French is the same page under `/fr` (`/fr/team`). The EN | FR switch sits top right; on phones it is inside the menu.
+
+- **To change any wording:** edit `lib/dictionaries/en.ts`, then the same line in `lib/dictionaries/fr.ts`. If French is missing a line, `npm run build` fails and names it.
+- **Legal pages** are whole documents per language: `content/legal/<page>.en.tsx` and `<page>.fr.tsx`.
+- **Trial emails** (the team's copy and the rancher's confirmation) are in `lib/cta.ts`. The team's copy is always English and says "(FR)" in the subject when the rancher used the French site.
+- **Which language a visitor gets:** what they last picked with the switch (saved in the `NEXT_LOCALE` cookie), otherwise their browser's language, otherwise English. See `middleware.ts`.
+- **The app itself only understands English speech today**, so the French home page says so and keeps the dictation example in English. Remove `appLanguageNote` in `fr.ts` when that changes.
+
 ## Key design choices
 
 ### Color palette (from supplied reference image)

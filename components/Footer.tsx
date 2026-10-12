@@ -2,56 +2,61 @@ import Link from "next/link";
 import Image from "next/image";
 import { Linkedin, Instagram, Youtube, Mail, ArrowUpRight } from "lucide-react";
 import { DEMO_CALENDLY } from "@/lib/cta";
+import { fmt, localizePath, type Locale } from "@/lib/i18n";
+import type { Dictionary } from "@/lib/dictionaries";
 import TrialButton from "@/components/TrialButton";
 
-const SOCIAL = [
-  { href: "https://www.linkedin.com/company/agrivanna/", icon: Linkedin, label: "LinkedIn" },
-  { href: "https://www.instagram.com/agrivanna/", icon: Instagram, label: "Instagram" },
-  { href: "https://www.youtube.com/@Agrivanna", icon: Youtube, label: "YouTube" },
-  { href: "mailto:info@agrivanna.com", icon: Mail, label: "Email" },
-] as const;
+export default function Footer({ locale, t }: { locale: Locale; t: Dictionary }) {
+  const l = t.footer.links;
+  const href = (path: string) => localizePath(locale, path);
 
-const COLUMNS = [
-  {
-    title: "Product",
-    links: [
-      { href: "/#recording", label: "Voice records" },
-      { href: "/#offline", label: "Works offline" },
-      { href: "/#pasture", label: "Pasture & grazing" },
-      { href: "/#features", label: "Full feature list" },
-      { href: "/#pricing", label: "Pricing" },
-    ],
-  },
-  {
-    title: "Company",
-    links: [
-      { href: "/team", label: "Team" },
-      { href: "/news", label: "News & timeline" },
-      { href: "mailto:info@agrivanna.com", label: "Contact" },
-    ],
-  },
-  {
-    title: "Legal",
-    links: [
-      { href: "/privacy", label: "Privacy policy" },
-      { href: "/cookie-policy", label: "Cookie policy" },
-      { href: "/service-terms", label: "Terms of service" },
-    ],
-  },
-] as const;
+  const SOCIAL = [
+    { href: "https://www.linkedin.com/company/agrivanna/", icon: Linkedin, label: "LinkedIn" },
+    { href: "https://www.instagram.com/agrivanna/", icon: Instagram, label: "Instagram" },
+    { href: "https://www.youtube.com/@Agrivanna", icon: Youtube, label: "YouTube" },
+    { href: "mailto:info@agrivanna.com", icon: Mail, label: t.footer.social.email },
+  ];
 
-export default function Footer() {
+  const COLUMNS = [
+    {
+      title: t.footer.columns.product,
+      links: [
+        { href: href("/#recording"), label: l.recording },
+        { href: href("/#offline"), label: l.offline },
+        { href: href("/#pasture"), label: l.pasture },
+        { href: href("/#features"), label: l.features },
+        { href: href("/#pricing"), label: l.pricing },
+      ],
+    },
+    {
+      title: t.footer.columns.company,
+      links: [
+        { href: href("/team"), label: l.team },
+        { href: href("/news"), label: l.news },
+        { href: "mailto:info@agrivanna.com", label: l.contact },
+      ],
+    },
+    {
+      title: t.footer.columns.legal,
+      links: [
+        { href: href("/privacy"), label: l.privacy },
+        { href: href("/cookie-policy"), label: l.cookies },
+        { href: href("/service-terms"), label: l.terms },
+      ],
+    },
+  ];
+
   return (
     <footer className="relative overflow-hidden border-t border-white/5 bg-ink-950">
       <div className="noise" />
       <div className="relative mx-auto max-w-6xl px-4 pt-20 pb-10">
         <div className="mb-16 flex flex-col gap-10 md:flex-row md:items-end md:justify-between">
           <div className="max-w-lg">
-            <p className="eyebrow mb-5">Start today</p>
+            <p className="eyebrow mb-5">{t.footer.eyebrow}</p>
             <h2 className="text-4xl font-medium tracking-tighter text-bone-50 sm:text-5xl">
-              Get it out of your head.
+              {t.footer.headLine1}
               <br />
-              <span className="text-lime-400">And into the record.</span>
+              <span className="text-lime-400">{t.footer.headLine2}</span>
             </h2>
           </div>
 
@@ -63,7 +68,7 @@ export default function Footer() {
               rel="noopener noreferrer"
               className="btn"
             >
-              Book a call <ArrowUpRight className="h-4 w-4" />
+              {t.bookCall} <ArrowUpRight className="h-4 w-4" />
             </Link>
           </div>
         </div>
@@ -79,8 +84,7 @@ export default function Footer() {
               className="h-9 w-auto brightness-0 invert"
             />
             <p className="mt-5 max-w-xs text-sm leading-relaxed text-bone-300">
-              Canadian agtech. Herd and pasture records built for dirty hands, heavy gloves, and
-              country with no signal.
+              {t.footer.blurb}
             </p>
             <ul className="mt-6 flex gap-2">
               {SOCIAL.map(({ href, icon: Icon, label }) => (
@@ -122,14 +126,14 @@ export default function Footer() {
         </div>
 
         <div className="flex flex-col items-start justify-between gap-4 pt-8 text-xs text-bone-300 md:flex-row md:items-center">
-          <p>© {new Date().getFullYear()} Agrivanna Inc. Calgary, Alberta.</p>
+          <p>{fmt(t.footer.copyright, { year: new Date().getFullYear() })}</p>
           <a
             href="https://albertainnovates.ca/"
             target="_blank"
             rel="noopener noreferrer"
             className="group inline-flex items-center gap-2.5 text-bone-300 transition-colors hover:text-lime-400"
           >
-            <span>With the support of Alberta Innovates</span>
+            <span>{t.footer.support}</span>
             <Image
               src="/partners/alberta-innovates.png"
               alt="Alberta Innovates"

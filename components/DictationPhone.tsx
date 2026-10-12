@@ -17,9 +17,15 @@ const BOX = {
 
 export default function DictationPhone({
   text,
+  srLabel,
+  lang,
   className = "",
 }: {
   text: string;
+  /** Screen-reader lead-in, e.g. "The Agrivanna voice note screen transcribing…:" */
+  srLabel: string;
+  /** Language of `text`, when it differs from the page's. */
+  lang?: string;
   className?: string;
 }) {
   return (
@@ -39,7 +45,7 @@ export default function DictationPhone({
         className="absolute overflow-hidden rounded-[4%] bg-white px-[4%] py-[3%]"
         style={BOX}
       >
-        <p className="text-[10px] leading-[1.45] text-ink-950 sm:text-[11.5px]">
+        <p lang={lang} className="text-[10px] leading-[1.45] text-ink-950 sm:text-[11.5px]">
           {text}
           <span
             aria-hidden="true"
@@ -49,7 +55,7 @@ export default function DictationPhone({
       </div>
 
       <span className="sr-only">
-        The Agrivanna voice note screen transcribing as a rancher speaks: “{text}”
+        {srLabel} <span lang={lang}>“{text}”</span>
       </span>
     </div>
   );

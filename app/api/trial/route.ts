@@ -5,6 +5,7 @@ import {
   TRIAL_EMAILS,
   confirmationBody,
   trialBody,
+  trialSubject,
   type TrialSubmission,
 } from "@/lib/cta";
 
@@ -56,16 +57,21 @@ export async function POST(request: Request) {
     records: clean(payload.records, 120),
     notes: clean(payload.notes, 2000),
     source: clean(payload.source, 60) || "website",
+    lang: payload.lang === "fr" ? "fr" : "en",
   };
+  const fr = data.lang === "fr";
 
   if (!data.name || !data.email) {
     return NextResponse.json(
-      { ok: false, error: "Name and email are required." },
+      { ok: false, error: fr ? "Le nom et le courriel sont obligatoires." : "Name and email are required." },
       { status: 400 }
     );
   }
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(data.email)) {
-    return NextResponse.json({ ok: false, error: "That email looks off." }, { status: 400 });
+    return NextResponse.json(
+      { ok: false, error: fr ? "Cette adresse courriel semble incorrecte." : "That email looks off." },
+      { status: 400 }
+    );
   }
 
   const key = process.env.RESEND_API_KEY;
@@ -80,7 +86,7 @@ export async function POST(request: Request) {
       from: FROM,
       to: [...TRIAL_EMAILS],
       reply_to: data.email,
-      subject: `Free trial — ${data.ranch || data.name}`,
+      subject: trialSubject(data),
       text: trialBody(data),
     });
   } catch (err) {
@@ -96,7 +102,7 @@ export async function POST(request: Request) {
       from: FROM,
       to: [data.email],
       reply_to: CONTACT_EMAIL,
-      subject: CONFIRMATION_SUBJECT,
+      subject: CONFIRMATION_SUBJECT[data.lang],
       text: confirmationBody(data),
     });
   } catch (err) {
