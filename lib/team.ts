@@ -18,7 +18,7 @@ export const COFOUNDERS = [
   {
     slug: "aminreza",
     name: "Aminreza Abbasi",
-    photo: "/team/aminreza.jpg",
+    photo: "/team/aminreza-abbasi.jpg",
     linkedin: "https://www.linkedin.com/in/aminrezaabbasi/",
   },
   {

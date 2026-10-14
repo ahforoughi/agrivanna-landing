@@ -2,6 +2,7 @@
 
 import { useRef, useState, useEffect, useCallback } from "react";
 import Image from "next/image";
+import RndBadge from "@/components/RndBadge";
 import { ChevronLeft, ChevronRight, Sparkles, Compass, Flag } from "lucide-react";
 import { TIMELINE } from "@/lib/news";
 import { useI18n } from "@/components/LocaleProvider";
@@ -97,6 +98,7 @@ export default function TimelineSlider() {
 
               {/* Image or icon placeholder */}
               <div className="relative mt-5 aspect-[4/3] overflow-hidden bg-ink-800">
+                {"rnd" in m && m.rnd && <RndBadge label={t.site.rndBadge} />}
                 {"image" in m ? (
                   <Image
                     src={m.image}

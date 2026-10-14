@@ -13,11 +13,13 @@ const nextConfig: NextConfig = {
     // results land somewhere current instead of a 404.
     return [
       { source: "/solutions", destination: "/", permanent: true },
-      { source: "/products", destination: "/", permanent: true },
+      { source: "/products", destination: "/features", permanent: true },
       { source: "/pilot-waitlist", destination: "/", permanent: true },
-      { source: "/about", destination: "/team", permanent: true },
-      { source: "/careers", destination: "/team", permanent: true },
-      { source: "/contact", destination: "/#trial", permanent: true },
+      { source: "/about", destination: "/company", permanent: true },
+      { source: "/careers", destination: "/company#team", permanent: true },
+      // The team now lives on the About page. Not permanent, in case it gets its own page again.
+      { source: "/team", destination: "/company#team", permanent: false },
+      { source: "/fr/team", destination: "/fr/company#team", permanent: false },
       { source: "/investment", destination: "/", permanent: true },
       { source: "/privacy-policy", destination: "/privacy", permanent: true },
     ];

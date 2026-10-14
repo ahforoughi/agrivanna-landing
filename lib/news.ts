@@ -71,13 +71,15 @@ export const TIMELINE = [
   { id: "aurrin", status: "past", image: "/story/timeline-aurrin.jpg" },
   { id: "liftoff", status: "past", image: "/story/timeline-liftoff.jpg" },
   { id: "arena", status: "past", image: "/story/timeline-arena.webp" },
-  { id: "pilots", status: "now", image: "/story/timeline-ranch-pilot-collars-v2.jpg" },
+  { id: "pilots", status: "now", image: "/story/timeline-ranch-pilot-collars-v2.jpg", rnd: true },
   { id: "refinement", status: "future", image: "/story/timeline-bench-testing-v2.jpg" },
   { id: "western-canada", status: "future", image: "/story/canada-flag.jpg" },
 ] as const satisfies readonly {
   id: string;
   status: "past" | "now" | "future";
   image?: string;
+  /** The photo shows collar hardware, so it carries the R&D label. */
+  rnd?: boolean;
 }[];
 
 export type MilestoneId = (typeof TIMELINE)[number]["id"];

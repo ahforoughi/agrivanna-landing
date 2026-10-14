@@ -2,6 +2,8 @@ import type { Config } from "tailwindcss";
 
 const config: Config = {
   content: ["./app/**/*.{ts,tsx}", "./components/**/*.{ts,tsx}"],
+  // hover: styles only on devices with a real pointer; on phones they stick after a tap
+  future: { hoverOnlyWhenSupported: true },
   theme: {
     extend: {
       colors: {
