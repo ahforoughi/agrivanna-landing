@@ -17,6 +17,7 @@ import { BlendFunction, ToneMappingMode } from "postprocessing";
 import { Flowers, Grass, Ground, SKY, SUN_DIR, Sky } from "./Meadow";
 import { clone as cloneSkinned } from "three/examples/jsm/utils/SkeletonUtils.js";
 import { groundHeight, nearestOnFence } from "./terrain";
+import { ScanCowMesh, useScanCow } from "./ScanCow";
 import { Ripple, VirtualFence } from "./Fences";
 
 const LIME = "#A6FF3D";
@@ -149,14 +150,74 @@ function useClips(actions: ReturnType<typeof useAnimations>["actions"]) {
   };
 }
 
+/**
+ * Which cattle the scene uses. "scan": the photo-scanned Hereford by the Center
+ * for Digital Humanities, University of Arizona (used with their written
+ * permission, 13 Oct 2026), posed in the shader. "lowpoly": Quaternius' CC0
+ * animated cow and bull.
+ */
+const CATTLE = "scan" as "scan" | "lowpoly";
+
+/** How the scan holds itself for each clip the herd logic asks for. */
+const SCAN_POSES: Record<string, { head: number; walk: number }> = {
+  Eating: { head: 1.25, walk: 0 },
+  Idle: { head: 0.02, walk: 0 },
+  Idle_2: { head: 0.35, walk: 0 },
+  Idle_Headlow: { head: 0.8, walk: 0 },
+  Walk: { head: 0.3, walk: 1 },
+  Idle_HitReact_Left: { head: -0.15, walk: 0 },
+  Idle_HitReact_Right: { head: -0.15, walk: 0 },
+};
+
+type Body = { node: React.ReactNode; play: (clip: string, fade?: number) => void; scale: number };
+
+function useLowPolyBody(breed: Breed, tone: number, group: React.RefObject<THREE.Group | null>, offset: number): Body {
+  const { object, animations } = useAnimal(breed, tone);
+  const { actions } = useAnimations(animations, group);
+  const clips = useClips(actions);
+  const started = useRef(false);
+  const play = (clip: string, fade = 0.6) => {
+    clips(clip, fade);
+    // Start each cow at a different point in her first clip
+    if (!started.current) {
+      started.current = true;
+      const a = actions[clip];
+      if (a) a.time = offset * a.getClip().duration;
+    }
+  };
+  return { node: <primitive object={object} />, play, scale: BASE_SCALE };
+}
+
+function useScanBody(breed: Breed, _tone: number, _group: React.RefObject<THREE.Group | null>, offset: number): Body {
+  const cow = useScanCow(breed === "angus");
+  const pose = useRef({ ...SCAN_POSES.Eating, rate: 1.4 });
+  useEffect(() => {
+    cow.uniforms.uPhase.value = offset * 20;
+  }, [cow, offset]);
+  useFrame((state, dt) => {
+    const u = cow.uniforms;
+    dt = Math.min(dt, 0.05);
+    u.uHead.value = approach(u.uHead.value, pose.current.head, pose.current.rate, dt);
+    u.uWalk.value = approach(u.uWalk.value, pose.current.walk, 3, dt);
+    u.uTime.value = state.clock.elapsedTime;
+  });
+  const play = (clip: string, fade = 0.6) => {
+    const p = SCAN_POSES[clip] ?? SCAN_POSES.Idle;
+    // A startle is quick; everything else eases over about the clip fade
+    pose.current = { ...p, rate: clip.startsWith("Idle_HitReact") ? 6 : fade === 0 ? 50 : 1.4 };
+  };
+  return { node: <ScanCowMesh cow={cow} />, play, scale: 1 };
+}
+
+const useBody = CATTLE === "scan" ? useScanBody : useLowPolyBody;
+
 // Where the herd lives: wanderers turn back toward the middle near the edges
 const PASTURE = { minX: 5.2, maxX: 11, minZ: -5.6, maxZ: 5, cx: 7.5, cz: 0 };
 
 function Cow({ breed, role, tone = 0.5, position, heading, offset, scale = 1 }: AnimalProps) {
   const group = useRef<THREE.Group>(null);
-  const { object, animations } = useAnimal(breed, tone);
-  const { actions } = useAnimations(animations, group);
-  const play = useClips(actions);
+  const body = useBody(breed, tone, group, offset);
+  const play = body.play;
   const mind = useRef({
     pos: new THREE.Vector2(position[0], position[1]),
     heading,
@@ -172,11 +233,8 @@ function Cow({ breed, role, tone = 0.5, position, heading, offset, scale = 1 }: 
     m.clip = first.clip === "Walk" ? "Eating" : first.clip;
     m.timer = first.min + offset * (first.max - first.min);
     play(m.clip, 0);
-    // Start each cow at a different point in her clip
-    const a = actions[m.clip];
-    if (a) a.time = offset * a.getClip().duration;
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [actions]);
+  }, []);
 
   useFrame((_, dt) => {
     const m = mind.current;
@@ -214,9 +272,11 @@ function Cow({ breed, role, tone = 0.5, position, heading, offset, scale = 1 }: 
   });
 
   return (
-    <group ref={group} scale={BASE_SCALE * scale}>
-      <primitive object={object} />
-      <GroundShade />
+    <group ref={group} scale={scale}>
+      <group scale={body.scale}>{body.node}</group>
+      <group scale={BASE_SCALE}>
+        <GroundShade />
+      </group>
     </group>
   );
 }
@@ -232,9 +292,8 @@ function approach(v: number, target: number, rate: number, dt: number) {
  */
 function FenceTester() {
   const group = useRef<THREE.Group>(null);
-  const { object, animations } = useAnimal("hereford");
-  const { actions } = useAnimations(animations, group);
-  const play = useClips(actions);
+  const body = useBody("hereford", 0.5, group, 0);
+  const play = body.play;
   const brain = useRef({
     phase: "walk" as "walk" | "startle" | "turn" | "graze",
     pos: new THREE.Vector2(3.6, -3.6),
@@ -254,7 +313,7 @@ function FenceTester() {
     brain.current.heading = aimAtFence();
     play("Walk", 0);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [actions]);
+  }, []);
 
   useFrame((_, dt) => {
     const b = brain.current;
@@ -304,9 +363,11 @@ function FenceTester() {
   });
 
   return (
-    <group ref={group} scale={BASE_SCALE}>
-      <primitive object={object} />
-      <GroundShade />
+    <group ref={group}>
+      <group scale={body.scale}>{body.node}</group>
+      <group scale={BASE_SCALE}>
+        <GroundShade />
+      </group>
     </group>
   );
 }
@@ -426,5 +487,7 @@ export default function HerdScene({ animate = true, lite = false }: { animate?: 
   );
 }
 
-useGLTF.preload(MODEL.angus);
-useGLTF.preload(MODEL.hereford);
+if (CATTLE === "lowpoly") {
+  useGLTF.preload(MODEL.angus);
+  useGLTF.preload(MODEL.hereford);
+}

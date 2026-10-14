@@ -98,6 +98,14 @@ export default function Footer({ locale, t }: { locale: Locale; t: Dictionary })
           <div className="flex flex-wrap items-center gap-4">
             <LanguageToggle />
             <p>{fmt(t.footer.copyright, { year: new Date().getFullYear() })}</p>
+            <a
+              href="https://sketchfab.com/3d-models/none-b6c8c027ab2f44de8b4a9ff518ea5f56"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-bone-300/70 transition-colors hover:text-lime-400"
+            >
+              {t.footer.scanCredit}
+            </a>
           </div>
           <a
             href="https://albertainnovates.ca/"

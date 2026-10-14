@@ -66,6 +66,7 @@ const fr: Dictionary = {
       terms: "Conditions d’utilisation",
     },
     copyright: "© {year} Agrivanna Inc. Calgary (Alberta).",
+    scanCredit: "Numérisation 3D de la vache : Center for Digital Humanities, University of Arizona",
     support: "Avec le soutien d’Alberta Innovates",
   },
 

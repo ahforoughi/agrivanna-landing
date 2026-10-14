@@ -61,6 +61,7 @@ const en = {
     },
     copyright: "© {year} Agrivanna Inc. Calgary, Alberta.",
     support: "With the support of Alberta Innovates",
+    scanCredit: "3D cow scan: Center for Digital Humanities, University of Arizona",
   },
 
   cookie: {
