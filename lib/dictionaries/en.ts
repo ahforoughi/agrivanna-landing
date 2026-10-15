@@ -105,7 +105,6 @@ const en = {
       "Muddy hands, no signal? Just talk. Agrivanna writes the herd and pasture records for you.",
     seeHow: "See how it works",
     heroVideoLabel: "A rancher works cattle through the chute while the Agrivanna app records each animal's tag and weight",
-    heroVideoPlay: "Play the video",
     testedOn: "Built and tested on working Alberta ranches",
 
 

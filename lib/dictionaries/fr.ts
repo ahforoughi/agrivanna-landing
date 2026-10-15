@@ -112,7 +112,6 @@ const fr: Dictionary = {
       "Les mains dans la boue, pas de réseau? Parlez, tout simplement. Agrivanna tient vos registres de troupeau et de pâturage pour vous.",
     seeHow: "Voir comment ça marche",
     heroVideoLabel: "Un éleveur fait passer le bétail dans la chute pendant que l’application Agrivanna enregistre l’étiquette et le poids de chaque animal",
-    heroVideoPlay: "Lire la vidéo",
     testedOn: "Conçu et testé dans des ranchs albertains en activité",
 
 
