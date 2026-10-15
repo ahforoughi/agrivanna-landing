@@ -20,8 +20,9 @@
  * Muted, looping, inline and `autoplay`, so the browser starts it by itself
  * without waiting for this page's JavaScript; paused while off screen.
  *
- * Phones get H.264 only: some Android phones say they play HEVC in Chrome but
- * can't decode it, and a decode error never moves on to the next <source>.
+ * Phones and tablets get H.264 only: some Android devices say they play HEVC
+ * or AV1 in Chrome but decode it badly or not at all, and a decode error never
+ * moves on to the next <source>. AV1/HEVC go to mouse-and-keyboard computers.
  * As a safety net, if the video errors or still has no picture a few seconds
  * after it's on screen, it switches to the H.264 file that plays everywhere.
  * Where autoplay is blocked (iPhone Low Power Mode, data saver) it starts at
@@ -65,7 +66,7 @@ export default function HomeHero() {
     const rescue = () => {
       if (rescued) return;
       rescued = true;
-      v.src = v.currentSrc.endsWith("/hero-720.mp4") ? "/video/hero-phone.mp4" : "/video/hero-720.mp4";
+      v.src = v.currentSrc.endsWith("/hero-1080.mp4") ? "/video/hero-phone.mp4" : "/video/hero-1080.mp4";
       v.load();
       tryPlay();
     };
@@ -130,10 +131,13 @@ export default function HomeHero() {
           aria-label={home.heroVideoLabel}
         >
           <source src="/video/hero-phone.mp4" type="video/mp4" media={PHONE} />
-          <source src="/video/hero-720.mp4" type="video/mp4" media="(max-width: 767px)" />
+          {/* Touchscreens (phones on their side, tablets) get H.264, which every
+              phone and tablet decodes in hardware; AV1 and HEVC only go to
+              mouse-and-keyboard computers */}
+          <source src="/video/hero-1080.mp4" type="video/mp4" media="(pointer: coarse)" />
           <source src="/video/hero-1080.av1.mp4" type='video/mp4; codecs="av01.0.08M.08"' />
           <source src="/video/hero-1080.hevc.mp4" type='video/mp4; codecs="hvc1"' />
-          <source src="/video/hero-720.mp4" type="video/mp4" />
+          <source src="/video/hero-1080.mp4" type="video/mp4" />
         </video>
         <div
           className="pointer-events-none absolute inset-0 wide:hidden"

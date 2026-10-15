@@ -37,7 +37,14 @@ export default function ProductShowcase() {
   const { locale, t, href } = useI18n();
   const s = t.site.home;
   const sections = t.site.pages.software.sections;
-  const reduce = useReducedMotion();
+  // The server can't know the visitor's motion setting, so the first render
+  // matches it (as if motion were allowed) and the real setting applies once
+  // the page has started; reading it straight away makes React throw away
+  // and rebuild the whole page
+  const prefersReduced = useReducedMotion();
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => setMounted(true), []);
+  const reduce = mounted && !!prefersReduced;
   const [active, setActive] = useState(0);
   const [paused, setPaused] = useState(false);
   const auto = !reduce && !paused;
