@@ -88,10 +88,6 @@ const fr: Dictionary = {
     email: "Courriel",
     phone: "Téléphone",
     ranch: "Nom du ranch",
-    location: "Ville la plus proche et province",
-    locationPlaceholder: "p. ex. Nanton (Alb.)",
-    head: "Nombre de têtes",
-    operation: "Type d’exploitation",
     records: "Où sont vos registres en ce moment",
     notes: "Ce que nous devrions savoir",
     notesPlaceholder:
@@ -487,9 +483,9 @@ const fr: Dictionary = {
     intro:
       "Parlez-nous de votre exploitation et nous configurerons votre compte. Ça prend quelques minutes — les questions ci-dessous sont celles que nous posons lors d’un premier appel.",
     asks: [
-      "Où vous élevez votre bétail",
-      "Type d’exploitation et taille du troupeau",
-      "Limites des pâturages, si vous les avez",
+      "Votre nom et comment vous joindre",
+      "Le nom de votre ranch",
+      "Où sont vos registres en ce moment",
     ],
     questionsBefore: "Des questions avant de commencer? Écrivez à ",
     questionsAfter: ".",

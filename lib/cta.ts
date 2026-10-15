@@ -21,32 +21,12 @@ export type TrialSubmission = {
   email: string
   phone: string
   ranch: string
-  location: string
-  head: string
-  operation: string
   records: string
   notes: string
   source: string
   /** Site language the form was sent from; the rancher's copy is written in it. */
   lang: Locale
 }
-
-export const HEAD_OPTIONS = [
-  "Under 100",
-  "100 – 300",
-  "300 – 800",
-  "800 – 2,000",
-  "Over 2,000",
-] as const
-
-export const OPERATION_OPTIONS = [
-  "Cow-calf",
-  "Cow-calf plus backgrounding",
-  "Backgrounding or feedlot",
-  "Community pasture or grazing association",
-  "Seedstock / purebred",
-  "Something else",
-] as const
 
 export const RECORD_OPTIONS = [
   "Notebook, calving book, or whiteboard",
@@ -55,27 +35,13 @@ export const RECORD_OPTIONS = [
   "Mostly in my head",
 ] as const
 
-type OptionValue =
-  | (typeof HEAD_OPTIONS)[number]
-  | (typeof OPERATION_OPTIONS)[number]
-  | (typeof RECORD_OPTIONS)[number]
+type OptionValue = (typeof RECORD_OPTIONS)[number]
 
 /**
  * What the French form shows for each option. The value sent is always the
  * English one above, so every enquiry reaches the team in the same words.
  */
 export const OPTION_LABELS_FR: Record<OptionValue, string> = {
-  "Under 100": "Moins de 100",
-  "100 – 300": "100 à 300",
-  "300 – 800": "300 à 800",
-  "800 – 2,000": "800 à 2 000",
-  "Over 2,000": "Plus de 2 000",
-  "Cow-calf": "Vache-veau",
-  "Cow-calf plus backgrounding": "Vache-veau et semi-finition",
-  "Backgrounding or feedlot": "Semi-finition ou parc d’engraissement",
-  "Community pasture or grazing association": "Pâturage communautaire ou association de pâturage",
-  "Seedstock / purebred": "Sujets reproducteurs / race pure",
-  "Something else": "Autre",
   "Notebook, calving book, or whiteboard": "Calepin, registre de vêlage ou tableau blanc",
   Spreadsheets: "Feuilles de calcul",
   "Another ranch program": "Un autre logiciel de ranch",
@@ -95,9 +61,6 @@ const LABELS: Record<Locale, Record<Field, string>> = {
     email: "Email",
     phone: "Phone",
     ranch: "Ranch",
-    location: "Where",
-    head: "Head",
-    operation: "Operation",
     records: "Records kept in",
     notes: "Notes",
   },
@@ -106,9 +69,6 @@ const LABELS: Record<Locale, Record<Field, string>> = {
     email: "Courriel",
     phone: "Téléphone",
     ranch: "Ranch",
-    location: "Lieu",
-    head: "Nombre de têtes",
-    operation: "Exploitation",
     records: "Tenue des registres",
     notes: "Notes",
   },

@@ -10,8 +10,10 @@
  *   whole. The text centres on the screen when there's room, and otherwise in
  *   the space to the right of the app (globals.css, .hero-root / .hero-copy);
  * - taller or shorter windows (phones, iPad portrait, a phone on its side)
- *   show it above the text instead (.hero-video-box): phones zoomed out with
- *   the app centred over the headline, wider ones from the frame's left edge.
+ *   show it above the text instead (.hero-video-box). Phones play a square cut
+ *   made for them (hero-phone.*): the app screen centred over the chute
+ *   footage from the same video, so nothing is blurred or empty and the file
+ *   is half the size. Wider ones show the full frame from its left edge.
  *
  * Encodes (public/video): AV1 and HEVC at 1080p for wider screens, HEVC and
  * H.264 at 720p for phones; the 720p H.264 is also the catch-all fallback.
@@ -59,27 +61,31 @@ export default function HomeHero() {
       ref={section}
       className="hero-root relative flex min-h-[100svh] flex-col overflow-hidden wide:items-center wide:justify-center wide:pb-16 wide:pt-28"
     >
-      {/* Wide: fills the section behind the text. Tall: sits above the text, zoomed
-          out so the whole app screen shows, with the app centred over the headline
-          (sizes in globals.css, .hero-video-box). */}
+      {/* Wide: fills the section behind the text. Tall: sits above the text
+          (sizes in globals.css, .hero-video-box). Phones get their own cut of the
+          video, made for them: the app screen centred over the chute footage. */}
       <div className="hero-video-box relative wide:absolute wide:inset-0">
-        {/* Tall screens only: a blurred, darkened still behind the video fills the
-            strip the centred app leaves on the left */}
-        <div
-          className="absolute inset-0 scale-110 bg-cover bg-center blur-2xl brightness-[0.45] sm:hidden wide:hidden"
-          style={{ backgroundImage: "url(/video/hero-poster.jpg)" }}
-          aria-hidden="true"
-        />
+        {/* The still frame, shown while the video loads; matches whichever cut plays */}
+        <picture>
+          <source media="(max-width: 639px) and (max-aspect-ratio: 1124/1000), (max-width: 639px) and (max-height: 499px)" srcSet="/video/hero-phone-poster.jpg" />
+          <img
+            src="/video/hero-poster.jpg"
+            alt=""
+            fetchPriority="high"
+            className="hero-video absolute inset-0 h-full w-full object-cover wide:object-left"
+          />
+        </picture>
         <video
           ref={video}
           className="hero-video absolute inset-0 h-full w-full object-cover wide:object-left"
-          poster="/video/hero-poster.jpg"
           muted
           loop
           playsInline
           preload={reduce ? "none" : "auto"}
           aria-label={home.heroVideoLabel}
         >
+          <source src="/video/hero-phone.hevc.mp4" type='video/mp4; codecs="hvc1"' media="(max-width: 639px) and (max-aspect-ratio: 1124/1000), (max-width: 639px) and (max-height: 499px)" />
+          <source src="/video/hero-phone.mp4" type="video/mp4" media="(max-width: 639px) and (max-aspect-ratio: 1124/1000), (max-width: 639px) and (max-height: 499px)" />
           <source src="/video/hero-720.hevc.mp4" type='video/mp4; codecs="hvc1"' media="(max-width: 767px)" />
           <source src="/video/hero-720.mp4" type="video/mp4" media="(max-width: 767px)" />
           <source src="/video/hero-1080.av1.mp4" type='video/mp4; codecs="av01.0.08M.08"' />

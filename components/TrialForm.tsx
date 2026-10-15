@@ -3,8 +3,6 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { ArrowUpRight, Check, X } from "lucide-react";
 import {
-  HEAD_OPTIONS,
-  OPERATION_OPTIONS,
   OPEN_TRIAL_EVENT,
   RECORD_OPTIONS,
   optionLabel,
@@ -18,9 +16,6 @@ const EMPTY: TrialSubmission = {
   email: "",
   phone: "",
   ranch: "",
-  location: "",
-  head: "",
-  operation: "",
   records: "",
   notes: "",
   source: "website",
@@ -198,58 +193,6 @@ export default function TrialForm({ inline = false }: { inline?: boolean }) {
               value={data.ranch}
               onChange={(e) => set("ranch")(e.target.value)}
             />
-          </div>
-        </div>
-
-        <div>
-          <label className={label} htmlFor="tf-location">
-            {t.location}
-          </label>
-          <input
-            id="tf-location"
-            placeholder={t.locationPlaceholder}
-            className={field}
-            value={data.location}
-            onChange={(e) => set("location")(e.target.value)}
-          />
-        </div>
-
-        <div className="grid gap-5 sm:grid-cols-2">
-          <div>
-            <label className={label} htmlFor="tf-head">
-              {t.head}
-            </label>
-            <select
-              id="tf-head"
-              className={field}
-              value={data.head}
-              onChange={(e) => set("head")(e.target.value)}
-            >
-              <option value="">{t.choose}</option>
-              {HEAD_OPTIONS.map((o) => (
-                <option key={o} value={o}>
-                  {optionLabel(o, locale)}
-                </option>
-              ))}
-            </select>
-          </div>
-          <div>
-            <label className={label} htmlFor="tf-operation">
-              {t.operation}
-            </label>
-            <select
-              id="tf-operation"
-              className={field}
-              value={data.operation}
-              onChange={(e) => set("operation")(e.target.value)}
-            >
-              <option value="">{t.choose}</option>
-              {OPERATION_OPTIONS.map((o) => (
-                <option key={o} value={o}>
-                  {optionLabel(o, locale)}
-                </option>
-              ))}
-            </select>
           </div>
         </div>
 
