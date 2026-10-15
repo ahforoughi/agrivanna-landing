@@ -30,10 +30,17 @@ export function localizePath(locale: Locale, href: string) {
   return `/fr${href}`;
 }
 
-/** The language-neutral path behind a URL: /fr/team → /team, /fr → /. */
+/**
+ * The language-neutral path behind a URL: /fr/team → /team, /fr → /.
+ * Also strips /en: the middleware rewrites English pages onto /en/…, and that
+ * internal path is what the server sees while rendering.
+ */
 export function stripLocale(pathname: string) {
-  if (pathname === "/fr") return "/";
-  return pathname.startsWith("/fr/") ? pathname.slice(3) : pathname;
+  for (const prefix of ["/fr", "/en"]) {
+    if (pathname === prefix) return "/";
+    if (pathname.startsWith(`${prefix}/`)) return pathname.slice(prefix.length);
+  }
+  return pathname;
 }
 
 /** Canonical URL plus hreflang links, so search engines pair the two versions. */

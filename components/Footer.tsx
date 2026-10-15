@@ -1,10 +1,10 @@
 import Link from "next/link";
 import Image from "next/image";
 import { Linkedin, Instagram, Youtube, Mail, ArrowUpRight } from "lucide-react";
-import { DEMO_CALENDLY } from "@/lib/cta";
 import { fmt, localizePath, type Locale } from "@/lib/i18n";
 import type { Dictionary } from "@/lib/dictionaries";
-import TrialButton from "@/components/TrialButton";
+import ScanCredit from "@/components/ScanCredit";
+import { COMPANY_LINKS, PRODUCT_LINKS, RESOURCE_LINKS, type MenuLink } from "@/lib/site-nav";
 
 export default function Footer({ locale, t }: { locale: Locale; t: Dictionary }) {
   const l = t.footer.links;
@@ -17,25 +17,17 @@ export default function Footer({ locale, t }: { locale: Locale; t: Dictionary })
     { href: "mailto:info@agrivanna.com", icon: Mail, label: t.footer.social.email },
   ];
 
+  const m = t.site.menu.items;
+  const links = (list: MenuLink[]) =>
+    list.map((x) => ({ href: href(x.path), label: m[x.key].label }));
+
   const COLUMNS = [
     {
       title: t.footer.columns.product,
-      links: [
-        { href: href("/#recording"), label: l.recording },
-        { href: href("/#offline"), label: l.offline },
-        { href: href("/#pasture"), label: l.pasture },
-        { href: href("/#features"), label: l.features },
-        { href: href("/#pricing"), label: l.pricing },
-      ],
+      links: [...links(PRODUCT_LINKS), { href: href("/pricing"), label: l.pricing }],
     },
-    {
-      title: t.footer.columns.company,
-      links: [
-        { href: href("/team"), label: l.team },
-        { href: href("/news"), label: l.news },
-        { href: "mailto:info@agrivanna.com", label: l.contact },
-      ],
-    },
+    { title: t.site.footerResources, links: links(RESOURCE_LINKS) },
+    { title: t.footer.columns.company, links: links(COMPANY_LINKS) },
     {
       title: t.footer.columns.legal,
       links: [
@@ -49,33 +41,10 @@ export default function Footer({ locale, t }: { locale: Locale; t: Dictionary })
   return (
     <footer className="relative overflow-hidden border-t border-white/5 bg-ink-950">
       <div className="noise" />
-      <div className="relative mx-auto max-w-6xl px-4 pt-20 pb-10">
-        <div className="mb-16 flex flex-col gap-10 md:flex-row md:items-end md:justify-between">
-          <div className="max-w-lg">
-            <p className="eyebrow mb-5">{t.footer.eyebrow}</p>
-            <h2 className="text-4xl font-medium tracking-tighter text-bone-50 sm:text-5xl">
-              {t.footer.headLine1}
-              <br />
-              <span className="text-lime-400">{t.footer.headLine2}</span>
-            </h2>
-          </div>
-
-          <div className="flex flex-wrap gap-3">
-            <TrialButton source="footer" />
-            <Link
-              href={DEMO_CALENDLY}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="btn"
-            >
-              {t.bookCall} <ArrowUpRight className="h-4 w-4" />
-            </Link>
-          </div>
-        </div>
-
+      <div className="relative mx-auto max-w-6xl px-4 pt-16 pb-10">
         {/* Columns */}
-        <div className="grid grid-cols-2 gap-10 border-y border-white/5 py-12 md:grid-cols-4">
-          <div className="col-span-2 md:col-span-1">
+        <div className="grid grid-cols-2 gap-10 border-b border-white/5 pb-12 md:grid-cols-3 lg:grid-cols-5">
+          <div className="col-span-2 md:col-span-3 lg:col-span-1">
             <Image
               src="/logos/logo-dark.png"
               alt="Agrivanna"
@@ -126,7 +95,10 @@ export default function Footer({ locale, t }: { locale: Locale; t: Dictionary })
         </div>
 
         <div className="flex flex-col items-start justify-between gap-4 pt-8 text-xs text-bone-300 md:flex-row md:items-center">
-          <p>{fmt(t.footer.copyright, { year: new Date().getFullYear() })}</p>
+          <div className="flex flex-wrap items-center gap-4">
+            <p>{fmt(t.footer.copyright, { year: new Date().getFullYear() })}</p>
+            <ScanCredit label={t.footer.scanCredit} />
+          </div>
           <a
             href="https://albertainnovates.ca/"
             target="_blank"

@@ -57,8 +57,8 @@ const page: LegalPage = {
 
       <h2>Responsabilité de l’utilisateur</h2>
       <p>
-        Vous êtes responsable des gestes posés sur la foi de l’application et du respect de la
-        réglementation locale.
+        Vous êtes responsable des mesures que vous prenez en vous fondant sur l’application et du
+        respect de la réglementation locale.
       </p>
 
       <h2>Communications liées au service</h2>

@@ -9,9 +9,6 @@ export const TRIAL_EMAIL = TRIAL_EMAILS[0]
 /** Where we tell a rancher to write with questions. */
 export const CONTACT_EMAIL = "info@agrivanna.com"
 
-export const DEMO_CALENDLY =
-  "https://calendly.com/aminrezaabbasi-agrivanna/meeting-with-agrivanna-team"
-
 /** Any button anywhere opens the trial form by dispatching this. */
 export const OPEN_TRIAL_EVENT = "agrivanna-open-trial"
 
@@ -197,7 +194,7 @@ function confirmationBodyFr(d: TrialSubmission) {
     "",
     submissionLines(d, "fr"),
     "",
-    `Si quelque chose ci-dessus est inexact, ou si vous avez des questions avant que Haden vous écrive, répondez à ce courriel ou écrivez à ${CONTACT_EMAIL}.`,
+    `Si un renseignement ci-dessus est inexact, ou si vous avez des questions avant que Haden vous écrive, répondez à ce courriel ou écrivez à ${CONTACT_EMAIL}.`,
     "",
     "Agrivanna Inc.",
     "1315 Northmount Dr NW, Calgary (Alberta) T2L 0C9",

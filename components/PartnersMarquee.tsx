@@ -58,7 +58,7 @@ const PARTNERS = [
   },
 ] as const;
 
-export default function PartnersMarquee() {
+export default function PartnersMarquee({ id }: { id?: string }) {
   const { t } = useI18n();
   // Duplicate for seamless loop; tripled so the strip always fills wide viewports.
   const loop = [...PARTNERS, ...PARTNERS, ...PARTNERS, ...PARTNERS].map((p) => ({
@@ -67,7 +67,7 @@ export default function PartnersMarquee() {
   }));
 
   return (
-    <section className="relative overflow-hidden border-y border-white/5 py-16">
+    <section id={id} className="relative scroll-mt-28 overflow-hidden border-y border-white/5 py-16">
       <div className="noise" />
       <div className="relative mx-auto mb-10 max-w-6xl px-4">
         <p className="eyebrow">{t.partners.eyebrow}</p>
@@ -76,9 +76,10 @@ export default function PartnersMarquee() {
         </h3>
       </div>
 
-      {/* Edge fades */}
-      <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-32 bg-gradient-to-r from-ink-950 to-transparent" />
-      <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-32 bg-gradient-to-l from-ink-950 to-transparent" />
+      {/* Edge fades on the logo strip only, so the heading above stays sharp */}
+      <div className="relative">
+        <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-10 bg-gradient-to-r from-ink-950 to-transparent sm:w-32" />
+        <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-10 bg-gradient-to-l from-ink-950 to-transparent sm:w-32" />
 
       <div className="marquee-track">
         {loop.map((p, i) => (
@@ -102,6 +103,7 @@ export default function PartnersMarquee() {
             </span>
           </a>
         ))}
+      </div>
       </div>
     </section>
   );

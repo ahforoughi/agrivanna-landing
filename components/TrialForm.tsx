@@ -45,16 +45,31 @@ export default function TrialForm({ inline = false }: { inline?: boolean }) {
   const firstField = useRef<HTMLInputElement>(null);
   const restoreFocus = useRef<Element | null>(null);
 
+  // Read by the open handler below, which is registered once
+  const sent = useRef(false);
+  useEffect(() => {
+    sent.current = state === "done";
+  }, [state]);
+
   useEffect(() => {
     if (inline) return;
     const onOpen = (e: Event) => {
       restoreFocus.current = document.activeElement;
-      setData((d) => ({ ...d, source: (e as CustomEvent<string>).detail || "website" }));
+      const source = (e as CustomEvent<string>).detail || "website";
+      if (sent.current) {
+        // Already sent one: start a clean form (another ranch, a correction).
+        // A half-filled form that was only closed keeps its answers.
+        setData({ ...EMPTY, lang: locale, source });
+        setError("");
+        setState("idle");
+      } else {
+        setData((d) => ({ ...d, source }));
+      }
       setOpen(true);
     };
     window.addEventListener(OPEN_TRIAL_EVENT, onOpen);
     return () => window.removeEventListener(OPEN_TRIAL_EVENT, onOpen);
-  }, [inline]);
+  }, [inline, locale]);
 
   const close = useCallback(() => {
     setOpen(false);

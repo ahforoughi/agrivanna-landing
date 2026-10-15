@@ -13,13 +13,27 @@ const nextConfig: NextConfig = {
     // results land somewhere current instead of a 404.
     return [
       { source: "/solutions", destination: "/", permanent: true },
-      { source: "/products", destination: "/", permanent: true },
+      { source: "/products", destination: "/product", permanent: true },
       { source: "/pilot-waitlist", destination: "/", permanent: true },
-      { source: "/about", destination: "/team", permanent: true },
-      { source: "/careers", destination: "/team", permanent: true },
-      { source: "/contact", destination: "/#trial", permanent: true },
+      { source: "/about", destination: "/company", permanent: true },
+      { source: "/careers", destination: "/company#team", permanent: true },
+      // The team now lives on the About page. Not permanent, in case it gets its own page again.
+      { source: "/team", destination: "/company#team", permanent: false },
+      { source: "/fr/team", destination: "/fr/company#team", permanent: false },
       { source: "/investment", destination: "/", permanent: true },
       { source: "/privacy-policy", destination: "/privacy", permanent: true },
+      // The software used to be one page per part; it's one page with sections
+      // now. Not permanent while the product menu is still settling.
+      ...[
+        ["/product/voice", "/product#ios-app"],
+        ["/product/offline", "/product#ios-app"],
+        ["/product/pasture", "/product#pasture"],
+        ["/product/web", "/product#web-app"],
+        ["/features", "/product#features"],
+      ].flatMap(([from, to]) => [
+        { source: from, destination: to, permanent: false },
+        { source: `/fr${from}`, destination: `/fr${to}`, permanent: false },
+      ]),
     ];
   },
   async headers() {

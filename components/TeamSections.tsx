@@ -1,71 +1,42 @@
-import type { Metadata } from "next";
 import Image from "next/image";
 import { COFOUNDERS, ADVISORS, type TeamMember, type TeamSlug } from "@/lib/team";
 import PersonCard from "@/components/PersonCard";
 import Reveal from "@/components/Reveal";
-import { getDictionary } from "@/lib/dictionaries";
-import { alternates, fmt, pageLocale, type PageProps } from "@/lib/i18n";
+import type { Dictionary } from "@/lib/dictionaries";
+import { fmt } from "@/lib/i18n";
 
-export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
-  const locale = await pageLocale(params);
-  const t = getDictionary(locale).team;
-  return {
-    title: t.metaTitle,
-    description: t.metaDescription,
-    alternates: alternates(locale, "/team"),
-  };
-}
-
-export default async function TeamPage({ params }: PageProps) {
-  const t = getDictionary(await pageLocale(params)).team;
+/**
+ * Who's behind Agrivanna: co-founders, advisory board and the team photo.
+ * Lives on the About page under #team (the old /team address redirects there).
+ */
+export default function TeamSections({ dict }: { dict: Dictionary }) {
+  const t = dict.team;
   const person = (m: TeamMember & { slug: TeamSlug }) => ({ ...m, ...t.people[m.slug] });
 
   return (
-    <>
-      {/* Header */}
-      <section className="relative overflow-hidden pt-40 pb-20">
-        <div className="absolute inset-0 grid-backdrop" aria-hidden="true" />
-        <div className="relative mx-auto max-w-6xl px-4">
-          <div className="grid gap-12 lg:grid-cols-12 lg:items-end">
-            <div className="lg:col-span-7">
-              <Reveal>
-                <p className="eyebrow">{t.eyebrow}</p>
-              </Reveal>
-              <Reveal delay={0.05}>
-                <h1 className="mt-6 max-w-4xl text-5xl font-medium tracking-tightest sm:text-7xl lg:text-8xl">
-                  {t.headLine1}
-                  <br />
-                  <span className="text-bone-300">{t.headLine2}</span>
-                  <br />
-                  <span className="text-lime-400">{t.headLine3}</span>
-                </h1>
-              </Reveal>
-              <Reveal delay={0.15}>
-                <p className="mt-10 max-w-xl text-bone-300">
-                  {t.intro}
-                </p>
-              </Reveal>
-            </div>
-            <div className="lg:col-span-5">
-              <Reveal delay={0.2}>
-                <div className="media relative aspect-[4/3]">
-                  <Image
-                    src="/story/founding-team-collar.jpg"
-                    alt={t.photoAlt}
-                    fill
-                    quality={95}
-                    className="object-cover"
-                    sizes="(min-width: 1024px) 480px, 100vw"
-                  />
-                </div>
-              </Reveal>
-            </div>
+    <div id="team" className="scroll-mt-24">
+      {/* Who we are */}
+      <section className="relative border-t border-white/5 pt-24">
+        <div className="mx-auto flex max-w-6xl flex-col gap-8 px-4 md:flex-row md:items-end md:justify-between">
+          <div>
+            <Reveal>
+              <p className="eyebrow">{t.eyebrow}</p>
+            </Reveal>
+            <Reveal delay={0.05}>
+              <h2 className="mt-6 text-4xl font-medium tracking-tighter text-bone-50 sm:text-5xl">
+                {t.headLine1} <span className="text-bone-300">{t.headLine2}</span>{" "}
+                <span className="text-lime-400">{t.headLine3}</span>
+              </h2>
+            </Reveal>
           </div>
+          <Reveal delay={0.1}>
+            <p className="max-w-sm text-base leading-relaxed text-bone-300">{t.intro}</p>
+          </Reveal>
         </div>
       </section>
 
-      {/* Co-founders */}
-      <section className="relative border-t border-white/5 py-24">
+      {/* Co-founders: no divider, it continues the intro above */}
+      <section className="relative pb-24 pt-16">
         <div className="mx-auto max-w-6xl px-4">
           <div className="mb-12 flex items-end justify-between">
             <div>
@@ -145,6 +116,7 @@ export default async function TeamPage({ params }: PageProps) {
           </Reveal>
         </div>
       </section>
-    </>
+
+    </div>
   );
 }

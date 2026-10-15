@@ -30,14 +30,22 @@ Open http://localhost:3000.
 
 | Route | Purpose |
 |---|---|
-| `/` | Hero with interactive `VariableProximity` letterform + the problem + pillars + partners marquee + pilot CTA |
-| `/solutions` | Three-part system (collar, drone base, PRS software) + impact stats + pricing card |
-| `/team` | Cofounders + advisory board with bios |
-| `/news` | Magazine grid of press/awards + vertical roadmap timeline |
+| `/` | Video hero (`components/home/HomeHero`, files in `public/video`), partners, product tabs, how it works, built with ranchers, your data |
+| `/product` | The software on one page: web app, iOS app, pasture, herd and grazing management, then all features. The old `/product/voice`, `/offline`, `/pasture`, `/web` and `/features` redirect to its sections |
+| `/product/virtual-fencing` | Virtual fencing hardware — in R&D, not for sale; 3D herd hero (`components/herd`) and the scanned-cow credit in its footer; collar photos carry an R&D label |
+| `/pricing` | Custom pricing per ranch, first month free, "software only for now", FAQ |
+| `/news` | Press and awards |
+| `/company` | About us: team (co-founders, advisors), our story timeline, partners. `/team` redirects to `/company#team` |
+| `/contact` | Trial form and email |
+| `/faq` | Help & FAQ |
+
+The top menu (Product · Pricing · News · Company · Help & FAQ) and the footer columns are built from one list, `lib/site-nav.ts`.
+
+**To add a news item:** add it to `lib/news.ts` (link, photo, tag) and its title, date and summary to both dictionaries under `news.items`.
 
 ## Languages (English and French)
 
-English is at the normal URLs (`/team`). French is the same page under `/fr` (`/fr/team`). The EN | FR switch sits top right; on phones it is inside the menu.
+English is at the normal URLs (`/pricing`). French is the same page under `/fr` (`/fr/pricing`). The EN | FR switch sits top right; on phones it is inside the menu.
 
 - **To change any wording:** edit `lib/dictionaries/en.ts`, then the same line in `lib/dictionaries/fr.ts`. If French is missing a line, `npm run build` fails and names it.
 - **Legal pages** are whole documents per language: `content/legal/<page>.en.tsx` and `<page>.fr.tsx`.

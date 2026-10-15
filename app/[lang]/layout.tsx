@@ -8,6 +8,7 @@ import ConsentGatedAnalytics from "@/components/ConsentGatedAnalytics";
 import LocaleProvider from "@/components/LocaleProvider";
 import { getDictionary } from "@/lib/dictionaries";
 import { HTML_LANG, LOCALES, OG_LOCALE, alternates, isLocale } from "@/lib/i18n";
+import { REVEAL_SCRIPT } from "@/lib/reveal-script";
 import { notFound } from "next/navigation";
 import "../globals.css";
 
@@ -66,7 +67,11 @@ export default async function RootLayout({
   const t = getDictionary(lang);
 
   return (
-    <html lang={HTML_LANG[lang]} className={`${geist.variable} ${geistMono.variable}`}>
+    <html lang={HTML_LANG[lang]} className={`${geist.variable} ${geistMono.variable}`} suppressHydrationWarning>
+      <head>
+        {/* Runs before the page's JavaScript so scroll-in text never waits on it */}
+        <script dangerouslySetInnerHTML={{ __html: REVEAL_SCRIPT }} />
+      </head>
       <body className="bg-ink-950 font-sans text-bone-50 antialiased">
         <LocaleProvider locale={lang} dictionary={t}>
           <Navbar />

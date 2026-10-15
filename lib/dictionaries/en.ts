@@ -9,7 +9,7 @@ const en = {
   meta: {
     title: "Agrivanna — Ranch records you can speak instead of type",
     description:
-      "Speak your herd and pasture records with gloves on. Works with no signal, syncs when you're back in range, and builds rotational grazing plans from satellite imagery. $50/month.",
+      "Speak your herd and pasture records with gloves on. Works with no signal, syncs when you're back in range, and builds rotational grazing plans from satellite imagery.",
     ogTitle: "Agrivanna — Run the herd, not the software",
     ogDescription:
       "Voice-first ranch records that work offline, plus pasture mapping and rotational grazing plans.",
@@ -20,7 +20,6 @@ const en = {
     pricing: "Pricing",
     team: "Team",
     news: "News",
-    freeTrial: "Free trial",
     homeAria: "Agrivanna home",
     openMenu: "Open menu",
     closeMenu: "Close menu",
@@ -32,7 +31,6 @@ const en = {
   },
 
   trialButton: "Start a free trial",
-  bookCall: "Book a call",
 
   footer: {
     eyebrow: "Start today",
@@ -61,6 +59,7 @@ const en = {
     },
     copyright: "© {year} Agrivanna Inc. Calgary, Alberta.",
     support: "With the support of Alberta Innovates",
+    scanCredit: "3D cow scan: Center for Digital Humanities, University of Arizona",
   },
 
   cookie: {
@@ -77,7 +76,7 @@ const en = {
     eyebrow: "Free trial",
     title: "Tell us about the outfit.",
     intro:
-      "We set the ranch up by hand so it works on day one. Takes a minute — these are the same questions we'd ask on a call.",
+      "Your first month is free. We set the ranch up by hand so it works on day one. Takes a minute — these are the same questions we'd ask on a call.",
     close: "Close",
     name: "Your name",
     email: "Email",
@@ -101,93 +100,21 @@ const en = {
   },
 
   home: {
-    eyebrow: "Ranch records · Calgary, AB",
     heroPhotoAlt:
       "A rancher holding a phone showing Agrivanna's weigh screen beside a scale head indicator",
     heroLine1: "Run the herd.",
     heroLine2: "Not the",
     heroLine3: "software.",
     heroBody:
-      "Muddy hands, no signal, and no week to spare learning a program. So don't learn one — talk to it. Agrivanna keeps the herd and pasture records you never get around to writing down.",
+      "Muddy hands, no signal? Just talk. Agrivanna writes the herd and pasture records for you.",
     seeHow: "See how it works",
+    heroVideoLabel: "A rancher works cattle through the chute while the Agrivanna app records each animal's tag and weight",
+    heroVideoPlay: "Play the video",
     testedOn: "Built and tested on working Alberta ranches",
 
-    problem: {
-      eyebrow: "The real problem",
-      headLine1: "The software was never",
-      headLine2: "the hard part.",
-      body:
-        "Getting anything into it is. Every ranch program in the last twenty years has failed at the same place — the moment a person with dirty hands has to stop working and type.",
-      friction: [
-        {
-          head: "Your hands are already full.",
-          body:
-            "Calving, gloves, blood, colostrum, a tag in your teeth. Nobody is tapping through six screens at three in the morning to log a heifer.",
-        },
-        {
-          head: "The notebook is the system.",
-          body:
-            "Tags on a scrap of paper, weights on the shop whiteboard, the rest carried in your head until the accountant asks in March.",
-        },
-        {
-          head: "Nobody has a week to learn a program.",
-          body:
-            "Most ranch software wants more fields than you have answers for, and it wants them typed. So it gets opened once and never again.",
-        },
-      ],
-      punchline: "So don't type. Talk.",
-    },
 
-    recording: {
-      eyebrow: "Recording",
-      headLine1: "Say it out loud.",
-      headLine2: "It's written down.",
-      body:
-        "Talk through the run the way you'd tell your neighbour over the fence. Agrivanna pulls the tags, weights and treatments out of what you said and writes them into your records against the right animal.",
-      bullets: [
-        "Speak in your own words. No forms, no dropdowns, nothing to learn.",
-        "Your wand and scale head send tags and weights in without you keying a number.",
-        "Already keeping records somewhere? Send them over and we'll load the ranch for you.",
-      ],
-      /** Shown only where the site language differs from what the app listens in. */
-      appLanguageNote: "",
-      /** The worked example shown transcribing on the phone. The confirm queue
-          below shows the records Agrivanna pulls out of this exact note. */
-      dictation:
-        "Cow 418, the black baldy heifer. Calved around five this morning in the north pasture. Bull calf, no help needed, up and sucking already. Gave him yellow tag 418 and a shot of vitamin E and selenium. Guessing he's about 85 pounds. She's a good mom, a bit protective.",
-      dictationSr: "The Agrivanna voice note screen transcribing as a rancher speaks:",
-      confirmEyebrow: "Then confirm",
-      confirmLine1: "One tap and it's",
-      confirmLine2: "in the book.",
-      confirmBody:
-        "Everything you said out there comes back as plain rows — the calving, the steers you moved, the cow you treated, where you dropped bales, where the salt went. Check them or throw them out. Nothing touches your records until you say yes, so a misheard tag never becomes a wrong record.",
-    },
 
-    confirmQueue: {
-      title: "Ready to confirm",
-      count: "5 records",
-      footer: "Tap the check and it's in the book. Nothing is written to your records until you say so.",
-      rows: [
-        { date: "Sep 11", action: "Calving", subject: "Cow 418", detail: "Bull calf, unassisted, north pasture" },
-        { date: "Sep 11", action: "Pasture move", subject: "Yearling steers · 88 head", detail: "North Meadow → South" },
-        { date: "Sep 10", action: "Treatment", subject: "Blue 61", detail: "Pinkeye, 8 cc, withdrawal logged" },
-        { date: "Sep 10", action: "Bales out", subject: "12 round bales", detail: "Creek pasture, west gate" },
-        { date: "Sep 09", action: "Salt & mineral", subject: "Block set out", detail: "South pasture, by the dugout" },
-      ],
-    },
 
-    offline: {
-      eyebrow: "Offline first",
-      headLine1: "No signal.",
-      headLine2: "Nothing lost.",
-      body:
-        "The phone is the source of truth, not a server in a city. Coming in and out of coverage is not something you should have to think about, and a dead zone should never cost you a day's work.",
-      steps: [
-        { step: "01", head: "You talk", body: "Out at the chute, in the field, wherever you are." },
-        { step: "02", head: "The phone keeps it", body: "Written to the device the second you stop. Bars or no bars." },
-        { step: "03", head: "It uploads itself", body: "Next time you hit signal or the yard Wi-Fi. Nothing for you to do." },
-      ],
-    },
 
     pasture: {
       eyebrow: "Pasture & grazing",
@@ -213,14 +140,6 @@ const en = {
         "We're not going to sell you a collar that isn't ready. Virtual fencing is in research and development. The pastures you map and the rotations you build now are the ones it will run on, so nothing you do today gets thrown away.",
     },
 
-    house: {
-      eyebrow: "Back at the house",
-      headLine1: "The same records,",
-      headLine2: "on the big screen.",
-      body:
-        "Everything you said at the chute is on the laptop by the time you come in. Sort herds, check weights, see which cows are earning their feed, and pull an export when the vet or the accountant asks.",
-      imageAlt: "Agrivanna herd list and animal records open in a browser",
-    },
 
     payoff: {
       eyebrow: "Why it pays",
@@ -253,32 +172,35 @@ const en = {
 
     pricing: {
       eyebrow: "Pricing",
-      heading: "One price. No surprises.",
+      heading: "Priced to your operation.",
       intro:
-        "No head count tiers, no sales call before you can see a number, no annual contract to get started.",
-      planName: "Software access",
-      price: "$50",
-      perMonth: "/ month",
+        "Every ranch runs differently, so each one gets its own price. Your first month is free while you find out if it keeps up.",
+      planName: "Agrivanna software",
+      price: "Custom",
+      priceNote: "for your ranch",
       includes: [
-        "Unlimited head, unlimited pastures",
         "Voice records, chute sessions, wand and scale support",
         "Works offline on every device, syncs itself",
         "Pasture mapping, readiness and rotation planning",
+        "Records on the web for the family, hired help and your vet",
+        "We set the ranch up and load your records for you",
         "Your data exports whenever you ask for it",
       ],
-      setupNote: "Email us and we'll get you set up. Self-serve signup is on the way.",
-      largeName: "Large operations",
-      largePrice: "Let's talk",
-      largeBody:
-        "Community pastures, grazing associations, leased land under several owners, or crews who need onboarding at the chute. Tell us how the operation is set up and we'll price it properly.",
+      setupNote: "First month free. No credit card to start.",
+      howTitle: "How pricing works",
+      howSteps: [
+        { step: "01", head: "Tell us about the ranch", body: "Fill in the free trial form. It takes a minute." },
+        { step: "02", head: "Talk it through", body: "On a short call we set the ranch up and agree on a price that fits your herd and land." },
+        { step: "03", head: "First month free", body: "Use everything for a month. Your plan only starts after that." },
+      ],
     },
 
     features: {
       eyebrow: "What you get",
       headLine1: "Everything in the platform,",
-      headLine2: "for the one price.",
+      headLine2: "included for every ranch.",
       body:
-        "No modules to add on, no per-head charges, no upsell when your herd grows. Parts of this are still rolling out — ask us what's live on your ranch today and we'll tell you straight.",
+        "No add-on modules: every ranch gets the whole platform. Parts of this are still rolling out — ask us what's live on your ranch today and we'll tell you straight.",
       imageAlt: "Picking the jobs a chute session covers in the Agrivanna app",
       /** Platform scope, grouped the way a rancher would ask about it rather
           than the way it's built. */
@@ -408,21 +330,25 @@ const en = {
   },
 
   news: {
-    metaTitle: "News & Timeline — Agrivanna",
+    metaTitle: "News — Agrivanna",
     metaDescription:
-      "Press, awards, and accelerator news from Agrivanna — plus our story from founding to first ranch pilots.",
+      "Press, awards, and accelerator news from Agrivanna.",
     eyebrow: "Press · Awards · Milestones",
     headLine1: "What we're",
     headLine2: "building in public.",
     intro:
-      "Every accelerator, award, and article the company has picked up along the way, plus the story from founding to first ranch pilots.",
-    photoAlt: "Agrivanna's mobile drone base station in the workshop",
+      "Every accelerator, award, and article the company has picked up along the way.",
+    photoAlt: "A rancher holding a phone showing Agrivanna's weigh screen beside a scale head indicator",
     latestEyebrow: "Latest",
     latestHeading: "In the news.",
     storyCount: "{count} stories",
     readMore: "Read more",
     watchEyebrow: "Watch",
     watchHeading: "Agrivanna, on video.",
+    videos: {
+      platform: "Platform Calgary · Agrivanna, 2026 Top 10 Finalist",
+      ucalgary: "University of Calgary · How Agrivanna started",
+    },
     storyEyebrow: "Our story so far",
     storyHeading: "From Calgary to the herd — and beyond.",
     storyIntro: "Every milestone since October 2024, plus what we're building toward next.",
@@ -433,6 +359,27 @@ const en = {
       Competition: "Competition",
     },
     items: {
+      "calgary-tech": {
+        title: "Agrivanna brings voice-powered records to the ranch",
+        source: "Calgary.Tech",
+        date: "September 2026",
+        summary:
+          "Calgary.Tech profiled how ranchers speak notes on animals, treatments and herd moves, check them before they're saved, and keep working with no cell signal, alongside pasture mapping and rotation planning.",
+      },
+      "platform-top-10": {
+        title: "Named one of Calgary's Top 10 early-stage startups",
+        source: "Platform Calgary",
+        date: "September 2026",
+        summary:
+          "Platform Calgary named Agrivanna to the Top 10 of its 2026 Calgary Launch Party, which picks the city's most promising early-stage startups. The Launch Party takes place November 5, during Calgary Innovation Week.",
+      },
+      "rural-roots": {
+        title: "Making virtual fencing more accessible to ranchers",
+        source: "Rural Roots Canada · Field to Future",
+        date: "August 2026",
+        summary:
+          "Rural Roots Canada looked at the virtual fencing Agrivanna is developing to make rotational grazing easier, including a lower-cost setup built around a handheld base station. Virtual fencing is still in research and development.",
+      },
       spring: {
         title: "Selected for Spring's Elevate Round Ready program",
         source: "Spring",
@@ -447,12 +394,19 @@ const en = {
         summary:
           "Agrivanna won $10,000 for 1st place in the Launchpad Stream at the University of Calgary's Start Something Summit — the latest in a run of Hunter Hub pitch wins.",
       },
-      arena: {
-        title: "Agrivanna takes 1st at The Arena Pitch Competition",
-        source: "Arthur L. Irving Entrepreneurship Centre",
-        date: "March 2026",
+      "ucalgary-feature": {
+        title: "Student-built agtech startup helps ranchers manage cattle",
+        source: "University of Calgary News",
+        date: "June 2026",
         summary:
-          "Agrivanna placed first at the Arena Pitch Competition — named a top Canadian university startup and earning a national spotlight for grazing intelligence.",
+          "UCalgary News told the story of how Agrivanna's three co-founders met at the university, and why they set out to make ranch technology cheaper and more useful for Canadian producers.",
+      },
+      arena: {
+        title: "Agrivanna wins The Arena 2026 and its $10,000 grand prize",
+        source: "Saint Mary's University · The Arena",
+        date: "April 2026",
+        summary:
+          "COO Haden Harrison pitched Agrivanna to the top of The Arena, Saint Mary's University's national student pitch competition: a month-long, head-to-head bracket of more than 64 founders from 41 schools across Canada.",
       },
       liftoff: {
         title: "2nd place at Hunter Hub Liftoff",
@@ -505,7 +459,7 @@ const en = {
       "plug-and-play": { date: "Nov 2025", title: "Plug and Play", body: "Accepted into the Plug and Play Kananaskis accelerator." },
       aurrin: { date: "Feb 2026", title: "Aurrin Ventures", body: "Won Most Investible Company at the Aurrin pitch competition." },
       liftoff: { date: "Mar 2026", title: "Hunter Hub Liftoff", body: "Second place at UCalgary's flagship startup competition." },
-      arena: { date: "Mar 2026", title: "The Arena · 1st place", body: "Top Canadian university startup at The Arena pitch competition." },
+      arena: { date: "Apr 2026", title: "The Arena · 1st place", body: "Top Canadian university startup at The Arena pitch competition." },
       pilots: { date: "Summer 2026", title: "First ranch pilots", body: "First real-world deployments at partner ranches in Alberta." },
       refinement: { date: "Late 2026", title: "Product refinement", body: "Iterate on hardware and software from pilot data." },
       "western-canada": { date: "2027", title: "Western Canada", body: "Expand pilots and commercial deployments across the prairies." },
@@ -513,10 +467,10 @@ const en = {
   },
 
   softwareLeads: {
-    metaTitle: "Get started — Agrivanna",
+    metaTitle: "Free trial — Agrivanna",
     metaDescription:
       "Tell us about your operation and get set up with Agrivanna grazing intelligence software.",
-    eyebrow: "Get started",
+    eyebrow: "Free trial",
     headLine1: "Put Agrivanna",
     headLine2: "on your ranch.",
     intro:
@@ -534,6 +488,241 @@ const en = {
     eyebrow: "Legal",
     /** Shown above translated legal text. Empty in English. */
     translationNote: "",
+  },
+
+  /** Menus and pages added by the site restructure (product, pricing, company…). */
+  site: {
+    menu: {
+      product: "Product",
+      resources: "Resources",
+      company: "Company",
+      pricing: "Pricing",
+      news: "News",
+      software: "Software",
+      hardware: "Hardware",
+      hardwareCard: {
+        title: "Virtual fencing",
+        body: "Fences without wire, built on the pastures you map today. In research and development, not for sale yet.",
+        link: "What we're building",
+      },
+      rnd: "R&D",
+      items: {
+        webApp: { label: "Web app", desc: "Your whole ranch on the big screen." },
+        iosApp: { label: "iOS app", desc: "Talk at the chute, even with no signal." },
+        pasture: { label: "Pasture management", desc: "Pastures mapped, readiness from satellite." },
+        herd: { label: "Herd management", desc: "Every animal, from birth to sale." },
+        grazing: { label: "Grazing management", desc: "Plan rotations, see where they grazed." },
+        fencing: { label: "Virtual fencing", desc: "Fences without wire. In research and development." },
+        features: { label: "All features", desc: "Voice records, offline and the rest, included." },
+        news: { label: "News", desc: "Press, awards and accelerators." },
+        faq: { label: "Help & FAQ", desc: "Straight answers before you start." },
+        about: { label: "About us", desc: "Our story so far, and who backs us." },
+        team: { label: "Team", desc: "The people building Agrivanna." },
+        partners: { label: "Partners", desc: "Research, funding and equipment partners." },
+        contact: { label: "Contact", desc: "Start a free trial or email the team." },
+      },
+    },
+
+    footerResources: "Resources",
+    pricingScope: {
+      title: "Software only, for now",
+      body: "Today we sell the Agrivanna software. Virtual fencing hardware is in research and development and isn't for sale yet.",
+      link: "See what we're building",
+    },
+    rndBadge: "R&D prototype",
+    fenceImageAlt: "A red cow wearing an Agrivanna virtual fencing collar prototype",
+    learnMore: "Learn more",
+
+    home: {
+      productsEyebrow: "The platform",
+      productsLine1: "One app,",
+      productsLine2: "from the chute to the kitchen table.",
+      howEyebrow: "How it works",
+      howLine1: "Say it. Check it.",
+      howLine2: "Decide from it.",
+      howSteps: [
+        { step: "01", head: "Say it", body: "Talk through the run at the chute or in the field. No signal needed." },
+        { step: "02", head: "Check it", body: "Each record comes back as a plain row. One tap keeps it, nothing is saved without you." },
+        { step: "03", head: "Use it", body: "Herd, weights and pastures on the phone and the laptop, ready to decide from." },
+      ],
+      pricingEyebrow: "Pricing",
+      pricingLine1: "Priced to your ranch.",
+      pricingLine2: "First month free.",
+      pricingBody: "The Agrivanna software, every feature, for every ranch. Tell us about the operation and we'll quote a price that fits it.",
+      showcasePause: "Pause the tour",
+      showcasePlay: "Play the tour",
+      showcase: {
+        voice: { label: "Voice records", head: "Say it at the chute.", body: "Talk through the run the way you'd tell your neighbour. Agrivanna writes the tags, weights and treatments into the right animal's record, and nothing is saved until you confirm it." },
+        pasture: { label: "Pasture & grazing", head: "Know which pasture is ready.", body: "Map your pastures, see from satellite imagery which ones have rested enough, and move herds through a rotation without redrawing anything." },
+        web: { label: "Records on the web", head: "The same records, on the big screen.", body: "Everything said at the chute is on the laptop by the time you come in. Sort herds, check weights, and export for the vet or the accountant." },
+        fencing: { label: "Virtual fencing", head: "Fences without wire.", body: "Virtual boundaries that turn cattle back, built on the pastures you map today. In research and development, not for sale yet." },
+      },
+      dataEyebrow: "Your data",
+      dataLine1: "Your records stay",
+      dataLine2: "on your side of the fence.",
+      dataPoints: [
+        { head: "Stored in Canada", body: "Our servers run on Google Cloud in Montréal." },
+        { head: "Never sold", body: "We don't sell your information or use it for advertising." },
+        { head: "Yours to take", body: "Export your records whenever you ask, in a format other programs can read." },
+        { head: "Encrypted on the way", body: "Records travel between the app and our servers over encrypted connections." },
+      ],
+      dataLink: "Read the privacy policy",
+    },
+
+    pages: {
+      software: {
+        metaTitle: "Software — Agrivanna",
+        metaDescription: "The Agrivanna web app and iOS app: herd, pasture and grazing management for cow-calf ranches, with voice records that work with no signal.",
+        eyebrow: "Product · Software",
+        headLine1: "One app,",
+        headLine2: "for the herd and the grass.",
+        intro: "Talk to it on your phone at the chute, plan grazing on the map, and pick it all up on the laptop back at the house. Every part is included for every ranch.",
+        jumpTitle: "On this page",
+        sections: {
+          webApp: {
+            head1: "Your whole ranch,",
+            head2: "on the big screen.",
+            body: "Everything said at the chute is on the laptop by the time you come in. The dashboard shows head counts, herds, pastures under graze and the weather at a glance.",
+            bullets: [
+              "See where every herd is, how long it's been there, and which moves are due.",
+              "Sort herds, check weights, and see which cows are earning their feed.",
+              "Export your records whenever the vet or the accountant asks.",
+              "Give family, hired help and your vet their own access, with permissions you set.",
+            ],
+            imageAlt: "The Agrivanna dashboard on a laptop: head count, herds, weather and pasture status",
+          },
+          iosApp: {
+            head1: "Talk to it at the chute.",
+            head2: "Even with no signal.",
+            body: "Tell it what happened the way you'd tell your neighbour over the fence. Agrivanna pulls out the tags, weights and treatments and writes them against the right animal.",
+            bullets: [
+              "Speak in your own words. No forms, no dropdowns, nothing to learn.",
+              "Each record comes back as a plain row, and nothing is saved until you confirm it.",
+              "No signal needed. Records stay on the phone and upload themselves when you're back in range.",
+              "Your wand and scale head send tags and weights in over Bluetooth.",
+            ],
+            imageAlt: "The Agrivanna iPhone app listening for a voice note",
+          },
+          pasture: {
+            head1: "Know which pasture",
+            head2: "is ready.",
+            body: "Get your pastures in however suits you: draw them on the map, drive them in the truck, walk the fence line, or import the boundaries you already have. Acres come out the other end either way.",
+            bullets: [
+              "Satellite imagery shows which pastures have had enough rest, so it isn't a guess.",
+              "Every pasture marked ready, watch or rest, at a glance.",
+              "See how many head are on each pasture, right on the map.",
+              "Your local weather and forecast, pulled in automatically.",
+            ],
+            imageAlt: "Pastures mapped over satellite imagery in the Agrivanna app, with the head count on each",
+          },
+          herd: {
+            head1: "Every animal,",
+            head2: "from birth to sale.",
+            body: "Each animal gets one history: calving, treatments, weights and moves, recorded as you work instead of typed up later.",
+            bullets: [
+              "Inventory counts that keep up as animals move, calve or get culled.",
+              "Breeding and calving: AI records, pregnancy checks and the calving book.",
+              "Treatments with withdrawal times, so you know who can't ship yet.",
+              "RFID tags scanned with Bluetooth stick readers, and body condition scored at the chute.",
+            ],
+            imageAlt: "Agrivanna herd list and animal records open in a browser",
+          },
+          grazing: {
+            head1: "Plan the rotation.",
+            head2: "See where they grazed.",
+            body: "Build a rotation and move herds through it without redrawing anything. Agrivanna keeps count of the days each herd has been on a pasture and flags when a move is due.",
+            bullets: [
+              "A grazing plan built from carrying capacity and stock density.",
+              "Utilization heat maps show where they actually grazed, not where you sent them.",
+              "Days on pasture and moves due, for every herd.",
+              "The pastures and rotations you set up now are the ones virtual fencing will run on.",
+            ],
+            imageAlt: "Grazing map in the Agrivanna app: paddocks shaded by vegetation index, with a herd's days on pasture and a Move button",
+          },
+        },
+      },
+      fencing: {
+        metaTitle: "Virtual fencing (in R&D) — Agrivanna",
+        metaDescription: "Agrivanna is building virtual fencing: boundaries that turn cattle back without posts or wire, on the pastures ranchers already map. In research and development, not for sale yet.",
+        eyebrow: "Hardware · Virtual fencing · In R&D",
+        heroLine1: "Fence the land.",
+        heroLine2: "Not with",
+        heroLine3: "wire.",
+        heroBody: "Virtual boundaries that turn cattle back without posts or wire. We're building it now, on the pastures and rotations ranchers already map in Agrivanna.",
+        howLink: "How it works",
+        ideaEyebrow: "The idea",
+        ideaLine1: "Draw the line.",
+        ideaLine2: "The herd learns it.",
+        ideaSteps: [
+          { step: "01", head: "Draw it on the map", body: "Mark the boundary in Agrivanna, the same way you map pastures today." },
+          { step: "02", head: "A cue near the line", body: "Cattle that walk up to the boundary get a gentle cue to turn back." },
+          { step: "03", head: "Move it when you rotate", body: "Shift the line to the next paddock without building anything." },
+        ],
+        whyEyebrow: "Why it matters",
+        whyLine1: "Put cattle where",
+        whyLine2: "fencing never paid.",
+        statusEyebrow: "Where it stands",
+        statusLine1: "In research",
+        statusLine2: "and development.",
+        statusBody: "We're testing prototypes with partner ranches in Alberta. Nothing here is for sale yet, and we'll say so plainly until it is.",
+        photoPilots: "Prototype collars at a partner ranch during pilot testing",
+        photoCow: "A cow wearing an Agrivanna virtual fencing prototype",
+        photoTeam: "The Agrivanna founders with an early collar prototype",
+        softwareEyebrow: "Start with the software",
+        softwareLine1: "The pastures you map now",
+        softwareLine2: "are the ones it will run on.",
+        softwareBody: "Map your pastures and plan rotations in Agrivanna today. When virtual fencing is ready, it builds on what you've already drawn.",
+        softwareLink: "Pasture management",
+      },
+      pricing: {
+        metaTitle: "Pricing — Agrivanna",
+        metaDescription: "Agrivanna is priced for each ranch. Tell us about your operation, get a quote on a short call, and use everything free for the first month.",
+        eyebrow: "Pricing",
+        headLine1: "Priced to",
+        headLine2: "your operation.",
+        intro: "No price list to decode. We learn how your ranch runs, quote a price that fits it, and give you the first month free.",
+        faqEyebrow: "Questions",
+        faqHeading: "Before you sign up.",
+      },
+      company: {
+        metaTitle: "About us — Agrivanna",
+        metaDescription: "Agrivanna is a Calgary agtech company building ranch records that work at the chute, with no signal.",
+        eyebrow: "About us",
+        headLine1: "Built in Calgary.",
+        headLine2: "Tested on Alberta ranches.",
+        intro: "Agrivanna was founded in October 2024 to build ranch records people actually keep: spoken at the chute, saved with no signal, and useful back at the house.",
+        photoAlt: "The Agrivanna founders with an early collar prototype",
+        teamLink: "Meet the team",
+      },
+      contact: {
+        metaTitle: "Contact — Agrivanna",
+        metaDescription: "Start a free trial or email the Agrivanna team.",
+        emailTitle: "Email us",
+        emailBody: "We read every message ourselves.",
+      },
+      faq: {
+        metaTitle: "Help & FAQ — Agrivanna",
+        metaDescription: "Straight answers about Agrivanna: price, contracts, signal, equipment, your data and virtual fencing.",
+        eyebrow: "Help & FAQ",
+        headLine1: "Straight answers.",
+        headLine2: "No sales pitch.",
+        intro: "The questions ranchers ask us most. If yours isn't here, email us and a person will answer.",
+        stillTitle: "Still have a question?",
+        stillBody: "Email {email} or start a free trial.",
+      },
+    },
+
+    /** Shown on /faq; the ones marked pricing are also on /pricing. */
+    faq: [
+      { pricing: true, q: "How much does it cost?", a: "Each ranch gets its own price, based on the operation and what you need. Fill in the free trial form and we'll quote it on a short call. The first month is free." },
+      { pricing: true, q: "Is there a contract?", a: "Terms are agreed with you on a call, before anything is charged." },
+      { pricing: true, q: "How do I get started?", a: "Onboarding is straightforward, and you don't start over. Fill in the free trial form and send us the records you already have, whether that's a notebook, spreadsheets or another program. We load the whole ranch for you and set it up ourselves, with pastures mapped, herds in and your wand paired, and we get in touch within a day." },
+      { pricing: false, q: "Do I need cell signal?", a: "No. Everything is saved on the phone first and uploads itself the next time you hit signal or the yard Wi-Fi." },
+      { pricing: false, q: "What equipment does it work with?", a: "Bluetooth stick readers and indicator scale heads. They send tags and weights in without you keying a number." },
+      { pricing: false, q: "Can I get my data out?", a: "Yes, whenever you ask, in a format other programs can read." },
+      { pricing: false, q: "Can my family, hired help or vet use it?", a: "Yes. Each person gets their own access, with permissions you set." },
+      { pricing: true, q: "Can I buy virtual fencing hardware?", a: "Not yet. Today we sell the Agrivanna software only. Virtual fencing is in research and development, and the pastures you map and rotations you build now are the ones it will run on." },
+    ],
   },
 
   notFound: {
