@@ -17,44 +17,89 @@
  *
  * Encodes (public/video): AV1 and HEVC at 1080p for wider screens, HEVC and
  * H.264 at 720p for phones; the 720p H.264 is also the catch-all fallback.
- * Muted, looping and inline so phones autoplay it; paused while off screen.
+ * Muted, looping, inline and `autoplay`, so the browser starts it by itself
+ * without waiting for this page's JavaScript; paused while off screen.
+ *
+ * Phones and tablets get H.264 only: some Android devices say they play HEVC
+ * or AV1 in Chrome but decode it badly or not at all, and a decode error never
+ * moves on to the next <source>. AV1/HEVC go to mouse-and-keyboard computers.
+ * As a safety net, if the video errors or still has no picture a few seconds
+ * after it's on screen, it switches to the H.264 file that plays everywhere.
+ * Where autoplay is blocked (iPhone Low Power Mode, data saver) it starts at
+ * the visitor's first touch instead. There are no visible controls.
  */
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import Link from "next/link";
-import { Play } from "lucide-react";
-import { useReducedMotion } from "motion/react";
 import Reveal from "@/components/Reveal";
 import TrialButton from "@/components/TrialButton";
 import VariableProximity from "@/components/VariableProximity";
 import { useI18n } from "@/components/LocaleProvider";
 
+/** Phones (the square video cut); must match the layout in globals.css (.hero-video-box). */
+const PHONE = "(max-width: 639px) and (max-aspect-ratio: 1124/1000), (max-width: 639px) and (max-height: 499px)";
+
 export default function HomeHero() {
   const section = useRef<HTMLElement>(null);
   const video = useRef<HTMLVideoElement>(null);
-  const reduce = useReducedMotion();
-  // Shown if the browser refuses to autoplay (iPhone Low Power Mode, data saver)
-  const [blocked, setBlocked] = useState(false);
   const { t } = useI18n();
   const home = t.home;
 
-  // Play only while on screen; with reduced motion it never starts on its own
   useEffect(() => {
     const v = video.current;
-    if (!v || reduce) return;
+    if (!v) return;
+    let rescued = false;
+    let onScreen = false;
+    let timer: ReturnType<typeof setTimeout> | undefined;
+
+    // Phones that block autoplay (Low Power Mode, data saver) still allow play
+    // after the visitor's first touch, so try again on that
+    const GESTURES = ["touchstart", "pointerdown", "keydown"] as const;
+    const onGesture = () => {
+      GESTURES.forEach((g) => window.removeEventListener(g, onGesture));
+      if (onScreen) v.play().catch(() => {});
+    };
+    const tryPlay = () =>
+      v.play().catch(() => GESTURES.forEach((g) => window.addEventListener(g, onGesture, { once: true, passive: true })));
+
+    // Swap, once, to an H.264 file every device can play (a different one from
+    // whatever just failed) and try again
+    const rescue = () => {
+      if (rescued) return;
+      rescued = true;
+      v.src = v.currentSrc.endsWith("/hero-1080.mp4") ? "/video/hero-phone.mp4" : "/video/hero-1080.mp4";
+      v.load();
+      tryPlay();
+    };
+    const sources = Array.from(v.querySelectorAll("source"));
+    v.addEventListener("error", rescue);
+    // An error on the last <source> means none of them worked
+    sources[sources.length - 1]?.addEventListener("error", rescue);
+
     const io = new IntersectionObserver(
       ([e]) => {
-        if (e.isIntersecting) v.play().then(() => setBlocked(false), () => setBlocked(true));
-        else v.pause();
+        clearTimeout(timer);
+        onScreen = e.isIntersecting;
+        if (!onScreen) {
+          v.pause();
+          return;
+        }
+        tryPlay();
+        // On screen but still no picture after 4 s: the file isn't decoding here
+        timer = setTimeout(() => {
+          if (v.readyState < 2) rescue();
+        }, 4000);
       },
       { threshold: 0.01 },
     );
     io.observe(v);
-    return () => io.disconnect();
-  }, [reduce]);
-
-  const start = () => {
-    video.current?.play().then(() => setBlocked(false), () => setBlocked(true));
-  };
+    return () => {
+      clearTimeout(timer);
+      io.disconnect();
+      GESTURES.forEach((g) => window.removeEventListener(g, onGesture));
+      v.removeEventListener("error", rescue);
+      sources[sources.length - 1]?.removeEventListener("error", rescue);
+    };
+  }, []);
 
   return (
     <section
@@ -67,7 +112,7 @@ export default function HomeHero() {
       <div className="hero-video-box relative wide:absolute wide:inset-0">
         {/* The still frame, shown while the video loads; matches whichever cut plays */}
         <picture>
-          <source media="(max-width: 639px) and (max-aspect-ratio: 1124/1000), (max-width: 639px) and (max-height: 499px)" srcSet="/video/hero-phone-poster.jpg" />
+          <source media={PHONE} srcSet="/video/hero-phone-poster.jpg" />
           <img
             src="/video/hero-poster.jpg"
             alt=""
@@ -78,19 +123,21 @@ export default function HomeHero() {
         <video
           ref={video}
           className="hero-video absolute inset-0 h-full w-full object-cover wide:object-left"
+          autoPlay
           muted
           loop
           playsInline
-          preload={reduce ? "none" : "auto"}
+          preload="auto"
           aria-label={home.heroVideoLabel}
         >
-          <source src="/video/hero-phone.hevc.mp4" type='video/mp4; codecs="hvc1"' media="(max-width: 639px) and (max-aspect-ratio: 1124/1000), (max-width: 639px) and (max-height: 499px)" />
-          <source src="/video/hero-phone.mp4" type="video/mp4" media="(max-width: 639px) and (max-aspect-ratio: 1124/1000), (max-width: 639px) and (max-height: 499px)" />
-          <source src="/video/hero-720.hevc.mp4" type='video/mp4; codecs="hvc1"' media="(max-width: 767px)" />
-          <source src="/video/hero-720.mp4" type="video/mp4" media="(max-width: 767px)" />
+          <source src="/video/hero-phone.mp4" type="video/mp4" media={PHONE} />
+          {/* Touchscreens (phones on their side, tablets) get H.264, which every
+              phone and tablet decodes in hardware; AV1 and HEVC only go to
+              mouse-and-keyboard computers */}
+          <source src="/video/hero-1080.mp4" type="video/mp4" media="(pointer: coarse)" />
           <source src="/video/hero-1080.av1.mp4" type='video/mp4; codecs="av01.0.08M.08"' />
           <source src="/video/hero-1080.hevc.mp4" type='video/mp4; codecs="hvc1"' />
-          <source src="/video/hero-720.mp4" type="video/mp4" />
+          <source src="/video/hero-1080.mp4" type="video/mp4" />
         </video>
         <div
           className="pointer-events-none absolute inset-0 wide:hidden"
@@ -147,16 +194,6 @@ export default function HomeHero() {
         </Reveal>
       </div>
 
-      {blocked && !reduce && (
-        <button
-          type="button"
-          onClick={start}
-          className="absolute bottom-6 right-6 flex h-12 w-12 items-center justify-center rounded-full bg-lime-400 text-ink-950 shadow-lg"
-          aria-label={home.heroVideoPlay}
-        >
-          <Play className="ml-0.5 h-5 w-5" fill="currentColor" />
-        </button>
-      )}
     </section>
   );
 }
