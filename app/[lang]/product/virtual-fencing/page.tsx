@@ -1,12 +1,11 @@
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowRight, ArrowUpRight } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import { ClosingCta } from "@/components/HomeSections";
 import HerdHero from "@/components/herd/HerdHero";
 import Reveal from "@/components/Reveal";
 import RndBadge from "@/components/RndBadge";
 import TrialButton from "@/components/TrialButton";
-import { DEMO_CALENDLY } from "@/lib/cta";
 import { getDictionary } from "@/lib/dictionaries";
 import { localizePath, pageLocale, type PageProps } from "@/lib/i18n";
 import { pageMetadata } from "@/lib/page-meta";
@@ -37,9 +36,7 @@ export default async function VirtualFencingPage({ params }: PageProps) {
         copy={{ eyebrow: p.eyebrow, line1: p.heroLine1, line2: p.heroLine2, line3: p.heroLine3, body: p.heroBody }}
         actions={
           <>
-            <Link href={DEMO_CALENDLY} target="_blank" rel="noopener noreferrer" className="btn btn-solid">
-              {p.pilots} <ArrowUpRight className="h-4 w-4" />
-            </Link>
+            <TrialButton source="virtual-fencing-hero" />
             <Link href="#idea" className="btn">
               {p.howLink}
             </Link>
@@ -157,7 +154,7 @@ export default async function VirtualFencingPage({ params }: PageProps) {
               <p className="text-base leading-relaxed text-ink-700">{p.softwareBody}</p>
               <div className="mt-6 flex flex-wrap gap-3">
                 <TrialButton source="virtual-fencing" />
-                <Link href={localizePath(locale, "/product/pasture")} className="btn">
+                <Link href={localizePath(locale, "/product#pasture")} className="btn">
                   {p.softwareLink} <ArrowRight className="h-4 w-4" />
                 </Link>
               </div>

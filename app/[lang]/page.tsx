@@ -3,7 +3,7 @@
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import PartnersMarquee from "@/components/PartnersMarquee";
-import HerdHero from "@/components/herd/HerdHero";
+import HomeHero from "@/components/home/HomeHero";
 import ProductShowcase from "@/components/home/ProductShowcase";
 import YourData from "@/components/home/YourData";
 import { BuiltWithSection, ClosingCta } from "@/components/HomeSections";
@@ -15,16 +15,16 @@ import { useI18n } from "@/components/LocaleProvider";
  * (agrivanna.com/#pricing and the like) still land on the right content.
  */
 const MOVED_ANCHORS: Record<string, string> = {
-  "#problem": "/product/voice",
-  "#recording": "/product/voice",
-  "#offline": "/product/offline",
-  "#pasture": "/product/pasture",
+  "#problem": "/product#ios-app",
+  "#recording": "/product#ios-app",
+  "#offline": "/product#ios-app",
+  "#pasture": "/product#pasture",
   "#pricing": "/pricing",
-  "#features": "/features",
+  "#features": "/product#features",
 };
 
 /**
- * The home page, laid out the way ElevenLabs does theirs: a living hero, who
+ * The home page, laid out the way ElevenLabs does theirs: a video hero, who
  * backs us, the products one tab at a time, how it works, who it's built with,
  * what happens to your data, and one closing ask. News and Pricing
  * have their own tabs, so they aren't repeated here.
@@ -40,7 +40,7 @@ export default function HomePage() {
 
   return (
     <>
-      <HerdHero />
+      <HomeHero />
       <PartnersMarquee />
       <ProductShowcase />
       <HowItWorks />

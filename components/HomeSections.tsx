@@ -1,379 +1,14 @@
 "use client";
 
 /**
- * The home page's sections, shared by the home page and the product pages so
+ * Sections shared by the home page and the inner pages, so
  * the copy lives in one place (dictionary key `home`).
  */
-import Link from "next/link";
 import Image from "next/image";
-import { ArrowUpRight, Check } from "lucide-react";
-import DictationPhone from "@/components/DictationPhone";
-import ConfirmQueue from "@/components/ConfirmQueue";
+import { Check } from "lucide-react";
 import Reveal from "@/components/Reveal";
-import RndBadge from "@/components/RndBadge";
 import TrialButton from "@/components/TrialButton";
-import { DEMO_CALENDLY } from "@/lib/cta";
 import { useI18n } from "@/components/LocaleProvider";
-
-/** The pain: why ranch software never gets used. */
-export function ProblemSection() {
-  const { t: dict } = useI18n();
-  const t = dict.home;
-  return (
-    <>
-    {/* ──────────────────────────── THE PAIN ──────────────────────────── */}
-    <section
-      id="problem"
-      className="relative overflow-hidden border-t border-white/5 py-28 sm:py-36"
-    >
-      <div className="mx-auto max-w-6xl px-4">
-        <div className="grid gap-16 lg:grid-cols-12">
-          <div className="lg:col-span-5">
-            <Reveal>
-              <p className="eyebrow">{t.problem.eyebrow}</p>
-            </Reveal>
-            <Reveal delay={0.05}>
-              <h2 className="mt-6 text-4xl font-medium tracking-tighter text-bone-50 sm:text-5xl lg:text-6xl">
-                {t.problem.headLine1}
-                <br />
-                <span className="text-bone-300">{t.problem.headLine2}</span>
-              </h2>
-            </Reveal>
-            <Reveal delay={0.15}>
-              <p className="mt-8 max-w-md text-base leading-relaxed text-bone-300">
-                {t.problem.body}
-              </p>
-            </Reveal>
-          </div>
-
-          <div className="lg:col-span-7">
-            <ul className="divide-y divide-white/5 border-y border-white/5">
-              {t.problem.friction.map((item, i) => (
-                <Reveal key={item.head} delay={0.1 + i * 0.08}>
-                  <li className="py-10">
-                    <h3 className="text-2xl font-medium tracking-tight text-bone-50 sm:text-3xl">
-                      {item.head}
-                    </h3>
-                    <p className="mt-4 max-w-xl text-base leading-relaxed text-bone-300">
-                      {item.body}
-                    </p>
-                  </li>
-                </Reveal>
-              ))}
-            </ul>
-            <Reveal delay={0.35}>
-              <p className="mt-10 text-2xl font-medium tracking-tight text-lime-400 sm:text-3xl">
-                {t.problem.punchline}
-              </p>
-            </Reveal>
-          </div>
-        </div>
-      </div>
-    </section>
-    </>
-  );
-}
-
-/** Dictation, then the confirm queue. */
-export function RecordingSection() {
-  const { locale, t: dict } = useI18n();
-  const t = dict.home;
-  return (
-    <>
-    {/* ────────────── RECORDING — dictation, then confirmation ────────────── */}
-    <section
-      id="recording"
-      className="section-light relative overflow-hidden border-t border-ink-950/10 py-28 sm:py-32"
-    >
-      <div className="mx-auto max-w-6xl px-4">
-        <div className="grid items-center gap-14 lg:grid-cols-12 lg:gap-16">
-          <div className="lg:col-span-5">
-            <Reveal>
-              <p className="eyebrow">{t.recording.eyebrow}</p>
-            </Reveal>
-            <Reveal delay={0.05}>
-              <h2 className="mt-6 text-4xl font-medium tracking-tighter text-ink-950 sm:text-5xl">
-                {t.recording.headLine1}
-                <br />
-                <span className="text-ink-700">{t.recording.headLine2}</span>
-              </h2>
-            </Reveal>
-            <Reveal delay={0.1}>
-              <p className="mt-6 text-base leading-relaxed text-ink-700">
-                {t.recording.body}
-              </p>
-            </Reveal>
-            <Reveal delay={0.15}>
-              <ul className="mt-8 space-y-4">
-                {t.recording.bullets.map((b) => (
-                  <li
-                    key={b}
-                    className="flex items-start gap-3 border-t border-ink-950/10 pt-4 text-base leading-relaxed text-ink-700"
-                  >
-                    <Check aria-hidden="true" className="mt-1 h-4 w-4 shrink-0 text-[#2F6A14]" />
-                    {b}
-                  </li>
-                ))}
-              </ul>
-            </Reveal>
-            {t.recording.appLanguageNote && (
-              <Reveal delay={0.2}>
-                <p className="mt-6 rounded-2xl border border-ink-950/10 bg-white px-5 py-4 text-sm leading-relaxed text-ink-700">
-                  {t.recording.appLanguageNote}
-                </p>
-              </Reveal>
-            )}
-          </div>
-
-          <div className="lg:col-span-6 lg:col-start-7">
-            <Reveal delay={0.15}>
-              <div className="flex justify-center lg:justify-start">
-                <DictationPhone
-                  text={t.recording.dictation}
-                  srLabel={t.recording.dictationSr}
-                  lang={locale === "en" ? undefined : "en"}
-                  className="max-w-[340px] drop-shadow-[0_30px_60px_rgba(20,22,26,0.22)] sm:max-w-[420px]"
-                />
-              </div>
-            </Reveal>
-          </div>
-        </div>
-
-        {/* What the spoken note becomes */}
-        <div className="mt-24 grid gap-12 lg:grid-cols-12 lg:items-center lg:gap-16">
-          <div className="lg:col-span-5">
-            <Reveal>
-              <p className="eyebrow">{t.recording.confirmEyebrow}</p>
-            </Reveal>
-            <Reveal delay={0.05}>
-              <h3 className="mt-6 text-3xl font-medium tracking-tighter text-ink-950 sm:text-4xl">
-                {t.recording.confirmLine1}
-                <br />
-                <span className="text-ink-700">{t.recording.confirmLine2}</span>
-              </h3>
-            </Reveal>
-            <Reveal delay={0.1}>
-              <p className="mt-6 max-w-md text-base leading-relaxed text-ink-700">
-                {t.recording.confirmBody}
-              </p>
-            </Reveal>
-          </div>
-          <div className="lg:col-span-7">
-            <Reveal delay={0.1}>
-              <ConfirmQueue t={t.confirmQueue} />
-            </Reveal>
-          </div>
-        </div>
-      </div>
-    </section>
-    </>
-  );
-}
-
-/** Offline first, in three beats. */
-export function OfflineSection() {
-  const { t: dict } = useI18n();
-  const t = dict.home;
-  return (
-    <>
-    {/* ────────────── OFFLINE — three beats, no screenshot ────────────── */}
-    <section
-      id="offline"
-      className="relative overflow-hidden border-t border-white/5 py-28 sm:py-36"
-    >
-      <div className="absolute inset-0 grid-backdrop" aria-hidden="true" />
-      <div className="relative mx-auto max-w-6xl px-4">
-        <div className="max-w-2xl">
-          <Reveal>
-            <p className="eyebrow">{t.offline.eyebrow}</p>
-          </Reveal>
-          <Reveal delay={0.05}>
-            <h2 className="mt-6 text-4xl font-medium tracking-tighter text-bone-50 sm:text-5xl lg:text-6xl">
-              {t.offline.headLine1}
-              <br />
-              <span className="text-lime-400">{t.offline.headLine2}</span>
-            </h2>
-          </Reveal>
-          <Reveal delay={0.15}>
-            <p className="mt-8 text-base leading-relaxed text-bone-300">
-              {t.offline.body}
-            </p>
-          </Reveal>
-        </div>
-
-        <div className="mt-20 grid gap-px border border-white/10 bg-white/10 md:grid-cols-3">
-          {t.offline.steps.map((s, i) => (
-            <Reveal key={s.step} delay={0.05 * i}>
-              <div className="flex h-full flex-col justify-between bg-ink-950 p-8 lg:p-10">
-                <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-lime-400">
-                  {s.step}
-                </p>
-                <div className="mt-16">
-                  <h3 className="text-2xl font-medium tracking-tight text-bone-50">{s.head}</h3>
-                  <p className="mt-3 text-base leading-relaxed text-bone-300">{s.body}</p>
-                </div>
-              </div>
-            </Reveal>
-          ))}
-        </div>
-      </div>
-    </section>
-    </>
-  );
-}
-
-/** Pasture mapping, plus virtual fencing stated honestly. */
-export function PastureSection() {
-  const { t: dict } = useI18n();
-  const t = dict.home;
-  return (
-    <>
-    {/* ────────────── PASTURE — cream ────────────── */}
-    <section
-      id="pasture"
-      className="section-light relative overflow-hidden border-t border-ink-950/10 py-28 sm:py-32"
-    >
-      <div className="mx-auto max-w-6xl px-4">
-        <div className="grid items-center gap-14 lg:grid-cols-12 lg:gap-16">
-          <div className="lg:order-2 lg:col-span-5 lg:col-start-8">
-            <Reveal>
-              <p className="eyebrow">{t.pasture.eyebrow}</p>
-            </Reveal>
-            <Reveal delay={0.05}>
-              <h2 className="mt-6 text-4xl font-medium tracking-tighter text-ink-950 sm:text-5xl">
-                {t.pasture.headLine1}
-                <br />
-                <span className="text-ink-700">{t.pasture.headLine2}</span>
-              </h2>
-            </Reveal>
-            <Reveal delay={0.1}>
-              <p className="mt-6 text-base leading-relaxed text-ink-700">
-                {t.pasture.bodyBefore}
-                <strong className="font-medium text-ink-950">{t.pasture.bodyStrong}</strong>
-                {t.pasture.bodyAfter}
-              </p>
-            </Reveal>
-            <Reveal delay={0.15}>
-              <ul className="mt-8 space-y-4">
-                {t.pasture.bullets.map((b) => (
-                  <li
-                    key={b}
-                    className="flex items-start gap-3 border-t border-ink-950/10 pt-4 text-base leading-relaxed text-ink-700"
-                  >
-                    <Check aria-hidden="true" className="mt-1 h-4 w-4 shrink-0 text-[#2F6A14]" />
-                    {b}
-                  </li>
-                ))}
-              </ul>
-            </Reveal>
-          </div>
-
-          <div className="lg:order-1 lg:col-span-6 lg:col-start-1">
-            <Reveal delay={0.15}>
-              <div className="flex justify-center lg:justify-end">
-                <Image
-                  src="/app/pasture-map.png"
-                  alt={t.pasture.mapAlt}
-                  width={758}
-                  height={1600}
-                  quality={95}
-                  sizes="(min-width: 1024px) 320px, 60vw"
-                  className="h-auto w-full max-w-[280px] drop-shadow-[0_30px_60px_rgba(20,22,26,0.22)] sm:max-w-[320px]"
-                />
-              </div>
-            </Reveal>
-          </div>
-        </div>
-
-        {/* Virtual fencing — stated once, honestly */}
-        <Reveal delay={0.1}>
-          <div id="fencing" className="mt-24 grid scroll-mt-32 gap-8 rounded-4xl border border-ink-950/10 bg-white p-8 sm:p-12 lg:grid-cols-12 lg:items-center">
-            <div className="lg:col-span-6">
-              <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-[#2F6A14]">
-                {t.pasture.fenceTag}
-              </p>
-              <h3 className="mt-4 text-2xl font-medium tracking-tight text-ink-950 sm:text-3xl">
-                {t.pasture.fenceHeadBefore}{" "}
-                <span className="bg-lime-400 px-1.5 py-0.5 text-ink-950">
-                  {t.pasture.fenceHeadHighlight}
-                </span>{" "}
-                {t.pasture.fenceHeadAfter}
-              </h3>
-              <p className="mt-5 max-w-xl text-base leading-relaxed text-ink-700">
-                {t.pasture.fenceBody}
-              </p>
-              <p className="mt-5 max-w-xl border-t border-ink-950/10 pt-5 text-base leading-relaxed text-ink-700">
-                {t.pasture.fenceHonest}
-              </p>
-            </div>
-            <div className="lg:col-span-6">
-              <div className="media relative aspect-[16/10] overflow-hidden">
-                <RndBadge label={dict.site.rndBadge} />
-                <Image
-                  src="/cow-with-collar.png"
-                  alt={dict.site.fenceImageAlt}
-                  fill
-                  quality={95}
-                  className="object-cover"
-                  sizes="(min-width: 1024px) 520px, 100vw"
-                />
-              </div>
-            </div>
-          </div>
-        </Reveal>
-      </div>
-    </section>
-    </>
-  );
-}
-
-/** The web app back at the house. */
-export function HouseSection() {
-  const { t: dict } = useI18n();
-  const t = dict.home;
-  return (
-    <>
-    {/* ────────────── BACK AT THE HOUSE ────────────── */}
-    <section className="relative overflow-hidden border-t border-white/5 py-28 sm:py-32">
-      <div className="mx-auto max-w-6xl px-4">
-        <div className="grid items-center gap-14 lg:grid-cols-12 lg:gap-16">
-          <div className="lg:col-span-5">
-            <Reveal>
-              <p className="eyebrow">{t.house.eyebrow}</p>
-            </Reveal>
-            <Reveal delay={0.05}>
-              <h2 className="mt-6 text-4xl font-medium tracking-tighter text-bone-50 sm:text-5xl">
-                {t.house.headLine1}
-                <br />
-                <span className="text-bone-300">{t.house.headLine2}</span>
-              </h2>
-            </Reveal>
-            <Reveal delay={0.1}>
-              <p className="mt-8 max-w-md text-base leading-relaxed text-bone-300">
-                {t.house.body}
-              </p>
-            </Reveal>
-          </div>
-
-          <div className="lg:col-span-7">
-            <Reveal delay={0.15}>
-              <Image
-                src="/app/herd-web.png"
-                alt={t.house.imageAlt}
-                width={2400}
-                height={1199}
-                quality={95}
-                sizes="(min-width: 1024px) 720px, 100vw"
-                className="h-auto w-full drop-shadow-[0_35px_60px_rgba(0,0,0,0.55)]"
-              />
-            </Reveal>
-          </div>
-        </div>
-      </div>
-    </section>
-    </>
-  );
-}
 
 /** What good records are worth. */
 export function PayoffSection() {
@@ -575,16 +210,6 @@ export function PricingSection() {
                   </li>
                 ))}
               </ol>
-              <div className="mt-auto pt-10">
-                <Link
-                  href={DEMO_CALENDLY}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="btn"
-                >
-                  {dict.bookCall} <ArrowUpRight className="h-4 w-4" />
-                </Link>
-              </div>
             </div>
           </Reveal>
         </div>
@@ -603,10 +228,10 @@ export function FeaturesSection() {
     {/* ────────────── FULL FEATURE BREAKDOWN ────────────── */}
     <section
       id="features"
-      className="relative overflow-hidden border-t border-white/5 py-28 sm:py-32"
+      className="relative scroll-mt-24 overflow-hidden border-t border-white/5 py-28 sm:py-32"
     >
       <div className="mx-auto max-w-6xl px-4">
-        <div className="mb-16 grid gap-12 lg:grid-cols-12 lg:items-end">
+        <div className="mb-16 grid gap-12 lg:grid-cols-12 lg:items-center">
           <div className="lg:col-span-7">
             <Reveal>
               <p className="eyebrow">{t.features.eyebrow}</p>
@@ -634,8 +259,8 @@ export function FeaturesSection() {
                 width={758}
                 height={1600}
                 quality={95}
-                sizes="(min-width: 1024px) 260px, 55vw"
-                className="h-auto w-full max-w-[220px] drop-shadow-[0_35px_60px_rgba(0,0,0,0.55)] sm:max-w-[260px]"
+                sizes="(min-width: 1024px) 230px, 55vw"
+                className="h-auto w-full max-w-[200px] drop-shadow-[0_35px_60px_rgba(0,0,0,0.55)] sm:max-w-[230px]"
               />
             </div>
           </Reveal>
@@ -674,7 +299,7 @@ export function FeaturesSection() {
   );
 }
 
-/** Closing band: free trial plus book a call. */
+/** Closing band: the free trial. */
 export function ClosingCta() {
   const { t: dict } = useI18n();
   const t = dict.home;
@@ -699,14 +324,6 @@ export function ClosingCta() {
         <Reveal delay={0.25}>
           <div className="mt-10 flex flex-wrap justify-center gap-3">
             <TrialButton source="closing-cta" />
-            <Link
-              href={DEMO_CALENDLY}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="btn"
-            >
-              {dict.bookCall}
-            </Link>
           </div>
         </Reveal>
       </div>

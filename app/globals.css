@@ -303,3 +303,77 @@ body {
   from { transform: scaleX(0); }
   to { transform: scaleX(1); }
 }
+
+/* Scroll-in reveal for <Reveal>. Hidden only once the inline reveal script has
+   marked <html data-reveal-on>, so without it everything is simply visible. */
+[data-reveal] {
+  transition:
+    opacity 0.9s cubic-bezier(0.22, 1, 0.36, 1) var(--reveal-delay, 0s),
+    transform 0.9s cubic-bezier(0.22, 1, 0.36, 1) var(--reveal-delay, 0s);
+}
+[data-reveal-on] [data-reveal]:not([data-in]) {
+  opacity: 0;
+  transform: translate3d(0, var(--reveal-y, 32px), 0);
+}
+@media (prefers-reduced-motion: reduce) {
+  [data-reveal] { transition: none; }
+  [data-reveal-on] [data-reveal]:not([data-in]) { opacity: 1; transform: none; }
+}
+
+/* Home hero (components/home/HomeHero.tsx). The breakpoint must match the
+   `wide` variant in tailwind.config.ts.
+
+   Video behind the text. The video covers the section pinned left, so on
+   windows narrower than 16:9 it is 100svh * 16/9 wide and the app's right edge
+   sits at 28.5% of that. --hero-shift is the left padding that keeps a text
+   block of width --hero-w clear of the app: zero when it fits centred,
+   otherwise it moves the text right just enough. */
+@media (min-aspect-ratio: 9/8) and (min-height: 500px) {
+  .hero-root {
+    --hero-app-right: calc(100svh * 16 / 9 * 0.285 + 2rem);
+    --hero-w: min(36rem, 46vw);
+    --hero-shift: max(0px, calc(2 * var(--hero-app-right) + var(--hero-w) - 100vw));
+  }
+  .hero-copy {
+    max-width: none;
+    padding-left: calc(1rem + var(--hero-shift));
+    padding-right: 1rem;
+  }
+  .hero-copy > * {
+    max-width: var(--hero-w);
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+/* Video above the text. Phones: zoomed out, shifted so the app's centre (15.9%
+   of the frame) lands on the page's centre, with a blurred still filling the
+   narrow strip that leaves on the left. Wider (iPad portrait, a phone on its
+   side): the frame from its left edge, at least as wide as the screen, so
+   nothing is left empty. */
+@media (max-aspect-ratio: 1124/1000), (max-height: 499px) {
+  .hero-video-box {
+    --hero-h: min(100vw, 46svh);
+    height: var(--hero-h);
+    margin-top: 5.25rem;
+    overflow: hidden;
+  }
+  .hero-video-box .hero-video {
+    right: auto;
+    max-width: none;
+    width: calc(var(--hero-h) * 16 / 9);
+    left: calc(50% - var(--hero-h) * 16 / 9 * 0.159);
+    -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 3.2%);
+    mask-image: linear-gradient(90deg, transparent 0, #000 3.2%);
+  }
+}
+@media (max-aspect-ratio: 1124/1000) and (min-width: 640px), (max-height: 499px) and (min-width: 640px) {
+  .hero-video-box {
+    --hero-h: max(46svh, 56.25vw);
+  }
+  .hero-video-box .hero-video {
+    left: 0;
+    -webkit-mask-image: none;
+    mask-image: none;
+  }
+}

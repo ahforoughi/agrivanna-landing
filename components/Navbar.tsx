@@ -9,10 +9,11 @@ import {
   ArrowRight,
   ArrowUpRight,
   ChevronDown,
-  Mic,
-  WifiOff,
+  Smartphone,
   Map,
   Monitor,
+  Sprout,
+  ClipboardList,
   Fence,
   LayoutGrid,
   Newspaper,
@@ -28,10 +29,8 @@ import TrialButton from "@/components/TrialButton";
 import LanguageToggle from "@/components/LanguageToggle";
 import RndBadge from "@/components/RndBadge";
 import { useI18n } from "@/components/LocaleProvider";
-import { DEMO_CALENDLY } from "@/lib/cta";
 import { stripLocale } from "@/lib/i18n";
 import {
-  APP_URL,
   COMPANY_LINKS,
   HARDWARE_LINKS,
   SOFTWARE_LINKS,
@@ -39,10 +38,11 @@ import {
 } from "@/lib/site-nav";
 
 const ICONS: Record<MenuLink["key"], LucideIcon> = {
-  voice: Mic,
-  offline: WifiOff,
+  webApp: Monitor,
+  iosApp: Smartphone,
   pasture: Map,
-  web: Monitor,
+  herd: ClipboardList,
+  grazing: Sprout,
   fencing: Fence,
   features: LayoutGrid,
   news: Newspaper,
@@ -55,13 +55,14 @@ const ICONS: Record<MenuLink["key"], LucideIcon> = {
 
 type MenuId = "product" | "company";
 
-/** Top bar, left to right. Dropdowns hold links; Pricing and News are plain tabs. */
-type BarItem = { kind: "menu"; id: MenuId; links: MenuLink[] } | { kind: "link"; id: "pricing" | "news"; path: string };
+/** Top bar, left to right. Dropdowns hold links; Pricing, News and Help & FAQ are plain tabs. */
+type BarItem = { kind: "menu"; id: MenuId; links: MenuLink[] } | { kind: "link"; id: "pricing" | "news" | "faq"; path: string };
 const BAR: BarItem[] = [
   { kind: "menu", id: "product", links: [...SOFTWARE_LINKS, ...HARDWARE_LINKS] },
   { kind: "link", id: "pricing", path: "/pricing" },
   { kind: "link", id: "news", path: "/news" },
   { kind: "menu", id: "company", links: COMPANY_LINKS },
+  { kind: "link", id: "faq", path: "/faq" },
 ];
 
 export default function Navbar() {
@@ -77,7 +78,9 @@ export default function Navbar() {
   const path = stripLocale(pathname || "/");
 
   const isActive = (link: MenuLink) => !link.path.includes("#") && link.path === path;
-  const groupActive = (links: MenuLink[]) => links.some(isActive);
+  // A group lights up on any of its pages, including one its links only jump into
+  const groupActive = (links: MenuLink[]) => links.some((l) => l.path.split("#")[0] === path);
+  const barLabel = (id: "pricing" | "news" | "faq") => (id === "faq" ? m.items.faq.label : m[id]);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 24);
@@ -133,7 +136,7 @@ export default function Navbar() {
       <Link
         href={href(link.path)}
         onClick={() => setMenu(null)}
-        className="group flex items-start gap-4 rounded-2xl p-3 transition-colors hover:bg-white/5"
+        className="group flex w-full items-start gap-4 rounded-2xl p-3 transition-colors hover:bg-white/5"
       >
         <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-white/10 bg-white/[0.03] text-lime-400 transition-colors group-hover:border-lime-400/40">
           <Icon aria-hidden="true" className="h-[18px] w-[18px]" />
@@ -166,7 +169,7 @@ export default function Navbar() {
               alt="Agrivanna"
               width={160}
               height={36}
-              className="h-5 w-auto brightness-0 invert sm:h-6 lg:h-7"
+              className="h-[18px] w-auto brightness-0 invert min-[390px]:h-5 sm:h-6 lg:h-7"
               priority
             />
           </Link>
@@ -176,7 +179,7 @@ export default function Navbar() {
               <li key={b.id}>
                 {b.kind === "link" ? (
                   <Link href={href(b.path)} onPointerEnter={(e) => e.pointerType === "mouse" && hoverClose()} className={triggerClass(path === b.path, false)}>
-                    {m[b.id]}
+                    {barLabel(b.id)}
                   </Link>
                 ) : (
                   <button
@@ -201,33 +204,17 @@ export default function Navbar() {
           <div className="flex items-center gap-1.5 sm:gap-2">
             {/* Phones get it inside the menu instead — there's no room in the bar */}
             <LanguageToggle className="hidden sm:flex" />
-            <a
-              href={APP_URL}
-              className="hidden whitespace-nowrap rounded-full px-2 py-2 text-sm text-bone-50/80 transition-colors hover:text-bone-50 xl:inline-flex"
-            >
-              {m.login}
-            </a>
-            {/* .btn sets its own display, so the wrapper does the hiding. The
-                French labels are longer and leave no room for it in the bar;
-                it's in every dropdown instead. */}
-            <span className={locale === "en" ? "hidden 2xl:contents" : "hidden"}>
-              <Link
-                href={DEMO_CALENDLY}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="btn !py-[0.95rem] !px-5 !text-[0.98rem]"
-              >
-                {t.bookCall}
-              </Link>
+            {/* Free trial — compact on mobile, full-size on desktop. .btn sets its
+                own display, so the wrapper does the hiding: the French label is too
+                long for a phone's bar (the English one for the smallest phones),
+                and it's in the menu instead. */}
+            <span className={locale === "en" ? "hidden min-[360px]:contents" : "hidden sm:contents"}>
+              <TrialButton
+                source="navbar"
+                arrow={false}
+                className="btn btn-solid whitespace-nowrap !py-2 !px-3 !text-[0.76rem] font-semibold !gap-1 min-[390px]:!px-3.5 min-[390px]:!text-[0.8rem] sm:!px-4 lg:!py-[0.95rem] lg:!px-6 lg:!text-[0.98rem] lg:!gap-[0.6rem]"
+              />
             </span>
-            {/* Free trial — compact on mobile, full-size on desktop */}
-            <TrialButton
-              source="navbar"
-              arrow={false}
-              className="btn btn-solid whitespace-nowrap !py-1 !px-2.5 sm:!px-3 !text-[0.72rem] !gap-1 lg:!py-[0.95rem] lg:!px-6 lg:!text-[0.98rem] lg:!gap-[0.6rem]"
-            >
-              {t.nav.freeTrial}
-            </TrialButton>
             <button
               type="button"
               onClick={() => setOpen((v) => !v)}
@@ -251,13 +238,18 @@ export default function Navbar() {
               {openItem.id === "product" ? (
                 <>
                   {/* Software: everything for sale today */}
-                  <div className="col-span-8 p-2">
-                    <p className="px-3 pb-2 pt-1 font-mono text-[11px] uppercase tracking-[0.18em] text-bone-400">
+                  <div className="col-span-8 flex flex-col p-2">
+                    <Link
+                      href={href("/product")}
+                      onClick={() => setMenu(null)}
+                      className="self-start px-3 pb-2 pt-1 font-mono text-[11px] uppercase tracking-[0.18em] text-bone-400 transition-colors hover:text-lime-400"
+                    >
                       {m.software}
-                    </p>
-                    <ul className="grid grid-cols-2 gap-1">
+                    </Link>
+                    {/* The spare height goes between the rows, so the list ends where the hardware card does */}
+                    <ul className="grid flex-1 grid-cols-2 content-between gap-1 pt-2">
                       {SOFTWARE_LINKS.map((link) => (
-                        <li key={link.key}>
+                        <li key={link.key} className="flex">
                           <PanelLink link={link} />
                         </li>
                       ))}
@@ -265,15 +257,19 @@ export default function Navbar() {
                   </div>
                   {/* Hardware: virtual fencing, in R&D */}
                   <div className="col-span-4 flex flex-col p-2">
-                    <p className="px-1 pb-3 pt-1 font-mono text-[11px] uppercase tracking-[0.18em] text-bone-400">
+                    <Link
+                      href={href(HARDWARE_LINKS[0].path)}
+                      onClick={() => setMenu(null)}
+                      className="self-start px-1 pb-3 pt-1 font-mono text-[11px] uppercase tracking-[0.18em] text-bone-400 transition-colors hover:text-lime-400"
+                    >
                       {m.hardware}
-                    </p>
+                    </Link>
                     <Link
                       href={href(HARDWARE_LINKS[0].path)}
                       onClick={() => setMenu(null)}
                       className="group flex flex-1 flex-col overflow-hidden rounded-3xl border border-white/5 bg-ink-950/60 transition-colors hover:border-lime-400/40"
                     >
-                      <div className="relative aspect-[16/9] overflow-hidden">
+                      <div className="relative aspect-[2/1] overflow-hidden">
                         <RndBadge label={m.rnd} />
                         <Image
                           src="/story/hero-virtual-fence.jpg"
@@ -283,7 +279,7 @@ export default function Navbar() {
                           className="object-cover transition-transform duration-700 group-hover:scale-105"
                         />
                       </div>
-                      <div className="flex flex-1 flex-col p-5">
+                      <div className="flex flex-1 flex-col px-5 pb-4 pt-4">
                         <p className="text-lg font-medium tracking-tight text-bone-50 group-hover:text-lime-400">
                           {m.hardwareCard.title}
                         </p>
@@ -321,7 +317,7 @@ export default function Navbar() {
                         path === b.path ? "text-lime-400" : "text-bone-50"
                       }`}
                     >
-                      {m[b.id]}
+                      {barLabel(b.id)}
                       <ArrowUpRight className="h-4 w-4 text-lime-400" />
                     </Link>
                   </li>
@@ -387,26 +383,12 @@ export default function Navbar() {
                   </li>
                 )
               )}
-              <li>
-                <a href={APP_URL} className="flex items-center justify-between py-4 text-base text-bone-50">
-                  {m.login}
-                  <ArrowUpRight className="h-4 w-4 text-lime-400" />
-                </a>
-              </li>
             </ul>
             <div className="mt-5 flex items-center justify-between sm:hidden">
               <span className="text-sm text-bone-300">{t.language.label}</span>
               <LanguageToggle />
             </div>
             <TrialButton source="navbar-mobile" className="btn btn-solid mt-5 w-full justify-center" />
-            <Link
-              href={DEMO_CALENDLY}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="btn mt-3 w-full justify-center"
-            >
-              {t.bookCall}
-            </Link>
           </div>
         )}
       </div>

@@ -1,10 +1,9 @@
-import Link from "next/link";
-import { ArrowUpRight } from "lucide-react";
 import { ClosingCta } from "@/components/HomeSections";
 import FaqList from "@/components/FaqList";
 import PageHeader from "@/components/PageHeader";
 import Reveal from "@/components/Reveal";
-import { CONTACT_EMAIL, DEMO_CALENDLY } from "@/lib/cta";
+import TrialButton from "@/components/TrialButton";
+import { CONTACT_EMAIL } from "@/lib/cta";
 import { getDictionary } from "@/lib/dictionaries";
 import { pageLocale, type PageProps } from "@/lib/i18n";
 import { pageMetadata } from "@/lib/page-meta";
@@ -39,14 +38,9 @@ export default async function FaqPage({ params }: PageProps) {
                   </a>
                   {after}
                 </p>
-                <Link
-                  href={DEMO_CALENDLY}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="btn mt-6"
-                >
-                  {dict.bookCall} <ArrowUpRight className="h-4 w-4" />
-                </Link>
+                <div className="mt-6">
+                  <TrialButton source="faq" className="btn" />
+                </div>
               </div>
             </Reveal>
           </div>

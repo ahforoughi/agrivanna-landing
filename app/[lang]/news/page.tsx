@@ -106,17 +106,28 @@ export default async function NewsPage({ params }: PageProps) {
               </h2>
             </Reveal>
           </div>
-          <Reveal delay={0.1}>
-            <div className="media relative aspect-video">
-              <iframe
-                src="https://www.youtube.com/embed/tWXcF0qAMlM"
-                title="Agrivanna"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                allowFullScreen
-                className="absolute inset-0 h-full w-full"
-              />
-            </div>
-          </Reveal>
+          <div className="grid gap-10 lg:grid-cols-2">
+            {[
+              { id: "2_-BQZmU3y4", caption: t.videos.platform },
+              { id: "tWXcF0qAMlM", caption: t.videos.ucalgary },
+            ].map((v, i) => (
+              <Reveal key={v.id} delay={0.1 + i * 0.08}>
+                <figure>
+                  <div className="media relative aspect-video">
+                    <iframe
+                      src={`https://www.youtube.com/embed/${v.id}`}
+                      title={v.caption}
+                      loading="lazy"
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                      allowFullScreen
+                      className="absolute inset-0 h-full w-full"
+                    />
+                  </div>
+                  <figcaption className="mt-4 text-sm text-bone-300">{v.caption}</figcaption>
+                </figure>
+              </Reveal>
+            ))}
+          </div>
         </div>
       </section>
 

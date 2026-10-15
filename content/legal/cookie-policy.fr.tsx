@@ -58,7 +58,7 @@ const page: LegalPage = {
           vous l’avez laissé.
         </li>
         <li>
-          <strong>Analytiques.</strong> Nous aident à voir comment les visiteurs utilisent le
+          <strong>D’analyse.</strong> Nous aident à voir comment les visiteurs utilisent le
           site pour l’améliorer. Les données sont agrégées et ne vous identifient pas
           personnellement. Ils ne sont chargés que si vous les acceptez.
         </li>
@@ -70,7 +70,7 @@ const page: LegalPage = {
 
       <h2>Gérer les témoins dans votre navigateur</h2>
       <p>
-        Vous pouvez contrôler les témoins dans les paramètres de votre navigateur ou de votre
+        Vous pouvez gérer les témoins dans les paramètres de votre navigateur ou de votre
         appareil, notamment en les bloquant ou en les supprimant. Certaines fonctions peuvent ne
         pas fonctionner correctement si vous bloquez les témoins strictement nécessaires. Pour
         les réglages propres à l’application, consultez les paramètres de votre appareil ou les
@@ -79,8 +79,8 @@ const page: LegalPage = {
 
       <h2>Mises à jour</h2>
       <p>
-        Nous pouvons mettre à jour cette politique pour refléter des changements dans nos
-        pratiques ou dans la loi. La version à jour est publiée sur cette page. Continuer
+        Nous pouvons mettre à jour cette politique pour tenir compte de changements dans nos
+        pratiques ou dans la législation. La version à jour est publiée sur cette page. Continuer
         d’utiliser nos services après une mise à jour signifie que vous acceptez la politique
         révisée.
       </p>

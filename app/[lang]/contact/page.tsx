@@ -1,23 +1,22 @@
 import Link from "next/link";
-import { ArrowUpRight, CalendarDays, Mail } from "lucide-react";
+import { ArrowUpRight, Mail } from "lucide-react";
 import PageHeader from "@/components/PageHeader";
 import Reveal from "@/components/Reveal";
 import TrialForm from "@/components/TrialForm";
-import { CONTACT_EMAIL, DEMO_CALENDLY } from "@/lib/cta";
+import { CONTACT_EMAIL } from "@/lib/cta";
 import { getDictionary } from "@/lib/dictionaries";
 import { pageLocale, type PageProps } from "@/lib/i18n";
 import { pageMetadata } from "@/lib/page-meta";
 
 export const generateMetadata = pageMetadata("contact", "/contact");
 
-/** The trial form from /software-leads, plus the other two ways to reach us. */
+/** The trial form from /software-leads, plus our email. */
 export default async function ContactPage({ params }: PageProps) {
   const dict = getDictionary(await pageLocale(params));
   const t = dict.softwareLeads;
   const p = dict.site.pages.contact;
 
   const OPTIONS = [
-    { icon: CalendarDays, title: p.callTitle, body: p.callBody, href: DEMO_CALENDLY, label: dict.bookCall, external: true },
     { icon: Mail, title: p.emailTitle, body: p.emailBody, href: `mailto:${CONTACT_EMAIL}`, label: CONTACT_EMAIL, external: false },
   ];
 

@@ -6,7 +6,7 @@ const page: LegalPage = {
   description:
     "Ce que l’application et le site Web d’Agrivanna recueillent, pourquoi, à qui ces renseignements sont communiqués et ce que vous pouvez y faire.",
   intro:
-    "Ce que nous recueillons dans l’application Agrivanna et sur ce site Web, pourquoi, à qui c’est communiqué et ce que vous pouvez y faire.",
+    "Ce que nous recueillons dans l’application Agrivanna et sur ce site Web, pourquoi, à qui ces renseignements sont communiqués et ce que vous pouvez y faire.",
   updated: "Agrivanna Inc. · En vigueur le 1er octobre 2026",
   body: (
     <>
@@ -30,7 +30,7 @@ const page: LegalPage = {
           ou sites Web et nous ne vendons pas vos renseignements.
         </li>
         <li>
-          Les commandes vocales sont comprises sur votre téléphone. L’enregistrement ne nous est
+          Les commandes vocales sont interprétées sur votre téléphone. L’enregistrement ne nous est
           pas envoyé, sauf pour une note vocale, qui est conservée avec son enregistrement.
         </li>
         <li>
@@ -48,9 +48,9 @@ const page: LegalPage = {
       <h2 id="what-we-collect">2. Ce que nous recueillons</h2>
       <p>
         <strong>Votre compte.</strong> Votre adresse courriel et votre nom. Les comptes sont créés
-        sur <a href="https://app.agrivanna.com">app.agrivanna.com</a>; l’application sert
-        seulement à se connecter. Nous ne voyons jamais votre mot de passe — il est géré par
-        notre fournisseur de connexion.
+        sur <a href="https://app.agrivanna.com">app.agrivanna.com</a>; l’application permet
+        seulement de se connecter. Nous ne voyons jamais votre mot de passe — il est géré par
+        notre fournisseur d’authentification.
       </p>
       <p>
         <strong>Les registres de votre ranch.</strong> Ce que vous et les gens de votre ranch
@@ -95,7 +95,7 @@ const page: LegalPage = {
         <strong>Ce qu’Agrivanna a entendu.</strong> Votre téléphone tient un journal des commandes
         vocales — les mots que chaque outil de reconnaissance a entendus et la façon dont la
         commande s’est terminée — pour nous aider à améliorer la reconnaissance. Il ne contient
-        que du texte et des chiffres, sans audio, et il reste sur votre téléphone. Il ne nous
+        que du texte et des chiffres, sans aucun enregistrement audio, et il reste sur votre téléphone. Il ne nous
         parvient que si vous choisissez de le partager à partir de l’écran Account (Compte).
       </p>
       <p>
@@ -113,7 +113,7 @@ const page: LegalPage = {
       <h2 id="how-we-use-it">3. Comment nous les utilisons</h2>
       <ul>
         <li>
-          Pour tenir les registres de votre ranch et les garder à jour entre le Web et votre
+          Pour tenir les registres de votre ranch et les garder synchronisés entre le Web et votre
           téléphone, y compris le travail sauvegardé sur le téléphone sans signal et téléversé
           plus tard.
         </li>
@@ -159,14 +159,14 @@ const page: LegalPage = {
         registres de ce ranch. Les entrées que vous saisissez leur sont communiquées.
       </p>
       <p>
-        <strong>Les fournisseurs de services qui exploitent des parties d’Agrivanna pour nous :</strong>
+        <strong>Les fournisseurs de services qui exploitent certaines composantes d’Agrivanna pour notre compte :</strong>
       </p>
       <ul>
         <li>
           <strong>Google Cloud</strong> héberge nos serveurs.
         </li>
         <li>
-          <strong>Supabase</strong> gère la connexion.
+          <strong>Supabase</strong> gère l’authentification.
         </li>
         <li>
           <strong>Google Gemini</strong> et <strong>Google Cloud Text-to-Speech</strong> font
@@ -205,7 +205,7 @@ const page: LegalPage = {
           données à l’extérieur du Canada.
         </li>
         <li>
-          <strong>Ce site Web</strong> est hébergé par Vercel et envoie ses courriels par Resend,
+          <strong>Ce site Web</strong> est hébergé par Vercel et envoie ses courriels par l’intermédiaire de Resend,
           aux États-Unis.
         </li>
       </ul>
@@ -233,7 +233,8 @@ const page: LegalPage = {
           <strong>Les journaux des serveurs</strong> sont conservés pendant un mois.
         </li>
         <li>
-          <strong>Les sauvegardes</strong> peuvent conserver des renseignements supprimés pendant trois mois avant d’être écrasées.
+          <strong>Les sauvegardes</strong> peuvent contenir des renseignements supprimés pendant trois mois, jusqu’à ce que ces
+          derniers soient écrasés.
         </li>
       </ul>
 
@@ -276,7 +277,7 @@ const page: LegalPage = {
           <strong>Autorisations.</strong> La localisation, l’appareil photo, les photos, le
           microphone et la reconnaissance vocale peuvent chacun être désactivés dans les
           Réglages de l’iPhone. Les fonctions qui en ont besoin cessent de fonctionner; tout le
-          reste continue.
+          reste continue de fonctionner.
         </li>
         <li>
           <strong>Mode en ligne.</strong> Revenez au mode hors ligne en tout temps.
@@ -309,18 +310,18 @@ const page: LegalPage = {
       </p>
 
       <h2 id="website">11. Ce site Web</h2>
-      <p>agrivanna.com n’exige aucune ouverture de session. Voici ce qu’il recueille :</p>
+      <p>agrivanna.com ne comporte aucune ouverture de session. Voici ce qu’il recueille :</p>
       <p>
         <strong>Demandes d’essai.</strong> Quand vous demandez un essai gratuit, le formulaire
-        envoie par courriel à notre équipe votre nom et votre courriel, ainsi que tout ce que
-        vous choisissez d’ajouter — téléphone, nom du ranch, lieu, taille du troupeau, type
+        envoie par courriel à notre équipe votre nom et votre adresse courriel, ainsi que tout ce
+        que vous choisissez d’ajouter — téléphone, nom du ranch, emplacement du ranch, taille du troupeau, type
         d’exploitation, façon dont vous tenez vos registres et notes —, avec une copie pour vous.
-        Nous nous en servons pour vous répondre et configurer votre essai. Si notre service de
+        Nous nous en servons pour vous répondre et mettre en place votre essai. Si notre service de
         courriel n’est pas disponible, le formulaire ouvre plutôt un courriel prérempli dans
         votre propre application de courriel.
       </p>
       <p>
-        <strong>Analyse, seulement si vous l’acceptez.</strong> Si vous acceptez les témoins dans
+        <strong>Analyse d’audience, seulement si vous l’acceptez.</strong> Si vous acceptez les témoins dans
         le bandeau, Vercel Analytics compte les pages visitées. Si vous les refusez, l’outil
         n’est pas chargé. Votre choix est conservé dans votre navigateur. Voir la{" "}
         <Link href="/fr/cookie-policy">politique relative aux témoins</Link>.
@@ -337,14 +338,15 @@ const page: LegalPage = {
 
       <h2 id="children">12. Enfants</h2>
       <p>
-        Agrivanna est un outil de gestion d’entreprise agricole. Il ne s’adresse pas aux enfants,
+        Agrivanna est un outil de gestion d’entreprise d’élevage. Il ne s’adresse pas aux enfants,
         et nous ne recueillons pas sciemment de renseignements auprès d’eux.
       </p>
 
       <h2 id="changes">13. Modifications de cette politique</h2>
       <p>
         Quand nous modifions cette politique, nous mettons à jour la date en haut de la page. Si
-        une modification change de façon importante notre utilisation de vos renseignements,
+        une modification a une incidence importante sur la façon dont nous utilisons vos
+        renseignements,
         nous vous en informerons dans l’application ou par courriel avant son entrée en vigueur.
       </p>
 
@@ -352,7 +354,7 @@ const page: LegalPage = {
       <p>
         Agrivanna Inc.
         <br />
-        1315 Northmount Dr NW, Calgary (Alberta)
+        1315 Northmount Dr NW, Calgary (Alb.)
         <br />
         <a href="mailto:info@agrivanna.com">info@agrivanna.com</a>
       </p>

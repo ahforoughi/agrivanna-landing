@@ -1,4 +1,5 @@
 import type { Config } from "tailwindcss";
+import plugin from "tailwindcss/plugin";
 
 const config: Config = {
   content: ["./app/**/*.{ts,tsx}", "./components/**/*.{ts,tsx}"],
@@ -69,7 +70,14 @@ const config: Config = {
       },
     },
   },
-  plugins: [],
+  plugins: [
+    // Home hero: the video goes behind the text on any window at least 9:8 wide
+    // and 500px tall. Taller or shorter ones (phones, iPad portrait, a phone on
+    // its side) stack it above the text instead. Must match globals.css.
+    plugin(({ addVariant }) => {
+      addVariant("wide", "@media (min-aspect-ratio: 9/8) and (min-height: 500px)");
+    }),
+  ],
 };
 
 export default config;

@@ -16,7 +16,8 @@ const HerdScene = dynamic(() => import("@/components/herd/HerdScene"), {
 });
 
 type Copy = {
-  eyebrow: string;
+  /** The small label above the headline; the home page has none */
+  eyebrow?: string;
   line1: string;
   line2: string;
   /** Lime, and swells as the pointer passes over it */
@@ -25,7 +26,7 @@ type Copy = {
 };
 
 /**
- * The herd scene behind a three-line headline. Defaults to the home page's
+ * The 3D herd behind a three-line headline. Defaults to the home page's
  * words; other pages pass their own copy and buttons.
  */
 export default function HerdHero({ copy, actions }: { copy?: Copy; actions?: React.ReactNode }) {
@@ -37,7 +38,6 @@ export default function HerdHero({ copy, actions }: { copy?: Copy; actions?: Rea
   const { t: dict } = useI18n();
   const home = dict.home;
   const c: Copy = copy ?? {
-    eyebrow: home.eyebrow,
     line1: home.heroLine1,
     line2: home.heroLine2,
     line3: home.heroLine3,
@@ -67,10 +67,12 @@ export default function HerdHero({ copy, actions }: { copy?: Copy; actions?: Rea
       />
 
       <div className="pointer-events-none relative mx-auto w-full max-w-6xl px-4">
-        <Reveal>
-          <p className="eyebrow">{c.eyebrow}</p>
-        </Reveal>
-        <h1 className="mt-6 max-w-4xl text-5xl font-medium leading-[0.95] tracking-tightest sm:text-7xl md:mt-8 lg:text-[7rem]">
+        {c.eyebrow && (
+          <Reveal>
+            <p className="eyebrow mb-6 md:mb-8">{c.eyebrow}</p>
+          </Reveal>
+        )}
+        <h1 className="max-w-4xl text-5xl font-medium leading-[0.95] tracking-tightest sm:text-7xl lg:text-[7rem]">
           <Reveal delay={0.05}>
             <span className="block text-bone-50">{c.line1}</span>
           </Reveal>

@@ -30,17 +30,16 @@ Open http://localhost:3000.
 
 | Route | Purpose |
 |---|---|
-| `/` | 3D herd hero (`components/herd`), partners, product tabs, how it works, built with ranchers, your data |
-| `/product/voice`, `/offline`, `/pasture`, `/web` | One page per part of the software |
-| `/product/virtual-fencing` | Virtual fencing hardware — in R&D, not for sale; collar photos carry an R&D label |
-| `/features` | Full feature list |
+| `/` | Video hero (`components/home/HomeHero`, files in `public/video`), partners, product tabs, how it works, built with ranchers, your data |
+| `/product` | The software on one page: web app, iOS app, pasture, herd and grazing management, then all features. The old `/product/voice`, `/offline`, `/pasture`, `/web` and `/features` redirect to its sections |
+| `/product/virtual-fencing` | Virtual fencing hardware — in R&D, not for sale; 3D herd hero (`components/herd`) and the scanned-cow credit in its footer; collar photos carry an R&D label |
 | `/pricing` | Custom pricing per ranch, first month free, "software only for now", FAQ |
 | `/news` | Press and awards |
 | `/company` | About us: team (co-founders, advisors), our story timeline, partners. `/team` redirects to `/company#team` |
-| `/contact` | Trial form, book a call, email |
-| `/faq` | Help & FAQ (linked from the footer) |
+| `/contact` | Trial form and email |
+| `/faq` | Help & FAQ |
 
-The top menu (Product · Pricing · News · Company) and the footer columns are built from one list, `lib/site-nav.ts`.
+The top menu (Product · Pricing · News · Company · Help & FAQ) and the footer columns are built from one list, `lib/site-nav.ts`.
 
 **To add a news item:** add it to `lib/news.ts` (link, photo, tag) and its title, date and summary to both dictionaries under `news.items`.
 

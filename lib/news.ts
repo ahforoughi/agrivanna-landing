@@ -3,6 +3,24 @@ export type NewsTag = "Press" | "Award" | "Accelerator" | "Competition";
 
 export const NEWS = [
   {
+    id: "calgary-tech",
+    href: "https://calgary.tech/2026/09/29/agrivanna-brings-voice-powered-records-to-the-ranch/",
+    image: "/story/rancher-interview.jpg",
+    tag: "Press",
+  },
+  {
+    id: "platform-top-10",
+    href: "https://www.youtube.com/watch?v=2_-BQZmU3y4",
+    image: "/story/team-photo.jpg",
+    tag: "Competition",
+  },
+  {
+    id: "rural-roots",
+    href: "https://www.fieldtofuture.ca/ag-tech-startup-looks-to-make-virtual-fencing-more-accessible-to-ranchers/",
+    image: "/story/cows-on-pasture.jpg",
+    tag: "Press",
+  },
+  {
     id: "spring",
     href: "https://spring.is",
     image: "/story/spring-scale-ready.jpg",
@@ -10,13 +28,19 @@ export const NEWS = [
   },
   {
     id: "start-something",
-    href: "https://ucalgary.ca/news/agrivanna-student-built-ai-agtech-startup-helps-ranchers-herd-cattle-quicker-saving-money-time",
+    href: "https://ucalgary.ca/news/ucalgary-founders-take-next-step-start-something-summit",
     image: "/story/start-something-winning.jpg",
     tag: "Award",
   },
   {
+    id: "ucalgary-feature",
+    href: "https://ucalgary.ca/news/agrivanna-student-built-ai-agtech-startup-helps-ranchers-herd-cattle-quicker-saving-money-time",
+    image: "/story/team-ranch.jpg",
+    tag: "Press",
+  },
+  {
     id: "arena",
-    href: "https://arthurlirvingentrepreneurshipcentre.ca/thearena/",
+    href: "https://news.smu.ca/news/2026/4/7/student-behind-ai-ranching-technology-wins-10000-grand-prize-in-the-arena-2026",
     image: "/story/arena-win.png",
     tag: "Award",
   },

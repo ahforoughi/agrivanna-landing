@@ -3,7 +3,7 @@ import Image from "next/image";
 import { Linkedin, Instagram, Youtube, Mail, ArrowUpRight } from "lucide-react";
 import { fmt, localizePath, type Locale } from "@/lib/i18n";
 import type { Dictionary } from "@/lib/dictionaries";
-import LanguageToggle from "@/components/LanguageToggle";
+import ScanCredit from "@/components/ScanCredit";
 import { COMPANY_LINKS, PRODUCT_LINKS, RESOURCE_LINKS, type MenuLink } from "@/lib/site-nav";
 
 export default function Footer({ locale, t }: { locale: Locale; t: Dictionary }) {
@@ -96,16 +96,8 @@ export default function Footer({ locale, t }: { locale: Locale; t: Dictionary })
 
         <div className="flex flex-col items-start justify-between gap-4 pt-8 text-xs text-bone-300 md:flex-row md:items-center">
           <div className="flex flex-wrap items-center gap-4">
-            <LanguageToggle />
             <p>{fmt(t.footer.copyright, { year: new Date().getFullYear() })}</p>
-            <a
-              href="https://sketchfab.com/3d-models/none-b6c8c027ab2f44de8b4a9ff518ea5f56"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-bone-300/70 transition-colors hover:text-lime-400"
-            >
-              {t.footer.scanCredit}
-            </a>
+            <ScanCredit label={t.footer.scanCredit} />
           </div>
           <a
             href="https://albertainnovates.ca/"

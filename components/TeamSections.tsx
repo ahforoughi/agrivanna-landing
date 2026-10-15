@@ -35,8 +35,8 @@ export default function TeamSections({ dict }: { dict: Dictionary }) {
         </div>
       </section>
 
-      {/* Co-founders */}
-      <section className="relative border-t border-white/5 py-24">
+      {/* Co-founders: no divider, it continues the intro above */}
+      <section className="relative pb-24 pt-16">
         <div className="mx-auto max-w-6xl px-4">
           <div className="mb-12 flex items-end justify-between">
             <div>

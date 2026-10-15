@@ -8,8 +8,8 @@ import type { Dictionary } from "./en";
  * Bios avoid gendered words (il/elle, étudiant/étudiante) because we don't
  * know how each person refers to themselves.
  *
- * The app itself, and its voice recognition, are English-only today — see
- * home.recording.appLanguageNote. Don't promise French dictation here.
+ * The app itself, and its voice recognition, are English-only today. Don't
+ * promise French dictation here.
  */
 const fr: Dictionary = {
   meta: {
@@ -18,7 +18,7 @@ const fr: Dictionary = {
       "Dictez vos registres de troupeau et de pâturage, gants aux mains. Fonctionne sans réseau, se synchronise dès que le signal revient et établit des plans de pâturage en rotation à partir d’images satellite.",
     ogTitle: "Agrivanna — Gérez le troupeau, pas le logiciel",
     ogDescription:
-      "Des registres de ranch à la voix qui fonctionnent hors ligne, plus la cartographie des pâturages et des plans de pâturage en rotation.",
+      "Des registres de ranch tenus à la voix qui fonctionnent hors ligne, ainsi que la cartographie des pâturages et des plans de pâturage en rotation.",
   },
 
   nav: {
@@ -26,7 +26,6 @@ const fr: Dictionary = {
     pricing: "Tarifs",
     team: "Équipe",
     news: "Nouvelles",
-    freeTrial: "Essai gratuit",
     homeAria: "Accueil Agrivanna",
     openMenu: "Ouvrir le menu",
     closeMenu: "Fermer le menu",
@@ -38,7 +37,6 @@ const fr: Dictionary = {
   },
 
   trialButton: "Commencer un essai gratuit",
-  bookCall: "Réserver un appel",
 
   footer: {
     eyebrow: "Commencez dès aujourd’hui",
@@ -109,93 +107,21 @@ const fr: Dictionary = {
   },
 
   home: {
-    eyebrow: "Registres de ranch · Calgary (Alb.)",
     heroPhotoAlt:
-      "Un téléphone affichant l’écran de pesée d’Agrivanna, tenu à côté d’un indicateur de balance",
+      "Un téléphone affichant l’écran de pesée d’Agrivanna, tenu par un éleveur à côté d’un indicateur de balance",
     heroLine1: "Gérez le troupeau.",
     heroLine2: "Pas le",
     heroLine3: "logiciel.",
     heroBody:
-      "Les mains dans la boue, pas de réseau et pas une semaine à perdre pour apprendre un logiciel. Alors n’apprenez rien — parlez-lui. Agrivanna tient les registres de troupeau et de pâturage que vous n’avez jamais le temps d’écrire.",
+      "Les mains dans la boue, pas de réseau? Parlez, tout simplement. Agrivanna tient vos registres de troupeau et de pâturage pour vous.",
     seeHow: "Voir comment ça marche",
-    testedOn: "Conçu et testé dans de vrais ranchs albertains",
+    heroVideoLabel: "Un éleveur fait passer le bétail dans la chute pendant que l’application Agrivanna enregistre l’étiquette et le poids de chaque animal",
+    heroVideoPlay: "Lire la vidéo",
+    testedOn: "Conçu et testé dans des ranchs albertains en activité",
 
-    problem: {
-      eyebrow: "Le vrai problème",
-      headLine1: "Le logiciel n’a jamais été",
-      headLine2: "le plus difficile.",
-      body:
-        "C’est d’y entrer quoi que ce soit. Depuis vingt ans, tous les logiciels de ranch échouent au même point — le moment où quelqu’un, les mains sales, doit arrêter de travailler pour taper.",
-      friction: [
-        {
-          head: "Vous avez déjà les mains pleines.",
-          body:
-            "Vêlages, gants, sang, colostrum, une étiquette entre les dents. Personne ne fait défiler six écrans à trois heures du matin pour inscrire une génisse.",
-        },
-        {
-          head: "Le calepin, c’est le système.",
-          body:
-            "Les étiquettes sur un bout de papier, les poids sur le tableau blanc de l’atelier, le reste dans votre tête jusqu’à ce que le comptable pose la question en mars.",
-        },
-        {
-          head: "Personne n’a une semaine pour apprendre un logiciel.",
-          body:
-            "La plupart des logiciels de ranch demandent plus de champs que vous n’avez de réponses, et il faut tout taper. Alors on les ouvre une fois, puis plus jamais.",
-        },
-      ],
-      punchline: "Alors ne tapez pas. Parlez.",
-    },
 
-    recording: {
-      eyebrow: "Enregistrement",
-      headLine1: "Dites-le à voix haute.",
-      headLine2: "C’est noté.",
-      body:
-        "Racontez ce que vous faites comme vous le diriez à votre voisin par-dessus la clôture. Agrivanna repère les étiquettes, les poids et les traitements dans ce que vous dites et les inscrit à la fiche du bon animal.",
-      bullets: [
-        "Parlez avec vos propres mots. Pas de formulaires, pas de menus déroulants, rien à apprendre.",
-        "Votre lecteur RFID et votre indicateur de balance envoient les étiquettes et les poids sans que vous tapiez un seul chiffre.",
-        "Vous tenez déjà des registres ailleurs? Envoyez-les-nous et nous importerons tout pour vous.",
-      ],
-      appLanguageNote:
-        "À noter : pour l’instant, l’application et la reconnaissance vocale fonctionnent en anglais. L’exemple sur le téléphone est donc dicté en anglais.",
-      // Left in English on purpose: it's what the app hears, and it only listens in English.
-      dictation:
-        "Cow 418, the black baldy heifer. Calved around five this morning in the north pasture. Bull calf, no help needed, up and sucking already. Gave him yellow tag 418 and a shot of vitamin E and selenium. Guessing he's about 85 pounds. She's a good mom, a bit protective.",
-      dictationSr: "L’écran de note vocale d’Agrivanna transcrit, en anglais, ce que dit un éleveur :",
-      confirmEyebrow: "Puis confirmez",
-      confirmLine1: "Touchez une fois, et c’est",
-      confirmLine2: "au registre.",
-      confirmBody:
-        "Tout ce que vous avez dit au champ revient sous forme de lignes simples — le vêlage, les bouvillons déplacés, la vache traitée, l’endroit où vous avez laissé les balles, celui où vous avez mis le sel. Vérifiez-les ou rejetez-les. Rien n’entre dans vos registres sans votre accord : une étiquette mal entendue ne devient jamais une erreur au dossier.",
-    },
 
-    confirmQueue: {
-      title: "Prêt à confirmer",
-      count: "5 entrées",
-      footer:
-        "Touchez le crochet et c’est au registre. Rien n’est inscrit à vos registres sans votre accord.",
-      rows: [
-        { date: "11 sept.", action: "Vêlage", subject: "Vache 418", detail: "Veau mâle, sans aide, pâturage nord" },
-        { date: "11 sept.", action: "Changement de pâturage", subject: "Bouvillons d’un an · 88 têtes", detail: "Pré nord → sud" },
-        { date: "10 sept.", action: "Traitement", subject: "Bleu 61", detail: "Kératoconjonctivite, 8 cc, délai d’attente inscrit" },
-        { date: "10 sept.", action: "Balles déposées", subject: "12 balles rondes", detail: "Pâturage du ruisseau, barrière ouest" },
-        { date: "9 sept.", action: "Sel et minéraux", subject: "Bloc déposé", detail: "Pâturage sud, près de la fosse-réservoir" },
-      ],
-    },
 
-    offline: {
-      eyebrow: "Pensé pour fonctionner hors ligne",
-      headLine1: "Pas de réseau.",
-      headLine2: "Rien de perdu.",
-      body:
-        "La version qui fait foi, c’est celle du téléphone, pas celle d’un serveur en ville. Entrer et sortir de la zone de couverture ne devrait pas vous préoccuper, et une zone morte ne devrait jamais vous coûter une journée de travail.",
-      steps: [
-        { step: "01", head: "Vous parlez", body: "À la contention, au champ, où que vous soyez." },
-        { step: "02", head: "Le téléphone garde tout", body: "Enregistré sur l’appareil dès que vous arrêtez de parler. Avec ou sans signal." },
-        { step: "03", head: "Ça se téléverse tout seul", body: "Dès que vous retrouvez du signal ou le Wi-Fi de la cour. Rien à faire de votre côté." },
-      ],
-    },
 
     pasture: {
       eyebrow: "Gestion des pâturages",
@@ -213,22 +139,14 @@ const fr: Dictionary = {
       mapAlt: "Carte satellite des pâturages montrant l’état du pâturage dans chaque enclos",
       fenceTag: "En R-D",
       fenceHeadBefore: "Conçu pour les clôtures que vous avez déjà.",
-      fenceHeadHighlight: "Les clôtures virtuelles",
+      fenceHeadHighlight: "Les limites virtuelles",
       fenceHeadAfter: "sont à venir.",
       fenceBody:
-        "Pas de fil, pas de piquets, pas de réparations après le passage des wapitis. Subdivisez un quart de section sans dépenser un dollar en matériaux ni une fin de semaine de travail, et mettez du bétail sur des terres que vous n’auriez jamais pu vous permettre de clôturer — fonds de ruisseau, boisés, terres louées, l’arrière de la colline.",
+        "Pas de fil, pas de poteaux, pas de réparations après le passage des wapitis. Subdivisez un quart de section sans dépenser un dollar en matériaux ni une fin de semaine de travail, et mettez du bétail sur des terres que vous n’auriez jamais pu vous permettre de clôturer — fonds de ruisseau, boisés, terres louées, l’arrière de la colline.",
       fenceHonest:
         "Nous n’allons pas vous vendre un collier qui n’est pas prêt. La clôture virtuelle est en recherche et développement. Les pâturages que vous cartographiez et les rotations que vous établissez aujourd’hui sont ceux sur lesquels elle fonctionnera : rien de ce que vous faites maintenant ne sera perdu.",
     },
 
-    house: {
-      eyebrow: "De retour à la maison",
-      headLine1: "Les mêmes registres,",
-      headLine2: "sur grand écran.",
-      body:
-        "Tout ce que vous avez dit à la contention est sur l’ordinateur avant même que vous rentriez. Triez les troupeaux, vérifiez les poids, voyez quelles vaches méritent leur ration et exportez vos données quand le vétérinaire ou le comptable les demande.",
-      imageAlt: "Liste du troupeau et fiches des animaux d’Agrivanna ouvertes dans un navigateur",
-    },
 
     payoff: {
       eyebrow: "Pourquoi c’est payant",
@@ -255,7 +173,7 @@ const fr: Dictionary = {
 
     builtWith: {
       eyebrow: "Avec qui nous le bâtissons",
-      headLine1: "Conçu à la contention,",
+      headLine1: "Conçu à la chute,",
       headLine2: "pas dans une salle de réunion.",
       body:
         "Nous travaillons aux côtés d’éleveurs qui composent avec un vrai terrain, de la vraie boue et une vraie météo — et avec l’Université de Calgary, Alberta Innovates et l’Association canadienne pour les plantes fourragères.",
@@ -274,7 +192,7 @@ const fr: Dictionary = {
       price: "Sur mesure",
       priceNote: "pour votre ranch",
       includes: [
-        "Registres vocaux, séances de contention, lecteurs et indicateurs de balance",
+        "Registres vocaux, séances à la chute, prise en charge des lecteurs et des indicateurs de balance",
         "Fonctionne hors ligne sur chaque appareil, se synchronise tout seul",
         "Cartographie des pâturages, état de préparation et planification des rotations",
         "Registres sur le Web pour la famille, les employés et votre vétérinaire",
@@ -295,8 +213,8 @@ const fr: Dictionary = {
       headLine1: "Toute la plateforme,",
       headLine2: "comprise pour chaque ranch.",
       body:
-        "Aucun module à ajouter : chaque ranch a toute la plateforme. Certaines fonctions sont encore en déploiement — demandez-nous ce qui est déjà disponible pour votre ranch et nous vous le dirons franchement.",
-      imageAlt: "Choix des tâches d’une séance de contention dans l’application Agrivanna",
+        "Aucun module à ajouter : chaque ranch a toute la plateforme. Certaines fonctions sont encore en déploiement — demandez-nous ce qui est déjà disponible pour votre ranch et nous vous le dirons franchement.",
+      imageAlt: "Choix des tâches d’une séance à la chute dans l’application Agrivanna",
       groups: [
         {
           group: "Animaux et troupeau",
@@ -305,8 +223,8 @@ const fr: Dictionary = {
             { name: "Inventaire en temps réel", detail: "Se met à jour tout seul quand les animaux changent de place, vêlent ou sont réformés." },
             { name: "Lecture des étiquettes RFID", detail: "Lecteurs à bâton Bluetooth et indicateurs de balance." },
             { name: "Reproduction et vêlage", detail: "Registres d’insémination, diagnostics de gestation et registre de vêlage." },
-            { name: "Génétique et DEP", detail: "Différences escomptées chez la progéniture, rattachées à l’animal." },
-            { name: "Cote d’état de chair", detail: "De 1 à 10, prise à la contention pendant la lecture de l’étiquette." },
+            { name: "Génétique et DEP", detail: "Différences attendues chez la progéniture, rattachées à l’animal." },
+            { name: "Cote d’état de chair", detail: "De 1 à 10, prise à la chute pendant la lecture de l’étiquette." },
             { name: "Gestion BQA", detail: "Protocoles Beef Quality Assurance suivis au fil du travail." },
             { name: "Inventaire des aliments", detail: "Un portrait global de ce que vous avez en réserve." },
           ],
@@ -335,10 +253,10 @@ const fr: Dictionary = {
     },
 
     cta: {
-      headLine1: "Essayez Agrivanna à la contention.",
-      headLine2: "Au dernier veau, vous serez fixé.",
+      headLine1: "Essayez Agrivanna le temps d’un passage à la chute.",
+      headLine2: "Au dernier veau, vous saurez.",
       body:
-        "Écrivez-nous et nous configurerons votre ranch nous-mêmes — pâturages cartographiés, troupeaux importés, lecteur jumelé. Ensuite, apportez votre téléphone à la contention et voyez si Agrivanna suit le rythme.",
+        "Écrivez-nous et nous configurerons votre ranch nous-mêmes — pâturages cartographiés, troupeaux importés, lecteur jumelé. Ensuite, apportez votre téléphone à la chute et voyez si Agrivanna suit le rythme.",
     },
   },
 
@@ -366,7 +284,7 @@ const fr: Dictionary = {
     headLine2: "éleveurs,",
     headLine3: "gestionnaires.",
     intro:
-      "Agrivanna est une petite équipe qui a bâti ce que presque toute l’industrie jugeait impossible : un système d’aide à la gestion du pâturage qui fonctionne hors ligne, dans de vrais ranchs. Voici qui est derrière.",
+      "Agrivanna est une petite équipe qui a bâti ce que presque toute l’industrie jugeait impossible : un système d’aide à la gestion du pâturage qui fonctionne hors ligne, dans des ranchs en activité. Voici qui est derrière.",
     photoAlt: "L’équipe fondatrice d’Agrivanna avec un des premiers prototypes de collier",
     cofoundersEyebrow: "Équipe fondatrice",
     cofoundersHeading: "Les trois qui bâtissent l’entreprise.",
@@ -431,13 +349,17 @@ const fr: Dictionary = {
     headLine2: "au grand jour.",
     intro:
       "Chaque accélérateur, prix et article obtenu en chemin.",
-    photoAlt: "Un téléphone affichant l’écran de pesée d’Agrivanna, tenu à côté d’un indicateur de balance",
+    photoAlt: "Un téléphone affichant l’écran de pesée d’Agrivanna, tenu par un éleveur à côté d’un indicateur de balance",
     latestEyebrow: "Récent",
     latestHeading: "Dans les médias.",
     storyCount: "{count} articles",
     readMore: "Lire la suite",
     watchEyebrow: "Regarder",
     watchHeading: "Agrivanna en vidéo.",
+    videos: {
+      platform: "Platform Calgary · Agrivanna, finaliste du Top 10 2026",
+      ucalgary: "Université de Calgary · Les débuts d’Agrivanna",
+    },
     storyEyebrow: "Notre parcours jusqu’ici",
     storyHeading: "De Calgary au troupeau — et plus loin.",
     storyIntro: "Chaque jalon depuis octobre 2024, et ce que nous préparons pour la suite.",
@@ -448,6 +370,27 @@ const fr: Dictionary = {
       Competition: "Concours",
     },
     items: {
+      "calgary-tech": {
+        title: "Agrivanna apporte les registres vocaux au ranch",
+        source: "Calgary.Tech",
+        date: "Septembre 2026",
+        summary:
+          "Calgary.Tech a présenté comment les éleveurs dictent leurs notes sur les animaux, les traitements et les déplacements de troupeaux, les vérifient avant de les enregistrer et continuent de travailler sans réseau cellulaire, en plus de la cartographie des pâturages et de la planification des rotations.",
+      },
+      "platform-top-10": {
+        title: "Parmi les 10 meilleures jeunes pousses en démarrage de Calgary",
+        source: "Platform Calgary",
+        date: "Septembre 2026",
+        summary:
+          "Platform Calgary a nommé Agrivanna parmi les 10 finalistes de son Calgary Launch Party 2026, qui réunit les jeunes pousses en démarrage les plus prometteuses de la ville. Le Launch Party a lieu le 5 novembre, pendant la Calgary Innovation Week.",
+      },
+      "rural-roots": {
+        title: "Rendre la clôture virtuelle plus accessible aux éleveurs",
+        source: "Rural Roots Canada · Field to Future",
+        date: "Août 2026",
+        summary:
+          "Rural Roots Canada s’est penché sur la clôture virtuelle qu’Agrivanna développe pour faciliter le pâturage en rotation, dont une option moins coûteuse construite autour d’une station de base portative. La clôture virtuelle est toujours en recherche et développement.",
+      },
       spring: {
         title: "Sélection au programme Elevate Round Ready de Spring",
         source: "Spring",
@@ -462,12 +405,19 @@ const fr: Dictionary = {
         summary:
           "Agrivanna a remporté 10 000 $ pour la 1re place du volet Launchpad au Start Something Summit de l’Université de Calgary — la plus récente d’une série de victoires aux concours de présentation du Hunter Hub.",
       },
-      arena: {
-        title: "Agrivanna remporte la 1re place au concours The Arena",
-        source: "Arthur L. Irving Entrepreneurship Centre",
-        date: "Mars 2026",
+      "ucalgary-feature": {
+        title: "Une jeune pousse étudiante en agrotech aide les éleveurs à gérer leur bétail",
+        source: "Nouvelles de l’Université de Calgary",
+        date: "Juin 2026",
         summary:
-          "Agrivanna a terminé première au concours de présentation The Arena — reconnue parmi les meilleures jeunes pousses universitaires du Canada, avec une visibilité nationale pour son outil d’aide au pâturage.",
+          "Les Nouvelles de l’Université de Calgary ont raconté comment les trois membres de l’équipe fondatrice d’Agrivanna se sont rencontrés à l’université, et pourquoi ils ont voulu rendre la technologie de ranch moins chère et plus utile pour les producteurs canadiens.",
+      },
+      arena: {
+        title: "Agrivanna remporte The Arena 2026 et son grand prix de 10 000 $",
+        source: "Université Saint Mary’s · The Arena",
+        date: "Avril 2026",
+        summary:
+          "Haden Harrison, chef de l’exploitation, a mené Agrivanna au sommet de The Arena, le concours national de présentation pour étudiants de l’Université Saint Mary’s : un mois de duels éliminatoires entre plus de 64 fondateurs issus de 41 établissements de partout au Canada.",
       },
       liftoff: {
         title: "2e place au Hunter Hub Liftoff",
@@ -520,7 +470,7 @@ const fr: Dictionary = {
       "plug-and-play": { date: "Nov. 2025", title: "Plug and Play", body: "Admission à l’accélérateur Plug and Play Kananaskis." },
       aurrin: { date: "Févr. 2026", title: "Aurrin Ventures", body: "Prix Most Investible Company au concours Aurrin." },
       liftoff: { date: "Mars 2026", title: "Hunter Hub Liftoff", body: "Deuxième place au principal concours de jeunes pousses de l’Université de Calgary." },
-      arena: { date: "Mars 2026", title: "The Arena · 1re place", body: "Meilleure jeune pousse universitaire canadienne au concours The Arena." },
+      arena: { date: "Avr. 2026", title: "The Arena · 1re place", body: "Meilleure jeune pousse universitaire canadienne au concours The Arena." },
       pilots: { date: "Été 2026", title: "Premiers projets pilotes en ranch", body: "Premiers déploiements réels dans des ranchs partenaires en Alberta." },
       refinement: { date: "Fin 2026", title: "Peaufinage du produit", body: "Amélioration du matériel et du logiciel grâce aux données des projets pilotes." },
       "western-canada": { date: "2027", title: "Ouest canadien", body: "Expansion des projets pilotes et des déploiements commerciaux dans les Prairies." },
@@ -528,10 +478,10 @@ const fr: Dictionary = {
   },
 
   softwareLeads: {
-    metaTitle: "Commencer — Agrivanna",
+    metaTitle: "Essai gratuit — Agrivanna",
     metaDescription:
       "Parlez-nous de votre exploitation et commencez à utiliser le logiciel d’aide à la gestion du pâturage d’Agrivanna.",
-    eyebrow: "Commencer",
+    eyebrow: "Essai gratuit",
     headLine1: "Mettez Agrivanna",
     headLine2: "sur votre ranch.",
     intro:
@@ -565,21 +515,21 @@ const fr: Dictionary = {
         body: "Des clôtures sans fil, bâties sur les pâturages que vous cartographiez aujourd’hui. En recherche et développement, pas encore en vente.",
         link: "Ce que nous bâtissons",
       },
-      login: "Se connecter",
       rnd: "R-D",
       items: {
-        voice: { label: "Registres vocaux", desc: "Dites-le à la chute. C’est noté." },
-        offline: { label: "Fonctionne hors ligne", desc: "Pas de réseau, rien de perdu." },
-        pasture: { label: "Gestion des pâturages", desc: "Herbe cartographiée, rotations planifiées." },
-        web: { label: "Registres sur le Web", desc: "Les mêmes registres, sur grand écran." },
+        webApp: { label: "Application Web", desc: "Tout votre ranch sur grand écran." },
+        iosApp: { label: "Application iOS", desc: "Parlez à la chute, même sans réseau." },
+        pasture: { label: "Gestion des pâturages", desc: "Pâturages cartographiés, état vu par satellite." },
+        herd: { label: "Gestion du troupeau", desc: "Chaque animal, de la naissance à la vente." },
+        grazing: { label: "Pâturage en rotation", desc: "Planifiez les rotations, voyez où les bêtes ont brouté." },
         fencing: { label: "Clôture virtuelle", desc: "Des clôtures sans fil. En recherche et développement." },
-        features: { label: "Toutes les fonctions", desc: "Toute la plateforme, comprise." },
+        features: { label: "Toutes les fonctions", desc: "Registres vocaux, mode hors ligne et le reste, tout compris." },
         news: { label: "Nouvelles", desc: "Presse, prix et accélérateurs." },
         faq: { label: "Aide et FAQ", desc: "Des réponses franches avant de commencer." },
         about: { label: "À propos", desc: "Notre parcours et ceux qui nous appuient." },
         team: { label: "Équipe", desc: "Les gens qui bâtissent Agrivanna." },
         partners: { label: "Partenaires", desc: "Partenaires de recherche, de financement et d’équipement." },
-        contact: { label: "Contact", desc: "Réservez un appel ou commencez un essai gratuit." },
+        contact: { label: "Contact", desc: "Commencez un essai gratuit ou écrivez à l’équipe." },
       },
     },
 
@@ -602,7 +552,7 @@ const fr: Dictionary = {
       howLine2: "Décidez à partir de là.",
       howSteps: [
         { step: "01", head: "Dites-le", body: "Racontez la journée à la chute ou au champ. Pas besoin de réseau." },
-        { step: "02", head: "Vérifiez-le", body: "Chaque entrée revient en ligne simple. Un toucher la garde; rien n’est enregistré sans vous." },
+        { step: "02", head: "Vérifiez-le", body: "Chaque entrée revient sous forme de ligne simple. Un toucher suffit pour la garder; rien n’est enregistré sans vous." },
         { step: "03", head: "Utilisez-le", body: "Troupeau, poids et pâturages sur le téléphone et l’ordinateur, prêts pour vos décisions." },
       ],
       pricingEyebrow: "Tarifs",
@@ -612,10 +562,10 @@ const fr: Dictionary = {
       showcasePause: "Mettre la visite en pause",
       showcasePlay: "Reprendre la visite",
       showcase: {
-        voice: { head: "Dites-le à la chute.", body: "Racontez la journée comme vous le feriez à votre voisin. Agrivanna inscrit les étiquettes, les poids et les traitements au dossier du bon animal, et rien n’est enregistré avant votre confirmation." },
-        pasture: { head: "Sachez quel pâturage est prêt.", body: "Cartographiez vos pâturages, voyez par imagerie satellite lesquels se sont assez reposés et faites passer vos troupeaux dans une rotation sans rien redessiner." },
-        web: { head: "Les mêmes registres, sur grand écran.", body: "Tout ce qui est dit à la chute est sur l’ordinateur quand vous rentrez. Triez les troupeaux, vérifiez les poids et exportez pour le vétérinaire ou le comptable." },
-        fencing: { head: "Des clôtures sans fil.", body: "Des limites virtuelles qui font rebrousser chemin au bétail, bâties sur les pâturages que vous cartographiez aujourd’hui. En recherche et développement, pas encore en vente." },
+        voice: { label: "Registres vocaux", head: "Dites-le à la chute.", body: "Racontez la journée comme vous le feriez à votre voisin. Agrivanna inscrit les étiquettes, les poids et les traitements à la fiche du bon animal, et rien n’est enregistré avant votre confirmation." },
+        pasture: { label: "Gestion des pâturages", head: "Sachez quel pâturage est prêt.", body: "Cartographiez vos pâturages, voyez par imagerie satellite lesquels se sont assez reposés et faites passer vos troupeaux dans une rotation sans rien redessiner." },
+        web: { label: "Registres sur le Web", head: "Les mêmes registres, sur grand écran.", body: "Tout ce qui est dit à la chute est sur l’ordinateur quand vous rentrez. Triez les troupeaux, vérifiez les poids et exportez pour le vétérinaire ou le comptable." },
+        fencing: { label: "Clôture virtuelle", head: "Des clôtures sans fil.", body: "Des limites virtuelles qui font rebrousser chemin au bétail, bâties sur les pâturages que vous cartographiez aujourd’hui. En recherche et développement, pas encore en vente." },
       },
       dataEyebrow: "Vos données",
       dataLine1: "Vos registres restent",
@@ -630,6 +580,77 @@ const fr: Dictionary = {
     },
 
     pages: {
+      software: {
+        metaTitle: "Logiciel — Agrivanna",
+        metaDescription: "L’application Web et l’application iOS d’Agrivanna : gestion du troupeau, des pâturages et du pâturage en rotation pour les ranchs vache-veau, avec des registres vocaux qui fonctionnent sans réseau.",
+        eyebrow: "Produit · Logiciel",
+        headLine1: "Une application,",
+        headLine2: "pour le troupeau et l’herbe.",
+        intro: "Parlez-lui sur votre téléphone à la chute, planifiez le pâturage sur la carte et retrouvez tout sur l’ordinateur de retour à la maison. Chaque partie est comprise pour chaque ranch.",
+        jumpTitle: "Sur cette page",
+        sections: {
+          webApp: {
+            head1: "Tout votre ranch,",
+            head2: "sur grand écran.",
+            body: "Tout ce que vous avez dit à la chute est sur l’ordinateur avant même que vous rentriez. Le tableau de bord montre d’un coup d’œil le nombre de têtes, les troupeaux, les pâturages occupés et la météo.",
+            bullets: [
+              "Voyez où est chaque troupeau, depuis combien de temps, et quels déplacements sont dus.",
+              "Triez les troupeaux, vérifiez les poids et voyez quelles vaches méritent leur ration.",
+              "Exportez vos registres quand le vétérinaire ou le comptable les demande.",
+              "Donnez à votre famille, à vos employés et à votre vétérinaire leur propre accès, avec les autorisations que vous choisissez.",
+            ],
+            imageAlt: "Le tableau de bord d’Agrivanna sur un ordinateur portable : nombre de têtes, troupeaux, météo et état des pâturages",
+          },
+          iosApp: {
+            head1: "Parlez-lui à la chute.",
+            head2: "Même sans réseau.",
+            body: "Racontez ce qui s’est passé comme vous le diriez à votre voisin par-dessus la clôture. Agrivanna repère les étiquettes, les poids et les traitements et les inscrit à la fiche du bon animal.",
+            bullets: [
+              "Parlez avec vos propres mots. Pas de formulaires, pas de menus déroulants, rien à apprendre.",
+              "Chaque entrée revient sous forme de ligne simple, et rien n’est enregistré avant votre confirmation.",
+              "Pas besoin de réseau. Les registres restent sur le téléphone et se téléversent tout seuls quand vous retrouvez le signal.",
+              "Votre lecteur RFID et votre indicateur de balance envoient les étiquettes et les poids par Bluetooth.",
+            ],
+            imageAlt: "L’application iPhone d’Agrivanna à l’écoute d’une note vocale",
+          },
+          pasture: {
+            head1: "Sachez quel pâturage",
+            head2: "est prêt.",
+            body: "Entrez vos pâturages comme ça vous convient : dessinez-les sur la carte, faites-en le tour en camion, longez la clôture à pied ou importez les limites que vous avez déjà. Dans tous les cas, vous obtenez la superficie.",
+            bullets: [
+              "Les images satellite montrent quels pâturages se sont assez reposés : plus besoin de deviner.",
+              "Chaque pâturage marqué prêt, à surveiller ou au repos, d’un coup d’œil.",
+              "Voyez combien de têtes sont sur chaque pâturage, directement sur la carte.",
+              "Votre météo locale et vos prévisions, intégrées automatiquement.",
+            ],
+            imageAlt: "Pâturages cartographiés sur l’imagerie satellite dans l’application Agrivanna, avec le nombre de têtes sur chacun",
+          },
+          herd: {
+            head1: "Chaque animal,",
+            head2: "de la naissance à la vente.",
+            body: "Chaque animal a un seul historique : vêlages, traitements, poids et déplacements, enregistrés pendant que vous travaillez au lieu d’être tapés plus tard.",
+            bullets: [
+              "Un inventaire qui se tient à jour quand les animaux se déplacent, vêlent ou sont réformés.",
+              "Reproduction et vêlage : inséminations, diagnostics de gestation et registre de vêlage.",
+              "Les traitements avec leurs délais d’attente, pour savoir quels animaux ne peuvent pas encore être expédiés.",
+              "Étiquettes RFID lues avec des lecteurs à bâton Bluetooth, et état de chair noté à la chute.",
+            ],
+            imageAlt: "Liste du troupeau et fiches des animaux d’Agrivanna ouvertes dans un navigateur",
+          },
+          grazing: {
+            head1: "Planifiez la rotation.",
+            head2: "Voyez où les bêtes ont brouté.",
+            body: "Établissez une rotation et faites-y passer vos troupeaux sans rien redessiner. Agrivanna compte les jours que chaque troupeau passe sur un pâturage et vous signale quand un déplacement est dû.",
+            bullets: [
+              "Un plan de pâturage établi selon la capacité de charge et la densité de chargement.",
+              "Les cartes thermiques d’utilisation montrent où les bêtes ont vraiment brouté, pas où vous les avez envoyées.",
+              "Le nombre de jours au pâturage et les déplacements dus, pour chaque troupeau.",
+              "Les pâturages et les rotations que vous configurez aujourd’hui sont ceux sur lesquels la clôture virtuelle fonctionnera.",
+            ],
+            imageAlt: "Carte de pâturage dans l’application Agrivanna : enclos colorés selon l’indice de végétation, avec les jours de pâturage d’un troupeau et le bouton « Move »",
+          },
+        },
+      },
       fencing: {
         metaTitle: "Clôture virtuelle (en R-D) — Agrivanna",
         metaDescription: "Agrivanna bâtit la clôture virtuelle : des limites qui font rebrousser chemin au bétail sans poteaux ni fil, sur les pâturages que les éleveurs cartographient déjà. En recherche et développement, pas encore en vente.",
@@ -637,8 +658,7 @@ const fr: Dictionary = {
         heroLine1: "Clôturez la terre.",
         heroLine2: "Sans",
         heroLine3: "fil.",
-        heroBody: "Des limites virtuelles qui font rebrousser chemin au bétail, sans poteaux ni fil. Nous la bâtissons maintenant, sur les pâturages et les rotations que les éleveurs cartographient déjà dans Agrivanna.",
-        pilots: "Parlons des projets pilotes",
+        heroBody: "Des limites virtuelles qui font rebrousser chemin au bétail, sans poteaux ni fil. Nous les bâtissons maintenant, sur les pâturages et les rotations que les éleveurs cartographient déjà dans Agrivanna.",
         howLink: "Comment ça marche",
         ideaEyebrow: "L’idée",
         ideaLine1: "Tracez la ligne.",
@@ -646,7 +666,7 @@ const fr: Dictionary = {
         ideaSteps: [
           { step: "01", head: "Tracez-la sur la carte", body: "Marquez la limite dans Agrivanna, comme vous cartographiez vos pâturages aujourd’hui." },
           { step: "02", head: "Un signal près de la ligne", body: "Le bétail qui s’approche de la limite reçoit un léger signal pour faire demi-tour." },
-          { step: "03", head: "Déplacez-la à chaque rotation", body: "Passez la ligne au prochain enclos sans rien construire." },
+          { step: "03", head: "Déplacez-la à chaque rotation", body: "Déplacez la ligne vers le prochain enclos sans rien construire." },
         ],
         whyEyebrow: "Pourquoi c’est important",
         whyLine1: "Mettez le bétail là où",
@@ -657,52 +677,12 @@ const fr: Dictionary = {
         statusBody: "Nous testons des prototypes avec des ranchs partenaires en Alberta. Rien de tout cela n’est encore en vente, et nous le dirons clairement tant que ce sera le cas.",
         photoPilots: "Prototypes de colliers dans un ranch partenaire pendant les essais pilotes",
         photoCow: "Une vache portant un prototype de clôture virtuelle Agrivanna",
-        photoTeam: "Les fondateurs d’Agrivanna avec un premier prototype de collier",
+        photoTeam: "L’équipe fondatrice d’Agrivanna avec un des premiers prototypes de collier",
         softwareEyebrow: "Commencez par le logiciel",
         softwareLine1: "Les pâturages que vous cartographiez",
         softwareLine2: "sont ceux sur lesquels elle fonctionnera.",
         softwareBody: "Cartographiez vos pâturages et planifiez vos rotations dans Agrivanna dès aujourd’hui. Quand la clôture virtuelle sera prête, elle s’appuiera sur ce que vous avez déjà tracé.",
         softwareLink: "Gestion des pâturages",
-      },
-      voice: {
-        metaTitle: "Registres vocaux — Agrivanna",
-        metaDescription: "Dictez vos registres de troupeau, gants aux mains. Agrivanna les inscrit au bon animal, et rien n’est enregistré avant votre confirmation.",
-        eyebrow: "Produit · Registres vocaux",
-        headLine1: "Parlez-lui.",
-        headLine2: "Ne tapez plus.",
-        intro: "Racontez ce qui s’est passé comme vous le feriez à votre voisin par-dessus la clôture. Agrivanna en tire les étiquettes, les poids et les traitements, et n’enregistre rien avant votre accord.",
-      },
-      offline: {
-        metaTitle: "Fonctionne hors ligne — Agrivanna",
-        metaDescription: "Agrivanna enregistre chaque entrée sur le téléphone d’abord et la téléverse d’elle-même dès que le signal revient.",
-        eyebrow: "Produit · Fonctionne hors ligne",
-        headLine1: "Conçu pour les coins",
-        headLine2: "sans réseau.",
-        intro: "Tout est enregistré sur le téléphone dès que vous arrêtez de parler. Le téléversement se fait tout seul au prochain signal ou sur le Wi-Fi de la cour : une zone morte ne vous coûte jamais une journée de travail.",
-      },
-      pasture: {
-        metaTitle: "Gestion des pâturages — Agrivanna",
-        metaDescription: "Cartographiez vos pâturages, voyez par imagerie satellite lesquels se sont assez reposés et faites passer vos troupeaux dans un plan de rotation.",
-        eyebrow: "Produit · Gestion des pâturages",
-        headLine1: "Sachez quel pâturage",
-        headLine2: "est prêt.",
-        intro: "Cartographiez vos pâturages, voyez par imagerie satellite lesquels ont eu assez de repos et faites passer vos troupeaux dans une rotation sans rien redessiner.",
-      },
-      web: {
-        metaTitle: "Registres sur le Web — Agrivanna",
-        metaDescription: "Tout ce qui est noté à la chute est sur l’ordinateur quand vous rentrez. Triez les troupeaux, vérifiez les poids et exportez vos données.",
-        eyebrow: "Produit · Registres sur le Web",
-        headLine1: "De la chute",
-        headLine2: "à la table de cuisine.",
-        intro: "Tout ce qui est noté au champ s’affiche sur l’ordinateur. Triez les troupeaux, vérifiez les poids et sortez un export quand le vétérinaire ou le comptable le demande.",
-      },
-      features: {
-        metaTitle: "Toutes les fonctions — Agrivanna",
-        metaDescription: "Toutes les fonctions d’Agrivanna pour le troupeau, les pâturages et les données, comprises pour chaque ranch.",
-        eyebrow: "Produit · Toutes les fonctions",
-        headLine1: "Une plateforme.",
-        headLine2: "Tout compris.",
-        intro: "Registres de troupeau, planification des pâturages et vos données, tout compris. Aucun module à acheter plus tard.",
       },
       pricing: {
         metaTitle: "Tarifs — Agrivanna",
@@ -718,17 +698,15 @@ const fr: Dictionary = {
         metaTitle: "À propos — Agrivanna",
         metaDescription: "Agrivanna est une entreprise agrotechnologique de Calgary qui conçoit des registres de ranch qui fonctionnent à la chute, sans réseau.",
         eyebrow: "À propos",
-        headLine1: "Conçu à Calgary.",
-        headLine2: "Éprouvé sur des ranchs albertains.",
+        headLine1: "Bâti à Calgary.",
+        headLine2: "Testé dans des ranchs albertains.",
         intro: "Agrivanna a été fondée en octobre 2024 pour créer des registres de ranch que les gens tiennent vraiment : dictés à la chute, enregistrés sans réseau et utiles à la maison.",
-        photoAlt: "Les fondateurs d’Agrivanna avec un premier prototype de collier",
+        photoAlt: "L’équipe fondatrice d’Agrivanna avec un des premiers prototypes de collier",
         teamLink: "Rencontrer l’équipe",
       },
       contact: {
         metaTitle: "Contact — Agrivanna",
-        metaDescription: "Commencez un essai gratuit, réservez un appel ou écrivez à l’équipe d’Agrivanna.",
-        callTitle: "Vous préférez en parler?",
-        callBody: "Choisissez le moment qui vous convient et parlez à l’équipe.",
+        metaDescription: "Commencez un essai gratuit ou écrivez à l’équipe d’Agrivanna.",
         emailTitle: "Écrivez-nous",
         emailBody: "Nous lisons chaque message nous-mêmes.",
       },
@@ -740,22 +718,19 @@ const fr: Dictionary = {
         headLine2: "Sans boniment.",
         intro: "Les questions que les éleveurs nous posent le plus. Si la vôtre n’y est pas, écrivez-nous et une vraie personne vous répondra.",
         stillTitle: "Encore une question?",
-        stillBody: "Écrivez à {email} ou réservez un appel.",
+        stillBody: "Écrivez à {email} ou commencez un essai gratuit.",
       },
     },
 
     faq: [
-      { pricing: true, q: "Combien ça coûte?", a: "Chaque ranch a son propre prix, selon l’exploitation et vos besoins. Remplissez le formulaire d’essai ou réservez un appel et nous vous le proposerons. Le premier mois est gratuit." },
+      { pricing: true, q: "Combien ça coûte?", a: "Chaque ranch a son propre prix, selon l’exploitation et vos besoins. Remplissez le formulaire d’essai gratuit et nous vous le proposerons lors d’un court appel. Le premier mois est gratuit." },
       { pricing: true, q: "Y a-t-il un contrat?", a: "Les conditions sont convenues avec vous lors d’un appel, avant tout paiement." },
-      { pricing: true, q: "Y a-t-il des frais en plus?", a: "Aucun module à ajouter. Chaque ranch a toute la plateforme." },
-      { pricing: true, q: "Comment commencer?", a: "Remplissez le formulaire d’essai gratuit. Nous configurons le ranch nous-mêmes, pâturages cartographiés, troupeaux importés et lecteur jumelé, et nous vous contactons d’ici un jour." },
+      { pricing: true, q: "Comment commencer?", a: "L’intégration est simple, et vous ne repartez pas de zéro. Remplissez le formulaire d’essai gratuit et envoyez-nous les registres que vous avez déjà, que ce soit un calepin, des feuilles de calcul ou un autre logiciel. Nous importons tout le ranch pour vous et le configurons nous-mêmes (pâturages cartographiés, troupeaux importés et lecteur jumelé), et nous vous contactons d’ici un jour." },
       { pricing: false, q: "Ai-je besoin d’un signal cellulaire?", a: "Non. Tout est enregistré sur le téléphone d’abord et se téléverse tout seul au prochain signal ou sur le Wi-Fi de la cour." },
-      { pricing: false, q: "Avec quel équipement fonctionne-t-il?", a: "Les lecteurs à bâton Bluetooth et les indicateurs de balance. Ils transmettent étiquettes et poids sans que vous ayez à taper un chiffre." },
-      { pricing: false, q: "Je tiens déjà des registres ailleurs. Dois-je tout recommencer?", a: "Non. Envoyez-nous ce que vous avez, calepin, feuilles de calcul ou autre logiciel, et nous chargerons le ranch pour vous." },
+      { pricing: false, q: "Avec quel équipement Agrivanna fonctionne-t-il?", a: "Avec les lecteurs à bâton Bluetooth et les indicateurs de balance. Ils transmettent étiquettes et poids sans que vous ayez à taper un chiffre." },
       { pricing: false, q: "Puis-je récupérer mes données?", a: "Oui, quand vous voulez, dans un format que d’autres logiciels peuvent lire." },
-      { pricing: false, q: "Ma famille, mes employés ou mon vétérinaire peuvent-ils l’utiliser?", a: "Oui. Chaque personne a son propre accès, avec les permissions que vous choisissez." },
-      { pricing: true, q: "Puis-je acheter le matériel de clôture virtuelle?", a: "Pas encore. Aujourd’hui, nous vendons seulement le logiciel Agrivanna. La clôture virtuelle est en recherche et développement, et les pâturages que vous cartographiez et les rotations que vous bâtissez aujourd’hui sont ceux sur lesquels elle fonctionnera." },
-      { pricing: false, q: "L’application comprend-elle le français?", a: "Pas encore. Pour l’instant, l’application et sa reconnaissance vocale fonctionnent en anglais seulement." },
+      { pricing: false, q: "Ma famille, mes employés ou mon vétérinaire peuvent-ils l’utiliser?", a: "Oui. Chaque personne a son propre accès, avec les autorisations que vous choisissez." },
+      { pricing: true, q: "Puis-je acheter le matériel de clôture virtuelle?", a: "Pas encore. Aujourd’hui, nous vendons seulement le logiciel Agrivanna. La clôture virtuelle est en recherche et développement, et les pâturages que vous cartographiez et les rotations que vous établissez aujourd’hui sont ceux sur lesquels elle fonctionnera." },
     ],
   },
 
