@@ -82,10 +82,6 @@ const en = {
     email: "Email",
     phone: "Phone",
     ranch: "Ranch name",
-    location: "Nearest town and province",
-    locationPlaceholder: "e.g. Nanton, AB",
-    head: "How many head",
-    operation: "What you run",
     records: "Where your records live now",
     notes: "Anything we should know",
     notesPlaceholder: "Wand or scale you use, how many pastures, what you're hoping to fix.",
@@ -476,9 +472,9 @@ const en = {
     intro:
       "Tell us about your operation and we'll get you set up. It takes a couple of minutes — the questions below are the same ones we ask on a first call.",
     asks: [
-      "Where you run cattle",
-      "Operation type & herd size",
-      "Pasture boundaries, if you have them",
+      "Your name and how to reach you",
+      "Your ranch's name",
+      "Where your records live now",
     ],
     questionsBefore: "Questions before you start? Email ",
     questionsAfter: ".",
