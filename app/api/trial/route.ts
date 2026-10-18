@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { checkBotId } from "botid/server";
 import {
   CONFIRMATION_SUBJECT,
   CONTACT_EMAIL,
@@ -39,6 +40,17 @@ function clean(v: unknown, max = 400) {
 }
 
 export async function POST(request: Request) {
+  // Vercel BotID (set up in instrumentation-client.ts). Bots, including
+  // scripts posting here without loading the site, are turned away before
+  // anything is read or sent. Off Vercel (local dev) it lets everything in.
+  const verification = await checkBotId();
+  if (verification.isBot) {
+    // No error text: the form then shows its own message, in the visitor's
+    // language, with our email address, so a person wrongly flagged can still
+    // reach us
+    return NextResponse.json({ ok: false, blocked: true }, { status: 403 });
+  }
+
   let payload: Partial<TrialSubmission>;
   try {
     payload = await request.json();

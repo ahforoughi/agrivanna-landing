@@ -51,6 +51,7 @@ export function middleware(request: NextRequest) {
 }
 
 export const config = {
-  // Pages only: not the trial API, Next's own assets, or files in public/.
-  matcher: ["/((?!api|_next|_vercel|.*\\..*).*)"],
+  // Pages only: not the trial API, Next's own assets, files in public/, or the
+  // path Vercel BotID routes its checks through (it must not get a /en prefix).
+  matcher: ["/((?!api|_next|_vercel|149e9513-01fa-4fb0-aad4-566afd725d1b|.*\\..*).*)"],
 };
