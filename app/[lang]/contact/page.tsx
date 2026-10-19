@@ -56,7 +56,7 @@ export default async function ContactPage({ params }: PageProps) {
       <section className="relative border-t border-white/5 py-20 sm:py-24">
         <div className="mx-auto max-w-2xl px-4">
           <Reveal>
-            <TrialForm inline />
+            <TrialForm inline source="contact-page" />
           </Reveal>
         </div>
       </section>

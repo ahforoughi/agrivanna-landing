@@ -63,7 +63,7 @@ export default async function SoftwareLeadsPage({ params }: PageProps) {
       <section className="relative border-t border-white/5 py-20 sm:py-24">
         <div className="mx-auto max-w-2xl px-4">
           <Reveal>
-            <TrialForm inline />
+            <TrialForm inline source="software-leads-page" />
           </Reveal>
           <Reveal delay={0.1}>
             <p className="mt-8 text-center text-sm text-bone-300">

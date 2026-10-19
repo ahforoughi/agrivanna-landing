@@ -12,6 +12,30 @@ export const CONTACT_EMAIL = "info@agrivanna.com"
 /** Any button anywhere opens the trial form by dispatching this. */
 export const OPEN_TRIAL_EVENT = "agrivanna-open-trial"
 
+/**
+ * Every tag the site's buttons and forms send as `source`. The API refuses
+ * any other value: a request without one of these didn't come from our pages.
+ */
+export const TRIAL_SOURCES = [
+  "navbar",
+  "navbar-mobile",
+  "hero",
+  "hero-herd",
+  "pricing",
+  "faq",
+  "closing-cta",
+  "virtual-fencing",
+  "virtual-fencing-hero",
+  "contact-page",
+  "software-leads-page",
+] as const
+
+/** Bots fill in every field; people never see this one. A name browser autofill doesn't recognise, so it's never filled for a real visitor. */
+export const TRIAL_TRAP_FIELD = "agv_hp_extra"
+
+/** Faster than this from opening the form to sending is a machine (even autofill plus a click takes longer). */
+export const TRIAL_MIN_FILL_MS = 1500
+
 export function openTrialForm(source: string) {
   window.dispatchEvent(new CustomEvent(OPEN_TRIAL_EVENT, { detail: source }))
 }
@@ -113,24 +137,22 @@ function today(lang: Locale) {
  * repeats back what they sent so a wrong tag or town is easy to catch, and
  * points at CONTACT_EMAIL for anything they want to ask in the meantime.
  */
+/**
+ * The visitor's copy. It repeats nothing they typed (not even their name), so
+ * the form can't be used to send someone else's text from our domain to an
+ * address a bot entered. Our own copy (trialBody) still has every field.
+ */
 export function confirmationBody(d: TrialSubmission) {
-  if (d.lang === "fr") return confirmationBodyFr(d)
-
-  const greeting = d.name.trim().split(/\s+/)[0] || "there"
-  const outfit = d.ranch ? `try Agrivanna on ${d.ranch}` : "try Agrivanna"
+  if (d.lang === "fr") return confirmationBodyFr()
 
   return [
-    `Hello ${greeting},`,
+    "Hello,",
     "",
-    `We have your request to ${outfit}. It reached us on ${today("en")}.`,
+    `We have your request to try Agrivanna. It reached us on ${today("en")}.`,
     "",
-    "Haden Harrison will write back within one business day and set the ranch up before you touch it: pastures mapped, herds loaded, and your wand or scale head paired.",
+    "Our team will be in touch soon to set up your ranch.",
     "",
-    "Here is what you sent, so you can tell us if anything is wrong:",
-    "",
-    submissionLines(d),
-    "",
-    `If something above is off, or you have questions before Haden writes, reply to this email or write to ${CONTACT_EMAIL}.`,
+    `If you have questions in the meantime, reply to this email or write to ${CONTACT_EMAIL}.`,
     "",
     "Agrivanna Inc.",
     "1315 Northmount Dr NW, Calgary, AB T2L 0C9",
@@ -138,23 +160,15 @@ export function confirmationBody(d: TrialSubmission) {
   ].join("\n")
 }
 
-/** The same reply, for a rancher who used the French site. */
-function confirmationBodyFr(d: TrialSubmission) {
-  const first = d.name.trim().split(/\s+/)[0]
-  const outfit = d.ranch ? `d’essai d’Agrivanna pour votre ranch, ${d.ranch}` : "d’essai d’Agrivanna"
-
+function confirmationBodyFr() {
   return [
-    first ? `Bonjour ${first},` : "Bonjour,",
+    "Bonjour,",
     "",
-    `Nous avons bien reçu votre demande ${outfit}. Elle nous est parvenue le ${today("fr")}.`,
+    `Nous avons bien reçu votre demande d’essai d’Agrivanna. Elle nous est parvenue le ${today("fr")}.`,
     "",
-    "Haden Harrison vous répondra d’ici un jour ouvrable et configurera votre compte avant même que vous ayez à y toucher : pâturages cartographiés, troupeaux importés et lecteur ou indicateur de balance jumelé.",
+    "Notre équipe communiquera avec vous sous peu pour configurer votre ranch.",
     "",
-    "Voici ce que vous nous avez envoyé, pour que vous puissiez nous signaler toute erreur :",
-    "",
-    submissionLines(d, "fr"),
-    "",
-    `Si un renseignement ci-dessus est inexact, ou si vous avez des questions avant que Haden vous écrive, répondez à ce courriel ou écrivez à ${CONTACT_EMAIL}.`,
+    `Si vous avez des questions d’ici là, répondez à ce courriel ou écrivez à ${CONTACT_EMAIL}.`,
     "",
     "Agrivanna Inc.",
     "1315 Northmount Dr NW, Calgary (Alberta) T2L 0C9",
