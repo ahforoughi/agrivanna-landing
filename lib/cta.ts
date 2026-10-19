@@ -12,6 +12,30 @@ export const CONTACT_EMAIL = "info@agrivanna.com"
 /** Any button anywhere opens the trial form by dispatching this. */
 export const OPEN_TRIAL_EVENT = "agrivanna-open-trial"
 
+/**
+ * Every tag the site's buttons and forms send as `source`. The API refuses
+ * any other value: a request without one of these didn't come from our pages.
+ */
+export const TRIAL_SOURCES = [
+  "navbar",
+  "navbar-mobile",
+  "hero",
+  "hero-herd",
+  "pricing",
+  "faq",
+  "closing-cta",
+  "virtual-fencing",
+  "virtual-fencing-hero",
+  "contact-page",
+  "software-leads-page",
+] as const
+
+/** Bots fill in every field; people never see this one. A name browser autofill doesn't recognise, so it's never filled for a real visitor. */
+export const TRIAL_TRAP_FIELD = "agv_hp_extra"
+
+/** Faster than this from opening the form to sending is a machine (even autofill plus a click takes longer). */
+export const TRIAL_MIN_FILL_MS = 1500
+
 export function openTrialForm(source: string) {
   window.dispatchEvent(new CustomEvent(OPEN_TRIAL_EVENT, { detail: source }))
 }

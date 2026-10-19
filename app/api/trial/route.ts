@@ -4,6 +4,9 @@ import {
   CONFIRMATION_SUBJECT,
   CONTACT_EMAIL,
   TRIAL_EMAILS,
+  TRIAL_MIN_FILL_MS,
+  TRIAL_SOURCES,
+  TRIAL_TRAP_FIELD,
   confirmationBody,
   trialBody,
   trialSubject,
@@ -42,16 +45,23 @@ function clean(v: unknown, max = 400) {
 export async function POST(request: Request) {
   // Vercel BotID (set up in instrumentation-client.ts). Bots, including
   // scripts posting here without loading the site, are turned away before
-  // anything is read or sent. Off Vercel (local dev) it lets everything in.
-  const verification = await checkBotId();
-  if (verification.isBot) {
+  // anything is read or sent. If BotID itself fails (off Vercel, or the
+  // project's OIDC token isn't available) it must not take the form down
+  // with it: the request carries on to the spam checks below.
+  let verification: Awaited<ReturnType<typeof checkBotId>> | null = null;
+  try {
+    verification = await checkBotId();
+  } catch (err) {
+    console.error("BotID check failed; falling back to the form's own spam checks", err);
+  }
+  if (verification?.isBot) {
     // No error text: the form then shows its own message, in the visitor's
     // language, with our email address, so a person wrongly flagged can still
     // reach us
     return NextResponse.json({ ok: false, blocked: true }, { status: 403 });
   }
 
-  let payload: Partial<TrialSubmission>;
+  let payload: Partial<TrialSubmission> & Record<string, unknown>;
   try {
     payload = await request.json();
   } catch {
@@ -69,6 +79,16 @@ export async function POST(request: Request) {
     lang: payload.lang === "fr" ? "fr" : "en",
   };
   const fr = data.lang === "fr";
+
+  // Spam checks, before anything is sent. Each one answers "ok" so a bot
+  // can't tell it was caught and learn to get around it; nothing goes out.
+  const fromOurPages = (TRIAL_SOURCES as readonly string[]).includes(data.source);
+  const trapFilled = clean(payload[TRIAL_TRAP_FIELD], 200) !== "";
+  const tooFast = typeof payload.elapsedMs !== "number" || payload.elapsedMs < TRIAL_MIN_FILL_MS;
+  if (!fromOurPages || trapFilled || tooFast) {
+    console.warn("Trial request dropped as spam", { source: data.source, trapFilled, tooFast });
+    return NextResponse.json({ ok: true });
+  }
 
   if (!data.name || !data.email) {
     return NextResponse.json(

@@ -8,6 +8,7 @@ import {
   optionLabel,
   trialMailto,
   type TrialSubmission,
+  TRIAL_TRAP_FIELD,
 } from "@/lib/cta";
 import { useI18n } from "@/components/LocaleProvider";
 
@@ -30,7 +31,7 @@ const label = "mb-2 block text-sm text-bone-300";
  * Free trial request form. Opened from anywhere by dispatching OPEN_TRIAL_EVENT
  * (see openTrialForm in lib/cta), and also rendered inline via `inline`.
  */
-export default function TrialForm({ inline = false }: { inline?: boolean }) {
+export default function TrialForm({ inline = false, source: inlineSource = "contact-page" }: { inline?: boolean; source?: string }) {
   const { locale, t: dict } = useI18n();
   const t = dict.trial;
   const [open, setOpen] = useState(inline);
@@ -42,6 +43,12 @@ export default function TrialForm({ inline = false }: { inline?: boolean }) {
 
   // Read by the open handler below, which is registered once
   const sent = useRef(false);
+  // Spam checks (see /api/trial): when the form opened, and a hidden field
+  const openedAt = useRef(Date.now());
+  const trap = useRef<HTMLInputElement>(null);
+  useEffect(() => {
+    if (open) openedAt.current = Date.now();
+  }, [open]);
   useEffect(() => {
     sent.current = state === "done";
   }, [state]);
@@ -96,7 +103,14 @@ export default function TrialForm({ inline = false }: { inline?: boolean }) {
       const res = await fetch("/api/trial", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data),
+        body: JSON.stringify({
+        ...data,
+        // An inline form has no button, so it says which page it's on
+        source: inline ? inlineSource : data.source,
+        // Spam checks: the hidden field's value and how long the form was open
+        [TRIAL_TRAP_FIELD]: trap.current?.value ?? "",
+        elapsedMs: Date.now() - openedAt.current,
+      }),
       });
       const body = await res.json().catch(() => ({}));
 
@@ -141,6 +155,13 @@ export default function TrialForm({ inline = false }: { inline?: boolean }) {
       </div>
     ) : (
       <form onSubmit={submit} className="space-y-5">
+        {/* Hidden from people (and screen readers); bots fill it in */}
+        <div aria-hidden="true" style={{ position: "absolute", left: "-10000px", width: 1, height: 1, overflow: "hidden" }}>
+          <label>
+            Leave this empty
+            <input ref={trap} type="text" name={TRIAL_TRAP_FIELD} tabIndex={-1} autoComplete="off" defaultValue="" />
+          </label>
+        </div>
         <div className="grid gap-5 sm:grid-cols-2">
           <div>
             <label className={label} htmlFor="tf-name">
