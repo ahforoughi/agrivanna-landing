@@ -23,8 +23,8 @@
  * Phones and tablets get H.264 only: some Android devices say they play HEVC
  * or AV1 in Chrome but decode it badly or not at all, and a decode error never
  * moves on to the next <source>. AV1/HEVC go to mouse-and-keyboard computers.
- * As a safety net, if the video errors or still has no picture a few seconds
- * after it's on screen, it switches to the H.264 file that plays everywhere.
+ * As a safety net, if the video errors, or has no picture and its download
+ * has stopped making progress, it switches to another H.264 file.
  * Where autoplay is blocked (iPhone Low Power Mode, data saver) it starts at
  * the visitor's first touch instead. There are no visible controls.
  */
@@ -70,6 +70,9 @@ export default function HomeHero() {
       v.load();
       tryPlay();
     };
+    let lastProgress = Date.now();
+    const onProgress = () => (lastProgress = Date.now());
+    v.addEventListener("progress", onProgress);
     const sources = Array.from(v.querySelectorAll("source"));
     v.addEventListener("error", rescue);
     // An error on the last <source> means none of them worked
@@ -84,10 +87,21 @@ export default function HomeHero() {
           return;
         }
         tryPlay();
-        // On screen but still no picture after 4 s: the file isn't decoding here
-        timer = setTimeout(() => {
-          if (v.readyState < 2) rescue();
-        }, 4000);
+        // Still no picture: switch files only if the download has stalled too.
+        // A slow connection that's still bringing data in just gets more time,
+        // so a rancher on a weak signal isn't moved to a bigger file.
+        // (the browser reports downloads in bursts, so any progress event or
+        // more buffered video within the last 8 s counts as still coming in)
+        let lastBuffered = -1;
+        const check = () => {
+          if (v.readyState >= 2 || rescued) return;
+          const buffered = v.buffered.length ? v.buffered.end(v.buffered.length - 1) : 0;
+          const moving = buffered > lastBuffered || Date.now() - lastProgress < 8000;
+          lastBuffered = buffered;
+          if (moving && v.networkState !== v.NETWORK_NO_SOURCE) timer = setTimeout(check, 4000);
+          else rescue();
+        };
+        timer = setTimeout(check, 4000);
       },
       { threshold: 0.01 },
     );
@@ -97,6 +111,7 @@ export default function HomeHero() {
       io.disconnect();
       GESTURES.forEach((g) => window.removeEventListener(g, onGesture));
       v.removeEventListener("error", rescue);
+      v.removeEventListener("progress", onProgress);
       sources[sources.length - 1]?.removeEventListener("error", rescue);
     };
   }, []);
