@@ -1,0 +1,249 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0a0a0a">
+<meta name="robots" content="noindex">
+<title>Try Agrivanna on your land</title>
+<meta name="description" content="The operating system for grazing. Leave your details and we'll set you up.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;700&family=Archivo+Black&family=Exo+2:wght@700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0a0a;
+    --panel: #141414;
+    --border: #2a2a2a;
+    --text: #ffffff;
+    --muted: #a3a3a3;
+    --lime: #B6FF2A;
+    --error: #ff8a7a;
+  }
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: "Archivo", system-ui, -apple-system, sans-serif;
+    font-size: 17px;
+    line-height: 1.5;
+    overflow-x: hidden;
+  }
+  main {
+    max-width: 520px;
+    margin: 0 auto;
+    padding: max(32px, env(safe-area-inset-top)) 16px max(40px, env(safe-area-inset-bottom));
+    min-height: 100svh;
+    display: flex;
+    flex-direction: column;
+  }
+  .wordmark {
+    font-family: "Exo 2", sans-serif;
+    font-weight: 700;
+    font-size: 26px;
+    letter-spacing: 0.01em;
+    display: inline-block;
+    align-self: flex-start;
+    padding-bottom: 6px;
+    border-bottom: 3px solid var(--lime);
+  }
+  h1 {
+    font-family: "Archivo Black", sans-serif;
+    font-weight: 400;
+    font-size: clamp(34px, 10vw, 46px);
+    line-height: 1.02;
+    letter-spacing: -0.01em;
+    margin: 36px 0 16px;
+  }
+  .sub { color: var(--muted); margin: 0 0 28px; }
+  form { display: flex; flex-direction: column; gap: 18px; }
+  label, .legend { display: block; font-weight: 500; font-size: 15px; margin-bottom: 8px; }
+  input[type="text"], input[type="email"] {
+    width: 100%;
+    font: inherit;
+    font-size: 17px; /* 16px or more stops iPhone zooming in on focus */
+    color: var(--text);
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 15px 16px;
+    outline: none;
+    -webkit-appearance: none;
+    appearance: none;
+  }
+  input:focus { border-color: var(--lime); box-shadow: 0 0 0 1px var(--lime); }
+  input[aria-invalid="true"] { border-color: var(--error); }
+  .field-error { color: var(--error); font-size: 14px; margin-top: 6px; min-height: 0; }
+  fieldset { border: 0; margin: 0; padding: 0; min-width: 0; }
+  .roles { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .role {
+    font: inherit;
+    font-weight: 700;
+    font-size: 16px;
+    min-height: 64px;
+    border-radius: 14px;
+    border: 1px solid var(--border);
+    background: var(--panel);
+    color: var(--text);
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .role[aria-pressed="true"] { border-color: var(--lime); color: var(--lime); box-shadow: inset 0 0 0 1px var(--lime); }
+  .submit {
+    font: inherit;
+    font-weight: 700;
+    font-size: 18px;
+    min-height: 60px;
+    margin-top: 6px;
+    border: 0;
+    border-radius: 999px;
+    background: var(--lime);
+    color: #0a0a0a;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .submit:active { transform: scale(0.98); }
+  .submit[disabled] { opacity: 0.6; cursor: default; }
+  .notice { color: var(--error); font-size: 15px; margin: 0; }
+  /* Off screen for people and screen readers; bots fill it in */
+  .hp { position: absolute; left: -10000px; top: auto; width: 1px; height: 1px; overflow: hidden; }
+  .done { display: none; }
+  .done h2 { font-family: "Archivo Black", sans-serif; font-weight: 400; font-size: clamp(30px, 9vw, 40px); line-height: 1.05; margin: 36px 0 14px; }
+  .done p { color: var(--muted); margin: 0; }
+  .done .tick {
+    width: 56px; height: 56px; border-radius: 50%; background: var(--lime);
+    display: flex; align-items: center; justify-content: center; margin-top: 36px;
+  }
+  footer { margin-top: auto; padding-top: 40px; color: var(--muted); font-size: 12px; letter-spacing: 0.18em; font-weight: 700; }
+</style>
+</head>
+<body>
+<main>
+  <div class="wordmark">Agrivanna</div>
+
+  <section id="signup">
+    <h1>Try Agrivanna on your land.</h1>
+    <p class="sub">The operating system for grazing. Satellite pasture intelligence and AI grazing plans for Prairie ranches. Leave your details and we'll set you up.</p>
+
+    <form id="form" novalidate>
+      <div>
+        <label for="name">Name</label>
+        <input id="name" name="name" type="text" autocomplete="name" required maxlength="200">
+        <div class="field-error" id="name-error" role="alert"></div>
+      </div>
+      <div>
+        <label for="email">Email</label>
+        <input id="email" name="email" type="email" autocomplete="email" inputmode="email" required maxlength="200">
+        <div class="field-error" id="email-error" role="alert"></div>
+      </div>
+      <fieldset>
+        <legend class="legend">I'm a</legend>
+        <div class="roles" role="group" aria-label="I'm a">
+          <button type="button" class="role" data-role="rancher" aria-pressed="false">Rancher</button>
+          <button type="button" class="role" data-role="investor" aria-pressed="false">Investor</button>
+          <button type="button" class="role" data-role="partner" aria-pressed="false">Partner</button>
+          <button type="button" class="role" data-role="team" aria-pressed="false">Want to join</button>
+        </div>
+        <div class="field-error" id="role-error" role="alert"></div>
+      </fieldset>
+
+      <div class="hp" aria-hidden="true">
+        <label for="website">Leave this empty</label>
+        <input id="website" name="website" type="text" tabindex="-1" autocomplete="off">
+      </div>
+
+      <button class="submit" type="submit" id="submit">Get early access</button>
+      <p class="notice" id="notice" role="alert" hidden></p>
+    </form>
+  </section>
+
+  <section class="done" id="done" aria-live="polite">
+    <div class="tick" aria-hidden="true">
+      <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#0a0a0a" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
+    </div>
+    <h2>You're on the list.</h2>
+    <p>Thanks for stopping by. We'll be in touch soon. If you're at the booth, ask us to run your pasture on the tablet.</p>
+  </section>
+
+  <footer>BUILT HERE. BACKED HERE.</footer>
+</main>
+
+<script>
+  // Google Apps Script web app URL (ends in /exec). See booth/apps_script.gs.
+  const SHEET_ENDPOINT = "PASTE_APPS_SCRIPT_URL_HERE";
+
+  const form = document.getElementById("form");
+  const submit = document.getElementById("submit");
+  const notice = document.getElementById("notice");
+  const roles = Array.from(document.querySelectorAll(".role"));
+  let role = "";
+
+  const params = new URLSearchParams(location.search);
+  const utm = {
+    utm_source: params.get("utm_source") || "direct",
+    utm_medium: params.get("utm_medium") || "",
+    utm_campaign: params.get("utm_campaign") || "",
+  };
+
+  roles.forEach((b) =>
+    b.addEventListener("click", () => {
+      role = b.dataset.role;
+      roles.forEach((x) => x.setAttribute("aria-pressed", String(x === b)));
+      setError("role", "");
+    })
+  );
+
+  function setError(field, message) {
+    document.getElementById(field + "-error").textContent = message;
+    const input = document.getElementById(field);
+    if (input) input.setAttribute("aria-invalid", message ? "true" : "false");
+  }
+
+  function showDone() {
+    document.getElementById("signup").style.display = "none";
+    document.getElementById("done").style.display = "block";
+    window.scrollTo(0, 0);
+  }
+
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    notice.hidden = true;
+    const name = document.getElementById("name").value.trim();
+    const email = document.getElementById("email").value.trim();
+    let ok = true;
+    if (!name) { setError("name", "Please add your name."); ok = false; } else setError("name", "");
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)) { setError("email", "Please check your email address."); ok = false; } else setError("email", "");
+    if (!role) { setError("role", "Please pick one."); ok = false; }
+    if (!ok) return;
+
+    // A bot filled the hidden field: pretend it worked, send nothing
+    if (document.getElementById("website").value) { showDone(); return; }
+
+    const body = new URLSearchParams({
+      name,
+      email,
+      role,
+      ...utm,
+      website: "",
+      page: location.pathname,
+    });
+
+    submit.disabled = true;
+    submit.textContent = "Sending";
+    try {
+      // no-cors: the reply can't be read, so a resolved fetch counts as sent;
+      // only a network failure rejects
+      await fetch(SHEET_ENDPOINT, { method: "POST", mode: "no-cors", body });
+      showDone();
+    } catch (err) {
+      notice.textContent = "That didn't go through. Check your connection and try again, or give your details to someone at the booth.";
+      notice.hidden = false;
+      submit.disabled = false;
+      submit.textContent = "Get early access";
+    }
+  });
+</script>
+</body>
+</html>
