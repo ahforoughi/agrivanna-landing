@@ -15,6 +15,7 @@
     document.querySelectorAll(".screen").forEach((s) => (s.scrollTop = 0));
     document.querySelectorAll(".screen").forEach((s) => s.classList.toggle("is-on", s.id === id));
     current = id;
+    $("home").hidden = id === "attract";
     const v = $("attract-video");
     if (id === "attract") { v.currentTime = 0; v.play().catch(() => {}); resetMap(); stopSpeech(); }
     else v.pause();
@@ -26,6 +27,9 @@
     if (current !== "attract") idle = setTimeout(() => show("attract"), IDLE_MS);
   }
   ["pointerdown", "keydown"].forEach((e) => window.addEventListener(e, armIdle, { passive: true }));
+
+  // ---------------------------------------------------------------- back to the start
+  $("home").addEventListener("click", () => show("attract"));
 
   // ---------------------------------------------------------------- attract
   $("attract").addEventListener("click", () => { primeSpeech(); show("map"); });
