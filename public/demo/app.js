@@ -12,6 +12,7 @@
 
   // ---------------------------------------------------------------- screens + idle
   function show(id) {
+    document.querySelectorAll(".screen").forEach((s) => (s.scrollTop = 0));
     document.querySelectorAll(".screen").forEach((s) => s.classList.toggle("is-on", s.id === id));
     current = id;
     const v = $("attract-video");
@@ -68,7 +69,7 @@
   tag.className = "herd-tag";
   tag.textContent = `${D.herd.head} head · ${D.herd.days} days`;
   tag.style.left = (herdP.label[0] / w * 100) + "%";
-  tag.style.top = `calc(${herdP.label[1] / h * 100}% + 40px)`;
+  tag.style.top = `calc(${herdP.label[1] / h * 100}% + 4.2%)`;
   $("map-pills").appendChild(tag);
 
   function pick(L) {
@@ -84,6 +85,8 @@
     $("card-acres").textContent = `${p.acres} acres`;
     $("card-reasons").innerHTML = p.reasons.map((r) => `<li>${r}</li>`).join("");
     countUp($("card-score"), p.prs);
+    // phones: the card sits below the map, so bring it into view
+    if (matchMedia("(max-aspect-ratio: 1/1), (max-height: 540px)").matches) $("panel-card").scrollIntoView({ behavior: "smooth", block: "start" });
   }
   function resetMap() {
     picked = null;
@@ -149,11 +152,11 @@
   if (Rec) $("mic").hidden = false; else $("hint-mic").hidden = true;
   function resetAsk() {
     $("convo").hidden = true; $("to-close").hidden = true; $("answer").textContent = "";
-    $("ask-btn").hidden = false; $("mic").hidden = !Rec; $("ask-hint").hidden = false; stopSpeech();
+    $("ask-btn").hidden = false; $("mic").hidden = !Rec; $("ask-title").hidden = false; $("ask-hint").hidden = false; stopSpeech();
     $("mic").classList.remove("listening");
   }
   function answer(said) {
-    $("ask-btn").hidden = true; $("mic").hidden = true; $("mic").classList.remove("listening"); $("ask-hint").hidden = true;
+    $("ask-btn").hidden = true; $("mic").hidden = true; $("ask-title").hidden = true; $("mic").classList.remove("listening"); $("ask-hint").hidden = true;
     $("you-said").textContent = said || "Should I move my cows this week?";
     $("convo").hidden = false;
     const out = $("answer"); out.textContent = "";
