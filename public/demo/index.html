@@ -27,7 +27,7 @@
   <div class="attract-copy">
     <p class="eyebrow">Pasture readiness · Ranch OS</p>
     <h1>See your grass<br><span class="lime">from space.</span></h1>
-    <button class="btn btn-solid btn-xl" id="start">Tap to see a real pasture</button>
+    <button class="btn btn-solid btn-lg" id="start">Tap to see a real pasture <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M8 7h9v9"/></svg></button>
   </div>
 </section>
 
@@ -43,7 +43,8 @@
       <img class="logo" src="assets/logo.png" alt="Agrivanna">
       <p class="eyebrow">Pasture readiness</p>
       <h2>A Southern Alberta ranch, <span class="lime">scored from space.</span></h2>
-      <p class="lead">Every paddock gets a readiness score from 0 to 100. Tap a paddock to see why.</p>
+      <p class="lead">Every paddock gets a readiness score from 0 to 100, from satellite images and grazing records.</p>
+      <p class="tip">Tap a paddock to see why</p>
       <ul class="legend">
         <li><span class="chip chip-ready">Ready</span> 60 or more</li>
         <li><span class="chip chip-watch">Watch</span> 35 to 60</li>
@@ -61,7 +62,7 @@
       <p class="acres" id="card-acres"></p>
       <ul class="reasons" id="card-reasons"></ul>
       <div class="actions">
-        <button class="btn btn-solid" id="to-history">See its history</button>
+        <button class="btn btn-solid" id="to-history">See its history <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M8 7h9v9"/></svg></button>
         <button class="btn" id="pick-another">Pick another</button>
       </div>
     </div>
@@ -81,7 +82,7 @@
     </ul>
     <p class="credit">Average greenness from satellite, May to September, 2016 to 2026.</p>
     <div class="actions">
-      <button class="btn btn-solid" id="to-ask">Ask Agrivanna</button>
+      <button class="btn btn-solid" id="to-ask">Ask Agrivanna <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M8 7h9v9"/></svg></button>
       <button class="btn" id="hist-back">Back to the map</button>
     </div>
   </aside>
@@ -91,10 +92,11 @@
 <section id="ask" class="screen" aria-label="Ask">
   <div class="ask-inner">
     <p class="eyebrow">Ask your ranch</p>
+    <h2 class="ask-title" id="ask-title">Ask it like you'd ask a neighbour.</h2>
     <div class="ask-row">
-      <button class="btn btn-solid btn-xl" id="ask-btn">Should I move my cows this week?</button>
+      <button class="btn btn-solid btn-lg" id="ask-btn">Should I move my cows this week?</button>
       <button class="mic" id="mic" aria-label="Ask out loud" hidden>
-        <svg viewBox="0 0 24 24" width="40" height="40" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="2" width="6" height="12" rx="3"/><path d="M5 10a7 7 0 0 0 14 0M12 17v4M8 21h8"/></svg>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="2" width="6" height="12" rx="3"/><path d="M5 10a7 7 0 0 0 14 0M12 17v4M8 21h8"/></svg>
       </button>
     </div>
     <p class="hint" id="ask-hint">Tap the question<span id="hint-mic">, or the mic and ask out loud</span>.</p>
@@ -104,7 +106,7 @@
         <div class="agv-head"><img src="assets/icon-192.png" alt=""> Agrivanna · just now</div>
         <p id="answer"></p>
       </div>
-      <button class="btn btn-solid" id="to-close" hidden>Next</button>
+      <button class="btn btn-solid" id="to-close" hidden>Next <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M8 7h9v9"/></svg></button>
     </div>
   </div>
 </section>
