@@ -37,8 +37,29 @@ const nextConfig: NextConfig = {
       ]),
     ];
   },
+  async rewrites() {
+    // The booth's offline tablet demo: plain files in public/demo, opened at /demo
+    return [{ source: "/demo", destination: "/demo/index.html" }];
+  },
   async headers() {
     return [
+      {
+        // The demo's offline cache covers /demo itself, one level above its file, and
+        // must always be the latest version; nothing in it should reach search engines
+        source: "/demo/sw.js",
+        headers: [
+          { key: "Service-Worker-Allowed", value: "/demo" },
+          { key: "Cache-Control", value: "no-cache" },
+        ],
+      },
+      {
+        source: "/demo/:path*",
+        headers: [{ key: "X-Robots-Tag", value: "noindex, nofollow" }],
+      },
+      {
+        source: "/demo",
+        headers: [{ key: "X-Robots-Tag", value: "noindex, nofollow" }],
+      },
       {
         source: "/:path*.mp4",
         headers: [

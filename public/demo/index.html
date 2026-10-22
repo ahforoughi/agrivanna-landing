@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<!-- Served at agrivanna.com/demo (no trailing slash), so relative paths need a base -->
+<base href="/demo/">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+<meta name="theme-color" content="#14161A">
+<meta name="robots" content="noindex">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Agrivanna">
+<title>Agrivanna booth demo</title>
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="assets/icon-180.png">
+<link rel="icon" href="assets/icon-192.png">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- 1. Attract -->
+<section id="attract" class="screen is-on" aria-label="Start">
+  <video id="attract-video" src="/video/hero-1080.mp4" poster="/video/hero-poster.jpg" autoplay muted loop playsinline preload="auto"></video>
+  <div class="attract-shade"></div>
+  <img class="logo attract-logo" src="assets/logo.png" alt="Agrivanna">
+  <div class="attract-copy">
+    <p class="eyebrow">Pasture readiness · Ranch OS</p>
+    <h1>See your grass<br><span class="lime">from space.</span></h1>
+    <button class="btn btn-solid btn-xl" id="start">Tap to see a real pasture</button>
+  </div>
+</section>
+
+<!-- 2 and 3. Map, then the paddock card -->
+<section id="map" class="screen" aria-label="Ranch map">
+  <div class="map-wrap" id="map-wrap">
+    <img id="map-img" alt="Satellite map of six paddocks coloured by how much grass they have">
+    <svg id="map-svg" aria-hidden="true"></svg>
+    <div id="map-pills"></div>
+  </div>
+  <aside class="panel" id="panel">
+    <div id="panel-intro">
+      <img class="logo" src="assets/logo.png" alt="Agrivanna">
+      <p class="eyebrow">Pasture readiness</p>
+      <h2>A Southern Alberta ranch, <span class="lime">scored from space.</span></h2>
+      <p class="lead">Every paddock gets a readiness score from 0 to 100. Tap a paddock to see why.</p>
+      <ul class="legend">
+        <li><span class="chip chip-ready">Ready</span> 60 or more</li>
+        <li><span class="chip chip-watch">Watch</span> 35 to 60</li>
+        <li><span class="chip chip-rest">Rest</span> grazed down</li>
+      </ul>
+      <div class="greenbar"><span>Less grass</span><i></i><span>More grass</span></div>
+      <p class="credit">Sentinel 2 satellite · 17 Oct 2026</p>
+    </div>
+    <div id="panel-card" hidden>
+      <div class="card-head">
+        <p class="eyebrow" id="card-eyebrow">Paddock</p>
+        <span class="chip" id="card-chip">Ready</span>
+      </div>
+      <div class="score"><span id="card-score">0</span><small>/ 100</small></div>
+      <p class="acres" id="card-acres"></p>
+      <ul class="reasons" id="card-reasons"></ul>
+      <div class="actions">
+        <button class="btn btn-solid" id="to-history">See its history</button>
+        <button class="btn" id="pick-another">Pick another</button>
+      </div>
+    </div>
+  </aside>
+</section>
+
+<!-- 4. This year vs normal -->
+<section id="history" class="screen" aria-label="History">
+  <div class="history-chart"><svg id="chart" aria-hidden="true"></svg></div>
+  <aside class="panel">
+    <p class="eyebrow" id="hist-eyebrow">Paddock</p>
+    <h2 id="hist-title"></h2>
+    <p class="lead" id="hist-lead"></p>
+    <ul class="key">
+      <li><i class="k-line"></i> This paddock, each summer</li>
+      <li><i class="k-dash"></i> Its 10 year normal</li>
+    </ul>
+    <p class="credit">Average greenness from satellite, May to September, 2016 to 2026.</p>
+    <div class="actions">
+      <button class="btn btn-solid" id="to-ask">Ask Agrivanna</button>
+      <button class="btn" id="hist-back">Back to the map</button>
+    </div>
+  </aside>
+</section>
+
+<!-- 5. Ask -->
+<section id="ask" class="screen" aria-label="Ask">
+  <div class="ask-inner">
+    <p class="eyebrow">Ask your ranch</p>
+    <div class="ask-row">
+      <button class="btn btn-solid btn-xl" id="ask-btn">Should I move my cows this week?</button>
+      <button class="mic" id="mic" aria-label="Ask out loud" hidden>
+        <svg viewBox="0 0 24 24" width="40" height="40" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="2" width="6" height="12" rx="3"/><path d="M5 10a7 7 0 0 0 14 0M12 17v4M8 21h8"/></svg>
+      </button>
+    </div>
+    <p class="hint" id="ask-hint">Tap the question<span id="hint-mic">, or the mic and ask out loud</span>.</p>
+    <div class="convo" id="convo" hidden>
+      <div class="bubble you" id="you-said">Should I move my cows this week?</div>
+      <div class="bubble agv">
+        <div class="agv-head"><img src="assets/icon-192.png" alt=""> Agrivanna · just now</div>
+        <p id="answer"></p>
+      </div>
+      <button class="btn btn-solid" id="to-close" hidden>Next</button>
+    </div>
+  </div>
+</section>
+
+<!-- 6. Close -->
+<section id="close" class="screen" aria-label="Get Agrivanna">
+  <div class="close-inner">
+    <div>
+      <img class="logo" src="assets/logo.png" alt="Agrivanna">
+      <h2>Want this <span class="lime">on your ranch?</span></h2>
+      <p class="lead">Scan the QR at the stand to get early access.</p>
+      <button class="btn" id="restart">Start over</button>
+    </div>
+    <div class="qr-card"><img src="assets/qr.png" alt="QR code for agrivanna.com/launch"><span>agrivanna.com/launch</span></div>
+  </div>
+  <p class="tagline">BUILT HERE. BACKED HERE.</p>
+</section>
+
+<div id="offline-badge" hidden>Offline ready</div>
+
+<script src="data.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
