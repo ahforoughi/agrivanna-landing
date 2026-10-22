@@ -53,6 +53,6 @@ export function middleware(request: NextRequest) {
 export const config = {
   // Pages only: not the trial API, Next's own assets, files in public/, or the
   // path Vercel BotID routes its checks through (it must not get a /en prefix),
-  // or /launch, the Launch Party sign up page (public/launch.html).
+  // or /launch, the Launch Party sign up page (app/launch, English only).
   matcher: ["/((?!api|_next|_vercel|149e9513-01fa-4fb0-aad4-566afd725d1b|launch$|.*\\..*).*)"],
 };
