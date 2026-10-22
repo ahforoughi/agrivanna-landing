@@ -37,11 +37,6 @@ const nextConfig: NextConfig = {
       ]),
     ];
   },
-  async rewrites() {
-    // The Launch Party sign up page (the booth QR code points here). A plain
-    // HTML file in public/, kept outside the site's pages and languages.
-    return [{ source: "/launch", destination: "/launch.html" }];
-  },
   async headers() {
     return [
       {
