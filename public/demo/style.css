@@ -522,16 +522,19 @@ h2 .lime { display: block; }
   .feat[data-feat="ai"] .asks .ask-chip { min-height: 38px; padding: 6px 14px; }
 }
 
-/* virtual fencing: the 3D pasture */
-.f3d { position: absolute; inset: 0; background: radial-gradient(120% 90% at 50% 10%, #8C6436 0%, #2E2C22 45%, #14161A 100%); cursor: grab; }
-.f3d:active { cursor: grabbing; }
+/* virtual fencing: the 3D paddock, a smaller box with bigger R&D photos under it */
+.feat[data-feat="fence"] .visual { grid-template-rows: minmax(0, 1.25fr) minmax(0, 1fr); }
+.f3d { position: absolute; inset: 0; background: radial-gradient(120% 90% at 50% 40%, #3A4A22 0%, #1F2716 60%, #14161A 100%); }
 .f3d canvas { touch-action: none; }
 .sim-loading { position: absolute; inset: 0; display: grid; place-items: center; font-size: 14px; color: var(--bone-300); pointer-events: none; }
 .sim-loading[hidden] { display: none; }
 .sim-ctrls { left: 12px; flex-wrap: wrap; justify-content: flex-end; }
+.sim-ctrls .btn { height: 38px; font-size: 13.5px; padding: 0 14px; }
 .sim-hint { top: 52px; bottom: auto; }
+.fence-thumbs { height: auto; }
+.fence-thumbs .rnd { font-size: 10px; left: 10px; top: 10px; padding: 5px 9px; }
 @media (max-aspect-ratio: 1/1), (max-width: 760px), (max-height: 560px) {
-  .sim { aspect-ratio: 4 / 3.4; }
-  .sim-ctrls .btn { height: 38px; font-size: 13px; padding: 0 12px; }
+  .sim { aspect-ratio: 4 / 3.3; }
+  .sim-ctrls .btn { height: 36px; font-size: 13px; padding: 0 11px; }
+  .fence-thumbs { gap: 8px; } .fence-thumbs figure { aspect-ratio: 3 / 4; }
 }
-.fence-thumbs { height: clamp(64px, 15cqh, 104px); }
