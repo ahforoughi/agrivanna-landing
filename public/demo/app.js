@@ -515,157 +515,70 @@
   });
   const plain = (html) => html.replace(/<[^>]+>/g, "");
 
-  // ================================================================ 5. virtual fencing: a small simulation
-  // A pasture as a grid of grass, a fence line people can drag, and cattle
-  // that want the fresh grass over the line. Near the line a collar cue turns
-  // them back; with the cue off they walk through.
+  // ================================================================ 5. virtual fencing: the website's 3D herd
+  // fence3d.js (built from booth/fence3d) is the virtual fencing page's own scene:
+  // scanned cattle, meadow and glowing fence. It loads the first time fencing opens.
   const sim = (() => {
-    const cv = $("sim-canvas"), ctx = cv.getContext("2d");
-    const GX = 48, GY = 32, START = [[0.42, 0.06], [0.36, 0.94]];
-    let W = 0, H = 0, raf = 0, last = 0, cues = 0, cueOn = true, grass, cows, line = START.map((p) => p.slice()), ripples = [], drag = null, shift = null, touched = false;
-    function reset() {
-      line = START.map((p) => p.slice());
-      grass = new Float32Array(GX * GY);
-      for (let j = 0; j < GY; j++) for (let i = 0; i < GX; i++)
-        grass[j * GX + i] = (side((i + 0.5) / GX, (j + 0.5) / GY) > 0 ? 0.25 : 0.95) + (Math.random() - 0.5) * 0.12;
-      cows = Array.from({ length: 14 }, () => ({ x: 0.06 + Math.random() * 0.24, y: 0.12 + Math.random() * 0.76, a: Math.random() * 6.28, cool: 0 }));
-      cues = 0; ripples = []; shift = null;
+    let api = null, loading = false, cues = 0, out = 0, step = 0, cueOn = true, flashT, audio;
+    const steps = [...document.querySelectorAll("#fence-steps li")];
+    let current = 0;
+    const setStep = (i) => { current = i; steps.forEach((li, n) => li.classList.toggle("on", n === i)); };
+    const flashStep = (i) => { steps.forEach((li, n) => li.classList.toggle("on", n === i)); clearTimeout(flashT); flashT = setTimeout(() => setStep(current), 1400); };
+    // the collar's cue: two short rising tones
+    function beep() {
+      try {
+        audio = audio || new (window.AudioContext || window.webkitAudioContext)();
+        [880, 1175].forEach((f, i) => {
+          const o = audio.createOscillator(), g = audio.createGain(), t = audio.currentTime + i * 0.16;
+          o.frequency.value = f; o.type = "sine"; g.gain.setValueAtTime(0.0001, t);
+          g.gain.exponentialRampToValueAtTime(0.18, t + 0.02); g.gain.exponentialRampToValueAtTime(0.0001, t + 0.14);
+          o.connect(g).connect(audio.destination); o.start(t); o.stop(t + 0.15);
+        });
+      } catch {}
     }
-    // signed distance in pasture widths: > 0 on the herd's side (left of the line)
-    function side(x, y) {
-      const [[x1, y1], [x2, y2]] = line, w = W || 4, h = H || 3;
-      const dx = (x2 - x1) * w, dy = (y2 - y1) * h, len = Math.hypot(dx, dy) || 1;
-      return ((x - x1) * w * dy - (y - y1) * h * dx) / len / w * -1;
+    function onEvent(name) {
+      if (name === "ready") $("sim-loading").hidden = true;
+      if (name === "cue") { cues++; $("sim-cues").textContent = cues; flashStep(1); if (feat === "fence") beep(); }
+      if (name === "crossed") { out++; $("sim-out").textContent = out; }
     }
-    // unit vector (in screen space) pointing from the herd's side to the fresh side
-    function toFresh() {
-      const [[x1, y1], [x2, y2]] = line, w = W || 4, h = H || 3;
-      let nx = (y2 - y1) * h, ny = -(x2 - x1) * w; const l = Math.hypot(nx, ny) || 1; nx /= l; ny /= l;
-      const probe = side(x1 + nx * 0.01, y1 + ny * 0.01 * w / h);
-      return probe < 0 ? [nx, ny] : [-nx, -ny];
+    function load() {
+      if (api || loading) return;
+      if (window.Fence3D) { api = window.Fence3D.mount($("f3d"), onEvent); return; }
+      loading = true;
+      const sc = document.createElement("script");
+      sc.src = "fence3d.js";
+      sc.onload = () => { loading = false; api = window.Fence3D.mount($("f3d"), onEvent); if (feat !== "fence") api.run(false); };
+      sc.onerror = () => { loading = false; $("sim-loading").textContent = "The 3D pasture could not load."; };
+      document.head.appendChild(sc);
     }
-    function size() {
-      const r = cv.getBoundingClientRect(), dpr = Math.min(2, devicePixelRatio || 1);
-      if (!r.width || !r.height) return;
-      W = r.width; H = r.height; cv.width = Math.round(W * dpr); cv.height = Math.round(H * dpr); ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-    }
-    function tick(t) {
-      raf = requestAnimationFrame(tick);
-      if (!W) { size(); if (!W) return; }
-      const dt = Math.min(50, t - (last || t)) / 16.7; last = t;
-      if (shift) {
-        const k = Math.min(1, (t - shift.t0) / 900), e = 1 - Math.pow(1 - k, 3);
-        line = shift.from.map(([x, y]) => [x + shift.dx * e, y + shift.dy * e]);
-        if (k >= 1) shift = null;
-      }
-      const dz = 0.05, [fx, fy] = toFresh(), freshA = Math.atan2(fy, fx);
-      let out = 0;
-      for (const c of cows) {
-        const s = side(c.x, c.y);
-        c.a += (Math.random() - 0.5) * 0.25 * dt;
-        // on the herd's side they lean toward the fresh grass; once over, with the cue on, they head back
-        if (s > 0) c.a += Math.sin(freshA - c.a) * 0.02 * dt;
-        else if (cueOn) c.a += Math.sin(freshA + Math.PI - c.a) * 0.03 * dt;
-        let nx = c.x + Math.cos(c.a) * 0.0011 * dt, ny = c.y + Math.sin(c.a) * 0.0011 * dt * (W / H);
-        const ns = side(nx, ny);
-        if (cueOn && s > 0 && ns < dz && ns < s) {
-          if (c.cool <= 0) { cues++; ripples.push({ x: c.x, y: c.y, t }); c.cool = 60; flashStep(1); }
-          c.a = freshA + Math.PI + (Math.random() - 0.5) * 1.6; nx = c.x; ny = c.y;
-        }
-        c.cool -= dt;
-        if (nx < 0.02 || nx > 0.98) { c.a = Math.PI - c.a; nx = Math.min(0.98, Math.max(0.02, nx)); }
-        if (ny < 0.03 || ny > 0.97) { c.a = -c.a; ny = Math.min(0.97, Math.max(0.03, ny)); }
-        c.x = nx; c.y = ny;
-        if (side(c.x, c.y) < 0) out++;
-        const gi = Math.min(GX - 1, c.x * GX | 0) + Math.min(GY - 1, c.y * GY | 0) * GX;
-        grass[gi] = Math.max(0.08, grass[gi] - 0.004 * dt);
-      }
-      for (let i = 0; i < grass.length; i++) grass[i] = Math.min(1, grass[i] + 0.00005 * dt);
-      $("sim-cues").textContent = cues; $("sim-out").textContent = out;
-      draw(t, dz, fx, fy);
-    }
-    function draw(t, dz, fx, fy) {
-      const cw = W / GX, ch = H / GY;
-      for (let j = 0; j < GY; j++) for (let i = 0; i < GX; i++) {
-        const g = grass[j * GX + i];
-        ctx.fillStyle = `rgb(${Math.round(150 - g * 90)},${Math.round(130 + g * 50)},${Math.round(70 - g * 30)})`;
-        ctx.fillRect(i * cw, j * ch, cw + 1, ch + 1);
-      }
-      // the line, run right across the pasture, with the cue band on the herd's side
-      const [[x1, y1], [x2, y2]] = line, dx = x2 - x1, dy = y2 - y1;
-      const A = [(x1 - dx * 3) * W, (y1 - dy * 3) * H], B = [(x2 + dx * 3) * W, (y2 + dy * 3) * H], off = dz * W;
-      const tint = cueOn ? "166,255,61" : "255,138,115";
-      ctx.save(); ctx.lineCap = "round";
-      ctx.strokeStyle = `rgba(${tint},.16)`; ctx.lineWidth = off * 2;
-      ctx.beginPath(); ctx.moveTo(A[0] - fx * off, A[1] - fy * off); ctx.lineTo(B[0] - fx * off, B[1] - fy * off); ctx.stroke();
-      ctx.shadowColor = `rgb(${tint})`; ctx.shadowBlur = 12; ctx.strokeStyle = `rgb(${tint})`; ctx.lineWidth = 3;
-      ctx.setLineDash([12, 9]); ctx.lineDashOffset = -t / 40;
-      ctx.beginPath(); ctx.moveTo(A[0], A[1]); ctx.lineTo(B[0], B[1]); ctx.stroke();
-      ctx.restore();
-      ripples = ripples.filter((r) => t - r.t < 900);
-      for (const r of ripples) {
-        const k = (t - r.t) / 900;
-        ctx.strokeStyle = `rgba(166,255,61,${1 - k})`; ctx.lineWidth = 2;
-        ctx.beginPath(); ctx.arc(r.x * W, r.y * H, 6 + k * 26, 0, 6.28); ctx.stroke();
-      }
-      const L = Math.max(8, W * 0.016);
-      for (const c of cows) {
-        ctx.save(); ctx.translate(c.x * W, c.y * H); ctx.rotate(c.a);
-        ctx.fillStyle = "rgba(0,0,0,.25)"; ctx.beginPath(); ctx.ellipse(2, 3, L, L * 0.5, 0, 0, 6.28); ctx.fill();
-        ctx.fillStyle = "#1d1b19"; ctx.beginPath(); ctx.ellipse(0, 0, L, L * 0.5, 0, 0, 6.28); ctx.fill();
-        ctx.beginPath(); ctx.ellipse(L * 1.05, 0, L * 0.38, L * 0.3, 0, 0, 6.28); ctx.fill();
-        ctx.fillStyle = "#A6FF3D"; ctx.fillRect(L * 0.62, -L * 0.36, L * 0.14, L * 0.72);
-        ctx.restore();
-      }
-      for (const [x, y] of line) {
-        ctx.fillStyle = "#fff"; ctx.strokeStyle = "#14161A"; ctx.lineWidth = 3;
-        ctx.beginPath(); ctx.arc(x * W, y * H, 11, 0, 6.28); ctx.fill(); ctx.stroke();
-      }
-    }
-    const at = (e) => { const r = cv.getBoundingClientRect(); return [(e.clientX - r.left) / r.width, (e.clientY - r.top) / r.height]; };
-    cv.addEventListener("pointerdown", (e) => {
-      const [x, y] = at(e);
-      const k = line.findIndex(([px, py]) => Math.hypot((px - x) * W, (py - y) * H) < 34);
-      if (k < 0 || shift) return;
-      drag = k; try { cv.setPointerCapture(e.pointerId); } catch {} setStep(0); hint();
+    $("sim-send").addEventListener("click", () => {
+      if (!api) return;
+      // iPad only allows sound after a tap: open the audio here so the cue can sound later
+      try { audio = audio || new (window.AudioContext || window.webkitAudioContext)(); if (audio.state === "suspended") audio.resume(); } catch {}
+      api.send(); setStep(1); hint();
     });
-    cv.addEventListener("pointermove", (e) => {
-      if (drag == null) return;
-      const [x, y] = at(e), o = line[1 - drag];
-      if (Math.hypot((x - o[0]) * W, (y - o[1]) * H) < 60) return;
-      line[drag] = [Math.min(0.97, Math.max(0.03, x)), Math.min(0.97, Math.max(0.03, y))];
-    });
-    const up = () => { drag = null; };
-    cv.addEventListener("pointerup", up); cv.addEventListener("pointercancel", up);
-    function hint() { if (!touched) { touched = true; $("sim-hint").classList.add("gone"); } }
-    // rotate: the line steps onto fresh grass; past the far side a new season starts
-    $("sim-move").addEventListener("click", () => {
-      if (shift) return;
-      setStep(2); hint();
-      const [fx, fy] = toFresh(), step = 0.2, sx = fx * step, sy = fy * step * (W / H);
-      if (line.every(([x]) => x + sx > 0.95) || line.some(([x, y]) => x + sx > 1.1 || x + sx < -0.1 || y + sy > 1.1 || y + sy < -0.1)) { reset(); return; }
-      shift = { t0: performance.now(), from: line.map((p) => p.slice()), dx: sx, dy: sy };
-    });
+    $("sim-move").addEventListener("click", () => { if (!api) return; step = api.move(); setStep(2); hint(); });
     $("sim-cue").addEventListener("click", (e) => {
-      cueOn = !cueOn;
+      if (!api) return;
+      cueOn = !cueOn; api.setCue(cueOn);
       e.currentTarget.setAttribute("aria-pressed", String(cueOn));
       e.currentTarget.textContent = cueOn ? "Cue on" : "Cue off";
     });
-    // the steps on the left follow what people do
-    const steps = [...document.querySelectorAll("#fence-steps li")];
-    let current = 0, flashT;
-    function setStep(i) { current = i; steps.forEach((li, n) => li.classList.toggle("on", n === i)); }
-    function flashStep(i) { steps.forEach((li, n) => li.classList.toggle("on", n === i)); clearTimeout(flashT); flashT = setTimeout(() => setStep(current), 1200); }
+    $("f3d").addEventListener("pointerdown", hint);
+    function hint() { $("sim-hint").classList.add("gone"); }
+    steps[1].addEventListener("click", () => $("sim-send").click());
     steps[2].addEventListener("click", () => $("sim-move").click());
-    new ResizeObserver(size).observe(cv);
     return {
       start() {
-        size(); reset(); cueOn = true; $("sim-cue").setAttribute("aria-pressed", "true"); $("sim-cue").textContent = "Cue on";
-        setStep(0); touched = false; $("sim-hint").classList.remove("gone");
-        cancelAnimationFrame(raf); last = 0; raf = requestAnimationFrame(tick);
+        load();
+        if (api) { api.reset(); api.run(true); }
+        cues = 0; out = 0; step = 0; cueOn = true;
+        $("sim-cues").textContent = 0; $("sim-out").textContent = 0;
+        $("sim-cue").setAttribute("aria-pressed", "true"); $("sim-cue").textContent = "Cue on";
+        $("sim-hint").classList.remove("gone"); setStep(0);
       },
-      stop() { cancelAnimationFrame(raf); raf = 0; },
-      peek: () => ({ cues, cueOn, line: line.map((p) => p.slice()), cows: cows.length }),
+      stop() { if (api) api.run(false); },
+      peek: () => ({ ready: $("sim-loading").hidden, cues, out, step, cueOn }),
     };
   })();
   window.__sim = sim;
