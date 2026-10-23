@@ -482,8 +482,10 @@ h2 .lime { display: block; }
 @container (max-width: 560px) { .wa { grid-template-columns: minmax(0, 1fr); } .wa-page { display: none; } }
 
 /* ================================================================ virtual fencing: one photo */
-.feat[data-feat="fence"] .visual { display: grid; grid-template-rows: minmax(0, 1fr); align-items: center; }
-.fence-photo { width: 100%; max-height: 100%; aspect-ratio: 1400 / 781; align-self: center; }
+/* two photos stacked: the virtual fence, then the collar */
+.feat[data-feat="fence"] .visual { display: grid; grid-template-rows: auto auto; align-content: center; justify-items: end; gap: 14px; }
+.fence-photo { width: min(100%, calc((100cqh - 14px) / 2 * 16 / 9)); aspect-ratio: 16 / 9; }
+@media (max-aspect-ratio: 1/1), (max-width: 760px), (max-height: 560px) { .fence-photo { width: 100%; } }
 @media (max-aspect-ratio: 1/1), (max-width: 760px), (max-height: 560px) {
   .home-video { width: 100%; }
   .ios { height: min(70svh, 620px); margin: 0 auto; }
