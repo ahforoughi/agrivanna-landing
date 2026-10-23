@@ -515,11 +515,12 @@
   });
   const plain = (html) => html.replace(/<[^>]+>/g, "");
 
-  // ================================================================ 5. virtual fencing: the website's 3D herd
-  // fence3d.js (built from booth/fence3d) is the virtual fencing page's own scene:
-  // scanned cattle, meadow and glowing fence. It loads the first time fencing opens.
+  // ================================================================ 5. virtual fencing: a 3D paddock
+  // fence3d.js (built from booth/fence3d): the website's scanned cattle in one paddock,
+  // with a fence people drag by its posts or move onto fresh grass. It loads the first
+  // time fencing opens.
   const sim = (() => {
-    let api = null, loading = false, cues = 0, out = 0, step = 0, cueOn = true, flashT, audio;
+    let api = null, loading = false, cues = 0, out = 0, moves = 0, cueOn = true, flashT, audio;
     const steps = [...document.querySelectorAll("#fence-steps li")];
     let current = 0;
     const setStep = (i) => { current = i; steps.forEach((li, n) => li.classList.toggle("on", n === i)); };
@@ -536,10 +537,11 @@
         });
       } catch {}
     }
-    function onEvent(name) {
+    function onEvent(name, detail) {
       if (name === "ready") $("sim-loading").hidden = true;
       if (name === "cue") { cues++; $("sim-cues").textContent = cues; flashStep(1); if (feat === "fence") beep(); }
-      if (name === "crossed") { out++; $("sim-out").textContent = out; }
+      if (name === "out") { out = detail; $("sim-out").textContent = out; }
+      if (name === "drag") { setStep(0); hint(); }
     }
     function load() {
       if (api || loading) return;
@@ -557,14 +559,13 @@
       try { audio = audio || new (window.AudioContext || window.webkitAudioContext)(); if (audio.state === "suspended") audio.resume(); } catch {}
       api.send(); setStep(1); hint();
     });
-    $("sim-move").addEventListener("click", () => { if (!api) return; step = api.move(); setStep(2); hint(); });
+    $("sim-move").addEventListener("click", () => { if (!api) return; api.move(); moves++; setStep(2); hint(); });
     $("sim-cue").addEventListener("click", (e) => {
       if (!api) return;
       cueOn = !cueOn; api.setCue(cueOn);
       e.currentTarget.setAttribute("aria-pressed", String(cueOn));
       e.currentTarget.textContent = cueOn ? "Cue on" : "Cue off";
     });
-    $("f3d").addEventListener("pointerdown", hint);
     function hint() { $("sim-hint").classList.add("gone"); }
     steps[1].addEventListener("click", () => $("sim-send").click());
     steps[2].addEventListener("click", () => $("sim-move").click());
@@ -572,13 +573,13 @@
       start() {
         load();
         if (api) { api.reset(); api.run(true); }
-        cues = 0; out = 0; step = 0; cueOn = true;
+        cues = 0; out = 0; moves = 0; cueOn = true;
         $("sim-cues").textContent = 0; $("sim-out").textContent = 0;
         $("sim-cue").setAttribute("aria-pressed", "true"); $("sim-cue").textContent = "Cue on";
         $("sim-hint").classList.remove("gone"); setStep(0);
       },
       stop() { if (api) api.run(false); },
-      peek: () => ({ ready: $("sim-loading").hidden, cues, out, step, cueOn }),
+      peek: () => ({ ready: $("sim-loading").hidden, cues, out, moves, cueOn, ...(api ? api.peek() : {}) }),
     };
   })();
   window.__sim = sim;
