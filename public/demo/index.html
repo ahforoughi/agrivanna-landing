@@ -22,66 +22,82 @@
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
   <defs>
     <symbol id="i-mic" viewBox="0 0 24 24"><rect x="9" y="2" width="6" height="12" rx="3"/><path d="M19 10v2a7 7 0 0 1-14 0v-2M12 19v3"/></symbol>
+    <symbol id="i-stop" viewBox="0 0 24 24"><rect x="6" y="6" width="12" height="12" rx="2.5"/></symbol>
     <symbol id="i-map" viewBox="0 0 24 24"><path d="M14.1 5.55a2 2 0 0 0 1.8 0l3.65-1.83A1 1 0 0 1 21 4.62v12.76a1 1 0 0 1-.55.9l-4.55 2.27a2 2 0 0 1-1.8 0l-4.2-2.1a2 2 0 0 0-1.8 0l-3.65 1.83A1 1 0 0 1 3 19.38V6.62a1 1 0 0 1 .55-.9L8.1 3.45a2 2 0 0 1 1.8 0zM15 5.76v15M9 3.24v15"/></symbol>
     <symbol id="i-herd" viewBox="0 0 24 24"><rect x="8" y="2" width="8" height="4" rx="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2M12 11h4M12 16h4M8 11h.01M8 16h.01"/></symbol>
     <symbol id="i-ai" viewBox="0 0 24 24"><path d="M9.94 15.5A2 2 0 0 0 8.5 14.06l-6.14-1.58a.5.5 0 0 1 0-.96L8.5 9.94A2 2 0 0 0 9.94 8.5l1.58-6.14a.5.5 0 0 1 .96 0l1.58 6.14a2 2 0 0 0 1.44 1.44l6.14 1.58a.5.5 0 0 1 0 .96l-6.14 1.58a2 2 0 0 0-1.44 1.44l-1.58 6.14a.5.5 0 0 1-.96 0zM20 3v4M22 5h-4"/></symbol>
     <symbol id="i-fence" viewBox="0 0 24 24"><path d="M4 3 2 5v15c0 .6.4 1 1 1h2c.6 0 1-.4 1-1V5zM6 8h4M6 18h4M12 3l-2 2v15c0 .6.4 1 1 1h2c.6 0 1-.4 1-1V5zM14 8h4M14 18h4M20 3l-2 2v15c0 .6.4 1 1 1h2c.6 0 1-.4 1-1V5z"/></symbol>
     <symbol id="i-check" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></symbol>
     <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M7 17 17 7M8 7h9v9"/></symbol>
-    <symbol id="i-play" viewBox="0 0 24 24"><path d="M6 4l14 8-14 8z"/></symbol>
+    <symbol id="i-down" viewBox="0 0 24 24"><path d="M12 5v14M5 12l7 7 7-7"/></symbol>
     <symbol id="i-wifi-off" viewBox="0 0 24 24"><path d="M12 20h.01M8.5 16.43a5 5 0 0 1 7 0M2 8.82a15 15 0 0 1 4.18-2.65M19 12.86a10 10 0 0 0-2.29-1.64M22 8.82a15 15 0 0 0-11.29-3.76M5 12.86a10 10 0 0 1 5.24-2.76M2 2l20 20"/></symbol>
+    <symbol id="i-dash" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="9" rx="1"/><rect x="14" y="3" width="7" height="5" rx="1"/><rect x="14" y="12" width="7" height="9" rx="1"/><rect x="3" y="16" width="7" height="5" rx="1"/></symbol>
+    <symbol id="i-cow" viewBox="0 0 24 24"><path d="M5 9 3 6M19 9l2-3M6 9h12v6a4 4 0 0 1-4 4h-4a4 4 0 0 1-4-4zM10 15h.01M14 15h.01"/></symbol>
+    <symbol id="i-layers" viewBox="0 0 24 24"><path d="m12 2 10 5-10 5L2 7zM2 17l10 5 10-5M2 12l10 5 10-5"/></symbol>
+    <symbol id="i-export" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8zM14 2v6h6M12 18v-6M9 15l3 3 3-3"/></symbol>
+    <symbol id="i-x" viewBox="0 0 24 24"><path d="M18 6 6 18M6 6l12 12"/></symbol>
   </defs>
 </svg>
 
-<!-- Attract -->
-<section id="attract" class="attract is-on" aria-label="Start">
-  <video id="attract-video" src="/video/hero-1080.mp4" poster="/video/hero-poster.jpg" autoplay muted loop playsinline preload="auto"></video>
-  <div class="attract-shade"></div>
-  <img class="logo attract-logo" src="assets/logo.png" alt="Agrivanna">
-  <div class="attract-copy">
-    <p class="eyebrow">Ranch OS · Calgary, AB</p>
-    <h1>The operating system<br><span class="lime">for grazing.</span></h1>
-    <p class="lead">Voice records, pasture scores from space, herd records and an AI assistant. Built for ranchers, working with no signal.</p>
-    <button class="btn btn-solid btn-lg" id="start">Tap to explore <svg class="ic"><use href="#i-arrow"/></svg></button>
-  </div>
-</section>
-
-<!-- The app window -->
-<section id="hub" class="hub" aria-label="Agrivanna features" hidden>
+<section id="hub" class="hub" aria-label="Agrivanna">
   <header class="topbar">
-    <button class="logo-btn" id="home" aria-label="Back to the start"><img class="logo" src="assets/logo.png" alt="Agrivanna"></button>
-    <span class="ranch-tag"><i></i>A Southern Alberta ranch · live data, 17 Oct 2026</span>
-    <button class="btn btn-sm btn-solid" id="open-qr">Get early access</button>
+    <button class="logo-btn" id="home" aria-label="Home"><img class="logo" src="assets/logo.png" alt="Agrivanna"></button>
+    <button class="btn btn-sm btn-solid" id="open-qr">Get early access <svg class="ic"><use href="#i-arrow"/></svg></button>
   </header>
 
   <main class="stage" id="stage">
+
+    <!-- 0. Home -->
+    <article class="feat feat-home" data-feat="home" aria-label="Home">
+      <div class="copy">
+        <p class="eyebrow">Ranch OS · Calgary, AB</p>
+        <h1>The operating system <span class="lime">for grazing.</span></h1>
+        <p class="lead">Agrivanna is a Calgary agtech startup building software for cow calf ranchers. Talk to it at the chute, see your grass from space, keep every animal's record and ask Vanna what to do next. All of it works with no signal.</p>
+        <div class="badges">
+          <span class="badge"><b>Top 10</b>Calgary early stage startups, 2026</span>
+          <span class="badge"><b>Since 2024</b>Built with Alberta and Saskatchewan ranchers</span>
+          <span class="badge"><b>Offline</b>Works at the chute with no signal</span>
+        </div>
+        <p class="explore"><svg class="ic"><use href="#i-down"/></svg> Tap a circle below to explore</p>
+      </div>
+      <div class="visual">
+        <div class="home-video">
+          <video id="home-video" src="/video/hero-1080.mp4" poster="/video/hero-poster.jpg" autoplay muted loop playsinline preload="auto"></video>
+          <span class="live-chip"><i></i>At the chute, Southern Alberta</span>
+        </div>
+      </div>
+    </article>
 
     <!-- 1. Voice -->
     <article class="feat" data-feat="voice" aria-label="Voice records">
       <div class="copy">
         <p class="eyebrow">Voice records</p>
         <h2>Say it at the chute. <span class="lime">It's written down.</span></h2>
-        <p class="lead">Talk through the run the way you'd tell your neighbour. Agrivanna pulls out the tags, weights and treatments and writes them against the right animal.</p>
+        <p class="lead">Talk the way you'd tell your neighbour. Agrivanna picks out the animal, the tag, the weight and the treatment, and writes each one to the right record.</p>
+        <p class="try-label">Try it</p>
+        <div class="samples" id="samples"></div>
         <ul class="ticks">
-          <li>No forms, no dropdowns, nothing to learn</li>
           <li>Nothing is saved until you confirm it</li>
           <li>Works with no signal. Syncs when you're back in range</li>
         </ul>
-        <button class="btn" id="voice-replay"><svg class="ic"><use href="#i-play"/></svg> Play it again</button>
       </div>
       <div class="visual">
-        <div class="phone">
-          <div class="phone-notch"></div>
-          <div class="phone-screen">
-            <div class="ph-bar"><span>Record a session</span><span class="pill-off"><svg class="ic"><use href="#i-wifi-off"/></svg> Offline</span></div>
-            <div class="listen" id="listen">
-              <div class="wave" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
-              <p class="dictation" id="dictation"></p>
+        <div class="recorder" id="recorder">
+          <div class="rec-top">
+            <span class="rec-title">Record a session</span>
+            <span class="pill-off"><svg class="ic"><use href="#i-wifi-off"/></svg> No signal needed</span>
+          </div>
+          <div class="rec-body">
+            <div class="mic-zone">
+              <button class="big-mic" id="big-mic" aria-label="Tap and talk"><span class="ring"></span><span class="ring r2"></span><svg class="ic"><use href="#i-mic"/></svg></button>
+              <div class="mic-status" id="mic-status">Tap the mic and talk,<br>or pick a note on the left</div>
+              <div class="bars" id="bars" aria-hidden="true"></div>
             </div>
-            <div class="confirm" id="confirm" hidden>
-              <p class="ph-sub">Ready to confirm · <b id="rec-count">4</b> records</p>
-              <ul id="records"></ul>
-              <button class="btn btn-solid btn-block" id="save-records">Save 4 records</button>
+            <div class="transcript" id="transcript"><span class="placeholder">Your words show up here as you speak.</span></div>
+            <div class="extract" id="extract" hidden>
+              <div class="ex-head"><span>Agrivanna found <b id="ex-count">0</b></span><button class="link" id="ex-clear">Start over</button></div>
+              <ul class="ex-list" id="ex-list"></ul>
+              <button class="btn btn-solid btn-block" id="ex-save">Save records</button>
             </div>
           </div>
         </div>
@@ -101,7 +117,7 @@
         <div id="pasture-intro">
           <p class="eyebrow">Pasture management</p>
           <h2>Every paddock, <span class="lime">scored from space.</span></h2>
-          <p class="lead">A readiness score from 0 to 100, from satellite images, weather and your grazing records. Tap a paddock.</p>
+          <p class="lead">A real Southern Alberta ranch. Each paddock gets a readiness score from 0 to 100, from satellite images, weather and grazing records. Tap a paddock.</p>
           <ul class="legend">
             <li><span class="chip chip-ready">Ready</span> 60 or more</li>
             <li><span class="chip chip-watch">Watch</span> 35 to 60</li>
@@ -126,57 +142,63 @@
       <div class="copy">
         <p class="eyebrow">Herd management</p>
         <h2>Every animal, <span class="lime">birth to sale.</span></h2>
-        <p class="lead">One history per animal: calving, treatments, weights and moves, recorded as you work instead of typed up later.</p>
+        <p class="lead">One history per animal: calving, treatments, weights and moves, recorded as you work. Tap a herd, then an animal.</p>
         <ul class="ticks">
           <li>Counts that keep up as animals move, calve or get culled</li>
           <li>Treatments with withdrawal times, so you know who can't ship</li>
           <li>Tags from Bluetooth wands, weights from scale heads</li>
         </ul>
-        <div class="stats">
-          <div><b>65</b><span>head on Paddock E</span></div>
-          <div><b>71</b><span>days in, move due</span></div>
-          <div><b>5</b><span>herd groups together</span></div>
-        </div>
       </div>
       <div class="visual">
-        <div class="laptop">
-          <div class="laptop-screen"><img src="assets/f/herd-web.webp" alt="Agrivanna herd list and animal records in a browser"></div>
-          <div class="laptop-base"></div>
-        </div>
-        <div class="animal-card" id="animal-card">
-          <div class="ac-head"><span class="tagno">418</span><div><b>Cow 418</b><small>Black baldy · North pasture</small></div></div>
-          <ol class="timeline">
-            <li><time>Sep 11</time><span>Calved, bull calf, no help needed</span></li>
-            <li><time>Sep 11</time><span>Calf tagged yellow 418</span></li>
-            <li><time>Sep 11</time><span>Vitamin E and selenium</span></li>
-            <li><time>Sep 11</time><span>Calf about 85 lb</span></li>
-          </ol>
+        <div class="appwin" id="appwin">
+          <aside class="aw-side">
+            <img class="aw-logo" src="assets/logo.png" alt="">
+            <span class="aw-rec"><svg class="ic"><use href="#i-mic"/></svg> Record</span>
+            <span><svg class="ic"><use href="#i-dash"/></svg> Dashboard</span>
+            <span><svg class="ic"><use href="#i-cow"/></svg> Animals</span>
+            <span class="on"><svg class="ic"><use href="#i-layers"/></svg> Herds</span>
+            <span><svg class="ic"><use href="#i-map"/></svg> Pasture</span>
+            <span><svg class="ic"><use href="#i-export"/></svg> Exports</span>
+          </aside>
+          <div class="aw-main">
+            <div class="aw-stats" id="aw-stats"></div>
+            <div class="aw-cols">
+              <div class="aw-card aw-herds"><p class="aw-label">Herd list</p><div id="herd-list"></div></div>
+              <div class="aw-card aw-animals">
+                <div class="aw-herd-head" id="herd-head"></div>
+                <table class="aw-table"><thead><tr><th>Tag</th><th>Visual</th><th>Class</th><th>Breed</th></tr></thead><tbody id="animal-rows"></tbody></table>
+              </div>
+            </div>
+            <div class="drawer" id="drawer" hidden>
+              <button class="drawer-x" id="drawer-x" aria-label="Close"><svg class="ic"><use href="#i-x"/></svg></button>
+              <div class="ac-head"><span class="tagno" id="dr-visual"></span><div><b id="dr-title"></b><small id="dr-sub"></small></div></div>
+              <ol class="timeline" id="dr-timeline"></ol>
+            </div>
+          </div>
         </div>
       </div>
     </article>
 
-    <!-- 4. AI assistant -->
-    <article class="feat" data-feat="ai" aria-label="AI assistant">
+    <!-- 4. Vanna, the AI assistant -->
+    <article class="feat" data-feat="ai" aria-label="Vanna, the AI assistant">
       <div class="copy">
-        <p class="eyebrow">AI assistant · Web and iPhone</p>
-        <h2>Ask your ranch. <span class="lime">Get a plan.</span></h2>
-        <p class="lead">Ask in plain words, out loud or typed. It answers from your satellite scores, herd moves and records, in the web app and on your phone.</p>
+        <p class="eyebrow">Vanna · AI assistant</p>
+        <h2>Ask your ranch. <span class="lime">Vanna answers.</span></h2>
+        <p class="lead">Ask in plain words, out loud or typed. Vanna answers from your satellite scores, herd moves and records, in the web app and on your phone.</p>
         <div class="device-toggle" role="tablist">
           <button role="tab" aria-selected="true" data-device="phone">iPhone</button>
           <button role="tab" aria-selected="false" data-device="web">Web app</button>
         </div>
         <div class="asks" id="asks"></div>
         <div class="ask-mic-row">
-          <button class="mic" id="mic" aria-label="Ask out loud" hidden><svg class="ic"><use href="#i-mic"/></svg></button>
-          <span class="hint" id="mic-hint" hidden>Or tap the mic and ask out loud</span>
+          <button class="mic" id="mic" aria-label="Ask Vanna out loud" hidden><svg class="ic"><use href="#i-mic"/></svg></button>
+          <span class="hint" id="mic-hint" hidden>Or tap the mic and ask Vanna out loud</span>
         </div>
       </div>
       <div class="visual">
         <div class="chat-frame phone-mode" id="chat-frame">
-          <div class="cf-top"><span class="dots"><i></i><i></i><i></i></span><span class="cf-title">Agrivanna assistant</span><span class="pill-off"><svg class="ic"><use href="#i-wifi-off"/></svg> Offline</span></div>
-          <div class="chat" id="chat">
-            <div class="msg agv"><img src="assets/icon-192.png" alt=""><p>Hi. I know your paddocks, herds and records. What do you want to know?</p></div>
-          </div>
+          <div class="cf-top"><span class="dots"><i></i><i></i><i></i></span><img class="cf-avatar" src="assets/icon-192.png" alt=""><span class="cf-title">Vanna<small>Your grazing assistant</small></span><span class="pill-off"><svg class="ic"><use href="#i-wifi-off"/></svg> Offline</span></div>
+          <div class="chat" id="chat"></div>
         </div>
       </div>
     </article>
@@ -211,7 +233,7 @@
     <button data-go="voice"><span class="orb"><svg class="ic"><use href="#i-mic"/></svg></span><em>Voice</em></button>
     <button data-go="pasture"><span class="orb"><svg class="ic"><use href="#i-map"/></svg></span><em>Pasture</em></button>
     <button data-go="herd"><span class="orb"><svg class="ic"><use href="#i-herd"/></svg></span><em>Herd</em></button>
-    <button data-go="ai"><span class="orb"><svg class="ic"><use href="#i-ai"/></svg></span><em>AI assistant</em></button>
+    <button data-go="ai"><span class="orb"><svg class="ic"><use href="#i-ai"/></svg></span><em>Vanna AI</em></button>
     <button data-go="fence"><span class="orb"><svg class="ic"><use href="#i-fence"/></svg></span><em>Virtual fencing</em></button>
   </nav>
 </section>
