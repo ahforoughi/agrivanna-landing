@@ -1,5 +1,5 @@
 /* Agrivanna booth demo: a home page about Agrivanna with a dock of five features
-   (voice, pasture, herd, Vanna the AI assistant, virtual fencing), opened in any order.
+   (voice, pasture, herd, the AI assistant, virtual fencing), opened in any order.
    Works with no network: every file is cached by sw.js, all data is in data.js,
    and nothing calls any live service. */
 (() => {
@@ -29,16 +29,16 @@
     if (name === "voice") resetVoice();
     if (name === "pasture" && !picked) setTimeout(() => feat === "pasture" && !picked && pick(D.herd.paddock), 1500);
     if (name === "herd") selectHerd(0);
-    if (name === "ai") resetChat();
-    if (name === "fence") startSteps();
+    if (name === "ai") resetAssistant();
+    if (name === "fence") sim.start();
   }
   function leave(name) {
     if (name === "home") $("home-video").pause();
     if (name === "voice") stopVoice();
     if (name === "pasture") resetMap();
     if (name === "herd") $("drawer").hidden = true;
-    if (name === "fence") stopSteps();
-    if (name === "ai") stopSpeech();
+    if (name === "fence") sim.stop();
+    if (name === "ai") { stopSpeech(); clearAiTimers(); }
   }
   let idle;
   function armIdle() { clearTimeout(idle); idle = setTimeout(() => { $("qr-sheet").hidden = true; go("home"); }, IDLE_MS); }
@@ -51,7 +51,7 @@
   $("stage").addEventListener("touchend", (e) => {
     if (sx == null) return;
     const dx = e.changedTouches[0].clientX - sx, dy = e.changedTouches[0].clientY - sy; sx = null;
-    if (Math.abs(dx) > 90 && Math.abs(dx) > Math.abs(dy) * 1.6 && !e.target.closest(".map-wrap, .appwin, .chat")) step(dx < 0 ? 1 : -1);
+    if (Math.abs(dx) > 90 && Math.abs(dx) > Math.abs(dy) * 1.6 && !e.target.closest(".map-wrap, .appwin, .ios, .wa, .sim")) step(dx < 0 ? 1 : -1);
   }, { passive: true });
   window.addEventListener("keydown", (e) => {
     if (e.key === "ArrowRight") step(1); if (e.key === "ArrowLeft") step(-1); if (e.key === "Escape") $("qr-sheet").hidden = true;
@@ -76,6 +76,18 @@
     playText(SAMPLES[+b.dataset.i].text, "Playing a sample note");
   }));
 
+  const SAY = [
+    "Heifer 27 calved a bull calf, tagged yellow 27, 80 pounds",
+    "Steer 61 has foot rot, gave him 10 cc of Draxxin",
+    "Moved 40 pairs from Paddock B to Paddock C",
+  ];
+  $("say-lines").innerHTML = SAY.map((t) => `<li>${t}</li>`).join("");
+  // tapping a line plays it, so it also works on browsers that can't listen
+  $("say-lines").querySelectorAll("li").forEach((li, i) => li.addEventListener("click", () => {
+    document.querySelectorAll(".sample").forEach((x) => x.classList.remove("on"));
+    playText(SAY[i], "Playing your line");
+  }));
+
   const bars = $("bars");
   bars.innerHTML = "<i></i>".repeat(28);
   let barTimer = null, typeTimers = [], recog = null, records = [];
@@ -98,7 +110,7 @@
     $("transcript").className = "transcript";
     $("transcript").innerHTML = `<span class="placeholder">Your words show up here as you speak.</span>`;
     $("extract").hidden = true;
-    $("mic-status").innerHTML = Rec ? "Tap the mic and talk,<br>or pick a note on the left" : "Tap the mic to hear a note,<br>or pick one on the left";
+    $("mic-status").innerHTML = Rec ? "Tap the mic and say one of<br>the lines on the left" : "Tap the mic to hear a note,<br>or pick one on the left";
   }
   // types a note word by word as if it were being said
   function playText(text, status) {
@@ -289,13 +301,13 @@
   // ================================================================ 3. herd (the web app's herd screen)
   const A = (tag, vis, cls, breed, hist) => ({ tag: "124 000 1000" + tag, vis, cls, breed, hist });
   const HERDS = [
-    { name: "North pasture cows", meta: "Cows · 1,349 lb · 11 of 42 tagged", head: 42, tagged: 11, avg: "1,349 lb", animals: [
-      A("00418", "418", "Cow", "Black Baldy", [["Sep 11", "Calved a bull calf, no help needed"], ["Sep 11", "Calf tagged yellow 418, about 85 lb"], ["Jun 02", "Preg checked, bred"], ["May 01", "Moved to North pasture"]]),
-      A("00405", "R05", "Cow", "Angus", [["Sep 14", "Calved a heifer calf"], ["Jul 20", "Pinkeye, 8 cc LA 200, withdrawal logged"], ["May 01", "Moved to North pasture"]]),
+    { name: "Cow calf pairs", meta: "Cows · 1,349 lb · on Paddock E", head: D.herd.head, tagged: 11, avg: "1,349 lb", animals: [
+      A("00418", "418", "Cow", "Black Baldy", [["Sep 11", "Calved a bull calf, no help needed"], ["Sep 11", "Calf tagged yellow 418, about 85 lb"], ["Jun 02", "Preg checked, bred"], ["Aug 07", "Moved to Paddock E"]]),
+      A("00405", "R05", "Cow", "Angus", [["Sep 14", "Calved a heifer calf"], ["Jul 20", "Pinkeye, 8 cc LA 200, withdrawal logged"], ["Aug 07", "Moved to Paddock E"]]),
       A("00411", "R11", "Cow", "Angus", [["Sep 09", "Calved a bull calf"], ["Jun 02", "Preg checked, bred"]]),
       A("00434", "P34", "Cow", "Hereford", [["Sep 18", "Calved a bull calf, pulled"], ["Sep 18", "Calf about 92 lb"], ["Jun 02", "Preg checked, bred"]]),
       A("00441", "P41", "Cow", "Red Angus", [["Aug 30", "Body condition 6"], ["Jun 02", "Preg checked, open"], ["Jun 02", "Flagged to cull"]]),
-      A("00508", "N08", "Cow", "Angus", [["Sep 12", "Calved a heifer calf"], ["May 01", "Moved to North pasture"]]),
+      A("00508", "N08", "Cow", "Angus", [["Sep 12", "Calved a heifer calf"], ["Aug 07", "Moved to Paddock E"]]),
     ] },
     { name: "Backgrounding steers", meta: "Steers · 760 lb · 88 head", head: 88, tagged: 88, avg: "760 lb", animals: [
       A("00061", "61", "Steer", "Angus cross", [["Oct 12", "Weighed 768 lb"], ["Oct 03", "Pinkeye, 8 cc LA 200, in hospital pen"], ["Sep 01", "Weighed 712 lb"]]),
@@ -309,7 +321,7 @@
       A("00203", "H03", "Heifer", "Angus", [["Oct 01", "Weighed 895 lb"], ["Jul 11", "Bred, AI"]]),
     ] },
   ];
-  $("aw-stats").innerHTML = `<div><small>Herds</small><b>3</b></div><div><small>Linked IDs</small><b>123</b></div><div><small>Total animals</small><b>154</b></div>`;
+  $("aw-stats").innerHTML = `<div><small>Herds</small><b>3</b></div><div><small>Linked IDs</small><b>123</b></div><div><small>Total animals</small><b>${HERDS.reduce((n, x) => n + x.head, 0)}</b></div>`;
   $("herd-list").innerHTML = HERDS.map((hd, i) => `<button class="herd-row" data-i="${i}"><span class="hr-top"><b>${hd.name}</b><span>${hd.head} head</span></span><small>${hd.meta}</small><span class="bar"><i style="width:${Math.round(hd.tagged / hd.head * 100)}%"></i></span></button>`).join("");
   document.querySelectorAll(".herd-row").forEach((b) => b.addEventListener("click", () => selectHerd(+b.dataset.i)));
   function selectHerd(i) {
@@ -332,56 +344,165 @@
   }
   $("drawer-x").addEventListener("click", () => { $("drawer").hidden = true; $("animal-rows").querySelectorAll("tr").forEach((r) => r.classList.remove("on")); });
 
-  // ================================================================ 4. Vanna
+  // ================================================================ 4. AI assistant
+  // The same examples drive two faithful copies: the iOS app's command sheet
+  // and the web app's "Ask the assistant" panel. Answers come from data.js.
   const P = D.paddocks;
-  const QA = [
-    { q: "Should I move my cows this week?",
-      a: `Yes. Paddock E is grazed down, <strong>PRS ${P.E.prs}</strong>. Move the herd next door to Paddock A. It scores <strong>${P.A.prs}</strong> and has rested.`,
-      keys: /move|cow|herd|week|shift/i },
-    { q: "Which paddock is ready next?",
-      a: `Paddock A, ready at <strong>${P.A.prs}</strong>. It's had the most rest. Paddock B is next at <strong>${P.B.prs}</strong>.`,
-      keys: /ready|next|best|which|graze/i },
-    { q: "How is Paddock E doing?",
-      a: `${D.herd.head} head have been on Paddock E for <strong>${D.herd.days} days</strong>. It's grazed down to ${P.E.prs}, so it needs rest. The grass had a good year though, greener than normal.`,
-      keys: /paddock e|\be\b|doing|how is|status/i },
+  const COW = HERDS[0];
+  const byScore = Object.entries(P).sort((x, y) => y[1].prs - x[1].prs);
+  const [best, second] = byScore;
+  const daysOn = (n) => { const d = new Date(); d.setDate(d.getDate() + n); return d.toLocaleDateString("en-CA", { month: "short", day: "numeric" }); };
+  const past = P.E.history.filter(([y]) => y < 2026).map(([, v]) => v);
+  const eGreener = P.E.history[P.E.history.length - 1][1] > past.reduce((x, y) => x + y, 0) / past.length;
+  const total = HERDS.reduce((n, x) => n + x.head, 0);
+  const AI = [
+    { kind: "ask", q: "How many cattle do I have?", keys: /how many|cattle|count|head/i,
+      ios: `<b>${total} head</b>, in ${HERDS.length} herds: ${HERDS.map((x) => `${x.name.toLowerCase()} ${x.head}`).join(", ")}.`,
+      web: [`You have **${total} head** across ${HERDS.length} herds.`, { cols: ["Herd", "Head", "Avg weight"], rows: HERDS.map((x) => [x.name, x.head, x.avg]) }] },
+    { kind: "ask", q: "Which pastures are ready to graze?", keys: /ready|next|graze|which|best/i,
+      ios: `<b>Paddock ${best[0]}</b> is ready, at ${best[1].prs}. Paddock ${second[0]} is next at ${second[1].prs}. The rest need more time.`,
+      web: [`**Paddock ${best[0]}** is the most ready, at ${best[1].prs} out of 100. Paddock ${second[0]} is next.`, { cols: ["Paddock", "Score", "Status", "Acres"], rows: byScore.slice(0, 4).map(([L, x]) => [`Paddock ${L}`, x.prs, x.status, x.acres]) }] },
+    { kind: "ask", q: "How is Paddock E doing?", keys: /paddock e|\be\b|doing|how is/i,
+      ios: `${D.herd.head} head have been on Paddock E for <b>${D.herd.days} days</b>. It's down to ${P.E.prs}, so it needs rest.${eGreener ? " The grass had a better year than normal." : ""}`,
+      web: [`**${COW.name}**, ${D.herd.head} head, have been on Paddock E for **${D.herd.days} days**. It scores ${P.E.prs} now, so it needs rest.`, { cols: ["Paddock", "Score", "Status", "Herd on it"], rows: [["Paddock E", P.E.prs, P.E.status, `${D.herd.head} head, ${D.herd.days} days`]] }] },
+    { kind: "log", q: `Move the cow calf pairs to Paddock ${best[0]}`, keys: /move|shift|put/i,
+      kicker: "Move herd", title: `${COW.name} · ${COW.head} head → Paddock ${best[0]}`,
+      lead: `Off Paddock E after ${D.herd.days} days. Paddock E gets its rest.`,
+      rows: [["Now on", "Paddock E"], ["To", `Paddock ${best[0]}`], ["Moved", "Today"]],
+      done: "Move recorded", doneLine: `${COW.name} are moving onto Paddock ${best[0]}.`, saved: `Moved ${COW.name} to Paddock ${best[0]}` },
+    { kind: "log", q: "Steer 61 got 8 cc of LA 200 for pinkeye", keys: /steer|treat|gave|pinkeye|la ?200|cc/i,
+      kicker: "Treatment", title: "Steer 61 · LA 200, 8 cc",
+      lead: `For pinkeye. 28 day withdrawal: he can't ship before ${daysOn(28)}.`,
+      rows: [["Product", "LA 200"], ["Dose", "8 cc"], ["Given", "Today"], ["For", "Pinkeye"], ["Withdrawal", `28 days, until ${daysOn(28)}`]],
+      done: "Treatment recorded", doneLine: `LA 200 on Steer 61. Clear to ship ${daysOn(28)}.`, saved: "Treated Steer 61 with LA 200" },
+    { kind: "log", q: "Note: trough on Paddock C is low", keys: /note|trough|water|gate/i,
+      kicker: "Note", title: "Paddock C",
+      lead: "“Trough is low.”",
+      rows: [["About", "Paddock C"], ["Note", "Trough is low"]],
+      done: "Note saved", doneLine: "On Paddock C: trough is low.", saved: "Noted on Paddock C" },
   ];
-  const plain = (html) => html.replace(/<[^>]+>/g, "");
-  function resetChat() {
-    stopSpeech();
-    $("chat").innerHTML = `<div class="msg agv"><img src="assets/icon-192.png" alt=""><p>Hi, I'm Vanna. I know your paddocks, herds and records. What do you want to know?</p></div>`;
-    $("asks").innerHTML = QA.map((x, i) => `<button class="ask-chip" data-i="${i}">${x.q}<svg class="ic"><use href="#i-arrow"/></svg></button>`).join("");
-    $("asks").querySelectorAll(".ask-chip").forEach((b) => b.addEventListener("click", () => ask(QA[+b.dataset.i], b)));
+  const chip = (x, i) => `<button class="ask-chip" data-i="${i}">${x.q}<svg class="ic"><use href="#i-arrow"/></svg></button>`;
+  $("asks-q").innerHTML = AI.map((x, i) => (x.kind === "ask" ? chip(x, i) : "")).join("");
+  $("asks-l").innerHTML = AI.map((x, i) => (x.kind === "log" ? chip(x, i) : "")).join("");
+  document.querySelectorAll("#asks-q .ask-chip, #asks-l .ask-chip").forEach((b) => b.addEventListener("click", () => run(AI[+b.dataset.i], null, b)));
+
+  let device = "phone", aiTimers = [];
+  const later = (fn, ms) => aiTimers.push(setTimeout(fn, ms));
+  function clearAiTimers() { aiTimers.forEach(clearTimeout); aiTimers = []; }
+  function resetAssistant() {
+    clearAiTimers(); stopSpeech();
+    document.querySelectorAll(".ask-chip").forEach((b) => b.classList.remove("used"));
+    iosIdle(); waEmpty();
   }
-  let busy = false;
-  function ask(item, chip, said) {
-    if (busy) return; busy = true;
-    if (chip) chip.classList.add("used");
-    const c = $("chat");
-    c.insertAdjacentHTML("beforeend", `<div class="msg you"><p>${esc(said || item.q)}</p></div>`);
-    c.insertAdjacentHTML("beforeend", `<div class="msg agv" id="typing"><img src="assets/icon-192.png" alt=""><p class="typing"><i></i><i></i><i></i></p></div>`);
-    c.scrollTop = c.scrollHeight;
-    setTimeout(() => {
-      $("typing").remove();
-      c.insertAdjacentHTML("beforeend", `<div class="msg agv"><img src="assets/icon-192.png" alt=""><p>${item.a}</p></div>`);
-      c.scrollTop = c.scrollHeight;
-      speak(plain(item.a));
-      busy = false;
-    }, 900);
+  function run(item, said, chipEl) {
+    primeSpeech();
+    if (chipEl) chipEl.classList.add("used");
+    clearAiTimers(); stopSpeech();
+    device === "phone" ? iosRun(item, said) : waRun(item, said);
   }
   document.querySelectorAll(".device-toggle button").forEach((b) => b.addEventListener("click", () => {
     document.querySelectorAll(".device-toggle button").forEach((x) => x.setAttribute("aria-selected", String(x === b)));
-    $("chat-frame").className = "chat-frame " + (b.dataset.device === "web" ? "web-mode" : "phone-mode");
+    device = b.dataset.device;
+    $("ios").hidden = device !== "phone"; $("wa").hidden = device !== "web";
+    resetAssistant();
   }));
-  if (Rec) { $("mic").hidden = false; $("mic-hint").hidden = false; }
+
+  // ---- iPhone: the command sheet
+  const ORB = (live, label) => `<div class="ios-orb ${live ? "live" : ""}"><div class="core"><div class="bars5"><i></i><i></i><i></i><i></i><i></i></div></div><span>${label}</span></div>`;
+  function iosStatus(text, live) { $("ios-status").textContent = text; $("ios-dot").classList.toggle("live", !!live); }
+  function iosIdle() {
+    iosStatus("Listening", true);
+    $("ios-body").innerHTML = `<p class="ios-display">Ask, or say what happened.</p><p class="ios-lead">Like “${AI[3].q}”.</p>${ORB(true, "Listening")}`;
+  }
+  function iosRun(item, said) {
+    const heard = `<p class="ios-said">“${esc(said || item.q)}”</p>`;
+    if (item.kind === "ask") {
+      iosStatus("Asking the ranch");
+      $("ios-body").innerHTML = `${heard}<p class="ios-display">Asking the ranch…</p><div class="ios-think"><i></i><i></i><i></i></div>`;
+      later(() => {
+        iosStatus("Answered");
+        $("ios-body").innerHTML = `${heard}<p class="ios-display answer">${item.ios}</p><div class="ios-btns"><button class="ios-btn" data-act="again"><svg class="ic"><use href="#i-mic"/></svg> Say another</button></div>`;
+        speak(plain(item.ios));
+        bindIos();
+      }, 1100);
+      return;
+    }
+    iosStatus("Say yes or no", true);
+    $("ios-body").innerHTML = `${heard}<p class="ios-kicker">${item.kicker}</p><p class="ios-display">${esc(item.title)}</p><p class="ios-lead">${esc(item.lead)}</p>
+      <div class="ios-btns"><button class="ios-btn primary" data-act="yes"><svg class="ic"><use href="#i-check"/></svg> Yes, record</button><button class="ios-btn" data-act="no">No</button></div>
+      <p class="ios-small" style="text-align:center">Nothing is written until you say yes.</p>`;
+    speak(`${item.title.replace("→", "to").replace(" · ", ", ")}. Yes or no?`);
+    bindIos(item);
+  }
+  function bindIos(item) {
+    $("ios-body").querySelectorAll("[data-act]").forEach((b) => b.addEventListener("click", () => {
+      const act = b.dataset.act;
+      stopSpeech();
+      if (act === "again") return iosIdle();
+      if (act === "no") {
+        iosStatus("Nothing recorded");
+        $("ios-body").innerHTML = `<p class="ios-display" style="margin-top:30px">Okay.</p><p class="ios-lead">Nothing recorded.</p>`;
+        return later(iosIdle, 1800);
+      }
+      iosStatus("Recorded");
+      $("ios-body").innerHTML = `<div class="ios-done"><span class="tick"><svg class="ic"><use href="#i-check"/></svg></span><p class="ios-display">${item.done}</p></div>
+        <p class="ios-lead">${esc(item.doneLine)}</p><p class="ios-small">Saved on the phone. Uploads when there is signal.</p>
+        <div class="ios-btns"><button class="ios-btn" data-act="again"><svg class="ic"><use href="#i-mic"/></svg> Say another</button></div>`;
+      bindIos();
+    }));
+  }
+
+  // ---- Web: the side panel
+  const md = (t) => esc(t).replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>");
+  function waEmpty() {
+    $("wa-scroll").innerHTML = `<div class="wa-empty"><b>Ask, or say what happened</b><p>Try “how many cattle do I have?” or “put a note on the bulls: fence is down”</p></div>`;
+    waBox("");
+  }
+  function waBox(text) {
+    $("wa-text").textContent = text || "Ask a question, or say what happened";
+    $("wa-text").parentElement.classList.toggle("typed", !!text);
+  }
+  const waAdd = (html) => { const sc = $("wa-scroll"); sc.querySelector(".wa-empty")?.remove(); sc.insertAdjacentHTML("beforeend", html); sc.scrollTop = sc.scrollHeight; return sc.lastElementChild; };
+  function waRun(item, said) {
+    const text = said || item.q;
+    let i = 0;
+    const type = () => { waBox(text.slice(0, ++i)); if (i < text.length) later(type, 22); else later(send, 350); };
+    const send = () => {
+      waBox("");
+      waAdd(`<p class="wa-q">${esc(text)}</p>`);
+      const spin = waAdd(`<span class="wa-spin">Working it out</span>`);
+      later(() => {
+        spin.remove();
+        if (item.kind === "ask") {
+          const [line, t] = item.web;
+          waAdd(`<div class="wa-a"><p>${md(line)}</p><div class="wa-table"><table><thead><tr>${t.cols.map((c) => `<th>${c}</th>`).join("")}</tr></thead><tbody>${t.rows.map((r) => `<tr>${r.map((c) => `<td>${esc(String(c))}</td>`).join("")}</tr>`).join("")}</tbody></table></div></div>`);
+          speak(plain(md(line)));
+          return;
+        }
+        const card = waAdd(`<div class="wa-a"><p style="color:#565A61">Here it is. Check it, then save.</p><div class="wa-card"><span class="wa-kick">${item.kicker}</span><span class="wa-title">${esc(item.title.split(" → ")[0])}</span>
+          <dl>${item.rows.map(([k, v]) => `<dt>${k}</dt><dd>${esc(v)}</dd>`).join("")}</dl>
+          <div class="wa-acts"><button class="wa-btn primary" data-act="save">Save</button><button class="wa-btn" data-act="cancel">Cancel</button></div></div></div>`);
+        card.querySelectorAll("[data-act]").forEach((b) => b.addEventListener("click", () => {
+          const ok = b.dataset.act === "save";
+          card.innerHTML = ok ? `<p class="wa-ok"><svg class="ic"><use href="#i-check"/></svg> ${esc(item.saved)}</p>` : `<p class="wa-ok" style="color:#565A61">Cancelled. Nothing recorded.</p>`;
+        }));
+      }, 900);
+    };
+    type();
+  }
+  $("wa-new").addEventListener("click", () => { clearAiTimers(); waEmpty(); });
+
+  // ---- asking out loud: matched to the nearest example, so it always answers
+  if (Rec) $("ask-mic-row").hidden = false;
   let rec = null;
   $("mic").addEventListener("click", () => {
     primeSpeech();
     if (rec) { try { rec.abort(); } catch {} rec = null; }
     let done = false;
     const end = (text) => {
-      if (done) return; done = true; $("mic").classList.remove("listening");
-      const item = (text && QA.find((x) => x.keys.test(text))) || QA[0];
-      ask(item, null, text ? cap(text) : null);
+      if (done) return; done = true; $("mic").classList.remove("listening"); rec = null;
+      const item = (text && AI.find((x) => x.keys.test(text))) || AI[0];
+      run(item, text ? cap(text) : null);
     };
     try {
       rec = new Rec(); rec.lang = "en-CA"; rec.interimResults = false; rec.maxAlternatives = 1;
@@ -392,17 +513,162 @@
       setTimeout(() => { if (!done) { try { rec.stop(); } catch {} } }, 7000);
     } catch { end(null); }
   });
+  const plain = (html) => html.replace(/<[^>]+>/g, "");
 
-  // ================================================================ 5. virtual fencing
-  let stepTimer;
-  function startSteps() {
-    stopSteps(); let i = 0;
-    const lis = [...document.querySelectorAll("#fence-steps li")];
-    const show = () => lis.forEach((li, n) => li.classList.toggle("on", n === i));
-    show(); stepTimer = setInterval(() => { i = (i + 1) % lis.length; show(); }, 2600);
-    lis.forEach((li, n) => (li.onclick = () => { i = n; show(); }));
-  }
-  function stopSteps() { clearInterval(stepTimer); }
+  // ================================================================ 5. virtual fencing: a small simulation
+  // A pasture as a grid of grass, a fence line people can drag, and cattle
+  // that want the fresh grass over the line. Near the line a collar cue turns
+  // them back; with the cue off they walk through.
+  const sim = (() => {
+    const cv = $("sim-canvas"), ctx = cv.getContext("2d");
+    const GX = 48, GY = 32, START = [[0.42, 0.06], [0.36, 0.94]];
+    let W = 0, H = 0, raf = 0, last = 0, cues = 0, cueOn = true, grass, cows, line = START.map((p) => p.slice()), ripples = [], drag = null, shift = null, touched = false;
+    function reset() {
+      line = START.map((p) => p.slice());
+      grass = new Float32Array(GX * GY);
+      for (let j = 0; j < GY; j++) for (let i = 0; i < GX; i++)
+        grass[j * GX + i] = (side((i + 0.5) / GX, (j + 0.5) / GY) > 0 ? 0.25 : 0.95) + (Math.random() - 0.5) * 0.12;
+      cows = Array.from({ length: 14 }, () => ({ x: 0.06 + Math.random() * 0.24, y: 0.12 + Math.random() * 0.76, a: Math.random() * 6.28, cool: 0 }));
+      cues = 0; ripples = []; shift = null;
+    }
+    // signed distance in pasture widths: > 0 on the herd's side (left of the line)
+    function side(x, y) {
+      const [[x1, y1], [x2, y2]] = line, w = W || 4, h = H || 3;
+      const dx = (x2 - x1) * w, dy = (y2 - y1) * h, len = Math.hypot(dx, dy) || 1;
+      return ((x - x1) * w * dy - (y - y1) * h * dx) / len / w * -1;
+    }
+    // unit vector (in screen space) pointing from the herd's side to the fresh side
+    function toFresh() {
+      const [[x1, y1], [x2, y2]] = line, w = W || 4, h = H || 3;
+      let nx = (y2 - y1) * h, ny = -(x2 - x1) * w; const l = Math.hypot(nx, ny) || 1; nx /= l; ny /= l;
+      const probe = side(x1 + nx * 0.01, y1 + ny * 0.01 * w / h);
+      return probe < 0 ? [nx, ny] : [-nx, -ny];
+    }
+    function size() {
+      const r = cv.getBoundingClientRect(), dpr = Math.min(2, devicePixelRatio || 1);
+      if (!r.width || !r.height) return;
+      W = r.width; H = r.height; cv.width = Math.round(W * dpr); cv.height = Math.round(H * dpr); ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    }
+    function tick(t) {
+      raf = requestAnimationFrame(tick);
+      if (!W) { size(); if (!W) return; }
+      const dt = Math.min(50, t - (last || t)) / 16.7; last = t;
+      if (shift) {
+        const k = Math.min(1, (t - shift.t0) / 900), e = 1 - Math.pow(1 - k, 3);
+        line = shift.from.map(([x, y]) => [x + shift.dx * e, y + shift.dy * e]);
+        if (k >= 1) shift = null;
+      }
+      const dz = 0.05, [fx, fy] = toFresh(), freshA = Math.atan2(fy, fx);
+      let out = 0;
+      for (const c of cows) {
+        const s = side(c.x, c.y);
+        c.a += (Math.random() - 0.5) * 0.25 * dt;
+        // on the herd's side they lean toward the fresh grass; once over, with the cue on, they head back
+        if (s > 0) c.a += Math.sin(freshA - c.a) * 0.02 * dt;
+        else if (cueOn) c.a += Math.sin(freshA + Math.PI - c.a) * 0.03 * dt;
+        let nx = c.x + Math.cos(c.a) * 0.0011 * dt, ny = c.y + Math.sin(c.a) * 0.0011 * dt * (W / H);
+        const ns = side(nx, ny);
+        if (cueOn && s > 0 && ns < dz && ns < s) {
+          if (c.cool <= 0) { cues++; ripples.push({ x: c.x, y: c.y, t }); c.cool = 60; flashStep(1); }
+          c.a = freshA + Math.PI + (Math.random() - 0.5) * 1.6; nx = c.x; ny = c.y;
+        }
+        c.cool -= dt;
+        if (nx < 0.02 || nx > 0.98) { c.a = Math.PI - c.a; nx = Math.min(0.98, Math.max(0.02, nx)); }
+        if (ny < 0.03 || ny > 0.97) { c.a = -c.a; ny = Math.min(0.97, Math.max(0.03, ny)); }
+        c.x = nx; c.y = ny;
+        if (side(c.x, c.y) < 0) out++;
+        const gi = Math.min(GX - 1, c.x * GX | 0) + Math.min(GY - 1, c.y * GY | 0) * GX;
+        grass[gi] = Math.max(0.08, grass[gi] - 0.004 * dt);
+      }
+      for (let i = 0; i < grass.length; i++) grass[i] = Math.min(1, grass[i] + 0.00005 * dt);
+      $("sim-cues").textContent = cues; $("sim-out").textContent = out;
+      draw(t, dz, fx, fy);
+    }
+    function draw(t, dz, fx, fy) {
+      const cw = W / GX, ch = H / GY;
+      for (let j = 0; j < GY; j++) for (let i = 0; i < GX; i++) {
+        const g = grass[j * GX + i];
+        ctx.fillStyle = `rgb(${Math.round(150 - g * 90)},${Math.round(130 + g * 50)},${Math.round(70 - g * 30)})`;
+        ctx.fillRect(i * cw, j * ch, cw + 1, ch + 1);
+      }
+      // the line, run right across the pasture, with the cue band on the herd's side
+      const [[x1, y1], [x2, y2]] = line, dx = x2 - x1, dy = y2 - y1;
+      const A = [(x1 - dx * 3) * W, (y1 - dy * 3) * H], B = [(x2 + dx * 3) * W, (y2 + dy * 3) * H], off = dz * W;
+      const tint = cueOn ? "166,255,61" : "255,138,115";
+      ctx.save(); ctx.lineCap = "round";
+      ctx.strokeStyle = `rgba(${tint},.16)`; ctx.lineWidth = off * 2;
+      ctx.beginPath(); ctx.moveTo(A[0] - fx * off, A[1] - fy * off); ctx.lineTo(B[0] - fx * off, B[1] - fy * off); ctx.stroke();
+      ctx.shadowColor = `rgb(${tint})`; ctx.shadowBlur = 12; ctx.strokeStyle = `rgb(${tint})`; ctx.lineWidth = 3;
+      ctx.setLineDash([12, 9]); ctx.lineDashOffset = -t / 40;
+      ctx.beginPath(); ctx.moveTo(A[0], A[1]); ctx.lineTo(B[0], B[1]); ctx.stroke();
+      ctx.restore();
+      ripples = ripples.filter((r) => t - r.t < 900);
+      for (const r of ripples) {
+        const k = (t - r.t) / 900;
+        ctx.strokeStyle = `rgba(166,255,61,${1 - k})`; ctx.lineWidth = 2;
+        ctx.beginPath(); ctx.arc(r.x * W, r.y * H, 6 + k * 26, 0, 6.28); ctx.stroke();
+      }
+      const L = Math.max(8, W * 0.016);
+      for (const c of cows) {
+        ctx.save(); ctx.translate(c.x * W, c.y * H); ctx.rotate(c.a);
+        ctx.fillStyle = "rgba(0,0,0,.25)"; ctx.beginPath(); ctx.ellipse(2, 3, L, L * 0.5, 0, 0, 6.28); ctx.fill();
+        ctx.fillStyle = "#1d1b19"; ctx.beginPath(); ctx.ellipse(0, 0, L, L * 0.5, 0, 0, 6.28); ctx.fill();
+        ctx.beginPath(); ctx.ellipse(L * 1.05, 0, L * 0.38, L * 0.3, 0, 0, 6.28); ctx.fill();
+        ctx.fillStyle = "#A6FF3D"; ctx.fillRect(L * 0.62, -L * 0.36, L * 0.14, L * 0.72);
+        ctx.restore();
+      }
+      for (const [x, y] of line) {
+        ctx.fillStyle = "#fff"; ctx.strokeStyle = "#14161A"; ctx.lineWidth = 3;
+        ctx.beginPath(); ctx.arc(x * W, y * H, 11, 0, 6.28); ctx.fill(); ctx.stroke();
+      }
+    }
+    const at = (e) => { const r = cv.getBoundingClientRect(); return [(e.clientX - r.left) / r.width, (e.clientY - r.top) / r.height]; };
+    cv.addEventListener("pointerdown", (e) => {
+      const [x, y] = at(e);
+      const k = line.findIndex(([px, py]) => Math.hypot((px - x) * W, (py - y) * H) < 34);
+      if (k < 0 || shift) return;
+      drag = k; try { cv.setPointerCapture(e.pointerId); } catch {} setStep(0); hint();
+    });
+    cv.addEventListener("pointermove", (e) => {
+      if (drag == null) return;
+      const [x, y] = at(e), o = line[1 - drag];
+      if (Math.hypot((x - o[0]) * W, (y - o[1]) * H) < 60) return;
+      line[drag] = [Math.min(0.97, Math.max(0.03, x)), Math.min(0.97, Math.max(0.03, y))];
+    });
+    const up = () => { drag = null; };
+    cv.addEventListener("pointerup", up); cv.addEventListener("pointercancel", up);
+    function hint() { if (!touched) { touched = true; $("sim-hint").classList.add("gone"); } }
+    // rotate: the line steps onto fresh grass; past the far side a new season starts
+    $("sim-move").addEventListener("click", () => {
+      if (shift) return;
+      setStep(2); hint();
+      const [fx, fy] = toFresh(), step = 0.2, sx = fx * step, sy = fy * step * (W / H);
+      if (line.every(([x]) => x + sx > 0.95) || line.some(([x, y]) => x + sx > 1.1 || x + sx < -0.1 || y + sy > 1.1 || y + sy < -0.1)) { reset(); return; }
+      shift = { t0: performance.now(), from: line.map((p) => p.slice()), dx: sx, dy: sy };
+    });
+    $("sim-cue").addEventListener("click", (e) => {
+      cueOn = !cueOn;
+      e.currentTarget.setAttribute("aria-pressed", String(cueOn));
+      e.currentTarget.textContent = cueOn ? "Cue on" : "Cue off";
+    });
+    // the steps on the left follow what people do
+    const steps = [...document.querySelectorAll("#fence-steps li")];
+    let current = 0, flashT;
+    function setStep(i) { current = i; steps.forEach((li, n) => li.classList.toggle("on", n === i)); }
+    function flashStep(i) { steps.forEach((li, n) => li.classList.toggle("on", n === i)); clearTimeout(flashT); flashT = setTimeout(() => setStep(current), 1200); }
+    steps[2].addEventListener("click", () => $("sim-move").click());
+    new ResizeObserver(size).observe(cv);
+    return {
+      start() {
+        size(); reset(); cueOn = true; $("sim-cue").setAttribute("aria-pressed", "true"); $("sim-cue").textContent = "Cue on";
+        setStep(0); touched = false; $("sim-hint").classList.remove("gone");
+        cancelAnimationFrame(raf); last = 0; raf = requestAnimationFrame(tick);
+      },
+      stop() { cancelAnimationFrame(raf); raf = 0; },
+      peek: () => ({ cues, cueOn, line: line.map((p) => p.slice()), cows: cows.length }),
+    };
+  })();
+  window.__sim = sim;
 
   // ================================================================ speech out
   let voice = null;

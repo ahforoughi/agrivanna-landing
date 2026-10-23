@@ -36,6 +36,8 @@
     <symbol id="i-layers" viewBox="0 0 24 24"><path d="m12 2 10 5-10 5L2 7zM2 17l10 5 10-5M2 12l10 5 10-5"/></symbol>
     <symbol id="i-export" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8zM14 2v6h6M12 18v-6M9 15l3 3 3-3"/></symbol>
     <symbol id="i-x" viewBox="0 0 24 24"><path d="M18 6 6 18M6 6l12 12"/></symbol>
+    <symbol id="i-lock" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></symbol>
+    <symbol id="i-pencil" viewBox="0 0 24 24"><path d="M21.17 6.81a2.83 2.83 0 0 0-4-4L3.84 16.17a2 2 0 0 0-.5.83l-1.32 4.35a.5.5 0 0 0 .62.62l4.35-1.32a2 2 0 0 0 .83-.5zM15 5l4 4"/></symbol>
   </defs>
 </svg>
 
@@ -52,7 +54,7 @@
       <div class="copy">
         <p class="eyebrow">Ranch OS · Calgary, AB</p>
         <h1>The operating system <span class="lime">for grazing.</span></h1>
-        <p class="lead">Agrivanna is a Calgary agtech startup building software for cow calf ranchers. Talk to it at the chute, see your grass from space, keep every animal's record and ask Vanna what to do next. All of it works with no signal.</p>
+        <p class="lead">Agrivanna is a Calgary agtech startup building software for cow calf ranchers. Talk to it at the chute, see your grass from space, keep every animal's record and ask the assistant what to do next. All of it works with no signal.</p>
         <div class="badges">
           <span class="badge"><b>Top 10</b>Calgary early stage startups, 2026</span>
           <span class="badge"><b>Since 2024</b>Built with Alberta and Saskatchewan ranchers</span>
@@ -76,9 +78,12 @@
         <p class="lead">Talk the way you'd tell your neighbour. Agrivanna picks out the animal, the tag, the weight and the treatment, and writes each one to the right record.</p>
         <p class="try-label">Try it</p>
         <div class="samples" id="samples"></div>
+        <div class="say-own" id="say-own">
+          <p class="try-label">Or tap the mic and say one yourself</p>
+          <ul id="say-lines"></ul>
+        </div>
         <ul class="ticks">
           <li>Nothing is saved until you confirm it</li>
-          <li>Works with no signal. Syncs when you're back in range</li>
         </ul>
       </div>
       <div class="visual">
@@ -179,51 +184,87 @@
       </div>
     </article>
 
-    <!-- 4. Vanna, the AI assistant -->
-    <article class="feat" data-feat="ai" aria-label="Vanna, the AI assistant">
+    <!-- 4. AI assistant: the web app's side panel and the iPhone app's command sheet -->
+    <article class="feat" data-feat="ai" aria-label="AI assistant">
       <div class="copy">
-        <p class="eyebrow">Vanna · AI assistant</p>
-        <h2>Ask your ranch. <span class="lime">Vanna answers.</span></h2>
-        <p class="lead">Ask in plain words, out loud or typed. Vanna answers from your satellite scores, herd moves and records, in the web app and on your phone.</p>
-        <div class="device-toggle" role="tablist">
-          <button role="tab" aria-selected="true" data-device="phone">iPhone</button>
-          <button role="tab" aria-selected="false" data-device="web">Web app</button>
+        <p class="eyebrow">AI assistant · web and iPhone</p>
+        <h2>Ask your ranch. <span class="lime">Or tell it what happened.</span></h2>
+        <p class="lead">Ask a question and it answers from your herds, pastures and records. Say what happened and it writes the record, after you say yes.</p>
+        <div class="ai-row">
+          <div class="device-toggle" role="tablist">
+            <button role="tab" aria-selected="true" data-device="phone">iPhone app</button>
+            <button role="tab" aria-selected="false" data-device="web">Web app</button>
+          </div>
+          <div class="ask-mic-row" id="ask-mic-row" hidden>
+            <button class="mic" id="mic" aria-label="Ask out loud"><svg class="ic"><use href="#i-mic"/></svg></button>
+            <span class="hint">Or ask out loud</span>
+          </div>
         </div>
-        <div class="asks" id="asks"></div>
-        <div class="ask-mic-row">
-          <button class="mic" id="mic" aria-label="Ask Vanna out loud" hidden><svg class="ic"><use href="#i-mic"/></svg></button>
-          <span class="hint" id="mic-hint" hidden>Or tap the mic and ask Vanna out loud</span>
-        </div>
+        <p class="try-label">Ask</p>
+        <div class="asks" id="asks-q"></div>
+        <p class="try-label">Tell it</p>
+        <div class="asks" id="asks-l"></div>
       </div>
       <div class="visual">
-        <div class="chat-frame phone-mode" id="chat-frame">
-          <div class="cf-top"><span class="dots"><i></i><i></i><i></i></span><img class="cf-avatar" src="assets/icon-192.png" alt=""><span class="cf-title">Vanna<small>Your grazing assistant</small></span><span class="pill-off"><svg class="ic"><use href="#i-wifi-off"/></svg> Offline</span></div>
-          <div class="chat" id="chat"></div>
+        <!-- iPhone: the command sheet from the iOS app -->
+        <div class="ios" id="ios">
+          <div class="ios-island"></div>
+          <div class="ios-under"><i></i><i></i><i></i></div>
+          <div class="ios-sheet">
+            <div class="ios-grab"></div>
+            <div class="ios-status"><span class="ios-dot" id="ios-dot"></span><span id="ios-status">Listening</span></div>
+            <div class="ios-body" id="ios-body"></div>
+          </div>
+        </div>
+        <!-- Web: the "Ask the assistant" panel from the web app -->
+        <div class="wa" id="wa" hidden>
+          <div class="wa-page" aria-hidden="true">
+            <img class="wa-logo" src="assets/logo.png" alt="">
+            <span class="wa-nav on"></span><span class="wa-nav"></span><span class="wa-nav"></span><span class="wa-nav"></span>
+          </div>
+          <aside class="wa-panel">
+            <header class="wa-head"><b>Ask the assistant</b><span class="wa-hbtns"><span class="wa-tbtn" id="wa-new">New</span><span class="wa-tbtn">Full page</span><span class="wa-x"><svg class="ic"><use href="#i-x"/></svg></span></span></header>
+            <div class="wa-scroll" id="wa-scroll"></div>
+            <div class="wa-composer">
+              <div class="wa-box"><span class="wa-text" id="wa-text">Ask a question, or say what happened</span><span class="wa-mic"><svg class="ic"><use href="#i-mic"/></svg></span></div>
+              <div class="wa-row"><span class="wa-send">Send <svg class="ic"><use href="#i-arrow"/></svg></span></div>
+              <p class="wa-lock"><svg class="ic"><use href="#i-lock"/></svg> Nothing is recorded until you save it. Questions are answered from your ranch's records.</p>
+            </div>
+          </aside>
         </div>
       </div>
     </article>
 
-    <!-- 5. Virtual fencing -->
+    <!-- 5. Virtual fencing: a small simulation people can play with -->
     <article class="feat" data-feat="fence" aria-label="Virtual fencing">
       <div class="copy">
         <p class="eyebrow">Virtual fencing · In R&amp;D</p>
         <h2>Fence the land. <span class="lime">Not with wire.</span></h2>
-        <p class="lead">Boundaries that turn cattle back without posts or wire, built on the pastures you map today.</p>
+        <p class="lead">Boundaries that turn cattle back without posts or wire. Try it: drag the ends of the line, then move the fence.</p>
         <ol class="steps" id="fence-steps">
-          <li class="on"><b>01</b><div><strong>Draw it on the map</strong><span>Mark the line the same way you map pastures.</span></div></li>
-          <li><b>02</b><div><strong>A cue near the line</strong><span>Cattle walking up to it get a gentle cue to turn back.</span></div></li>
-          <li><b>03</b><div><strong>Move it when you rotate</strong><span>Shift the line to the next paddock. Nothing to build.</span></div></li>
+          <li class="on"><b>01</b><div><strong>Draw it on the map</strong><span>Drag either end of the line to set the fence.</span></div></li>
+          <li><b>02</b><div><strong>A cue near the line</strong><span>A cow walking up to it gets a sound cue and turns back.</span></div></li>
+          <li><b>03</b><div><strong>Move it when you rotate</strong><span>One tap opens fresh grass. Nothing to build.</span></div></li>
         </ol>
-        <p class="honest">Prototypes are being tested with partner ranches in Alberta. Not for sale yet.</p>
+        <p class="honest">A simulation. Collar prototypes are being tested with partner ranches in Alberta. Not for sale yet.</p>
       </div>
-      <div class="visual">
-        <div class="fence-photo">
-          <img src="assets/f/fence-hero.jpg" alt="Cattle grazing beside a virtual fence line">
-          <span class="rnd">R&amp;D prototype</span>
+      <div class="visual fence-visual">
+        <div class="sim" id="sim">
+          <canvas id="sim-canvas" aria-label="A pasture with a virtual fence line and cattle"></canvas>
+          <div class="sim-hud">
+            <span class="sim-stat"><b id="sim-cues">0</b> cues</span>
+            <span class="sim-stat"><b id="sim-out">0</b> past the line</span>
+          </div>
+          <div class="sim-ctrls">
+            <button class="btn btn-sm btn-solid" id="sim-move"><svg class="ic"><use href="#i-fence"/></svg> Move the fence</button>
+            <button class="btn btn-sm" id="sim-cue" aria-pressed="true">Cue on</button>
+          </div>
+          <span class="sim-hint" id="sim-hint">Drag a white dot</span>
         </div>
         <div class="fence-thumbs">
           <figure><img src="assets/f/cow-collar.jpg" alt="A cow wearing a collar prototype"><span class="rnd">R&amp;D prototype</span></figure>
           <figure><img src="assets/f/pilot-collars.jpg" alt="Collar prototypes at a partner ranch"><span class="rnd">R&amp;D prototype</span></figure>
+          <figure><img src="assets/f/fence-hero.jpg" alt="Cattle grazing in a pasture"><span class="rnd">Partner ranch</span></figure>
         </div>
       </div>
     </article>
@@ -233,7 +274,7 @@
     <button data-go="voice"><span class="orb"><svg class="ic"><use href="#i-mic"/></svg></span><em>Voice</em></button>
     <button data-go="pasture"><span class="orb"><svg class="ic"><use href="#i-map"/></svg></span><em>Pasture</em></button>
     <button data-go="herd"><span class="orb"><svg class="ic"><use href="#i-herd"/></svg></span><em>Herd</em></button>
-    <button data-go="ai"><span class="orb"><svg class="ic"><use href="#i-ai"/></svg></span><em>Vanna AI</em></button>
+    <button data-go="ai"><span class="orb"><svg class="ic"><use href="#i-ai"/></svg></span><em>AI assistant</em></button>
     <button data-go="fence"><span class="orb"><svg class="ic"><use href="#i-fence"/></svg></span><em>Virtual fencing</em></button>
   </nav>
 </section>
