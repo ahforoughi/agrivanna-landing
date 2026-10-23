@@ -1,50 +1,126 @@
-/* Agrivanna booth demo. Works with no network: every file is cached by sw.js,
-   all data is in data.js, and nothing calls any live service. */
+/* Agrivanna booth demo: an attract video, then one window with five features
+   (voice, pasture, herd, AI assistant, virtual fencing) picked from the dock.
+   Works with no network: every file is cached by sw.js, all data is in data.js,
+   and nothing calls any live service. */
 (() => {
   const D = window.DEMO_DATA;
   const $ = (id) => document.getElementById(id);
-  const IDLE_MS = 20000;
-  const ANSWER = "Yes. Paddock E is grazed down, PRS 38. Move the herd next door to Paddock A. It scores 85 and has rested.";
+  const IDLE_MS = 30000;
+  const ORDER = ["voice", "pasture", "herd", "ai", "fence"];
   const STATUS_CLASS = { Ready: "ready", Watch: "watch", Rest: "rest" };
   const SVGNS = "http://www.w3.org/2000/svg";
-  let current = "attract";
-  let picked = null;
+  let feat = null;
 
-  // ---------------------------------------------------------------- screens + idle
-  function show(id) {
-    document.querySelectorAll(".screen").forEach((s) => (s.scrollTop = 0));
-    document.querySelectorAll(".screen").forEach((s) => s.classList.toggle("is-on", s.id === id));
-    current = id;
-    $("home").hidden = id === "attract";
-    const v = $("attract-video");
-    if (id === "attract") { v.currentTime = 0; v.play().catch(() => {}); resetMap(); stopSpeech(); }
-    else v.pause();
+  // ================================================================ screens
+  function toAttract() {
+    clearAll();
+    $("hub").hidden = true; $("qr-sheet").hidden = true;
+    $("attract").classList.add("is-on");
+    const v = $("attract-video"); v.currentTime = 0; v.play().catch(() => {});
+    feat = null;
+  }
+  function toHub(first = "voice") {
+    $("attract").classList.remove("is-on"); $("attract-video").pause();
+    $("hub").hidden = false;
+    go(first);
+  }
+  function go(name) {
+    if (!ORDER.includes(name)) return;
+    if (feat === name) return;
+    leave(feat);
+    feat = name;
+    document.querySelectorAll(".feat").forEach((f) => f.classList.toggle("is-on", f.dataset.feat === name));
+    document.querySelectorAll(".dock button").forEach((b) => b.setAttribute("aria-current", String(b.dataset.go === name)));
+    $("stage").scrollTop = 0;
+    enter(name);
     armIdle();
   }
-  let idle;
-  function armIdle() {
-    clearTimeout(idle);
-    if (current !== "attract") idle = setTimeout(() => show("attract"), IDLE_MS);
+  function enter(name) {
+    if (name === "voice") playVoice();
+    if (name === "pasture" && !picked) setTimeout(() => feat === "pasture" && !picked && pick(D.herd.paddock), 1600);
+    if (name === "ai") resetChat();
+    if (name === "fence") startSteps();
   }
-  ["pointerdown", "keydown"].forEach((e) => window.addEventListener(e, armIdle, { passive: true }));
+  function leave(name) {
+    if (name === "voice") stopVoice();
+    if (name === "pasture") resetMap();
+    if (name === "fence") stopSteps();
+    if (name === "ai") stopSpeech();
+  }
+  function clearAll() { ORDER.forEach(leave); stopSpeech(); }
 
-  // ---------------------------------------------------------------- back to the start
-  $("home").addEventListener("click", () => show("attract"));
+  let idle;
+  function armIdle() { clearTimeout(idle); if (!$("hub").hidden) idle = setTimeout(toAttract, IDLE_MS); }
+  ["pointerdown", "keydown", "wheel"].forEach((e) => window.addEventListener(e, armIdle, { passive: true }));
 
-  // ---------------------------------------------------------------- attract
-  $("attract").addEventListener("click", () => { primeSpeech(); show("map"); });
+  $("attract").addEventListener("click", () => { primeSpeech(); toHub("voice"); });
+  $("home").addEventListener("click", toAttract);
+  document.querySelectorAll(".dock button").forEach((b) => b.addEventListener("click", () => { primeSpeech(); go(b.dataset.go); }));
 
-  // ---------------------------------------------------------------- map
+  // swipe left / right between features (tablets), arrow keys (laptops)
+  let sx = null, sy = null;
+  $("stage").addEventListener("touchstart", (e) => { sx = e.touches[0].clientX; sy = e.touches[0].clientY; }, { passive: true });
+  $("stage").addEventListener("touchend", (e) => {
+    if (sx == null) return;
+    const dx = e.changedTouches[0].clientX - sx, dy = e.changedTouches[0].clientY - sy; sx = null;
+    if (Math.abs(dx) > 90 && Math.abs(dx) > Math.abs(dy) * 1.6 && !e.target.closest(".map-wrap")) step(dx < 0 ? 1 : -1);
+  }, { passive: true });
+  window.addEventListener("keydown", (e) => {
+    if ($("hub").hidden) { if (e.key === "Enter" || e.key === " ") toHub(); return; }
+    if (e.key === "ArrowRight") step(1); if (e.key === "ArrowLeft") step(-1); if (e.key === "Escape") $("qr-sheet").hidden = true;
+  });
+  function step(d) { const i = ORDER.indexOf(feat); go(ORDER[(i + d + ORDER.length) % ORDER.length]); }
+
+  // early access sheet
+  $("open-qr").addEventListener("click", () => ($("qr-sheet").hidden = false));
+  $("close-qr").addEventListener("click", () => ($("qr-sheet").hidden = true));
+  $("qr-sheet").addEventListener("click", (e) => { if (e.target.id === "qr-sheet") $("qr-sheet").hidden = true; });
+
+  // ================================================================ 1. voice
+  const DICTATION = "Cow 418, the black baldy heifer. Calved around five this morning in the north pasture. Bull calf, no help needed. Gave him yellow tag 418 and a shot of vitamin E and selenium. Guessing he's about 85 pounds.";
+  const RECORDS = [
+    ["Calving", "Cow 418", "Bull calf, no help needed"],
+    ["Tag", "Calf 418", "Yellow tag 418"],
+    ["Treatment", "Calf 418", "Vitamin E and selenium"],
+    ["Weight", "Calf 418", "About 85 lb"],
+  ];
+  let vTimers = [];
+  function stopVoice() { vTimers.forEach(clearTimeout); vTimers = []; }
+  function playVoice() {
+    stopVoice();
+    const out = $("dictation"), listen = $("listen"), conf = $("confirm");
+    out.textContent = ""; listen.classList.remove("done"); conf.hidden = true; conf.classList.remove("saved");
+    $("save-records").textContent = `Save ${RECORDS.length} records`;
+    const words = DICTATION.split(" "); let i = 0;
+    const tick = () => {
+      out.textContent = words.slice(0, ++i).join(" ");
+      if (i < words.length) vTimers.push(setTimeout(tick, 115 + (words[i - 1].endsWith(".") ? 220 : 0)));
+      else vTimers.push(setTimeout(showRecords, 700));
+    };
+    vTimers.push(setTimeout(tick, 500));
+  }
+  function showRecords() {
+    $("listen").classList.add("done");
+    const ul = $("records");
+    ul.innerHTML = RECORDS.map(([k, who, what], n) =>
+      `<li style="animation-delay:${n * 110}ms"><span class="k">${k}</span><div><b>${who}</b><small>${what}</small></div><span class="ok"><svg class="ic" style="width:13px;height:13px"><use href="#i-check"/></svg></span></li>`).join("");
+    $("rec-count").textContent = RECORDS.length;
+    $("confirm").hidden = false;
+  }
+  $("save-records").addEventListener("click", () => {
+    $("confirm").classList.add("saved");
+    $("save-records").innerHTML = `<svg class="ic"><use href="#i-check"/></svg> Saved to Cow 418's record`;
+  });
+  $("voice-replay").addEventListener("click", playVoice);
+
+  // ================================================================ 2. pasture
   const { w, h } = D.map;
   document.documentElement.style.setProperty("--map-ar", (w / h).toFixed(4));
   $("map-img").src = D.map.src;
   const svg = $("map-svg");
-  svg.setAttribute("viewBox", `0 0 ${w} ${h}`);
-  svg.setAttribute("preserveAspectRatio", "none");
+  svg.setAttribute("viewBox", `0 0 ${w} ${h}`); svg.setAttribute("preserveAspectRatio", "none");
   const path = (rings) => rings.map((r) => "M" + r.map((p) => p.join(",")).join("L") + "Z").join("");
-
-  const dim = document.createElementNS(SVGNS, "path");
-  dim.setAttribute("class", "dim"); dim.setAttribute("fill-rule", "evenodd"); dim.style.opacity = 0;
+  const dim = document.createElementNS(SVGNS, "path"); dim.setAttribute("class", "dim"); dim.setAttribute("fill-rule", "evenodd"); dim.style.opacity = 0;
   const sel = document.createElementNS(SVGNS, "path"); sel.setAttribute("class", "sel");
   for (const [L, p] of Object.entries(D.paddocks)) {
     const hit = document.createElementNS(SVGNS, "path");
@@ -53,8 +129,6 @@
     svg.appendChild(hit);
   }
   svg.appendChild(dim); svg.appendChild(sel);
-
-  // Small moves in map pixels so labels never sit on top of each other
   const NUDGE = { C: [-70, 40], A: [40, -20] };
   const pills = {};
   for (const [L, p] of Object.entries(D.paddocks)) {
@@ -62,133 +136,138 @@
     b.className = "pill " + STATUS_CLASS[p.status];
     b.innerHTML = `<i></i><b>${L}</b><em>·</em>${p.prs}`;
     const [nx, ny] = NUDGE[L] || [0, 0];
-    b.style.left = ((p.label[0] + nx) / w * 100) + "%";
-    b.style.top = ((p.label[1] + ny) / h * 100) + "%";
+    b.style.left = ((p.label[0] + nx) / w * 100) + "%"; b.style.top = ((p.label[1] + ny) / h * 100) + "%";
     b.setAttribute("aria-label", `Paddock ${L}, ${p.status}, score ${p.prs}`);
     b.addEventListener("click", () => pick(L));
     $("map-pills").appendChild(b); pills[L] = b;
   }
-  const herdP = D.paddocks[D.herd.paddock];
+  const hp = D.paddocks[D.herd.paddock];
   const tag = document.createElement("div");
-  tag.className = "herd-tag";
-  tag.textContent = `${D.herd.head} head · ${D.herd.days} days`;
-  tag.style.left = (herdP.label[0] / w * 100) + "%";
-  tag.style.top = `calc(${herdP.label[1] / h * 100}% + 4.2%)`;
+  tag.className = "herd-tag"; tag.textContent = `${D.herd.head} head · ${D.herd.days} days`;
+  tag.style.left = (hp.label[0] / w * 100) + "%"; tag.style.top = `calc(${hp.label[1] / h * 100}% + 4%)`;
   $("map-pills").appendChild(tag);
 
+  let picked = null;
   function pick(L) {
     picked = L;
     const p = D.paddocks[L];
     Object.entries(pills).forEach(([k, b]) => b.classList.toggle("on", k === L));
-    dim.setAttribute("d", `M0,0H${w}V${h}H0Z` + path(p.rings)); dim.style.opacity = 1;
-    sel.setAttribute("d", path(p.rings));
-    $("panel-intro").hidden = true; $("panel-card").hidden = false;
+    dim.setAttribute("d", `M0,0H${w}V${h}H0Z` + path(p.rings)); dim.style.opacity = 1; sel.setAttribute("d", path(p.rings));
+    $("pasture-intro").hidden = true;
+    const card = $("pasture-card"); card.hidden = false; card.style.animation = "none"; card.offsetWidth; card.style.animation = "";
     $("card-eyebrow").textContent = `Paddock ${L}`;
-    const chip = $("card-chip");
-    chip.className = "chip chip-" + STATUS_CLASS[p.status]; chip.textContent = p.status;
-    $("card-acres").textContent = `${p.acres} acres`;
+    $("card-chip").className = "chip chip-" + STATUS_CLASS[p.status]; $("card-chip").textContent = p.status;
+    $("card-acres").textContent = p.acres;
     $("card-reasons").innerHTML = p.reasons.map((r) => `<li>${r}</li>`).join("");
     countUp($("card-score"), p.prs);
-    // phones: the card sits below the map, so bring it into view
-    if (matchMedia("(max-aspect-ratio: 1/1), (max-height: 540px)").matches) $("panel-card").scrollIntoView({ behavior: "smooth", block: "start" });
+    drawSpark(p.history);
   }
   function resetMap() {
     picked = null;
     Object.values(pills).forEach((b) => b.classList.remove("on"));
     dim.style.opacity = 0; sel.setAttribute("d", "");
-    $("panel-intro").hidden = false; $("panel-card").hidden = true;
+    $("pasture-intro").hidden = false; $("pasture-card").hidden = true;
   }
   function countUp(el, to) {
     const t0 = performance.now();
-    const step = (t) => { const k = Math.min(1, (t - t0) / 700); el.textContent = Math.round(to * (1 - Math.pow(1 - k, 3))); if (k < 1) requestAnimationFrame(step); };
-    requestAnimationFrame(step);
+    const f = (t) => { const k = Math.min(1, (t - t0) / 700); el.textContent = Math.round(to * (1 - Math.pow(1 - k, 3))); if (k < 1) requestAnimationFrame(f); };
+    requestAnimationFrame(f);
   }
-  $("pick-another").addEventListener("click", resetMap);
-  $("to-history").addEventListener("click", () => { drawHistory(picked); show("history"); });
-
-  // ---------------------------------------------------------------- history
-  function drawHistory(L) {
-    const p = D.paddocks[L];
-    const pts = p.history;
+  function drawSpark(pts) {
+    const s = $("spark"); s.innerHTML = "";
     const past = pts.filter(([y]) => y < 2026).map(([, v]) => v);
     const normal = past.reduce((a, b) => a + b, 0) / past.length;
     const now = pts[pts.length - 1][1];
     const diff = Math.round((now / normal - 1) * 100);
-    $("hist-eyebrow").textContent = `Paddock ${L}`;
-    $("hist-title").innerHTML = diff >= 0
-      ? `This summer was <span class="lime">${diff}% greener</span> than normal.`
-      : `This summer was <span class="lime">${-diff}% less green</span> than normal.`;
-    $("hist-lead").textContent = L === D.herd.paddock
-      ? "A good year for grass. It scores 38 now because the herd has been on it 71 days, not because the year was dry."
-      : `Ten summers of satellite history for this paddock, and how 2026 compares.`;
-
-    const c = $("chart"); c.innerHTML = "";
-    const box = c.getBoundingClientRect();
-    const W = Math.max(600, box.width || 720), H = Math.max(360, box.height || 520);
-    c.setAttribute("viewBox", `0 0 ${W} ${H}`);
-    const pad = { l: 64, r: 40, t: 30, b: 56 };
+    $("spark-diff").textContent = diff >= 0 ? `2026: ${diff}% above normal` : `2026: ${-diff}% below normal`;
     const vals = pts.map(([, v]) => v).concat(normal);
-    const lo = Math.min(...vals) - 0.04, hi = Math.max(...vals) + 0.04;
-    const X = (y) => pad.l + (y - 2016) / 10 * (W - pad.l - pad.r);
-    const Y = (v) => H - pad.b - (v - lo) / (hi - lo) * (H - pad.t - pad.b);
-    const el = (tag, attrs, text) => { const e = document.createElementNS(SVGNS, tag); for (const k in attrs) e.setAttribute(k, attrs[k]); if (text != null) e.textContent = text; c.appendChild(e); return e; };
-    for (const y of [2016, 2018, 2020, 2022, 2024, 2026])
-      el("text", { x: X(y), y: H - 18, "text-anchor": "middle", fill: "#8C8C85", "font-size": 18, "font-family": "GeistMono" }, y);
-    el("line", { x1: pad.l, x2: W - pad.r, y1: Y(normal), y2: Y(normal), stroke: "#B6B6AE", "stroke-width": 2.5, "stroke-dasharray": "8 8" });
-    el("text", { x: pad.l, y: Y(normal) - 12, fill: "#B6B6AE", "font-size": 17, "font-family": "Geist" }, "10 year normal");
+    const lo = Math.min(...vals) - 0.02, hi = Math.max(...vals) + 0.02;
+    const X = (y) => 4 + (y - 2016) / 10 * 304, Y = (v) => 74 - (v - lo) / (hi - lo) * 66;
+    const el = (t, a) => { const e = document.createElementNS(SVGNS, t); for (const k in a) e.setAttribute(k, a[k]); s.appendChild(e); return e; };
+    el("line", { x1: 0, x2: 320, y1: Y(normal), y2: Y(normal), stroke: "#8C8C85", "stroke-width": 1.2, "stroke-dasharray": "4 4", "vector-effect": "non-scaling-stroke" });
     const d = pts.map(([y, v], i) => (i ? "L" : "M") + X(y).toFixed(1) + "," + Y(v).toFixed(1)).join("");
-    const area = el("path", { d: d + `L${X(2026)},${H - pad.b}L${X(2016)},${H - pad.b}Z`, fill: "rgba(166,255,61,0.08)" });
-    const line = el("path", { d, fill: "none", stroke: "#A6FF3D", "stroke-width": 4.5, "stroke-linejoin": "round", "stroke-linecap": "round" });
-    const len = line.getTotalLength ? line.getTotalLength() : 2000;
-    line.style.strokeDasharray = len; line.style.strokeDashoffset = len;
-    line.getBoundingClientRect();
-    line.style.transition = "stroke-dashoffset 1.4s cubic-bezier(.22,1,.36,1)"; line.style.strokeDashoffset = 0;
-    area.style.opacity = 0; area.style.transition = "opacity 1s .6s"; requestAnimationFrame(() => (area.style.opacity = 1));
-    el("circle", { cx: X(2026), cy: Y(now), r: 20, fill: "rgba(166,255,61,0.25)" });
-    el("circle", { cx: X(2026), cy: Y(now), r: 9, fill: "#A6FF3D", stroke: "#14161A", "stroke-width": 3 });
-    el("text", { x: X(2026) - 16, y: Y(now) - 26, "text-anchor": "end", fill: "#F6F6F4", "font-size": 22, "font-weight": 600, "font-family": "Geist" }, "2026");
+    el("path", { d: d + `L${X(2026)},80L${X(2016)},80Z`, fill: "rgba(166,255,61,0.1)" });
+    const line = el("path", { d, fill: "none", stroke: "#A6FF3D", "stroke-width": 2.5, "stroke-linejoin": "round", "vector-effect": "non-scaling-stroke" });
+    const len = 400; line.style.strokeDasharray = len; line.style.strokeDashoffset = len; line.getBoundingClientRect();
+    line.style.transition = "stroke-dashoffset 1.2s cubic-bezier(.22,1,.36,1)"; line.style.strokeDashoffset = 0;
+    el("circle", { cx: X(2026), cy: Y(now), r: 4.5, fill: "#A6FF3D", stroke: "#14161A", "stroke-width": 2 });
   }
-  $("hist-back").addEventListener("click", () => show("map"));
-  $("to-ask").addEventListener("click", () => { resetAsk(); show("ask"); });
 
-  // ---------------------------------------------------------------- ask
+  // ================================================================ 4. AI assistant
+  const A = D.paddocks;
+  const QA = [
+    { q: "Should I move my cows this week?",
+      a: `Yes. Paddock E is grazed down, <strong>PRS ${A.E.prs}</strong>. Move the herd next door to Paddock A. It scores <strong>${A.A.prs}</strong> and has rested.`,
+      keys: /move|cow|herd|week|shift/i },
+    { q: "Which paddock is ready next?",
+      a: `Paddock A, ready at <strong>${A.A.prs}</strong>. It's had the most rest. Paddock B is next at <strong>${A.B.prs}</strong>.`,
+      keys: /ready|next|best|which|graze/i },
+    { q: "How is Paddock E doing?",
+      a: `${D.herd.head} head have been on Paddock E for <strong>${D.herd.days} days</strong>. It's grazed down to ${A.E.prs}, so it needs rest. The grass had a good year though, greener than normal.`,
+      keys: /paddock e|\be\b|doing|how is|status/i },
+  ];
+  const plain = (html) => html.replace(/<[^>]+>/g, "");
+  function resetChat() {
+    stopSpeech();
+    const c = $("chat");
+    c.innerHTML = `<div class="msg agv"><img src="assets/icon-192.png" alt=""><p>Hi. I know your paddocks, herds and records. What do you want to know?</p></div>`;
+    $("asks").innerHTML = QA.map((x, i) => `<button class="ask-chip" data-i="${i}">${x.q}<svg class="ic"><use href="#i-arrow"/></svg></button>`).join("");
+    $("asks").querySelectorAll(".ask-chip").forEach((b) => b.addEventListener("click", () => ask(QA[+b.dataset.i], b)));
+  }
+  let busy = false;
+  function ask(item, chip, said) {
+    if (busy) return; busy = true;
+    if (chip) chip.classList.add("used");
+    const c = $("chat");
+    c.insertAdjacentHTML("beforeend", `<div class="msg you"><p>${said || item.q}</p></div>`);
+    c.insertAdjacentHTML("beforeend", `<div class="msg agv" id="typing"><img src="assets/icon-192.png" alt=""><p class="typing"><i></i><i></i><i></i></p></div>`);
+    c.scrollTop = c.scrollHeight;
+    setTimeout(() => {
+      $("typing").remove();
+      c.insertAdjacentHTML("beforeend", `<div class="msg agv"><img src="assets/icon-192.png" alt=""><p>${item.a}</p></div>`);
+      c.scrollTop = c.scrollHeight;
+      speak(plain(item.a));
+      busy = false;
+    }, 900);
+  }
+  document.querySelectorAll(".device-toggle button").forEach((b) => b.addEventListener("click", () => {
+    document.querySelectorAll(".device-toggle button").forEach((x) => x.setAttribute("aria-selected", String(x === b)));
+    $("chat-frame").className = "chat-frame " + (b.dataset.device === "web" ? "web-mode" : "phone-mode");
+  }));
   const Rec = window.SpeechRecognition || window.webkitSpeechRecognition;
-  if (Rec) $("mic").hidden = false; else $("hint-mic").hidden = true;
-  function resetAsk() {
-    $("convo").hidden = true; $("to-close").hidden = true; $("answer").textContent = "";
-    $("ask-btn").hidden = false; $("mic").hidden = !Rec; $("ask-title").hidden = false; $("ask-hint").hidden = false; stopSpeech();
-    $("mic").classList.remove("listening");
-  }
-  function answer(said) {
-    $("ask-btn").hidden = true; $("mic").hidden = true; $("ask-title").hidden = true; $("mic").classList.remove("listening"); $("ask-hint").hidden = true;
-    $("you-said").textContent = said || "Should I move my cows this week?";
-    $("convo").hidden = false;
-    const out = $("answer"); out.textContent = "";
-    const words = ANSWER.split(" "); let i = 0;
-    const tick = () => { out.textContent = words.slice(0, ++i).join(" "); if (i < words.length) setTimeout(tick, 120); else setTimeout(() => ($("to-close").hidden = false), 600); };
-    tick();
-    speak(ANSWER);
-  }
-  $("ask-btn").addEventListener("click", () => answer());
+  if (Rec) { $("mic").hidden = false; $("mic-hint").hidden = false; }
   let rec = null;
   $("mic").addEventListener("click", () => {
     primeSpeech();
     if (rec) { try { rec.abort(); } catch {} rec = null; }
-    let heard = false;
+    let done = false;
+    const finish = (text) => {
+      if (done) return; done = true; $("mic").classList.remove("listening");
+      const item = (text && QA.find((x) => x.keys.test(text))) || QA[0];
+      ask(item, null, text ? text.charAt(0).toUpperCase() + text.slice(1) : null);
+    };
     try {
       rec = new Rec(); rec.lang = "en-CA"; rec.interimResults = false; rec.maxAlternatives = 1;
-      rec.onresult = (e) => { heard = true; const t = e.results[0][0].transcript; answer(t ? t.charAt(0).toUpperCase() + t.slice(1) : null); };
-      // Any problem (no network, no permission, nothing heard): answer anyway; the demo never gets stuck
-      rec.onerror = () => { if (!heard) answer(); heard = true; };
-      rec.onend = () => { $("mic").classList.remove("listening"); if (!heard) answer(); };
-      $("mic").classList.add("listening");
-      rec.start();
-      setTimeout(() => { if (!heard) { try { rec.stop(); } catch {} } }, 7000);
-    } catch { answer(); }
+      rec.onresult = (e) => finish(e.results[0][0].transcript);
+      rec.onerror = () => finish(null);          // no network, no permission, nothing heard: still answer
+      rec.onend = () => finish(null);
+      $("mic").classList.add("listening"); rec.start();
+      setTimeout(() => { if (!done) { try { rec.stop(); } catch {} } }, 7000);
+    } catch { finish(null); }
   });
-  $("to-close").addEventListener("click", () => { show("close"); armClose(); });
 
-  // ---------------------------------------------------------------- speech out
+  // ================================================================ 5. virtual fencing
+  let stepTimer;
+  function startSteps() {
+    stopSteps(); let i = 0;
+    const lis = [...document.querySelectorAll("#fence-steps li")];
+    const show = () => lis.forEach((li, n) => li.classList.toggle("on", n === i));
+    show(); stepTimer = setInterval(() => { i = (i + 1) % lis.length; show(); }, 2600);
+    lis.forEach((li, n) => (li.onclick = () => { i = n; show(); }));
+  }
+  function stopSteps() { clearInterval(stepTimer); }
+
+  // ================================================================ speech out
   let voice = null;
   function pickVoice() {
     const vs = speechSynthesis.getVoices();
@@ -201,22 +280,14 @@
   }
   function speak(text) {
     if (!("speechSynthesis" in window)) return;
-    stopSpeech();
-    const u = new SpeechSynthesisUtterance(text); if (voice) u.voice = voice; u.rate = 1; u.pitch = 1;
-    speechSynthesis.speak(u);
+    stopSpeech(); const u = new SpeechSynthesisUtterance(text); if (voice) u.voice = voice; speechSynthesis.speak(u);
   }
   function stopSpeech() { if ("speechSynthesis" in window) speechSynthesis.cancel(); }
 
-  // ---------------------------------------------------------------- close
-  let closeTimer;
-  function armClose() { clearTimeout(closeTimer); closeTimer = setTimeout(() => current === "close" && show("attract"), 15000); }
-  $("restart").addEventListener("click", () => show("attract"));
-
-  // ---------------------------------------------------------------- offline
+  // ================================================================ offline + awake
   if ("serviceWorker" in navigator) {
-    navigator.serviceWorker.register("/demo/sw.js", { scope: "/demo" }).then(() => navigator.serviceWorker.ready).then(() => { $("offline-badge").hidden = false; }).catch(() => {});
+    navigator.serviceWorker.register("/demo/sw.js", { scope: "/demo" }).then(() => navigator.serviceWorker.ready).then(() => ($("offline-badge").hidden = false)).catch(() => {});
   }
-  // keep the screen awake where the browser allows it
   async function wake() { try { await navigator.wakeLock?.request("screen"); } catch {} }
   wake(); document.addEventListener("visibilitychange", () => document.visibilityState === "visible" && wake());
 })();
