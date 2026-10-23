@@ -30,14 +30,12 @@
     if (name === "pasture" && !picked) setTimeout(() => feat === "pasture" && !picked && pick(D.herd.paddock), 1500);
     if (name === "herd") selectHerd(0);
     if (name === "ai") resetAssistant();
-    if (name === "fence") sim.start();
   }
   function leave(name) {
     if (name === "home") $("home-video").pause();
     if (name === "voice") stopVoice();
     if (name === "pasture") resetMap();
     if (name === "herd") $("drawer").hidden = true;
-    if (name === "fence") sim.stop();
     if (name === "ai") { stopSpeech(); clearAiTimers(); }
   }
   let idle;
@@ -51,7 +49,7 @@
   $("stage").addEventListener("touchend", (e) => {
     if (sx == null) return;
     const dx = e.changedTouches[0].clientX - sx, dy = e.changedTouches[0].clientY - sy; sx = null;
-    if (Math.abs(dx) > 90 && Math.abs(dx) > Math.abs(dy) * 1.6 && !e.target.closest(".map-wrap, .appwin, .ios, .wa, .sim")) step(dx < 0 ? 1 : -1);
+    if (Math.abs(dx) > 90 && Math.abs(dx) > Math.abs(dy) * 1.6 && !e.target.closest(".map-wrap, .appwin, .ios, .wa")) step(dx < 0 ? 1 : -1);
   }, { passive: true });
   window.addEventListener("keydown", (e) => {
     if (e.key === "ArrowRight") step(1); if (e.key === "ArrowLeft") step(-1); if (e.key === "Escape") $("qr-sheet").hidden = true;
@@ -514,75 +512,6 @@
     } catch { end(null); }
   });
   const plain = (html) => html.replace(/<[^>]+>/g, "");
-
-  // ================================================================ 5. virtual fencing: a 3D paddock
-  // fence3d.js (built from booth/fence3d): the website's scanned cattle in one paddock,
-  // with a fence people drag by its posts or move onto fresh grass. It loads the first
-  // time fencing opens.
-  const sim = (() => {
-    let api = null, loading = false, cues = 0, out = 0, moves = 0, cueOn = true, flashT, audio;
-    const steps = [...document.querySelectorAll("#fence-steps li")];
-    let current = 0;
-    const setStep = (i) => { current = i; steps.forEach((li, n) => li.classList.toggle("on", n === i)); };
-    const flashStep = (i) => { steps.forEach((li, n) => li.classList.toggle("on", n === i)); clearTimeout(flashT); flashT = setTimeout(() => setStep(current), 1400); };
-    // the collar's cue: two short rising tones
-    function beep() {
-      try {
-        audio = audio || new (window.AudioContext || window.webkitAudioContext)();
-        [880, 1175].forEach((f, i) => {
-          const o = audio.createOscillator(), g = audio.createGain(), t = audio.currentTime + i * 0.16;
-          o.frequency.value = f; o.type = "sine"; g.gain.setValueAtTime(0.0001, t);
-          g.gain.exponentialRampToValueAtTime(0.18, t + 0.02); g.gain.exponentialRampToValueAtTime(0.0001, t + 0.14);
-          o.connect(g).connect(audio.destination); o.start(t); o.stop(t + 0.15);
-        });
-      } catch {}
-    }
-    function onEvent(name, detail) {
-      if (name === "ready") $("sim-loading").hidden = true;
-      if (name === "cue") { cues++; $("sim-cues").textContent = cues; flashStep(1); if (feat === "fence") beep(); }
-      if (name === "out") { out = detail; $("sim-out").textContent = out; }
-      if (name === "drag") { setStep(0); hint(); }
-    }
-    function load() {
-      if (api || loading) return;
-      if (window.Fence3D) { api = window.Fence3D.mount($("f3d"), onEvent); return; }
-      loading = true;
-      const sc = document.createElement("script");
-      sc.src = "fence3d.js";
-      sc.onload = () => { loading = false; api = window.Fence3D.mount($("f3d"), onEvent); if (feat !== "fence") api.run(false); };
-      sc.onerror = () => { loading = false; $("sim-loading").textContent = "The 3D pasture could not load."; };
-      document.head.appendChild(sc);
-    }
-    $("sim-send").addEventListener("click", () => {
-      if (!api) return;
-      // iPad only allows sound after a tap: open the audio here so the cue can sound later
-      try { audio = audio || new (window.AudioContext || window.webkitAudioContext)(); if (audio.state === "suspended") audio.resume(); } catch {}
-      api.send(); setStep(1); hint();
-    });
-    $("sim-move").addEventListener("click", () => { if (!api) return; api.move(); moves++; setStep(2); hint(); });
-    $("sim-cue").addEventListener("click", (e) => {
-      if (!api) return;
-      cueOn = !cueOn; api.setCue(cueOn);
-      e.currentTarget.setAttribute("aria-pressed", String(cueOn));
-      e.currentTarget.textContent = cueOn ? "Cue on" : "Cue off";
-    });
-    function hint() { $("sim-hint").classList.add("gone"); }
-    steps[1].addEventListener("click", () => $("sim-send").click());
-    steps[2].addEventListener("click", () => $("sim-move").click());
-    return {
-      start() {
-        load();
-        if (api) { api.reset(); api.run(true); }
-        cues = 0; out = 0; moves = 0; cueOn = true;
-        $("sim-cues").textContent = 0; $("sim-out").textContent = 0;
-        $("sim-cue").setAttribute("aria-pressed", "true"); $("sim-cue").textContent = "Cue on";
-        $("sim-hint").classList.remove("gone"); setStep(0);
-      },
-      stop() { if (api) api.run(false); },
-      peek: () => ({ ready: $("sim-loading").hidden, cues, out, moves, cueOn, ...(api ? api.peek() : {}) }),
-    };
-  })();
-  window.__sim = sim;
 
   // ================================================================ speech out
   let voice = null;
