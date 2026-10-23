@@ -521,3 +521,17 @@ h2 .lime { display: block; }
   .say-own li { padding: 6px 12px 6px 30px; font-size: 13.5px; }
   .feat[data-feat="ai"] .asks .ask-chip { min-height: 38px; padding: 6px 14px; }
 }
+
+/* virtual fencing: the 3D pasture */
+.f3d { position: absolute; inset: 0; background: radial-gradient(120% 90% at 50% 10%, #8C6436 0%, #2E2C22 45%, #14161A 100%); cursor: grab; }
+.f3d:active { cursor: grabbing; }
+.f3d canvas { touch-action: none; }
+.sim-loading { position: absolute; inset: 0; display: grid; place-items: center; font-size: 14px; color: var(--bone-300); pointer-events: none; }
+.sim-loading[hidden] { display: none; }
+.sim-ctrls { left: 12px; flex-wrap: wrap; justify-content: flex-end; }
+.sim-hint { top: 52px; bottom: auto; }
+@media (max-aspect-ratio: 1/1), (max-width: 760px), (max-height: 560px) {
+  .sim { aspect-ratio: 4 / 3.4; }
+  .sim-ctrls .btn { height: 38px; font-size: 13px; padding: 0 12px; }
+}
+.fence-thumbs { height: clamp(64px, 15cqh, 104px); }

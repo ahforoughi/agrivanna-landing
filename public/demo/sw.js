@@ -1,11 +1,12 @@
 /* Precaches every file the demo uses, then serves everything from the cache, so
    the demo runs with Wi-Fi off. Bump VERSION whenever any file changes. */
-const VERSION = "booth-demo-v13";
+const VERSION = "booth-demo-v14";
 const FILES = [
   "/demo", "/demo/index.html", "/demo/style.css", "/demo/app.js", "/demo/data.js", "/demo/manifest.webmanifest",
   "/demo/assets/map.jpg", "/demo/assets/logo.png", "/demo/assets/mark.png", "/demo/assets/qr.png",
   "/demo/assets/icon-180.png", "/demo/assets/icon-192.png", "/demo/assets/icon-512.png",
   "/demo/assets/f/fence-hero.jpg", "/demo/assets/f/cow-collar.jpg", "/demo/assets/f/pilot-collars.jpg",
+  "/demo/fence3d.js", "/models/scan/cow.obj", "/models/scan/cow.jpg",
   "/demo/assets/Geist-Medium.ttf", "/demo/assets/Geist-SemiBold.ttf", "/demo/assets/GeistMono-Medium.ttf",
   // the home page video: the website's own hero video
   "/video/hero-1080.mp4", "/video/hero-poster.jpg",
