@@ -52,15 +52,14 @@
     <!-- 0. Home -->
     <article class="feat feat-home" data-feat="home" aria-label="Home">
       <div class="copy">
-        <p class="eyebrow">Ranch OS · Calgary, AB</p>
         <h1>The operating system <span class="lime">for grazing.</span></h1>
-        <p class="lead">Agrivanna is a Calgary agtech startup building software for cow calf ranchers. Talk to it at the chute, see your grass from space, keep every animal's record and ask the assistant what to do next. All of it works with no signal.</p>
+        <p class="lead">Software for cow calf ranchers, built in Calgary. It works with no signal.</p>
         <div class="badges">
-          <span class="badge"><b>Top 10</b>Calgary early stage startups, 2026</span>
-          <span class="badge"><b>Since 2024</b>Built with Alberta and Saskatchewan ranchers</span>
-          <span class="badge"><b>Offline</b>Works at the chute with no signal</span>
+          <span class="badge"><b>Top 10</b>Calgary startups 2026</span>
+          <span class="badge"><b>Since 2024</b>Built with ranchers</span>
+          <span class="badge"><b>Offline</b>No signal needed</span>
         </div>
-        <p class="explore"><svg class="ic"><use href="#i-down"/></svg> Tap a circle below to explore</p>
+        <p class="explore"><svg class="ic"><use href="#i-down"/></svg> Tap a circle below</p>
       </div>
       <div class="visual">
         <div class="home-video">
@@ -73,18 +72,14 @@
     <!-- 1. Voice -->
     <article class="feat" data-feat="voice" aria-label="Voice records">
       <div class="copy">
-        <p class="eyebrow">Voice records</p>
         <h2>Say it at the chute. <span class="lime">It's written down.</span></h2>
-        <p class="lead">Talk the way you'd tell your neighbour. Agrivanna picks out the animal, the tag, the weight and the treatment, and writes each one to the right record.</p>
+        <p class="lead">Talk like you would to a neighbour. It writes the records.</p>
         <p class="try-label">Try it</p>
         <div class="samples" id="samples"></div>
         <div class="say-own" id="say-own">
-          <p class="try-label">Or tap the mic and say one yourself</p>
+          <p class="try-label">Or say one yourself</p>
           <ul id="say-lines"></ul>
         </div>
-        <ul class="ticks">
-          <li>Nothing is saved until you confirm it</li>
-        </ul>
       </div>
       <div class="visual">
         <div class="recorder" id="recorder">
@@ -120,9 +115,8 @@
       </div>
       <div class="copy">
         <div id="pasture-intro">
-          <p class="eyebrow">Pasture management</p>
           <h2>Every paddock, <span class="lime">scored from space.</span></h2>
-          <p class="lead">A real Southern Alberta ranch. Each paddock gets a readiness score from 0 to 100, from satellite images, weather and grazing records. Tap a paddock.</p>
+          <p class="lead">A real Southern Alberta ranch, scored 0 to 100 from satellite. Tap a paddock.</p>
           <ul class="legend">
             <li><span class="chip chip-ready">Ready</span> 60 or more</li>
             <li><span class="chip chip-watch">Watch</span> 35 to 60</li>
@@ -145,14 +139,8 @@
     <!-- 3. Herd -->
     <article class="feat" data-feat="herd" aria-label="Herd management">
       <div class="copy">
-        <p class="eyebrow">Herd management</p>
         <h2>Every animal, <span class="lime">birth to sale.</span></h2>
-        <p class="lead">One history per animal: calving, treatments, weights and moves, recorded as you work. Tap a herd, then an animal.</p>
-        <ul class="ticks">
-          <li>Counts that keep up as animals move, calve or get culled</li>
-          <li>Treatments with withdrawal times, so you know who can't ship</li>
-          <li>Tags from Bluetooth wands, weights from scale heads</li>
-        </ul>
+        <p class="lead">One history per animal. Tap a herd, then an animal.</p>
       </div>
       <div class="visual">
         <div class="appwin" id="appwin">
@@ -187,9 +175,8 @@
     <!-- 4. AI assistant: the web app's side panel and the iPhone app's command sheet -->
     <article class="feat" data-feat="ai" aria-label="AI assistant">
       <div class="copy">
-        <p class="eyebrow">AI assistant · web and iPhone</p>
         <h2>Ask your ranch. <span class="lime">Or tell it what happened.</span></h2>
-        <p class="lead">Ask a question and it answers from your herds, pastures and records. Say what happened and it writes the record, after you say yes.</p>
+        <p class="lead">Ask a question, or say what happened.</p>
         <div class="ai-row">
           <div class="device-toggle" role="tablist">
             <button role="tab" aria-selected="true" data-device="phone">iPhone app</button>
@@ -235,39 +222,15 @@
       </div>
     </article>
 
-    <!-- 5. Virtual fencing: a small simulation people can play with -->
+    <!-- 5. Virtual fencing: one photo, few words -->
     <article class="feat" data-feat="fence" aria-label="Virtual fencing">
       <div class="copy">
-        <p class="eyebrow">Virtual fencing · In R&amp;D</p>
         <h2>Fence the land. <span class="lime">Not with wire.</span></h2>
-        <p class="lead">Boundaries that turn cattle back without posts or wire. Try it: drag the white posts, send a cow to the line, then move the fence.</p>
-        <ol class="steps" id="fence-steps">
-          <li class="on"><b>01</b><div><strong>Draw it on the map</strong><span>The glowing line is the fence. Drag its white posts to redraw it.</span></div></li>
-          <li><b>02</b><div><strong>A cue near the line</strong><span>Near the line a cow hears a cue and turns back. Switch the cue off and she walks through.</span></div></li>
-          <li><b>03</b><div><strong>Move it when you rotate</strong><span>One tap moves the herd onto fresh grass. Nothing to build.</span></div></li>
-        </ol>
-        <p class="honest">A simulation. Collar prototypes are being tested with partner ranches in Alberta. Not for sale yet.</p>
+        <p class="lead">Draw the line on a map. Collars turn the cattle back.</p>
+        <p class="honest">In R&amp;D with Alberta ranches. Not for sale yet.</p>
       </div>
       <div class="visual fence-visual">
-        <div class="sim" id="sim">
-          <div class="f3d" id="f3d" aria-label="A 3D paddock with cattle and a virtual fence"></div>
-          <div class="sim-loading" id="sim-loading">Loading the paddock…</div>
-          <div class="sim-hud">
-            <span class="sim-stat"><b id="sim-cues">0</b> cues</span>
-            <span class="sim-stat"><b id="sim-out">0</b> past the line</span>
-          </div>
-          <div class="sim-ctrls">
-            <button class="btn btn-sm btn-solid" id="sim-send"><svg class="ic"><use href="#i-cow"/></svg> Send a cow to the line</button>
-            <button class="btn btn-sm" id="sim-move"><svg class="ic"><use href="#i-fence"/></svg> Move the fence</button>
-            <button class="btn btn-sm" id="sim-cue" aria-pressed="true">Cue on</button>
-          </div>
-          <span class="sim-hint" id="sim-hint">Drag a white post to move the fence</span>
-        </div>
-        <div class="fence-thumbs">
-          <figure><img src="assets/f/cow-collar.jpg" alt="A cow wearing a collar prototype"><span class="rnd">R&amp;D prototype</span></figure>
-          <figure><img src="assets/f/pilot-collars.jpg" alt="Collar prototypes at a partner ranch"><span class="rnd">R&amp;D prototype</span></figure>
-          <figure><img src="assets/f/fence-hero.jpg" alt="Cattle grazing in a pasture"><span class="rnd">Partner ranch</span></figure>
-        </div>
+        <figure class="fence-photo"><img src="assets/f/fence-hero.jpg" alt="Black Angus cattle grazing beside a glowing virtual fence line"></figure>
       </div>
     </article>
   </main>
