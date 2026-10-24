@@ -73,13 +73,6 @@
     <article class="feat" data-feat="voice" aria-label="Voice records">
       <div class="copy">
         <h2>Say it at the chute. <span class="lime">It's written down.</span></h2>
-        <p class="lead">Talk like you would to a neighbour. It writes the records.</p>
-        <p class="try-label">Try it</p>
-        <div class="samples" id="samples"></div>
-        <div class="say-own" id="say-own">
-          <p class="try-label">Or say one yourself</p>
-          <ul id="say-lines"></ul>
-        </div>
       </div>
       <div class="visual">
         <div class="recorder" id="recorder">
@@ -89,13 +82,13 @@
           </div>
           <div class="rec-body">
             <div class="mic-zone">
-              <button class="big-mic" id="big-mic" aria-label="Tap and talk"><span class="ring"></span><span class="ring r2"></span><svg class="ic"><use href="#i-mic"/></svg></button>
-              <div class="mic-status" id="mic-status">Tap the mic and talk,<br>or pick a note on the left</div>
+              <button class="big-mic" id="big-mic" aria-hidden="true" tabindex="-1"><span class="ring"></span><span class="ring r2"></span><svg class="ic"><use href="#i-mic"/></svg></button>
+              <div class="mic-status" id="mic-status"></div>
               <div class="bars" id="bars" aria-hidden="true"></div>
             </div>
             <div class="transcript" id="transcript"><span class="placeholder">Your words show up here as you speak.</span></div>
             <div class="extract" id="extract" hidden>
-              <div class="ex-head"><span>Agrivanna found <b id="ex-count">0</b></span><button class="link" id="ex-clear">Start over</button></div>
+              <div class="ex-head"><span>Agrivanna found <b id="ex-count">0</b></span></div>
               <ul class="ex-list" id="ex-list"></ul>
               <button class="btn btn-solid btn-block" id="ex-save">Save records</button>
             </div>
@@ -116,13 +109,12 @@
       <div class="copy">
         <div id="pasture-intro">
           <h2>Every paddock, <span class="lime">scored from space.</span></h2>
-          <p class="lead">A real Southern Alberta ranch, scored 0 to 100 from satellite. Tap a paddock.</p>
-          <ul class="legend">
-            <li><span class="chip chip-ready">Ready</span> 60 or more</li>
+          <p class="sub">0 to 100, from satellite</p>
+          <ul class="legend mini">
+            <li><span class="chip chip-ready">Ready</span> 60+</li>
             <li><span class="chip chip-watch">Watch</span> 35 to 60</li>
             <li><span class="chip chip-rest">Rest</span> grazed down</li>
           </ul>
-          <div class="greenbar"><span>Less grass</span><i></i><span>More grass</span></div>
         </div>
         <div id="pasture-card" hidden>
           <div class="card-head"><p class="eyebrow" id="card-eyebrow">Paddock</p><span class="chip" id="card-chip"></span></div>
@@ -140,7 +132,6 @@
     <article class="feat" data-feat="herd" aria-label="Herd management">
       <div class="copy">
         <h2>Every animal, <span class="lime">birth to sale.</span></h2>
-        <p class="lead">One history per animal. Tap a herd, then an animal.</p>
       </div>
       <div class="visual">
         <div class="appwin" id="appwin">
@@ -162,6 +153,7 @@
                 <table class="aw-table"><thead><tr><th>Tag</th><th>Visual</th><th>Class</th><th>Breed</th></tr></thead><tbody id="animal-rows"></tbody></table>
               </div>
             </div>
+            <div class="aw-toast" id="aw-toast" hidden></div>
             <div class="drawer" id="drawer" hidden>
               <button class="drawer-x" id="drawer-x" aria-label="Close"><svg class="ic"><use href="#i-x"/></svg></button>
               <div class="ac-head"><span class="tagno" id="dr-visual"></span><div><b id="dr-title"></b><small id="dr-sub"></small></div></div>
@@ -176,21 +168,12 @@
     <article class="feat" data-feat="ai" aria-label="AI assistant">
       <div class="copy">
         <h2>Ask your ranch. <span class="lime">Or tell it what happened.</span></h2>
-        <p class="lead">Ask a question, or say what happened.</p>
         <div class="ai-row">
           <div class="device-toggle" role="tablist">
             <button role="tab" aria-selected="true" data-device="phone">iPhone app</button>
             <button role="tab" aria-selected="false" data-device="web">Web app</button>
           </div>
-          <div class="ask-mic-row" id="ask-mic-row" hidden>
-            <button class="mic" id="mic" aria-label="Ask out loud"><svg class="ic"><use href="#i-mic"/></svg></button>
-            <span class="hint">Or ask out loud</span>
-          </div>
         </div>
-        <p class="try-label">Ask</p>
-        <div class="asks" id="asks-q"></div>
-        <p class="try-label">Tell it</p>
-        <div class="asks" id="asks-l"></div>
       </div>
       <div class="visual">
         <!-- iPhone: the command sheet from the iOS app -->
@@ -230,7 +213,7 @@
         <p class="honest">In R&amp;D with Alberta ranches. Not for sale yet.</p>
       </div>
       <div class="visual fence-visual">
-        <figure class="fence-photo"><img src="assets/f/fence-hero.jpg" alt="Black Angus cattle grazing beside a glowing virtual fence line"></figure>
+        <figure class="fence-photo"><img src="assets/f/fence-hero.jpg" width="2400" height="1340" alt="Black Angus cattle grazing beside a glowing virtual fence line"></figure>
         <figure class="fence-photo"><img src="assets/f/cow-collar.jpg" alt="A cow wearing a collar prototype"><span class="rnd">Collar prototype</span></figure>
       </div>
     </article>
@@ -238,8 +221,8 @@
 
   <nav class="dock" aria-label="Features">
     <button data-go="voice"><span class="orb"><svg class="ic"><use href="#i-mic"/></svg></span><em>Voice</em></button>
-    <button data-go="pasture"><span class="orb"><svg class="ic"><use href="#i-map"/></svg></span><em>Pasture</em></button>
-    <button data-go="herd"><span class="orb"><svg class="ic"><use href="#i-herd"/></svg></span><em>Herd</em></button>
+    <button data-go="pasture"><span class="orb"><svg class="ic"><use href="#i-map"/></svg></span><em>Pasture<span class="lg"> management</span></em></button>
+    <button data-go="herd"><span class="orb"><svg class="ic"><use href="#i-herd"/></svg></span><em>Herd<span class="lg"> management</span></em></button>
     <button data-go="ai"><span class="orb"><svg class="ic"><use href="#i-ai"/></svg></span><em>AI assistant</em></button>
     <button data-go="fence"><span class="orb"><svg class="ic"><use href="#i-fence"/></svg></span><em>Virtual fencing</em></button>
   </nav>

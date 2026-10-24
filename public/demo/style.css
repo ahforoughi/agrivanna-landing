@@ -506,3 +506,46 @@ h2 .lime { display: block; }
   .say-own li { padding: 6px 12px 6px 30px; font-size: 13.5px; }
   .feat[data-feat="ai"] .asks .ask-chip { min-height: 38px; padding: 6px 14px; }
 }
+
+/* ================================================================ self playing pages */
+/* a tap the loop makes: a lime ring that grows and fades */
+.tapped { animation: tapped .7s var(--ease); }
+@keyframes tapped { 0% { box-shadow: 0 0 0 0 rgba(166,255,61,.75); } 100% { box-shadow: 0 0 0 14px rgba(166,255,61,0); } }
+tr.tapped td { animation: rowtap .9s var(--ease); }
+@keyframes rowtap { 0%, 40% { background: rgba(166,255,61,.28); } 100% { background: transparent; } }
+.big-mic { pointer-events: none; }
+/* pasture: headline, one line and a small legend stay; the paddock card sits under them */
+#pasture-intro { gap: 10px; }
+.sub { margin: 0; font-size: clamp(15px, 1.4vw, 18px); color: var(--bone-300); }
+.legend.mini { display: flex; flex-wrap: wrap; gap: 6px 14px; font-size: 12.5px; color: var(--bone-400); }
+.legend.mini li { gap: 6px; }
+.legend.mini .chip { font-size: 10px; padding: 3px 8px; }
+.feat-map .copy { gap: 18px; }
+/* herd: add and remove */
+.aw-herd-head { position: relative; }
+.aw-add { margin-left: auto; align-self: center; padding: 6px 12px; border-radius: 10px; background: #14161A; color: #fff; font-size: 12px; font-weight: 600; white-space: nowrap; }
+#animal-rows tr.added td { animation: rowadd 2.6s var(--ease) both; }
+@keyframes rowadd { 0% { background: rgba(111,212,12,.35); opacity: 0; } 15% { opacity: 1; } 100% { background: transparent; } }
+#animal-rows tr.leaving td { background: rgba(255,138,115,.3); opacity: .45; text-decoration: line-through; transition: all .6s; }
+.aw-toast { position: absolute; left: 50%; bottom: 14px; transform: translateX(-50%); z-index: 5; display: flex; align-items: center; gap: 8px; padding: 9px 14px; border-radius: 12px;
+  background: #14161A; color: #fff; font-size: 13px; font-weight: 500; white-space: nowrap; box-shadow: 0 12px 30px -10px rgba(0,0,0,.5); animation: rise .35s var(--ease) both; }
+.aw-toast .ic { width: 15px; height: 15px; color: var(--lime); }
+.aw-toast[hidden] { display: none; }
+/* phones: the longer dock names go on two lines so all five fit */
+@media (max-aspect-ratio: 1/1), (max-width: 760px), (max-height: 560px) {
+  .dock em { white-space: normal; width: 62px; text-align: center; line-height: 1.12; }
+}
+/* short stages: the paddock card drops its chart so the words fit */
+@container (max-height: 640px) {
+  #pasture-card .spark { display: none; }
+  .feat-map h2 { font-size: clamp(28px, 3.2vw, 44px); }
+  #pasture-card { gap: 10px; } #pasture-card .score span { font-size: 64px; }
+}
+@media (max-width: 380px) {
+  .dock button { padding: 4px 2px; }
+  .dock em { width: 50px; font-size: 9px; }
+  .dock .lg { display: none; }
+  .dock .orb { width: 36px; height: 36px; }
+}
+/* pages that are only a headline: let the letters hang below the box */
+.feat[data-feat="voice"] .copy, .feat[data-feat="herd"] .copy { overflow: visible; }
