@@ -1,16 +1,16 @@
 /* Agrivanna booth demo: a home page about Agrivanna with a dock of five features
    (voice, pasture, herd, the AI assistant, virtual fencing), opened in any order.
+   Each feature plays itself on a loop; nobody has to tap anything but the dock.
    Works with no network: every file is cached by sw.js, all data is in data.js,
    and nothing calls any live service. */
 (() => {
   const D = window.DEMO_DATA;
   const $ = (id) => document.getElementById(id);
-  const IDLE_MS = 45000;
+  const IDLE_MS = 180000; // back to the home page after 3 minutes untouched
   const ORDER = ["voice", "pasture", "herd", "ai", "fence"];
   const STATUS_CLASS = { Ready: "ready", Watch: "watch", Rest: "rest" };
   const SVGNS = "http://www.w3.org/2000/svg";
-  const Rec = window.SpeechRecognition || window.webkitSpeechRecognition;
-  let feat = null;
+    let feat = null;
 
   // ================================================================ navigation
   function go(name) {
@@ -26,18 +26,22 @@
   }
   function enter(name) {
     if (name === "home") { const v = $("home-video"); v.play().catch(() => {}); }
-    if (name === "voice") resetVoice();
-    if (name === "pasture" && !picked) setTimeout(() => feat === "pasture" && !picked && pick(D.herd.paddock), 1500);
-    if (name === "herd") selectHerd(0);
-    if (name === "ai") resetAssistant();
+    const loop = { voice: voiceLoop, pasture: pastureLoop, herd: herdLoop, ai: aiLoop }[name];
+    if (loop) loop(run).catch(() => {});
   }
   function leave(name) {
+    run++; // stops whichever loop was playing
     if (name === "home") $("home-video").pause();
-    if (name === "voice") stopVoice();
+    if (name === "voice") resetVoice();
     if (name === "pasture") resetMap();
-    if (name === "herd") $("drawer").hidden = true;
-    if (name === "ai") { stopSpeech(); clearAiTimers(); }
+    if (name === "herd") resetHerd();
+    if (name === "ai") resetAssistant();
   }
+  // The loops: each waits with wait(ms, id) and stops as soon as the page changes.
+  let run = 0;
+  const wait = (ms, id) => new Promise((ok, stop) => setTimeout(() => (id === run ? ok() : stop("left")), ms));
+  // a tap shown on screen, so people see what a rancher would press
+  const tap = (el) => { if (!el) return; el.classList.remove("tapped"); el.offsetWidth; el.classList.add("tapped"); };
   let idle;
   function armIdle() { clearTimeout(idle); idle = setTimeout(() => { $("qr-sheet").hidden = true; go("home"); }, IDLE_MS); }
   ["pointerdown", "keydown", "wheel"].forEach((e) => window.addEventListener(e, armIdle, { passive: true }));
@@ -60,35 +64,15 @@
   $("qr-sheet").addEventListener("click", (e) => { if (e.target.id === "qr-sheet") $("qr-sheet").hidden = true; });
 
   // ================================================================ 1. voice
-  const SAMPLES = [
-    { icon: "i-cow", title: "Calving at the chute", sub: "A cow calves in the north pasture",
-      text: "Cow 418 calved this morning in the north pasture. Bull calf, no help needed. Tagged him yellow 418, about 85 pounds." },
-    { icon: "i-herd", title: "Treating a steer", sub: "Pinkeye, a dose, a pen",
-      text: "Steer 61 has pinkeye. Gave him 8 cc of LA 200 and put him in the hospital pen." },
-    { icon: "i-map", title: "Moving a herd", sub: "Yearlings to a new pasture",
-      text: "Moved the 88 yearling steers from North Meadow to the south pasture. Set out two salt blocks by the dugout." },
+  // Plays a calving note and a herd move, over and over: words appear as they are
+  // said, the records are pulled out, then saved.
+  const NOTES = [
+    { title: "Calving at the chute", text: "Cow 418 calved this morning in the north pasture. Bull calf, no help needed. Tagged him yellow 418, about 85 pounds." },
+    { title: "Moving a herd", text: "Moved the 88 yearling steers from North Meadow to the south pasture. Set out two salt blocks by the dugout." },
   ];
-  $("samples").innerHTML = SAMPLES.map((s, i) => `<button class="sample" data-i="${i}"><span class="s-ic"><svg class="ic"><use href="#${s.icon}"/></svg></span><span><b>${s.title}</b><small>${s.sub}</small></span></button>`).join("");
-  document.querySelectorAll(".sample").forEach((b) => b.addEventListener("click", () => {
-    document.querySelectorAll(".sample").forEach((x) => x.classList.toggle("on", x === b));
-    playText(SAMPLES[+b.dataset.i].text, "Playing a sample note");
-  }));
-
-  const SAY = [
-    "Heifer 27 calved a bull calf, tagged yellow 27, 80 pounds",
-    "Steer 61 has foot rot, gave him 10 cc of Draxxin",
-    "Moved 40 pairs from Paddock B to Paddock C",
-  ];
-  $("say-lines").innerHTML = SAY.map((t) => `<li>${t}</li>`).join("");
-  // tapping a line plays it, so it also works on browsers that can't listen
-  $("say-lines").querySelectorAll("li").forEach((li, i) => li.addEventListener("click", () => {
-    document.querySelectorAll(".sample").forEach((x) => x.classList.remove("on"));
-    playText(SAY[i], "Playing your line");
-  }));
-
   const bars = $("bars");
   bars.innerHTML = "<i></i>".repeat(28);
-  let barTimer = null, typeTimers = [], recog = null, records = [];
+  let barTimer = null, typeTimers = [];
   function setLive(on, status) {
     $("recorder").classList.toggle("live", on);
     if (status) $("mic-status").innerHTML = status;
@@ -97,87 +81,59 @@
     if (on) barTimer = setInterval(() => is.forEach((b) => (b.style.height = 18 + Math.random() * 82 + "%")), 110);
     else is.forEach((b) => (b.style.height = "18%"));
   }
-  function stopVoice() {
-    typeTimers.forEach(clearTimeout); typeTimers = [];
-    if (recog) { try { recog.abort(); } catch {} recog = null; }
-    setLive(false);
-  }
   function resetVoice() {
-    stopVoice();
-    document.querySelectorAll(".sample").forEach((x) => x.classList.remove("on"));
+    typeTimers.forEach(clearTimeout); typeTimers = [];
+    setLive(false, "");
     $("transcript").className = "transcript";
     $("transcript").innerHTML = `<span class="placeholder">Your words show up here as you speak.</span>`;
     $("extract").hidden = true;
-    $("mic-status").innerHTML = Rec ? "Tap the mic and say one of<br>the lines on the left" : "Tap the mic to hear a note,<br>or pick one on the left";
   }
   // types a note word by word as if it were being said
-  function playText(text, status) {
-    stopVoice();
-    $("extract").hidden = true;
-    const t = $("transcript"); t.className = "transcript";
-    setLive(true, `<b>Listening</b><br>${status}`);
-    const words = text.split(" "); let i = 0;
-    const tick = () => {
-      t.innerHTML = esc(words.slice(0, ++i).join(" ")) + '<span class="caret"></span>';
-      if (i < words.length) typeTimers.push(setTimeout(tick, 120 + (/[.,]$/.test(words[i - 1]) ? 200 : 0)));
-      else typeTimers.push(setTimeout(() => finish(text), 450));
-    };
-    typeTimers.push(setTimeout(tick, 300));
+  function playText(text, title) {
+    return new Promise((done) => {
+      $("extract").hidden = true;
+      const t = $("transcript"); t.className = "transcript";
+      setLive(true, `<b>Listening</b><br>${title}`);
+      const words = text.split(" "); let i = 0;
+      const tick = () => {
+        t.innerHTML = esc(words.slice(0, ++i).join(" ")) + '<span class="caret"></span>';
+        if (i < words.length) typeTimers.push(setTimeout(tick, 150 + (/[.,]$/.test(words[i - 1]) ? 260 : 0)));
+        else typeTimers.push(setTimeout(() => { finish(text); done(); }, 500));
+      };
+      typeTimers.push(setTimeout(tick, 400));
+    });
   }
-  $("big-mic").addEventListener("click", () => {
-    primeSpeech();
-    if ($("recorder").classList.contains("live")) { if (recog) { try { recog.stop(); } catch {} } return; }
-    if (!Rec) return playText(SAMPLES[0].text, "Playing a sample note");
-    stopVoice();
-    let finalText = "", heard = false;
-    const t = $("transcript"); t.className = "transcript"; t.innerHTML = '<span class="caret"></span>'; $("extract").hidden = true;
-    setLive(true, "<b>Listening</b><br>Talk now, tap again to stop");
-    try {
-      recog = new Rec(); recog.lang = "en-CA"; recog.interimResults = true; recog.continuous = true;
-      recog.onresult = (e) => {
-        heard = true; let interim = ""; finalText = "";
-        for (const r of e.results) (r.isFinal ? (finalText += r[0].transcript + " ") : (interim += r[0].transcript));
-        t.innerHTML = esc(finalText + interim) + '<span class="caret"></span>';
-      };
-      recog.onerror = () => {};
-      recog.onend = () => {
-        recog = null;
-        const said = finalText.trim() || t.textContent.trim();
-        if (heard && said) finish(cap(said));
-        else playText(SAMPLES[0].text, "Couldn't hear you, here's an example");
-      };
-      recog.start();
-      typeTimers.push(setTimeout(() => { try { recog && recog.stop(); } catch {} }, 15000));
-    } catch { playText(SAMPLES[0].text, "Playing a sample note"); }
-  });
   function finish(text) {
-    setLive(false, "<b>Done.</b> Tap a record to leave it out,<br>then save");
+    setLive(false, "<b>Done.</b> Check the records,<br>then save");
     const { recs, marks } = extract(text);
-    records = recs;
     const t = $("transcript");
     t.innerHTML = markUp(text, marks);
     requestAnimationFrame(() => t.classList.add("marked"));
     $("ex-count").textContent = `${recs.length} record${recs.length === 1 ? "" : "s"}`;
-    $("ex-list").innerHTML = recs.map((r, i) => `<li data-i="${i}" style="animation-delay:${200 + i * 120}ms"><span class="k k-${r.k}">${r.label}</span><div><b>${esc(r.who)}</b><small>${esc(r.what)}</small></div><span class="ok"><svg class="ic"><use href="#i-check"/></svg></span></li>`).join("");
-    $("ex-list").querySelectorAll("li").forEach((li) => li.addEventListener("click", () => {
-      if ($("extract").classList.contains("saved")) return;
-      li.classList.toggle("off"); updateSave();
-    }));
-    $("extract").classList.remove("saved"); $("extract").hidden = false; updateSave();
+    $("ex-list").innerHTML = recs.map((r, i) => `<li style="animation-delay:${200 + i * 120}ms"><span class="k k-${r.k}">${r.label}</span><div><b>${esc(r.who)}</b><small>${esc(r.what)}</small></div><span class="ok"><svg class="ic"><use href="#i-check"/></svg></span></li>`).join("");
+    $("ex-save").textContent = `Save ${recs.length} record${recs.length === 1 ? "" : "s"}`;
+    $("extract").classList.remove("saved"); $("extract").hidden = false;
   }
-  function updateSave() {
-    const n = $("ex-list").querySelectorAll("li:not(.off)").length;
-    $("ex-save").textContent = n ? `Save ${n} record${n === 1 ? "" : "s"}` : "Nothing to save";
-    $("ex-save").disabled = !n;
-  }
-  $("ex-save").addEventListener("click", () => {
-    const n = $("ex-list").querySelectorAll("li:not(.off)").length;
+  function save() {
+    const n = $("ex-list").children.length;
+    tap($("ex-save"));
     $("extract").classList.add("saved");
-    $("ex-list").querySelectorAll("li.off").forEach((li) => li.remove());
     $("ex-save").innerHTML = `<svg class="ic"><use href="#i-check"/></svg> ${n} saved on the phone. Syncs with signal`;
-    $("mic-status").innerHTML = "<b>Saved.</b> Try another note,<br>or tap the mic again";
-  });
-  $("ex-clear").addEventListener("click", resetVoice);
+    $("mic-status").innerHTML = "<b>Saved.</b> Next note coming up";
+  }
+  async function voiceLoop(id) {
+    resetVoice();
+    for (let k = 0; ; k = (k + 1) % NOTES.length) {
+      await wait(900, id);
+      tap($("big-mic"));
+      await playText(NOTES[k].text, NOTES[k].title);
+      if (id !== run) return;
+      await wait(3200, id);
+      save();
+      await wait(3200, id);
+      resetVoice();
+    }
+  }
 
   // A small rule based reader for ranch notes: finds the animal, calving, tags,
   // weights, treatments, herd moves and salt, and marks where each came from.
@@ -256,7 +212,6 @@
     const p = D.paddocks[L];
     Object.entries(pills).forEach(([k, b]) => b.classList.toggle("on", k === L));
     dim.setAttribute("d", `M0,0H${w}V${h}H0Z` + path(p.rings)); dim.style.opacity = 1; sel.setAttribute("d", path(p.rings));
-    $("pasture-intro").hidden = true;
     const card = $("pasture-card"); card.hidden = false; card.style.animation = "none"; card.offsetWidth; card.style.animation = "";
     $("card-eyebrow").textContent = `Paddock ${L}`;
     $("card-chip").className = "chip chip-" + STATUS_CLASS[p.status]; $("card-chip").textContent = p.status;
@@ -269,7 +224,13 @@
     picked = null;
     Object.values(pills).forEach((b) => b.classList.remove("on"));
     dim.style.opacity = 0; sel.setAttribute("d", "");
-    $("pasture-intro").hidden = false; $("pasture-card").hidden = true;
+    $("pasture-card").hidden = true;
+  }
+  // every paddock in turn, starting with E where the herd is
+  async function pastureLoop(id) {
+    resetMap();
+    await wait(700, id);
+    for (;;) for (const L of ["E", "A", "B", "D", "C", "F"]) { tap(pills[L]); pick(L); await wait(5500, id); }
   }
   function countUp(el, to) {
     const t0 = performance.now();
@@ -326,7 +287,7 @@
     const hd = HERDS[i];
     document.querySelectorAll(".herd-row").forEach((b) => b.classList.toggle("on", +b.dataset.i === i));
     const pct = hd.tagged / hd.head, C = 2 * Math.PI * 18;
-    $("herd-head").innerHTML = `<svg class="ring-stat" viewBox="0 0 44 44"><circle cx="22" cy="22" r="18" fill="none" stroke="#ecece8" stroke-width="5"/><circle cx="22" cy="22" r="18" fill="none" stroke="#6FD40C" stroke-width="5" stroke-linecap="round" stroke-dasharray="${C * pct} ${C}" transform="rotate(-90 22 22)"/><text x="22" y="25.5" text-anchor="middle" font-size="10" font-weight="700" fill="#14161A" font-family="Geist">${hd.tagged}</text></svg><div><b>${hd.name}</b><small>${hd.head} head · ${hd.avg} avg · ${hd.tagged} of ${hd.head} tagged</small></div>`;
+    $("herd-head").innerHTML = `<svg class="ring-stat" viewBox="0 0 44 44"><circle cx="22" cy="22" r="18" fill="none" stroke="#ecece8" stroke-width="5"/><circle cx="22" cy="22" r="18" fill="none" stroke="#6FD40C" stroke-width="5" stroke-linecap="round" stroke-dasharray="${C * pct} ${C}" transform="rotate(-90 22 22)"/><text x="22" y="25.5" text-anchor="middle" font-size="10" font-weight="700" fill="#14161A" font-family="Geist">${hd.tagged}</text></svg><div><b>${hd.name}</b><small>${hd.head} head · ${hd.avg} avg · ${hd.tagged} tagged</small></div><span class="aw-add" id="aw-add">+ Add animal</span>`;
     $("animal-rows").innerHTML = hd.animals.map((a, j) => `<tr data-j="${j}" style="animation-delay:${j * 50}ms"><td>${a.tag}</td><td><span class="vis">${a.vis}</span></td><td>${a.cls}</td><td>${a.breed}</td></tr>`).join("");
     $("animal-rows").querySelectorAll("tr").forEach((tr) => tr.addEventListener("click", () => openAnimal(hd, +tr.dataset.j, tr)));
     $("drawer").hidden = true;
@@ -340,114 +301,150 @@
     $("dr-timeline").innerHTML = a.hist.map(([d, t]) => `<li><time>${d}</time><span>${t}</span></li>`).join("");
     const dr = $("drawer"); dr.hidden = false; dr.style.animation = "none"; dr.offsetWidth; dr.style.animation = "";
   }
-  $("drawer-x").addEventListener("click", () => { $("drawer").hidden = true; $("animal-rows").querySelectorAll("tr").forEach((r) => r.classList.remove("on")); });
+  $("drawer-x").addEventListener("click", closeAnimal);
+  function closeAnimal() { $("drawer").hidden = true; $("animal-rows").querySelectorAll("tr").forEach((r) => r.classList.remove("on")); }
+
+  // What the loop adds to and takes out of each herd
+  const CHANGES = [
+    { open: 0, add: A("00512", "512", "Calf", "Black Baldy", []), addNote: "Calf 512 added, out of Cow 418", drop: 4, dropNote: "Cow P41 culled. Count updated" },
+    { open: 0, add: A("00095", "95", "Steer", "Angus", []), addNote: "Steer 95 added, bought at Medicine Hat", drop: 1, dropNote: "Steer 72 sold. Count updated" },
+    { open: 0, add: A("00204", "H04", "Heifer", "Hereford", []), addNote: "Heifer H04 added from the calf crop", drop: 2, dropNote: "Heifer H03 moved to the cow herd" },
+  ];
+  const baseHead = HERDS.map((x) => x.head);
+  function toast(text) { const t = $("aw-toast"); t.innerHTML = `<svg class="ic"><use href="#i-check"/></svg> ${esc(text)}`; t.hidden = false; t.style.animation = "none"; t.offsetWidth; t.style.animation = ""; }
+  function setCount(i, n) {
+    HERDS[i].head = n;
+    document.querySelector(`.herd-row[data-i="${i}"] .hr-top span`).textContent = `${n} head`;
+    $("aw-stats").querySelector(":scope > div:last-child b").textContent = HERDS.reduce((m, x) => m + x.head, 0);
+    const small = $("herd-head").querySelector("small");
+    if (small) small.textContent = small.textContent.replace(/^\d+ head/, `${n} head`);
+  }
+  function resetHerd() {
+    $("aw-toast").hidden = true; closeAnimal();
+    baseHead.forEach((n, i) => setCount(i, n));
+    selectHerd(0);
+  }
+  async function herdLoop(id) {
+    resetHerd();
+    for (;;) for (let i = 0; i < HERDS.length; i++) {
+      const hd = HERDS[i], c = CHANGES[i];
+      await wait(900, id);
+      tap(document.querySelector(`.herd-row[data-i="${i}"]`)); selectHerd(i);
+      await wait(1800, id);
+      // open an animal's history
+      const tr = $("animal-rows").querySelectorAll("tr")[c.open];
+      tap(tr); openAnimal(hd, c.open, tr);
+      await wait(4200, id);
+      closeAnimal();
+      await wait(700, id);
+      // add one
+      tap($("aw-add"));
+      await wait(500, id);
+      $("animal-rows").insertAdjacentHTML("afterbegin", `<tr class="added"><td>${c.add.tag}</td><td><span class="vis">${c.add.vis}</span></td><td>${c.add.cls}</td><td>${c.add.breed}</td></tr>`);
+      setCount(i, hd.head + 1); toast(c.addNote);
+      await wait(3000, id);
+      // take one out
+      const out = $("animal-rows").querySelectorAll("tr")[c.drop + 1];
+      tap(out); out.classList.add("leaving");
+      await wait(900, id);
+      out.remove(); setCount(i, hd.head - 1); toast(c.dropNote);
+      await wait(3000, id);
+      $("aw-toast").hidden = true;
+      setCount(i, baseHead[i]);
+    }
+  }
 
   // ================================================================ 4. AI assistant
-  // The same examples drive two faithful copies: the iOS app's command sheet
-  // and the web app's "Ask the assistant" panel. Answers come from data.js.
+  // The same five play on a loop in two faithful copies: the iOS app's command
+  // sheet and the web app's "Ask the assistant" panel (asked a little differently
+  // there, and in another order). Answers come from data.js.
   const P = D.paddocks;
   const COW = HERDS[0];
   const byScore = Object.entries(P).sort((x, y) => y[1].prs - x[1].prs);
   const [best, second] = byScore;
   const daysOn = (n) => { const d = new Date(); d.setDate(d.getDate() + n); return d.toLocaleDateString("en-CA", { month: "short", day: "numeric" }); };
-  const past = P.E.history.filter(([y]) => y < 2026).map(([, v]) => v);
-  const eGreener = P.E.history[P.E.history.length - 1][1] > past.reduce((x, y) => x + y, 0) / past.length;
+  const past = P.A.history.filter(([y]) => y < 2026).map(([, v]) => v);
+  const aGreener = P.A.history[P.A.history.length - 1][1] > past.reduce((x, y) => x + y, 0) / past.length;
   const total = HERDS.reduce((n, x) => n + x.head, 0);
   const AI = [
-    { kind: "ask", q: "How many cattle do I have?", keys: /how many|cattle|count|head/i,
+    { kind: "ask", q: "How many cattle do I have?", qw: "How many head are on the ranch?",
       ios: `<b>${total} head</b>, in ${HERDS.length} herds: ${HERDS.map((x) => `${x.name.toLowerCase()} ${x.head}`).join(", ")}.`,
       web: [`You have **${total} head** across ${HERDS.length} herds.`, { cols: ["Herd", "Head", "Avg weight"], rows: HERDS.map((x) => [x.name, x.head, x.avg]) }] },
-    { kind: "ask", q: "Which pastures are ready to graze?", keys: /ready|next|graze|which|best/i,
+    { kind: "ask", q: "Which pasture is ready to graze?", qw: "Which paddock should I graze next?",
       ios: `<b>Paddock ${best[0]}</b> is ready, at ${best[1].prs}. Paddock ${second[0]} is next at ${second[1].prs}. The rest need more time.`,
       web: [`**Paddock ${best[0]}** is the most ready, at ${best[1].prs} out of 100. Paddock ${second[0]} is next.`, { cols: ["Paddock", "Score", "Status", "Acres"], rows: byScore.slice(0, 4).map(([L, x]) => [`Paddock ${L}`, x.prs, x.status, x.acres]) }] },
-    { kind: "ask", q: "How is Paddock E doing?", keys: /paddock e|\be\b|doing|how is/i,
-      ios: `${D.herd.head} head have been on Paddock E for <b>${D.herd.days} days</b>. It's down to ${P.E.prs}, so it needs rest.${eGreener ? " The grass had a better year than normal." : ""}`,
-      web: [`**${COW.name}**, ${D.herd.head} head, have been on Paddock E for **${D.herd.days} days**. It scores ${P.E.prs} now, so it needs rest.`, { cols: ["Paddock", "Score", "Status", "Herd on it"], rows: [["Paddock E", P.E.prs, P.E.status, `${D.herd.head} head, ${D.herd.days} days`]] }] },
-    { kind: "log", q: `Move the cow calf pairs to Paddock ${best[0]}`, keys: /move|shift|put/i,
-      kicker: "Move herd", title: `${COW.name} · ${COW.head} head → Paddock ${best[0]}`,
+    { kind: "ask", q: "How is Paddock A doing?", qw: "How's Paddock A looking?",
+      ios: `Paddock A scores <b>${P.A.prs}</b>, the best on the ranch. It's rested and ready to graze.${aGreener ? " The grass is ahead of a normal year." : ""}`,
+      web: [`**Paddock A** scores **${P.A.prs}** out of 100, the best of the six. It's rested and ready.`, { cols: ["Paddock", "Score", "Status", "Acres"], rows: [["Paddock A", P.A.prs, P.A.status, P.A.acres]] }] },
+    { kind: "log", q: "Move the cow calf pairs to Paddock A", qw: "Put the pairs on Paddock A",
+      kicker: "Move herd", title: `${COW.name} · ${COW.head} head → Paddock A`,
       lead: `Off Paddock E after ${D.herd.days} days. Paddock E gets its rest.`,
-      rows: [["Now on", "Paddock E"], ["To", `Paddock ${best[0]}`], ["Moved", "Today"]],
-      done: "Move recorded", doneLine: `${COW.name} are moving onto Paddock ${best[0]}.`, saved: `Moved ${COW.name} to Paddock ${best[0]}` },
-    { kind: "log", q: "Steer 61 got 8 cc of LA 200 for pinkeye", keys: /steer|treat|gave|pinkeye|la ?200|cc/i,
-      kicker: "Treatment", title: "Steer 61 · LA 200, 8 cc",
-      lead: `For pinkeye. 28 day withdrawal: he can't ship before ${daysOn(28)}.`,
-      rows: [["Product", "LA 200"], ["Dose", "8 cc"], ["Given", "Today"], ["For", "Pinkeye"], ["Withdrawal", `28 days, until ${daysOn(28)}`]],
-      done: "Treatment recorded", doneLine: `LA 200 on Steer 61. Clear to ship ${daysOn(28)}.`, saved: "Treated Steer 61 with LA 200" },
-    { kind: "log", q: "Note: trough on Paddock C is low", keys: /note|trough|water|gate/i,
+      rows: [["Now on", "Paddock E"], ["To", "Paddock A"], ["Moved", "Today"]],
+      done: "Move recorded", doneLine: `${COW.name} are moving onto Paddock A.`, saved: `Moved ${COW.name} to Paddock A` },
+    { kind: "log", q: "Note: water trough on Paddock C is low", qw: "Water trough on Paddock C is low",
       kicker: "Note", title: "Paddock C",
-      lead: "“Trough is low.”",
-      rows: [["About", "Paddock C"], ["Note", "Trough is low"]],
-      done: "Note saved", doneLine: "On Paddock C: trough is low.", saved: "Noted on Paddock C" },
+      lead: "“Water trough is low.”",
+      rows: [["About", "Paddock C"], ["Note", "Water trough is low"]],
+      done: "Note saved", doneLine: "On Paddock C: water trough is low.", saved: "Noted on Paddock C" },
   ];
-  const chip = (x, i) => `<button class="ask-chip" data-i="${i}">${x.q}<svg class="ic"><use href="#i-arrow"/></svg></button>`;
-  $("asks-q").innerHTML = AI.map((x, i) => (x.kind === "ask" ? chip(x, i) : "")).join("");
-  $("asks-l").innerHTML = AI.map((x, i) => (x.kind === "log" ? chip(x, i) : "")).join("");
-  document.querySelectorAll("#asks-q .ask-chip, #asks-l .ask-chip").forEach((b) => b.addEventListener("click", () => run(AI[+b.dataset.i], null, b)));
-
-  let device = "phone", aiTimers = [];
-  const later = (fn, ms) => aiTimers.push(setTimeout(fn, ms));
-  function clearAiTimers() { aiTimers.forEach(clearTimeout); aiTimers = []; }
-  function resetAssistant() {
-    clearAiTimers(); stopSpeech();
-    document.querySelectorAll(".ask-chip").forEach((b) => b.classList.remove("used"));
-    iosIdle(); waEmpty();
-  }
-  function run(item, said, chipEl) {
-    primeSpeech();
-    if (chipEl) chipEl.classList.add("used");
-    clearAiTimers(); stopSpeech();
-    device === "phone" ? iosRun(item, said) : waRun(item, said);
-  }
+  let device = "phone";
+  function resetAssistant() { stopSpeech(); iosIdle(); waEmpty(); }
   document.querySelectorAll(".device-toggle button").forEach((b) => b.addEventListener("click", () => {
+    if (b.dataset.device === device) return;
     document.querySelectorAll(".device-toggle button").forEach((x) => x.setAttribute("aria-selected", String(x === b)));
     device = b.dataset.device;
     $("ios").hidden = device !== "phone"; $("wa").hidden = device !== "web";
-    resetAssistant();
+    run++; resetAssistant(); aiLoop(run).catch(() => {});
   }));
+  const WEB_ORDER = [1, 3, 0, 4, 2];
+  async function aiLoop(id) {
+    resetAssistant();
+    for (;;) {
+      const order = device === "phone" ? [0, 1, 2, 3, 4] : WEB_ORDER;
+      for (const i of order) await (device === "phone" ? iosRun(AI[i], id) : waRun(AI[i], id));
+      if (device === "web") { await wait(1500, id); tap($("wa-new")); waEmpty(); }
+    }
+  }
 
   // ---- iPhone: the command sheet
   const ORB = (live, label) => `<div class="ios-orb ${live ? "live" : ""}"><div class="core"><div class="bars5"><i></i><i></i><i></i><i></i><i></i></div></div><span>${label}</span></div>`;
   function iosStatus(text, live) { $("ios-status").textContent = text; $("ios-dot").classList.toggle("live", !!live); }
   function iosIdle() {
     iosStatus("Listening", true);
-    $("ios-body").innerHTML = `<p class="ios-display">Ask, or say what happened.</p><p class="ios-lead">Like “${AI[3].q}”.</p>${ORB(true, "Listening")}`;
+    $("ios-body").innerHTML = `<p class="ios-display">Ask, or say what happened.</p>${ORB(true, "Listening")}`;
   }
-  function iosRun(item, said) {
-    const heard = `<p class="ios-said">“${esc(said || item.q)}”</p>`;
+  async function iosRun(item, id) {
+    iosIdle();
+    await wait(1600, id);
+    // the question appears as it is said
+    const words = item.q.split(" ");
+    for (let i = 1; i <= words.length; i++) {
+      $("ios-body").innerHTML = `<p class="ios-said">“${esc(words.slice(0, i).join(" "))}”</p>${ORB(true, "Listening")}`;
+      await wait(170, id);
+    }
+    await wait(500, id);
+    const heard = `<p class="ios-said">“${esc(item.q)}”</p>`;
     if (item.kind === "ask") {
       iosStatus("Asking the ranch");
       $("ios-body").innerHTML = `${heard}<p class="ios-display">Asking the ranch…</p><div class="ios-think"><i></i><i></i><i></i></div>`;
-      later(() => {
-        iosStatus("Answered");
-        $("ios-body").innerHTML = `${heard}<p class="ios-display answer">${item.ios}</p><div class="ios-btns"><button class="ios-btn" data-act="again"><svg class="ic"><use href="#i-mic"/></svg> Say another</button></div>`;
-        speak(plain(item.ios));
-        bindIos();
-      }, 1100);
-      return;
+      await wait(1200, id);
+      iosStatus("Answered");
+      $("ios-body").innerHTML = `${heard}<p class="ios-display answer">${item.ios}</p>`;
+      speak(plain(item.ios));
+      return wait(6000, id);
     }
     iosStatus("Say yes or no", true);
     $("ios-body").innerHTML = `${heard}<p class="ios-kicker">${item.kicker}</p><p class="ios-display">${esc(item.title)}</p><p class="ios-lead">${esc(item.lead)}</p>
       <div class="ios-btns"><button class="ios-btn primary" data-act="yes"><svg class="ic"><use href="#i-check"/></svg> Yes, record</button><button class="ios-btn" data-act="no">No</button></div>
       <p class="ios-small" style="text-align:center">Nothing is written until you say yes.</p>`;
     speak(`${item.title.replace("→", "to").replace(" · ", ", ")}. Yes or no?`);
-    bindIos(item);
-  }
-  function bindIos(item) {
-    $("ios-body").querySelectorAll("[data-act]").forEach((b) => b.addEventListener("click", () => {
-      const act = b.dataset.act;
-      stopSpeech();
-      if (act === "again") return iosIdle();
-      if (act === "no") {
-        iosStatus("Nothing recorded");
-        $("ios-body").innerHTML = `<p class="ios-display" style="margin-top:30px">Okay.</p><p class="ios-lead">Nothing recorded.</p>`;
-        return later(iosIdle, 1800);
-      }
-      iosStatus("Recorded");
-      $("ios-body").innerHTML = `<div class="ios-done"><span class="tick"><svg class="ic"><use href="#i-check"/></svg></span><p class="ios-display">${item.done}</p></div>
-        <p class="ios-lead">${esc(item.doneLine)}</p><p class="ios-small">Saved on the phone. Uploads when there is signal.</p>
-        <div class="ios-btns"><button class="ios-btn" data-act="again"><svg class="ic"><use href="#i-mic"/></svg> Say another</button></div>`;
-      bindIos();
-    }));
+    await wait(4200, id);
+    tap($("ios-body").querySelector('[data-act="yes"]'));
+    await wait(500, id);
+    iosStatus("Recorded");
+    $("ios-body").innerHTML = `<div class="ios-done"><span class="tick"><svg class="ic"><use href="#i-check"/></svg></span><p class="ios-display">${item.done}</p></div>
+      <p class="ios-lead">${esc(item.doneLine)}</p><p class="ios-small">Saved on the phone. Uploads when there is signal.</p>`;
+    return wait(4000, id);
   }
 
   // ---- Web: the side panel
@@ -461,56 +458,34 @@
     $("wa-text").parentElement.classList.toggle("typed", !!text);
   }
   const waAdd = (html) => { const sc = $("wa-scroll"); sc.querySelector(".wa-empty")?.remove(); sc.insertAdjacentHTML("beforeend", html); sc.scrollTop = sc.scrollHeight; return sc.lastElementChild; };
-  function waRun(item, said) {
-    const text = said || item.q;
-    let i = 0;
-    const type = () => { waBox(text.slice(0, ++i)); if (i < text.length) later(type, 22); else later(send, 350); };
-    const send = () => {
-      waBox("");
-      waAdd(`<p class="wa-q">${esc(text)}</p>`);
-      const spin = waAdd(`<span class="wa-spin">Working it out</span>`);
-      later(() => {
-        spin.remove();
-        if (item.kind === "ask") {
-          const [line, t] = item.web;
-          waAdd(`<div class="wa-a"><p>${md(line)}</p><div class="wa-table"><table><thead><tr>${t.cols.map((c) => `<th>${c}</th>`).join("")}</tr></thead><tbody>${t.rows.map((r) => `<tr>${r.map((c) => `<td>${esc(String(c))}</td>`).join("")}</tr>`).join("")}</tbody></table></div></div>`);
-          speak(plain(md(line)));
-          return;
-        }
-        const card = waAdd(`<div class="wa-a"><p style="color:#565A61">Here it is. Check it, then save.</p><div class="wa-card"><span class="wa-kick">${item.kicker}</span><span class="wa-title">${esc(item.title.split(" → ")[0])}</span>
-          <dl>${item.rows.map(([k, v]) => `<dt>${k}</dt><dd>${esc(v)}</dd>`).join("")}</dl>
-          <div class="wa-acts"><button class="wa-btn primary" data-act="save">Save</button><button class="wa-btn" data-act="cancel">Cancel</button></div></div></div>`);
-        card.querySelectorAll("[data-act]").forEach((b) => b.addEventListener("click", () => {
-          const ok = b.dataset.act === "save";
-          card.innerHTML = ok ? `<p class="wa-ok"><svg class="ic"><use href="#i-check"/></svg> ${esc(item.saved)}</p>` : `<p class="wa-ok" style="color:#565A61">Cancelled. Nothing recorded.</p>`;
-        }));
-      }, 900);
-    };
-    type();
+  async function waRun(item, id) {
+    const text = item.qw;
+    for (let i = 1; i <= text.length; i++) { waBox(text.slice(0, i)); await wait(32, id); }
+    await wait(400, id);
+    tap(document.querySelector(".wa-send"));
+    waBox("");
+    waAdd(`<p class="wa-q">${esc(text)}</p>`);
+    const spin = waAdd(`<span class="wa-spin">Working it out</span>`);
+    await wait(1100, id);
+    spin.remove();
+    if (item.kind === "ask") {
+      const [line, t] = item.web;
+      waAdd(`<div class="wa-a"><p>${md(line)}</p><div class="wa-table"><table><thead><tr>${t.cols.map((c) => `<th>${c}</th>`).join("")}</tr></thead><tbody>${t.rows.map((r) => `<tr>${r.map((c) => `<td>${esc(String(c))}</td>`).join("")}</tr>`).join("")}</tbody></table></div></div>`);
+      speak(plain(md(line)));
+      return wait(6000, id);
+    }
+    const card = waAdd(`<div class="wa-a"><p style="color:#565A61">Here it is. Check it, then save.</p><div class="wa-card"><span class="wa-kick">${item.kicker}</span><span class="wa-title">${esc(item.title.split(" → ")[0])}</span>
+      <dl>${item.rows.map(([k, v]) => `<dt>${k}</dt><dd>${esc(v)}</dd>`).join("")}</dl>
+      <div class="wa-acts"><button class="wa-btn primary" data-act="save">Save</button><button class="wa-btn" data-act="cancel">Cancel</button></div></div></div>`);
+    $("wa-scroll").scrollTop = $("wa-scroll").scrollHeight;
+    await wait(3800, id);
+    tap(card.querySelector('[data-act="save"]'));
+    await wait(500, id);
+    card.innerHTML = `<p class="wa-ok"><svg class="ic"><use href="#i-check"/></svg> ${esc(item.saved)}</p>`;
+    $("wa-scroll").scrollTop = $("wa-scroll").scrollHeight;
+    return wait(3500, id);
   }
-  $("wa-new").addEventListener("click", () => { clearAiTimers(); waEmpty(); });
 
-  // ---- asking out loud: matched to the nearest example, so it always answers
-  if (Rec) $("ask-mic-row").hidden = false;
-  let rec = null;
-  $("mic").addEventListener("click", () => {
-    primeSpeech();
-    if (rec) { try { rec.abort(); } catch {} rec = null; }
-    let done = false;
-    const end = (text) => {
-      if (done) return; done = true; $("mic").classList.remove("listening"); rec = null;
-      const item = (text && AI.find((x) => x.keys.test(text))) || AI[0];
-      run(item, text ? cap(text) : null);
-    };
-    try {
-      rec = new Rec(); rec.lang = "en-CA"; rec.interimResults = false; rec.maxAlternatives = 1;
-      rec.onresult = (e) => end(e.results[0][0].transcript);
-      rec.onerror = () => end(null);
-      rec.onend = () => end(null);
-      $("mic").classList.add("listening"); rec.start();
-      setTimeout(() => { if (!done) { try { rec.stop(); } catch {} } }, 7000);
-    } catch { end(null); }
-  });
   const plain = (html) => html.replace(/<[^>]+>/g, "");
 
   // ================================================================ speech out
