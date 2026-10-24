@@ -658,7 +658,21 @@
   // ================================================================ start
   go("home");
   if ("serviceWorker" in navigator) {
-    navigator.serviceWorker.register("/demo/sw.js", { scope: "/demo" }).then(() => navigator.serviceWorker.ready).then(() => ($("offline-badge").hidden = false)).catch(() => {});
+    // A new version installs in the background while the old one is on screen; once it
+    // takes over, reload so nobody has to refresh by hand. Not on the very first visit.
+    const hadVersion = !!navigator.serviceWorker.controller;
+    let reloading = false;
+    navigator.serviceWorker.addEventListener("controllerchange", () => {
+      if (!hadVersion || reloading) return;
+      reloading = true; location.reload();
+    });
+    navigator.serviceWorker.register("/demo/sw.js", { scope: "/demo" }).then((reg) => {
+      // the booth iPad stays open all day: look for a new version every few minutes and on wake
+      const check = () => navigator.onLine && reg.update().catch(() => {});
+      setInterval(check, 5 * 60 * 1000);
+      document.addEventListener("visibilitychange", () => document.visibilityState === "visible" && check());
+      return navigator.serviceWorker.ready;
+    }).then(() => ($("offline-badge").hidden = false)).catch(() => {});
   }
   async function wake() { try { await navigator.wakeLock?.request("screen"); } catch {} }
   wake(); document.addEventListener("visibilitychange", () => document.visibilityState === "visible" && wake());
