@@ -733,3 +733,15 @@ tr.tapped td { animation: rowtap .9s var(--ease); }
 @media (max-aspect-ratio: 1/1), (max-width: 760px), (max-height: 560px) {
   .map-wrap { width: min(100%, calc(66svh * var(--map-ar))); height: auto; max-height: none; aspect-ratio: var(--map-ar); }
 }
+
+/* early access sheet, same look as the printed stand card: big code on top, text under it */
+.sheet-card { --q: min(48svh, 72vw, 440px); grid-template-columns: 1fr; justify-items: center; text-align: center; gap: 0; width: auto; max-width: calc(100vw - 2 * var(--pad));
+  padding: clamp(16px, 2.4svh, 26px) clamp(16px, 2.4svh, 26px) clamp(18px, 2.8svh, 30px);
+  background-image: radial-gradient(120% 70% at 50% 0%, rgba(166,255,61,.14), transparent 60%); }
+.sheet-card .qr-card { padding: 6px; border-radius: 22px; box-shadow: 0 0 0 1px rgba(166,255,61,.35); }
+.sheet-card .qr-card img { display: block; width: var(--q); }
+.sheet-card h2 { margin-top: clamp(14px, 2.4svh, 24px); font-size: clamp(30px, 5svh, 46px); line-height: 1.03; letter-spacing: -.03em; }
+.sheet-card .lead { margin-top: 8px; font-size: clamp(15px, 2.1svh, 19px); }
+.qr-url { margin-top: 8px; font-family: GeistMono, monospace; font-size: clamp(12px, 1.6svh, 14px); letter-spacing: .06em; }
+.qr-url b { color: var(--lime); font-weight: 500; }
+.sheet-card .btn { margin-top: clamp(14px, 2.4svh, 22px); }
