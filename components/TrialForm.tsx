@@ -23,6 +23,25 @@ const EMPTY: TrialSubmission = {
   lang: "en",
 };
 
+// UTM tags from the address the visitor arrived on. Kept for the visit so a
+// signup two pages later still says where they came from.
+const UTM_KEYS = ["utm_source", "utm_medium", "utm_campaign", "utm_content", "utm_term"];
+const UTM_STORE = "agv_utm";
+function rememberUtm() {
+  try {
+    const q = new URLSearchParams(window.location.search);
+    const utm = Object.fromEntries(UTM_KEYS.flatMap((k) => (q.get(k) ? [[k, q.get(k)!.slice(0, 200)]] : [])));
+    if (Object.keys(utm).length) sessionStorage.setItem(UTM_STORE, JSON.stringify(utm));
+  } catch {}
+}
+function savedUtm(): Record<string, string> {
+  try {
+    return JSON.parse(sessionStorage.getItem(UTM_STORE) || "{}");
+  } catch {
+    return {};
+  }
+}
+
 const field =
   "w-full rounded-xl border border-white/12 bg-ink-800 px-4 py-3 text-base text-bone-50 placeholder:text-bone-400 focus:border-lime-400 focus:outline-none focus:ring-1 focus:ring-lime-400";
 const label = "mb-2 block text-sm text-bone-300";
@@ -49,6 +68,7 @@ export default function TrialForm({ inline = false, source: inlineSource = "cont
   useEffect(() => {
     if (open) openedAt.current = Date.now();
   }, [open]);
+  useEffect(rememberUtm, []);
   useEffect(() => {
     sent.current = state === "done";
   }, [state]);
@@ -110,6 +130,9 @@ export default function TrialForm({ inline = false, source: inlineSource = "cont
         // Spam checks: the hidden field's value and how long the form was open
         [TRIAL_TRAP_FIELD]: trap.current?.value ?? "",
         elapsedMs: Date.now() - openedAt.current,
+        // Where it was sent from, for the Attio record
+        page: window.location.pathname,
+        utm: savedUtm(),
       }),
       });
       const body = await res.json().catch(() => ({}));
