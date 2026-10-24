@@ -1,6 +1,6 @@
 /* Precaches every file the demo uses, then serves everything from the cache, so
    the demo runs with Wi-Fi off. Bump VERSION whenever any file changes. */
-const VERSION = "booth-demo-v20";
+const VERSION = "booth-demo-v21";
 const FILES = [
   "/demo", "/demo/index.html", "/demo/style.css", "/demo/app.js", "/demo/data.js", "/demo/manifest.webmanifest",
   "/demo/assets/map.jpg", "/demo/assets/logo.png", "/demo/assets/mark.png", "/demo/assets/qr.png",
@@ -12,7 +12,9 @@ const FILES = [
 ];
 
 self.addEventListener("install", (e) => {
-  e.waitUntil(caches.open(VERSION).then((c) => c.addAll(FILES)).then(() => self.skipWaiting()));
+  // cache: "reload" skips the browser's own cache: images there are kept for a year as
+  // "never changes", so without it a new version could save the old picture again
+  e.waitUntil(caches.open(VERSION).then((c) => c.addAll(FILES.map((f) => new Request(f, { cache: "reload" })))).then(() => self.skipWaiting()));
 });
 self.addEventListener("activate", (e) => {
   e.waitUntil(caches.keys().then((keys) => Promise.all(keys.filter((k) => k !== VERSION).map((k) => caches.delete(k)))).then(() => self.clients.claim()));
