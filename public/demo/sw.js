@@ -1,6 +1,6 @@
 /* Precaches every file the demo uses, then serves everything from the cache, so
    the demo runs with Wi-Fi off. Bump VERSION whenever any file changes. */
-const VERSION = "booth-demo-v18";
+const VERSION = "booth-demo-v19";
 const FILES = [
   "/demo", "/demo/index.html", "/demo/style.css", "/demo/app.js", "/demo/data.js", "/demo/manifest.webmanifest",
   "/demo/assets/map.jpg", "/demo/assets/logo.png", "/demo/assets/mark.png", "/demo/assets/qr.png",
