@@ -1,17 +1,18 @@
-import { NextResponse } from "next/server";
+import { NextResponse, after } from "next/server";
 import { checkBotId } from "botid/server";
 import {
   CONFIRMATION_SUBJECT,
   CONTACT_EMAIL,
   TRIAL_EMAILS,
   TRIAL_MIN_FILL_MS,
-  TRIAL_SOURCES,
   TRIAL_TRAP_FIELD,
   confirmationBody,
   trialBody,
   trialSubject,
   type TrialSubmission,
 } from "@/lib/cta";
+import { sendToAttio } from "@/lib/attio";
+import { allowedOrigin, clientIp, isDisposable, parseSignup, rateLimited } from "@/lib/signup-guard";
 
 /**
  * Sends a trial request to TRIAL_EMAILS through Resend's REST API — no SDK, so
@@ -20,6 +21,9 @@ import {
  *
  * With no key configured the route reports `fallback: true` and the form opens a
  * prefilled email instead, so an enquiry is never silently dropped.
+ *
+ * Every real request also goes to Attio (lib/attio), after the reply is sent:
+ * alongside the email, never instead of it.
  */
 // Must be on a domain verified in Resend. notify.agrivanna.com is the verified
 // one — sending from bare agrivanna.com gets a 403 and the enquiry falls back.
@@ -43,6 +47,12 @@ function clean(v: unknown, max = 400) {
 }
 
 export async function POST(request: Request) {
+  // Only our own pages post here. A browser always sends Origin with a POST;
+  // a script that leaves it out, or fakes another site, is turned away.
+  if (!allowedOrigin(request.headers.get("origin"))) {
+    return NextResponse.json({ ok: false, blocked: true }, { status: 403 });
+  }
+
   // Vercel BotID (set up in instrumentation-client.ts). Bots, including
   // scripts posting here without loading the site, are turned away before
   // anything is read or sent. If BotID itself fails (off Vercel, or the
@@ -61,31 +71,38 @@ export async function POST(request: Request) {
     return NextResponse.json({ ok: false, blocked: true }, { status: 403 });
   }
 
-  let payload: Partial<TrialSubmission> & Record<string, unknown>;
+  let payload: Record<string, unknown>;
   try {
     payload = await request.json();
   } catch {
     return NextResponse.json({ ok: false, error: "Malformed request." }, { status: 400 });
   }
+  const fr = payload?.lang === "fr";
 
-  const data: TrialSubmission = {
-    name: clean(payload.name, 120),
-    email: clean(payload.email, 200),
-    phone: clean(payload.phone, 60),
-    ranch: clean(payload.ranch, 160),
-    records: clean(payload.records, 120),
-    notes: clean(payload.notes, 2000),
-    source: clean(payload.source, 60) || "website",
-    lang: payload.lang === "fr" ? "fr" : "en",
-  };
-  const fr = data.lang === "fr";
+  // 5 sends per address in 10 minutes. Someone correcting a typo never gets near it.
+  if (rateLimited(clientIp(request))) {
+    return NextResponse.json(
+      { ok: false, error: fr ? "Trop d'envois d'un coup. Réessayez dans quelques minutes." : "Too many requests at once. Please try again in a few minutes." },
+      { status: 429 }
+    );
+  }
+
+  // Every field trimmed, cut to its maximum length and cleaned of control characters
+  const parsed = parseSignup(payload);
+  if (!parsed.ok) {
+    return NextResponse.json(
+      { ok: false, error: fr ? "Cette adresse courriel semble incorrecte." : "That email looks off." },
+      { status: 400 }
+    );
+  }
+  const { page, utm, ...rest } = parsed.data;
+  const data: TrialSubmission = rest;
 
   // Spam checks, before anything is sent. Each one answers "ok" so a bot
   // can't tell it was caught and learn to get around it; nothing goes out.
-  const fromOurPages = (TRIAL_SOURCES as readonly string[]).includes(data.source);
-  const trapFilled = clean(payload[TRIAL_TRAP_FIELD], 200) !== "";
+  const trapFilled = typeof payload[TRIAL_TRAP_FIELD] === "string" && (payload[TRIAL_TRAP_FIELD] as string).trim() !== "";
   const tooFast = typeof payload.elapsedMs !== "number" || payload.elapsedMs < TRIAL_MIN_FILL_MS;
-  if (!fromOurPages || trapFilled || tooFast) {
+  if (!parsed.fromOurPages || trapFilled || tooFast) {
     console.warn("Trial request dropped as spam", { source: data.source, trapFilled, tooFast });
     return NextResponse.json({ ok: true });
   }
@@ -102,6 +119,15 @@ export async function POST(request: Request) {
       { status: 400 }
     );
   }
+  if (isDisposable(data.email)) {
+    return NextResponse.json(
+      { ok: false, error: fr ? "Merci d'utiliser votre adresse courriel habituelle." : "Please use your regular email address." },
+      { status: 400 }
+    );
+  }
+
+  // Into Attio once the visitor has their answer, whatever happens with the email
+  after(() => sendToAttio(data, { utm, page }));
 
   const key = process.env.RESEND_API_KEY;
   if (!key) {
