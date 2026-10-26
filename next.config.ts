@@ -13,6 +13,14 @@ const nextConfig: NextConfig = {
     // Retired 2024-design pages. Kept as redirects so old bookmarks and search
     // results land somewhere current instead of a 404.
     return [
+      // One address for the site: www served every page too, so Google filed
+      // the www copies as "Alternate page with proper canonical tag"
+      {
+        source: "/:path*",
+        has: [{ type: "host", value: "www.agrivanna.com" }],
+        destination: "https://agrivanna.com/:path*",
+        permanent: true,
+      },
       { source: "/solutions", destination: "/", permanent: true },
       { source: "/products", destination: "/product", permanent: true },
       { source: "/pilot-waitlist", destination: "/", permanent: true },
