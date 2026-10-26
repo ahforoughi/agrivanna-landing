@@ -176,6 +176,41 @@ function confirmationBodyFr() {
   ].join("\n")
 }
 
+/** The roles on the launch party sign up (agrivanna.com/launch). */
+export const LAUNCH_ROLES = ["rancher", "investor", "partner", "team"] as const
+export type LaunchRole = (typeof LAUNCH_ROLES)[number]
+
+export const LAUNCH_CONFIRMATION_SUBJECT = "You're on the Agrivanna early access list"
+
+/** What happens next, for each role someone picked at the booth. */
+const LAUNCH_NEXT: Record<LaunchRole, string> = {
+  rancher: "Our team will be in touch soon to set up Agrivanna on your ranch.",
+  investor: "Our team will be in touch soon to share where Agrivanna is headed.",
+  partner: "Our team will be in touch soon to talk about working together.",
+  team: "Our team will be in touch soon about joining Agrivanna.",
+}
+
+/**
+ * The launch party sign up's automatic reply. Same voice and footer as the
+ * trial confirmation, and like it repeats nothing the visitor typed.
+ */
+export function launchConfirmationBody(role: string) {
+  const next = LAUNCH_NEXT[role as LaunchRole] ?? "Our team will be in touch soon."
+  return [
+    "Hello,",
+    "",
+    `Thanks for signing up for early access to Agrivanna. Your sign up reached us on ${today("en")}.`,
+    "",
+    next,
+    "",
+    `If you have questions in the meantime, reply to this email or write to ${CONTACT_EMAIL}.`,
+    "",
+    "Agrivanna Inc.",
+    "1315 Northmount Dr NW, Calgary, AB T2L 0C9",
+    CONTACT_EMAIL,
+  ].join("\n")
+}
+
 /** Used only if the server has no mail credentials configured. */
 export function trialMailto(d: TrialSubmission) {
   return `mailto:${TRIAL_EMAILS.join(",")}?subject=${encodeURIComponent(trialSubject(d))}&body=${encodeURIComponent(

@@ -6,7 +6,8 @@ import LaunchForm from "./LaunchForm";
  * agrivanna.com/launch: the Launch Party sign up page (Thu Nov 5 2026,
  * Platform Calgary). The booth QR code opens it with
  * ?utm_source=launchparty&utm_medium=qr&utm_campaign=cinw2026.
- * Sign ups go to the "Launch Party Signups" Google Sheet (booth/apps_script.gs).
+ * Sign ups go to the "Launch Party Signups" Google Sheet (booth/apps_script.gs);
+ * /api/launch then emails the visitor their confirmation.
  */
 export default function LaunchPage() {
   return (

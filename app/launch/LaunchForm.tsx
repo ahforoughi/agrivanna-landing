@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { ArrowUpRight, Check } from "lucide-react";
 
 /** Google Apps Script web app for the "Launch Party Signups" Sheet (booth/apps_script.gs). */
@@ -28,6 +28,8 @@ export default function LaunchForm() {
   const [errors, setErrors] = useState<{ name?: string; email?: string; role?: string }>({});
   const [state, setState] = useState<"idle" | "sending" | "done" | "failed">("idle");
   const [utm, setUtm] = useState({ utm_source: "direct", utm_medium: "", utm_campaign: "" });
+  // For the confirmation email's spam check (see /api/launch): when the page opened
+  const openedAt = useRef(Date.now());
 
   useEffect(() => {
     const p = new URLSearchParams(window.location.search);
@@ -66,6 +68,14 @@ export default function LaunchForm() {
           page: window.location.pathname,
         }),
       });
+      // Their confirmation email, from our own server. Not awaited: the sign up
+      // has landed, so the page moves on whatever happens to the email.
+      fetch("/api/launch", {
+        method: "POST",
+        keepalive: true,
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email: email.trim(), role, website: trap, elapsedMs: Date.now() - openedAt.current }),
+      }).catch(() => {});
       setState("done");
       window.scrollTo(0, 0);
     } catch {

@@ -28,18 +28,18 @@ export const RATE_LIMIT = { max: 5, windowMs: 10 * 60 * 1000 };
 const hits = new Map<string, number[]>();
 
 /**
- * At most 5 sends per IP in 10 minutes. Kept in memory, so it's best effort: each
- * server instance counts on its own. The Vercel Firewall rule on /api/trial is the
- * hard limit in front of it.
+ * At most `max` sends per key (an IP, or a form plus an IP) in 10 minutes. Kept in
+ * memory, so it's best effort: each server instance counts on its own. The Vercel
+ * Firewall rule on /api/trial is the hard limit in front of it.
  */
-export function rateLimited(ip: string, now = Date.now()) {
-  const recent = (hits.get(ip) ?? []).filter((t) => now - t < RATE_LIMIT.windowMs);
-  if (recent.length >= RATE_LIMIT.max) {
-    hits.set(ip, recent);
+export function rateLimited(key: string, now = Date.now(), max = RATE_LIMIT.max) {
+  const recent = (hits.get(key) ?? []).filter((t) => now - t < RATE_LIMIT.windowMs);
+  if (recent.length >= max) {
+    hits.set(key, recent);
     return true;
   }
   recent.push(now);
-  hits.set(ip, recent);
+  hits.set(key, recent);
   if (hits.size > 5000) for (const [k, v] of hits) if (!v.some((t) => now - t < RATE_LIMIT.windowMs)) hits.delete(k);
   return false;
 }
