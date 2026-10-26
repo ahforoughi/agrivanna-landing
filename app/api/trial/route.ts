@@ -12,6 +12,7 @@ import {
   type TrialSubmission,
 } from "@/lib/cta";
 import { sendToAttio } from "@/lib/attio";
+import { FROM, sendEmail as send } from "@/lib/resend";
 import { allowedOrigin, clientIp, isDisposable, parseSignup, rateLimited } from "@/lib/signup-guard";
 
 /**
@@ -25,27 +26,6 @@ import { allowedOrigin, clientIp, isDisposable, parseSignup, rateLimited } from 
  * Every real request also goes to Attio (lib/attio), after the reply is sent:
  * alongside the email, never instead of it.
  */
-// Must be on a domain verified in Resend. notify.agrivanna.com is the verified
-// one — sending from bare agrivanna.com gets a 403 and the enquiry falls back.
-const FROM = process.env.TRIAL_FROM ?? "Agrivanna Website <noreply@notify.agrivanna.com>";
-
-/** Posts one email to Resend. Throws with the status and body if it refuses. */
-async function send(key: string, payload: Record<string, unknown>) {
-  const res = await fetch("https://api.resend.com/emails", {
-    method: "POST",
-    headers: {
-      Authorization: `Bearer ${key}`,
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(payload),
-  });
-  if (!res.ok) throw new Error(`${res.status} ${await res.text()}`);
-}
-
-function clean(v: unknown, max = 400) {
-  return typeof v === "string" ? v.trim().slice(0, max) : "";
-}
-
 export async function POST(request: Request) {
   // Only our own pages post here. A browser always sends Origin with a POST;
   // a script that leaves it out, or fakes another site, is turned away.
