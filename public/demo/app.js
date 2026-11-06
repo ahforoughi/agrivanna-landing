@@ -1,13 +1,16 @@
 /* Agrivanna booth demo: a home page about Agrivanna with a dock of five features
    (voice, pasture, herd, the AI assistant, virtual fencing), opened in any order.
-   Each feature plays itself on a loop; nobody has to tap anything but the dock.
+   It tours by itself, round and round: each page plays once, then the next opens.
+   A tap on the dock jumps to that page and the tour carries on from there.
    Works with no network: every file is cached by sw.js, all data is in data.js,
    and nothing calls any live service. */
 (() => {
   const D = window.DEMO_DATA;
   const $ = (id) => document.getElementById(id);
-  const IDLE_MS = 180000; // back to the home page after 3 minutes untouched
+  const IDLE_MS = 60000; // the QR sheet closes by itself after a minute untouched
   const ORDER = ["voice", "pasture", "herd", "ai", "fence"];
+  const TOUR = ["home", ...ORDER];
+  const HOLD = { home: 20000, fence: 20000 }; // pages with nothing to play stay this long
   const STATUS_CLASS = { Ready: "ready", Watch: "watch", Rest: "rest" };
   const SVGNS = "http://www.w3.org/2000/svg";
     let feat = null;
@@ -26,8 +29,19 @@
   }
   function enter(name) {
     if (name === "home") { const v = $("home-video"); v.play().catch(() => {}); }
-    const loop = { voice: voiceLoop, pasture: pastureLoop, herd: herdLoop, ai: aiLoop }[name];
-    if (loop) loop(run).catch(() => {});
+    playPage(name);
+  }
+  // Plays the page once, then opens the next one. Stops if the page changes first.
+  function playPage(name, device) {
+    const id = run;
+    const pass = { voice: voiceLoop, pasture: pastureLoop, herd: herdLoop, ai: aiLoop }[name];
+    (pass ? pass(id, device) : wait(HOLD[name], id)).then(() => nextPage(id)).catch(() => {});
+  }
+  async function nextPage(id) {
+    if (id !== run) return;
+    // someone may be scanning the code: stay on this page until the sheet closes
+    while (!$("qr-sheet").hidden) await wait(500, id);
+    go(TOUR[(TOUR.indexOf(feat) + 1) % TOUR.length]);
   }
   function leave(name) {
     run++; // stops whichever loop was playing
@@ -37,13 +51,13 @@
     if (name === "herd") resetHerd();
     if (name === "ai") resetAssistant();
   }
-  // The loops: each waits with wait(ms, id) and stops as soon as the page changes.
+  // Each page's play waits with wait(ms, id) and stops as soon as the page changes.
   let run = 0;
   const wait = (ms, id) => new Promise((ok, stop) => setTimeout(() => (id === run ? ok() : stop("left")), ms));
   // a tap shown on screen, so people see what a rancher would press
   const tap = (el) => { if (!el) return; el.classList.remove("tapped"); el.offsetWidth; el.classList.add("tapped"); };
   let idle;
-  function armIdle() { clearTimeout(idle); idle = setTimeout(() => { $("qr-sheet").hidden = true; go("home"); }, IDLE_MS); }
+  function armIdle() { clearTimeout(idle); idle = setTimeout(() => { $("qr-sheet").hidden = true; }, IDLE_MS); }
   ["pointerdown", "keydown", "wheel"].forEach((e) => window.addEventListener(e, armIdle, { passive: true }));
 
   $("home").addEventListener("click", () => go("home"));
@@ -64,7 +78,7 @@
   $("qr-sheet").addEventListener("click", (e) => { if (e.target.id === "qr-sheet") $("qr-sheet").hidden = true; });
 
   // ================================================================ 1. voice
-  // Plays a calving note and a herd move, over and over: words appear as they are
+  // Plays a calving note and a herd move: words appear as they are
   // said, the records are pulled out, then saved.
   const NOTES = [
     { title: "Calving at the chute", text: "Cow 418 calved this morning in the north pasture. Bull calf, no help needed. Tagged him yellow 418, about 85 pounds." },
@@ -124,7 +138,7 @@
   }
   async function voiceLoop(id) {
     resetVoice();
-    for (let k = 0; ; k = (k + 1) % NOTES.length) {
+    for (let k = 0; k < NOTES.length; k++) {
       await wait(1800, id);
       tap($("big-mic"));
       await playText(NOTES[k].text, NOTES[k].title);
@@ -229,11 +243,9 @@
   }
   // every paddock in turn, starting with E where the herd is
   async function pastureLoop(id) {
-    for (;;) {
-      resetMap();
-      await wait(5000, id);
-      for (const L of ["E", "A", "B", "D", "C", "F"]) { tap(pills[L]); pick(L); await wait(10000, id); }
-    }
+    resetMap();
+    await wait(5000, id);
+    for (const L of ["E", "A", "B", "D", "C", "F"]) { tap(pills[L]); pick(L); await wait(10000, id); }
   }
   function countUp(el, to) {
     const t0 = performance.now();
@@ -429,8 +441,9 @@
   async function point(el, id, ms = 900) {
     if (!el) return;
     const f = hc(".h-finger"), a = $("happ").getBoundingClientRect(), r = el.getBoundingClientRect();
+    const s = a.width / $("happ").offsetWidth; // on screen px per app px, with the monitor zoom too
     f.style.transitionDuration = ms + "ms";
-    f.style.transform = `translate(${(r.left - a.left + r.width / 2) / k}px, ${(r.top - a.top + r.height / 2) / k}px)`;
+    f.style.transform = `translate(${(r.left - a.left + r.width / 2) / s}px, ${(r.top - a.top + r.height / 2) / s}px)`;
     f.classList.add("show");
     await wait(ms + 150, id);
   }
@@ -464,53 +477,51 @@
     shell(); fit(); herdsView(0); animalsView(); show("herds", "Herds");
   }
   async function herdLoop(id) {
-    for (;;) {
-      resetHerd();
-      await wait(2500, id);
-      // 1. herds: look at another herd, then back to the cow calf pairs on Paddock E
-      await press(hc('.h-herd[data-h="1"]'), id); herdsView(1); await wait(3500, id);
-      await press(hc('.h-herd[data-h="2"]'), id); herdsView(2); await wait(3000, id);
-      await press(hc('.h-herd[data-h="0"]'), id); herdsView(0); await wait(3500, id);
-      // 2. animals: add a calf
-      await press(hc('.h-nav[data-nav="Animals"]'), id); show("animals", "Animals"); await wait(2500, id);
-      await press(hc("#h-add"), id);
-      const st = {}; const render = () => addModal(st);
-      render(); hc(".h-modal").hidden = false; hc(".h-scrim").hidden = false; await wait(1400, id);
-      await press(hc("#h-tag"), id); st.focus = "t"; await type(null, st, "tag", NEW.tag.replace(/^/, "124000"), render, id, 70); await wait(500, id);
-      await press(hc("#h-sex"), id); st.focus = ""; st.sex = "heifer"; render(); await wait(700, id);
-      await press(hc("#h-vis"), id); st.focus = "v"; await type(null, st, "vis", NEW.vis, render, id, 140); await wait(400, id);
-      await press(hc("#h-breed"), id); st.focus = "b"; await type(null, st, "breed", "Bla", render, id, 160); st.blist = true; render(); await wait(1000, id);
-      st.bpick = NEW.breed; render(); await press(hc('[data-b="Black Angus"]'), id); st.breed = NEW.breed; st.blist = false; st.focus = ""; render(); await wait(900, id);
-      await press(hc("#h-addgo"), id);
-      hc(".h-modal").hidden = true; hc(".h-scrim").hidden = true;
-      rows.unshift({ ...NEW, status: "Active", fresh: true }); rows.pop(); counts.all++; counts.active++;
-      animalsView(); toast(`Animal added · ${tagFmt(NEW.tag)}`); await wait(3500, id);
-      hc(".h-toast").hidden = true;
-      // 3. a treatment on Steer 61: product, dose, the withdrawal fills itself in
-      const steer = rows.find((a) => a.star);
-      await press(hc(`tr[data-r="${rows.indexOf(steer)}"]`), id);
-      chosen = steer; steer.weight = "768 lb"; steer.gainv = "2.1 lb/d"; drawRows(); drawPanel(); await wait(2800, id);
-      await press(hc("#h-treat"), id);
-      const t = {}; const tr = () => drawPanel(treatForm(t));
-      tr(); await wait(1200, id);
-      await press(hc("#h-prod"), id); t.focus = "p"; await type(null, t, "prod", "LA", tr, id, 220); t.list = true; tr(); await wait(1600, id);
-      t.pick = "Liquamycin LA-200"; tr(); await press(hc('[data-p="Liquamycin LA-200"]'), id);
-      t.prod = "Liquamycin LA-200"; t.list = false; t.wd = `48 days · until ${fmtDay(day(48))}`; t.focus = ""; tr(); await wait(1300, id);
-      await press(hc("#h-dose"), id); t.focus = "d"; await type(null, t, "dose", "8 mL", tr, id, 180); t.focus = ""; t.ready = true; tr(); await wait(900, id);
-      await press(hc("#h-save"), id);
-      steer.status = "Withdrawal"; steer.until = day(48); counts.wd++; counts.active--;
-      hc('[data-c="wd"]').textContent = counts.wd; hc('[data-c="active"]').textContent = counts.active;
-      drawRows(); drawPanel(); toast("Treatment recorded · withdrawal set"); await wait(3800, id);
-      hc(".h-toast").hidden = true;
-      // 4. the animal's full record
-      await press(hc("#h-open"), id);
-      profileView(steer); show("profile", "Animals"); await wait(6500, id);
-      await press(hc("#h-back"), id); await wait(400, id);
-    }
+    resetHerd();
+    await wait(2500, id);
+    // 1. herds: look at another herd, then back to the cow calf pairs on Paddock E
+    await press(hc('.h-herd[data-h="1"]'), id); herdsView(1); await wait(3500, id);
+    await press(hc('.h-herd[data-h="2"]'), id); herdsView(2); await wait(3000, id);
+    await press(hc('.h-herd[data-h="0"]'), id); herdsView(0); await wait(3500, id);
+    // 2. animals: add a calf
+    await press(hc('.h-nav[data-nav="Animals"]'), id); show("animals", "Animals"); await wait(2500, id);
+    await press(hc("#h-add"), id);
+    const st = {}; const render = () => addModal(st);
+    render(); hc(".h-modal").hidden = false; hc(".h-scrim").hidden = false; await wait(1400, id);
+    await press(hc("#h-tag"), id); st.focus = "t"; await type(null, st, "tag", NEW.tag.replace(/^/, "124000"), render, id, 70); await wait(500, id);
+    await press(hc("#h-sex"), id); st.focus = ""; st.sex = "heifer"; render(); await wait(700, id);
+    await press(hc("#h-vis"), id); st.focus = "v"; await type(null, st, "vis", NEW.vis, render, id, 140); await wait(400, id);
+    await press(hc("#h-breed"), id); st.focus = "b"; await type(null, st, "breed", "Bla", render, id, 160); st.blist = true; render(); await wait(1000, id);
+    st.bpick = NEW.breed; render(); await press(hc('[data-b="Black Angus"]'), id); st.breed = NEW.breed; st.blist = false; st.focus = ""; render(); await wait(900, id);
+    await press(hc("#h-addgo"), id);
+    hc(".h-modal").hidden = true; hc(".h-scrim").hidden = true;
+    rows.unshift({ ...NEW, status: "Active", fresh: true }); rows.pop(); counts.all++; counts.active++;
+    animalsView(); toast(`Animal added · ${tagFmt(NEW.tag)}`); await wait(3500, id);
+    hc(".h-toast").hidden = true;
+    // 3. a treatment on Steer 61: product, dose, the withdrawal fills itself in
+    const steer = rows.find((a) => a.star);
+    await press(hc(`tr[data-r="${rows.indexOf(steer)}"]`), id);
+    chosen = steer; steer.weight = "768 lb"; steer.gainv = "2.1 lb/d"; drawRows(); drawPanel(); await wait(2800, id);
+    await press(hc("#h-treat"), id);
+    const t = {}; const tr = () => drawPanel(treatForm(t));
+    tr(); await wait(1200, id);
+    await press(hc("#h-prod"), id); t.focus = "p"; await type(null, t, "prod", "LA", tr, id, 220); t.list = true; tr(); await wait(1600, id);
+    t.pick = "Liquamycin LA-200"; tr(); await press(hc('[data-p="Liquamycin LA-200"]'), id);
+    t.prod = "Liquamycin LA-200"; t.list = false; t.wd = `48 days · until ${fmtDay(day(48))}`; t.focus = ""; tr(); await wait(1300, id);
+    await press(hc("#h-dose"), id); t.focus = "d"; await type(null, t, "dose", "8 mL", tr, id, 180); t.focus = ""; t.ready = true; tr(); await wait(900, id);
+    await press(hc("#h-save"), id);
+    steer.status = "Withdrawal"; steer.until = day(48); counts.wd++; counts.active--;
+    hc('[data-c="wd"]').textContent = counts.wd; hc('[data-c="active"]').textContent = counts.active;
+    drawRows(); drawPanel(); toast("Treatment recorded · withdrawal set"); await wait(3800, id);
+    hc(".h-toast").hidden = true;
+    // 4. the animal's full record
+    await press(hc("#h-open"), id);
+    profileView(steer); show("profile", "Animals"); await wait(6500, id);
+    await press(hc("#h-back"), id); await wait(400, id);
   }
 
   // ================================================================ 4. AI assistant
-  // The same five play on a loop in two faithful copies: the iOS app's command
+  // The same five play in two faithful copies: the iOS app's command
   // sheet and the web app's "Ask the assistant" panel (asked a little differently
   // there, and in another order). Answers come from data.js.
   const P = D.paddocks;
@@ -543,20 +554,24 @@
   ];
   let device = "phone";
   function resetAssistant() { stopSpeech(); iosIdle(); waEmpty(); }
+  function setDevice(d) {
+    device = d;
+    document.querySelectorAll(".device-toggle button").forEach((x) => x.setAttribute("aria-selected", String(x.dataset.device === d)));
+    $("ios").hidden = d !== "phone"; $("wa").hidden = d !== "web";
+  }
+  // Picking a device shows all five on it; then the tour moves on as usual
   document.querySelectorAll(".device-toggle button").forEach((b) => b.addEventListener("click", () => {
     if (b.dataset.device === device) return;
-    document.querySelectorAll(".device-toggle button").forEach((x) => x.setAttribute("aria-selected", String(x === b)));
-    device = b.dataset.device;
-    $("ios").hidden = device !== "phone"; $("wa").hidden = device !== "web";
-    run++; resetAssistant(); aiLoop(run).catch(() => {});
+    run++; playPage("ai", b.dataset.device);
   }));
   const WEB_ORDER = [1, 3, 0, 4, 2];
-  async function aiLoop(id) {
+  async function aiLoop(id, picked) {
     resetAssistant();
-    for (;;) {
-      const order = device === "phone" ? [0, 1, 2, 3, 4] : WEB_ORDER;
-      for (const i of order) await (device === "phone" ? iosRun(AI[i], id) : waRun(AI[i], id));
-      if (device === "web") { await wait(1500, id); tap($("wa-new")); waEmpty(); }
+    // Left alone: three on the iPhone, then the other two on the web app, so all five show
+    const plan = picked ? [[picked, picked === "phone" ? [0, 1, 2, 3, 4] : WEB_ORDER]] : [["phone", [0, 1, 3]], ["web", [2, 4]]];
+    for (const [d, items] of plan) {
+      setDevice(d);
+      for (const i of items) await (d === "phone" ? iosRun(AI[i], id) : waRun(AI[i], id));
     }
   }
 
@@ -656,6 +671,12 @@
   function stopSpeech() { if ("speechSynthesis" in window) speechSynthesis.cancel(); }
 
   // ================================================================ start
+  // A big monitor shows the same layout as a laptop, just larger: type and panels
+  // stop growing at laptop size otherwise, and can't be read from a few steps back.
+  function fitMonitor() {
+    document.documentElement.style.zoom = String(Math.max(1, Math.min(innerWidth / 1440, innerHeight / 860)));
+  }
+  fitMonitor(); window.addEventListener("resize", fitMonitor);
   go("home");
   if ("serviceWorker" in navigator) {
     // A new version installs in the background while the old one is on screen; once it
@@ -674,6 +695,18 @@
       return navigator.serviceWorker.ready;
     }).then(() => ($("offline-badge").hidden = false)).catch(() => {});
   }
-  async function wake() { try { await navigator.wakeLock?.request("screen"); } catch {} }
-  wake(); document.addEventListener("visibilitychange", () => document.visibilityState === "visible" && wake());
+  // Keep the screen on while the demo shows. The system can drop this at any time
+  // (a brief lock, a power change), so keep asking for as long as the page is up.
+  let wakeLock = null;
+  async function wake() {
+    if (wakeLock || document.visibilityState !== "visible") return;
+    try {
+      wakeLock = await navigator.wakeLock?.request("screen");
+      wakeLock?.addEventListener("release", () => { wakeLock = null; wake(); });
+    } catch {}
+  }
+  wake();
+  setInterval(wake, 30000);
+  document.addEventListener("visibilitychange", wake);
+  window.addEventListener("pointerdown", wake, { passive: true });
 })();
